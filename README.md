@@ -19,8 +19,6 @@ With his loyal contingent of warriors he set out to rid the region of their enem
 | `npm install` | Install project dependencies |
 | `npm run dev` | Launch a development web server |
 | `npm run build` | Create a production build in the `dist` folder |
-
-**[Built from the official Phaser template](https://github.com/phaserjs/template-webpack)**
 <hr />
 [Version 1] Skyy Tribes 2 - The second game in the series.
 Built using Phaser JS and designed for keyboard and controller play.
