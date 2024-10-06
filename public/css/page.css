@@ -1,0 +1,30 @@
+/* Main page container and layout */
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #aaaaaa;
+  font-family: 'f-forward', sans-serif;
+}
+
+#app {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#page-cover {
+  display: block;
+  position: absolute;
+
+  width: 100vw;
+  height: 100vh;
+
+  border-radius: 3rem;
+  outline: 3rem solid black;
+  z-index: 100;
+}

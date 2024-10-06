@@ -1,9 +1,1 @@
 /* Base styles test */
-
-body {
-  margin: 0;
-  padding: 0;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #1c172e;
-  border: 5px solid silver;
-}

@@ -1,0 +1,16 @@
+/* Importer for all other CSS files and variables */
+
+@import url(page.css);
+@import url(base.css);
+
+:root {
+  --skyy-dark-blue: #1e1e3c;
+  --skyy-mid-grey: #50506e;
+  --skyy-light-blue: #bebee6;
+  --skyy-off-white: #e6e6ff;
+}
+
+@font-face {
+  font-family: "f-forward";
+  src: url('fff-forward.regular.ttf') format('truetype');
+}
