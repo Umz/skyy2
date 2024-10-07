@@ -1,0 +1,14 @@
+/* Contains most of the styles */
+
+/* Splash Icon */
+
+#splash-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #efefef;
+}
+
+#splash-image {
+  max-width: 80%;
+}

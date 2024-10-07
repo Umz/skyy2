@@ -19,7 +19,7 @@ body {
   height: 100vh;
 }
 
-#page-cover {
+#page-border {
   display: block;
   position: absolute;
 
@@ -29,4 +29,12 @@ body {
   border-radius: 3rem;
   outline: 3rem solid black;
   z-index: 100;
+}
+
+/* Page level container elements */
+
+.page-container {
+  position: absolute;
+  width: 100%;
+  height:100%;
 }

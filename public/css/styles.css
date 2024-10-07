@@ -1,7 +1,8 @@
 /* Importer for all other CSS files and variables */
 
 @import url(page.css);
-@import url(base.css);
+@import url(comms.css);
+@import url(main.css);
 
 :root {
   --skyy-dark-blue: #1e1e3c;

@@ -6,22 +6,20 @@ export class SplashScene extends Scene {
         super("SplashScene");
     }
 
-    init() {
-        this.cameras.main.fadeIn(1000, 0, 0, 0);   
-    }
-
     create() {
-
-        //  UG Logo
-
-        const logo = this.add.image(this.scale.width / 2, this.scale.height / 2, "logo");
-        const fx = logo.postFX.addShine(1, .2, 5);
-        
-        // Fadeout complete
-        const main_camera = this.cameras.main.fadeOut(500, 0, 0, 0);
-        main_camera.once("camerafadeoutcomplete", () => {
-            this.scene.start("MenuScene");
+        console.log("Tweening")
+        //  Fade out the splash logo (HTML element)
+        const fadeElement = document.getElementById('splash-container');
+        this.tweens.add({
+            targets: fadeElement.style,
+            opacity: {from: 1, to: 0},
+            delay: 5000,
+            duration: 1000,
+            ease: 'Linear',
+            onComplete: () => {
+                fadeElement.style.display = 'none';
+                this.scene.start("MenuScene");
+            }
         });
     }
-
 }
