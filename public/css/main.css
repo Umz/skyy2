@@ -12,3 +12,11 @@
 #splash-image {
   max-width: 80%;
 }
+
+/* Main menu layout */
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
