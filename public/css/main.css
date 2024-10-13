@@ -7,6 +7,9 @@
   align-items: center;
   justify-content: center;
   background-color: #efefef;
+  
+  visibility: hidden;
+  pointer-events: none;
 }
 
 #splash-image {
@@ -17,6 +20,35 @@
 
 .flex-center {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
+}
+
+/* Game logo on the main menu */
+#game-logo {
+  display: block;
+  max-width: 40%;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-2rem);
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
+#copyright {
+  position: absolute;
+  bottom: .5rem;
+  color: #ffffff;
+  font-family: 'Righteous', Arial, Helvetica, sans-serif;
+  text-shadow: 1px 1px 1px #000;
 }

@@ -29,6 +29,8 @@ body {
   border-radius: 3rem;
   outline: 3rem solid black;
   z-index: 100;
+
+  pointer-events: none;
 }
 
 /* Page level container elements */

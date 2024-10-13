@@ -15,3 +15,8 @@
   font-family: "f-forward";
   src: url('fff-forward.regular.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: "Righteous";
+  src: url('Righteous-Regular.ttf') format('truetype');
+}
