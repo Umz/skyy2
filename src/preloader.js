@@ -16,6 +16,8 @@ export class Preloader extends Phaser.Scene {
         this.load.image('bg_clouds_front', 'bg_layers/clouds_front.png');
         this.load.image('bg_clouds_front_t', 'bg_layers/clouds_front_t.png');
 
+        this.load.image('tilemap', 'bg_layers/tilemap.png');
+
         //  All below came with the builder - delete
 
         this.load.image("floor");
@@ -57,6 +59,6 @@ export class Preloader extends Phaser.Scene {
         this.cache.bitmapFont.add('knighthawks', Phaser.GameObjects.RetroFont.Parse(this, config));
 
         // When all the assets are loaded go to the next scene
-        this.scene.start("MenuScene");
+        this.scene.start("PlayScene");
     }
 }
