@@ -1,66 +1,46 @@
 import { Scene } from "phaser";
+import Scenery from "../bg/Scenery";
 
 export class MenuScene extends Scene {
+
     constructor() {
         super("MenuScene");
     }
 
-    init() {
-        this.cameras.main.fadeIn(1000, 0, 0, 0);
-    }
-
     create() {
 
-        // Background rectangles
-        this.add.rectangle(
-            0,
-            this.scale.height / 2,
-            this.scale.width,
-            120,
-            0xffffff
-        ).setAlpha(.8).setOrigin(0, 0.5);
-        this.add.rectangle(
-            0,
-            this.scale.height / 2 + 85,
-            this.scale.width,
-            50,
-            0x000000
-        ).setAlpha(.8).setOrigin(0, 0.5);
+        //  Set world size
+        const camera = this.cameras.main;
+        const width = 1280;
+        camera.setBounds(0, 0, width, camera.height);
+        camera.centerOn(width * .5, camera.height / 2);
 
-        // Logo
-        const logo_game = this.add.bitmapText(
-            this.scale.width / 2,
-            this.scale.height / 2,
-            "knighthawks",
-            "PHASER'S\nREVENGE",
-            52,
-            1
-        )
-        logo_game.setOrigin(0.5, 0.5);
-        logo_game.postFX.addShine();
+        //  Add groups and layers
+        const allGroup = this.add.group({
+            runChildUpdate: true
+        });
+        const allLayer = this.add.layer();
 
-        const start_msg = this.add.bitmapText(
-            this.scale.width / 2,
-            this.scale.height / 2 + 85,
-            "pixelfont",
-            "CLICK TO START",
-            24
-        ).setOrigin(0.5, 0.5);
-        
+        const scenery = new Scenery(this);      // Background scene
+        scenery.addFullScene(allLayer, allGroup);
 
-        // Tween to blink the text
+        this.fadeOutSplash();   // Fade out splash logo
+    }
+
+    fadeOutSplash() {
+        //  Fade out the splash logo (HTML element)
+        const fadeElement = document.getElementById('splash-container');
         this.tweens.add({
-            targets: start_msg,
-            alpha: 0,
-            duration: 800,
-            ease: (value) => Math.abs(Math.round(value)),
-            yoyo: true,
-            repeat: -1
+            targets: fadeElement.style,
+            opacity: {from: 1, to: 0},
+            delay: 500,
+            duration: 500,
+            ease: 'Linear',
+            onComplete: () => {
+                fadeElement.style.display = 'none';
+                this.scene.start("MenuScene");
+            }
         });
-
-        // Send start-game event when user clicks
-        this.input.on("pointerdown", () => {
-            this.game.events.emit("start-game");
-        });
+        
     }
 }

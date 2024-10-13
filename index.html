@@ -12,13 +12,32 @@
 
 <body>
 
-    <div id="page-cover"></div><!-- Box shape -->
+    <!-- Box shape -->
+    <div id="page-border"></div>
 
-    <!--
-        <div id="app"><div id="phaser-container"></div></div>
-        <script type="module" src="/src/main.js"></script>
-    -->
+    <!-- Splash Umz Games Logo -->
+    <div id="splash-container" class="page-container index-15">
+        <img id="splash-image" class="" src="/assets/umz_games_logo.png" alt="Umz Games" />
+    </div>
+
+    <div id="main-menu-container" class="page-container flex-center index-2">
+        <img id="game-logo" class="" src="/assets/skyy2_logo.png" alt="Skyy Tribes II" />
+        <div>
+            <button>Play</button>
+            <button>Credits</button>
+        </div>
+        <p id="copyright">Umz Games &copy; 2024 | STII 1.01</p>
+    </div>
+    
+    <div id="app" class="index-1">
+        <div id="phaser-container"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
 
 </body>
 
 </html>
+
+<!--
+logo_game.postFX.addShine();
+-->

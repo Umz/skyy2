@@ -1,14 +1,23 @@
-// Class to preload all the assets
-// Remember you can load this assets in another scene if you need it
 export class Preloader extends Phaser.Scene {
     constructor() {
         super({ key: "Preloader" });
     }
 
     preload() {
-        // Load all the assets
-        this.load.setPath("assets");
-        this.load.image("logo", "logo.png");
+        
+        this.load.setPath("assets");    // Set folder to load from
+
+        //  Load all images for the background scenery
+
+        this.load.image('bg_sky', 'bg_layers/sky.png');
+        this.load.image('bg_mountains', 'bg_layers/grassy_mountains.png');
+        this.load.image('bg_range', 'bg_layers/far_mountains.png');
+        this.load.image('bg_clouds_mid', 'bg_layers/clouds_mid.png');
+        this.load.image('bg_clouds_front', 'bg_layers/clouds_front.png');
+        this.load.image('bg_clouds_front_t', 'bg_layers/clouds_front_t.png');
+
+        //  All below came with the builder - delete
+
         this.load.image("floor");
         this.load.image("background", "background.png");
 
@@ -31,7 +40,7 @@ export class Preloader extends Phaser.Scene {
 
         // Event to update the loading bar
         this.load.on("progress", (progress) => {
-            console.log("Loading: " + Math.round(progress * 100) + "%");
+            //console.log("Loading: " + Math.round(progress * 100) + "%");
         });
     }
 
@@ -48,6 +57,6 @@ export class Preloader extends Phaser.Scene {
         this.cache.bitmapFont.add('knighthawks', Phaser.GameObjects.RetroFont.Parse(this, config));
 
         // When all the assets are loaded go to the next scene
-        this.scene.start("SplashScene");
+        this.scene.start("MenuScene");
     }
 }
