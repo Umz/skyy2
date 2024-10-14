@@ -17,7 +17,7 @@ export class PlayScene extends Scene {
     camera.centerOn(width * .5, camera.height / 2);
 
     //  Groups and layers
-    
+
     const allGroup = this.add.group({
       runChildUpdate: true
     });
@@ -34,8 +34,15 @@ export class PlayScene extends Scene {
     const tmBuilder = new TilemapBuilder(this);
     tmBuilder.buildTilemap(bg_tilemap);
 
+    //  Add trees in BG
+    //  Add bushes + fruit trees + veg in FG
+
     //  Add some buildings
     //  TexturePacker - Buildings
     //  JSON layout file
+
+    let sprite = this.add.sprite(width * .5, 207, 'base');
+    sprite.setOrigin(.5, 1);
+
   }
 }

@@ -18,6 +18,10 @@ export class Preloader extends Phaser.Scene {
 
         this.load.image('tilemap', 'bg_layers/tilemap.png');
 
+        //  Test items
+
+        this.load.image('base', 'test/mam_main.png');
+
         //  All below came with the builder - delete
 
         this.load.image("floor");
