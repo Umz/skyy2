@@ -1,0 +1,26 @@
+{
+  "mam": [
+    {"x": 40, "frame":"mam_spikes_left"},
+    {"x": 85, "frame":"mam_spikes_left"},
+    {"x": 145, "frame":"mam_barracks_full"},
+    {"x": 615, "frame":"mam_spikes_left"},
+    {"x": 740, "frame":"mam_store"},
+    {"x": 795, "frame":"mam_house"},
+    {"x": 825, "frame":"mam_base"},
+    {"x": 1000, "frame":"mam_store"},
+
+    {"x": 1070, "frame":"mam_tower"},
+
+    {"x": 1135, "frame":"mam_house"},
+    {"x": 1170, "frame":"mam_house"},
+    {"x": 1265, "frame":"mam_house"},
+    {"x": 1360, "frame":"mam_house"},
+    {"x": 1435, "frame":"mam_house"},
+
+    {"x": 1525, "frame":"mam_house"},
+    {"x": 1590, "frame":"mam_house"},
+
+    {"x": 1690, "frame":"mam_tower"},
+    {"x": 1745, "frame":"mam_spikes"}
+  ]
+}

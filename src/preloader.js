@@ -7,6 +7,8 @@ export class Preloader extends Phaser.Scene {
         
         this.load.setPath("assets");    // Set folder to load from
 
+        this.load.atlas('atlas', 'atlas/atlas.png', 'atlas/atlas.json');
+
         //  Load all images for the background scenery
 
         this.load.image('bg_sky', 'bg_layers/sky.png');
@@ -21,6 +23,10 @@ export class Preloader extends Phaser.Scene {
         //  Test items
 
         this.load.image('base', 'test/mam_main.png');
+
+        //  Load JSON files
+
+        this.load.json('json_mam', 'json/buildings.json', 'mam');
 
         //  All below came with the builder - delete
 

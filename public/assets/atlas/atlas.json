@@ -1,0 +1,68 @@
+{"frames": [
+
+{
+	"filename": "mam_barracks_full",
+	"frame": {"x":0,"y":0,"w":450,"h":91},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":450,"h":91},
+	"sourceSize": {"w":450,"h":91}
+},
+{
+	"filename": "mam_base",
+	"frame": {"x":0,"y":91,"w":160,"h":90},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":160,"h":90},
+	"sourceSize": {"w":160,"h":90}
+},
+{
+	"filename": "mam_house",
+	"frame": {"x":160,"y":91,"w":60,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":40},
+	"sourceSize": {"w":60,"h":40}
+},
+{
+	"filename": "mam_spikes",
+	"frame": {"x":220,"y":91,"w":51,"h":39},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":39},
+	"sourceSize": {"w":51,"h":39}
+},
+{
+	"filename": "mam_spikes_left",
+	"frame": {"x":271,"y":91,"w":51,"h":39},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":39},
+	"sourceSize": {"w":51,"h":39}
+},
+{
+	"filename": "mam_store",
+	"frame": {"x":322,"y":91,"w":48,"h":22},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":22},
+	"sourceSize": {"w":48,"h":22}
+},
+{
+	"filename": "mam_tower",
+	"frame": {"x":370,"y":91,"w":60,"h":120},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":120},
+	"sourceSize": {"w":60,"h":120}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas.png",
+	"format": "RGBA8888",
+	"size": {"w":450,"h":211},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:7222b3d891a0b7aba95341f3e1cf048a:c4e337adac27a5c93a1344b9b01ef2f3:cbce6b53f0f49e0bf15173c25c41f876$"
+}
+}
