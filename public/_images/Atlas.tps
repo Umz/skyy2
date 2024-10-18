@@ -173,7 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">buildings/Skyy2-Base.png</key>
+            <key type="filename">buildings/green_banner.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -182,13 +182,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>40,23,80,45</rect>
+                <rect>6,12,11,24</rect>
                 <key>scale9Paddings</key>
-                <rect>40,23,80,45</rect>
+                <rect>6,12,11,24</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">buildings/skyy2-houseA.png</key>
+            <key type="filename">buildings/green_block.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -197,14 +197,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>15,10,30,20</rect>
+                <rect>13,16,26,32</rect>
                 <key>scale9Paddings</key>
-                <rect>15,10,30,20</rect>
+                <rect>13,16,26,32</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">buildings/vii_spikes.png</key>
-            <key type="filename">buildings/vii_spikes_left.png</key>
+            <key type="filename">buildings/green_house.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -213,13 +212,43 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>13,10,25,19</rect>
+                <rect>18,11,35,22</rect>
                 <key>scale9Paddings</key>
-                <rect>13,10,25,19</rect>
+                <rect>18,11,35,22</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">buildings/vil_barracks_full.png</key>
+            <key type="filename">buildings/green_main.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,14,40,28</rect>
+                <key>scale9Paddings</key>
+                <rect>20,14,40,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/house-ren1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,11,27,22</rect>
+                <key>scale9Paddings</key>
+                <rect>13,11,27,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/mam_barracks_full.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -234,7 +263,53 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">buildings/vil_store.png</key>
+            <key type="filename">buildings/mam_base.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>40,23,80,45</rect>
+                <key>scale9Paddings</key>
+                <rect>40,23,80,45</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/mam_house.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,10,30,20</rect>
+                <key>scale9Paddings</key>
+                <rect>15,10,30,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/mam_spikes.png</key>
+            <key type="filename">buildings/mam_spikes_left.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,10,25,19</rect>
+                <key>scale9Paddings</key>
+                <rect>13,10,25,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/mam_store.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -249,7 +324,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">buildings/vil_tower.png</key>
+            <key type="filename">buildings/mam_tower.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -261,6 +336,81 @@
                 <rect>15,30,30,60</rect>
                 <key>scale9Paddings</key>
                 <rect>15,30,30,60</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_block.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,14,33,28</rect>
+                <key>scale9Paddings</key>
+                <rect>17,14,33,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_chest.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,4,17,7</rect>
+                <key>scale9Paddings</key>
+                <rect>9,4,17,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_hut.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,11,35,22</rect>
+                <key>scale9Paddings</key>
+                <rect>17,11,35,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_statue.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,8,17,15</rect>
+                <key>scale9Paddings</key>
+                <rect>9,8,17,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_vase.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,9,6</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,9,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

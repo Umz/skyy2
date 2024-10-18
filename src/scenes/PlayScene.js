@@ -40,12 +40,14 @@ export class PlayScene extends Scene {
     //  Add trees in BG
     //  Add bushes + fruit trees + veg in FG
 
-    //  Add some buildings
-    //  TexturePacker - Buildings
-    //  JSON layout file
+    //  Buildings
+
+    //  NEXT - Add the other villages
 
     const builder1 = new VillageBuilder(this);
-    builder1.loadMaM(buildingsLayer);
+    //builder1.loadMaM(buildingsLayer);
+    //builder1.loadGreen(buildingsLayer);
+    builder1.loadStorm(buildingsLayer);
 
     //  Temp
 

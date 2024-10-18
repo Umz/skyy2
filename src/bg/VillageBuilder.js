@@ -31,18 +31,32 @@ export default class VillageBuilder extends BaseBuilder {
     }
   }
 
+  loadVillage(json_data, layer) {
+    const startX = 0;
+    for (let data of json_data) {
+      const image = this.add(startX + data.x, Vars.GROUND_TOP, data.frame);
+      image.setDepth(data.depth);
+      layer.add(image);
+    }
+  }
+
+  /** Moon at Midnight */
   loadMaM(layer) {
     
     const villageBuildings = this.scene.cache.json.get('json_mam');
-    const startX = 0;
-
-    for (let b_data of villageBuildings) {
-      const image = this.add(startX + b_data.x, Vars.GROUND_TOP, b_data.frame);
-      image.setDepth(b_data.depth);
-      layer.add(image);
-    }
-
+    this.loadVillage(villageBuildings, layer);
     //  Load data from dB to check against upgraded buildings
+  }
+  
+  /** Storm Village */
+  loadStorm(layer) {
+    const villageBuildings = this.scene.cache.json.get('json_storm');
+    this.loadVillage(villageBuildings, layer);
+  }
 
+  /** Green Village */
+  loadGreen(layer) {
+    const villageBuildings = this.scene.cache.json.get('json_green');
+    this.loadVillage(villageBuildings, layer);
   }
 }

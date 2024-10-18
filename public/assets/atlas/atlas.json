@@ -1,8 +1,40 @@
 {"frames": [
 
 {
+	"filename": "green_banner",
+	"frame": {"x":86,"y":0,"w":22,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":48},
+	"sourceSize": {"w":22,"h":48}
+},
+{
+	"filename": "green_block",
+	"frame": {"x":70,"y":48,"w":52,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":64},
+	"sourceSize": {"w":52,"h":64}
+},
+{
+	"filename": "green_house",
+	"frame": {"x":0,"y":48,"w":70,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":44},
+	"sourceSize": {"w":70,"h":44}
+},
+{
+	"filename": "green_main",
+	"frame": {"x":188,"y":48,"w":80,"h":56},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":56},
+	"sourceSize": {"w":80,"h":56}
+},
+{
 	"filename": "mam_barracks_full",
-	"frame": {"x":0,"y":0,"w":450,"h":91},
+	"frame": {"x":0,"y":168,"w":450,"h":91},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":450,"h":91},
@@ -10,7 +42,7 @@
 },
 {
 	"filename": "mam_base",
-	"frame": {"x":0,"y":91,"w":160,"h":90},
+	"frame": {"x":328,"y":48,"w":160,"h":90},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":160,"h":90},
@@ -18,7 +50,7 @@
 },
 {
 	"filename": "mam_house",
-	"frame": {"x":160,"y":91,"w":60,"h":40},
+	"frame": {"x":311,"y":0,"w":60,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":40},
@@ -26,7 +58,7 @@
 },
 {
 	"filename": "mam_spikes",
-	"frame": {"x":220,"y":91,"w":51,"h":39},
+	"frame": {"x":156,"y":0,"w":51,"h":39},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":39},
@@ -34,7 +66,7 @@
 },
 {
 	"filename": "mam_spikes_left",
-	"frame": {"x":271,"y":91,"w":51,"h":39},
+	"frame": {"x":207,"y":0,"w":51,"h":39},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":39},
@@ -42,7 +74,7 @@
 },
 {
 	"filename": "mam_store",
-	"frame": {"x":322,"y":91,"w":48,"h":22},
+	"frame": {"x":108,"y":0,"w":48,"h":22},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":22},
@@ -50,19 +82,67 @@
 },
 {
 	"filename": "mam_tower",
-	"frame": {"x":370,"y":91,"w":60,"h":120},
+	"frame": {"x":268,"y":48,"w":60,"h":120},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":120},
 	"sourceSize": {"w":60,"h":120}
+},
+{
+	"filename": "storm_block",
+	"frame": {"x":122,"y":48,"w":66,"h":56},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":66,"h":56},
+	"sourceSize": {"w":66,"h":56}
+},
+{
+	"filename": "storm_chest",
+	"frame": {"x":17,"y":0,"w":35,"h":14},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":35,"h":14},
+	"sourceSize": {"w":35,"h":14}
+},
+{
+	"filename": "storm_house",
+	"frame": {"x":258,"y":0,"w":53,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":53,"h":44},
+	"sourceSize": {"w":53,"h":44}
+},
+{
+	"filename": "storm_hut",
+	"frame": {"x":371,"y":0,"w":66,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":66,"h":44},
+	"sourceSize": {"w":66,"h":44}
+},
+{
+	"filename": "storm_statue",
+	"frame": {"x":52,"y":0,"w":34,"h":30},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":30},
+	"sourceSize": {"w":34,"h":30}
+},
+{
+	"filename": "storm_vase",
+	"frame": {"x":0,"y":0,"w":17,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
+	"sourceSize": {"w":17,"h":12}
 }],
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "atlas.png",
 	"format": "RGBA8888",
-	"size": {"w":450,"h":211},
+	"size": {"w":488,"h":259},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:7222b3d891a0b7aba95341f3e1cf048a:c4e337adac27a5c93a1344b9b01ef2f3:cbce6b53f0f49e0bf15173c25c41f876$"
+	"smartupdate": "$TexturePacker:SmartUpdate:b8f1a6a8096587fba4991f6b09f2c91c:55babe0362408f7b000752dabb438cb7:cbce6b53f0f49e0bf15173c25c41f876$"
 }
 }
