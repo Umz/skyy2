@@ -7,7 +7,15 @@ export default class VillageBuilder extends BaseBuilder {
   loadVillage(json_data, layer) {
     const startX = 0;
     for (let data of json_data) {
-      const image = this.add(startX + data.x, Vars.GROUND_TOP, data.frame);
+
+      let image;
+      if (data.animation) {
+        image = this.addAnimated(data.x, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, data.animation);
+      }
+      else {
+        image = this.add(startX + data.x, Vars.GROUND_TOP, data.frame);
+      }
+
       image.setDepth(data.depth);
       layer.add(image);
     }

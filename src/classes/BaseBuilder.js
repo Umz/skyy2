@@ -17,18 +17,9 @@ export default class BaseBuilder {
 
   addAnimated(x, laneY, spritesheet, animation) {
     const {scene} = this;
-    const sprite = scene.add.sprite(x, laneY, spritesheet).setOrigin(.5, 1);
+    const sprite = scene.add.sprite(x, laneY, spritesheet).setOrigin(0, 1);
     sprite.anims.play(animation);
     return sprite;
-  }
-
-  addFromCentre(arr, y, layer) {
-    const cX = this.getCenterX();
-    for (let data of arr) {
-      const {x, frame} = data;
-      const image = this.add(cX + x, y, frame);
-      layer.add(image);
-    }
   }
 
   getBounds() {

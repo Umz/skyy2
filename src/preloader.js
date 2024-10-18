@@ -1,4 +1,7 @@
+import Vars from "./util/Vars";
+
 export class Preloader extends Phaser.Scene {
+
     constructor() {
         super({ key: "Preloader" });
     }
@@ -20,6 +23,10 @@ export class Preloader extends Phaser.Scene {
 
         this.load.image('tilemap', 'bg_layers/tilemap.png');
 
+        //  Spritesheets
+
+        this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight:48});
+
         //  Test items
 
         this.load.image('base', 'test/mam_main.png');
@@ -32,6 +39,8 @@ export class Preloader extends Phaser.Scene {
 
         this.load.json('json_mam_bg', 'json/bg_trees.json', 'bg.mam');
         this.load.json('json_mam_fg', 'json/bg_trees.json', 'fg.mam');
+
+        //  Animations
 
         //  All below came with the builder - delete
 
@@ -62,6 +71,15 @@ export class Preloader extends Phaser.Scene {
     }
 
     create() {
+
+        //  Banner Flapping
+        this.anims.create({
+            key: 'banner_mam',
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_ALL_BANNERS, { start: 0, end: 5 }),
+            frameRate: 6,
+            repeat: -1
+        });
+
         // Create bitmap font and load it in cache
         const config = {
             image: 'knighthawks',
