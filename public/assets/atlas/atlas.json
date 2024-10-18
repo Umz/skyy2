@@ -2,7 +2,7 @@
 
 {
 	"filename": "green_banner",
-	"frame": {"x":485,"y":0,"w":22,"h":48},
+	"frame": {"x":66,"y":44,"w":22,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":48},
@@ -10,7 +10,7 @@
 },
 {
 	"filename": "green_block",
-	"frame": {"x":146,"y":48,"w":52,"h":64},
+	"frame": {"x":234,"y":44,"w":52,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":64},
@@ -18,7 +18,7 @@
 },
 {
 	"filename": "green_house",
-	"frame": {"x":296,"y":0,"w":70,"h":44},
+	"frame": {"x":346,"y":0,"w":70,"h":44},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":44},
@@ -26,7 +26,7 @@
 },
 {
 	"filename": "green_main",
-	"frame": {"x":0,"y":48,"w":80,"h":56},
+	"frame": {"x":88,"y":44,"w":80,"h":56},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":56},
@@ -34,7 +34,7 @@
 },
 {
 	"filename": "mam_barracks_full",
-	"frame": {"x":0,"y":138,"w":450,"h":91},
+	"frame": {"x":0,"y":134,"w":450,"h":91},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":450,"h":91},
@@ -42,7 +42,7 @@
 },
 {
 	"filename": "mam_base",
-	"frame": {"x":223,"y":48,"w":160,"h":90},
+	"frame": {"x":311,"y":44,"w":160,"h":90},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":160,"h":90},
@@ -50,7 +50,7 @@
 },
 {
 	"filename": "mam_house",
-	"frame": {"x":236,"y":0,"w":60,"h":40},
+	"frame": {"x":286,"y":0,"w":60,"h":40},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":40},
@@ -58,7 +58,7 @@
 },
 {
 	"filename": "mam_spikes",
-	"frame": {"x":134,"y":0,"w":51,"h":39},
+	"frame": {"x":184,"y":0,"w":51,"h":39},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":39},
@@ -66,7 +66,7 @@
 },
 {
 	"filename": "mam_spikes_left",
-	"frame": {"x":185,"y":0,"w":51,"h":39},
+	"frame": {"x":235,"y":0,"w":51,"h":39},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":39},
@@ -74,7 +74,7 @@
 },
 {
 	"filename": "mam_store",
-	"frame": {"x":52,"y":0,"w":48,"h":22},
+	"frame": {"x":75,"y":0,"w":48,"h":22},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":48,"h":22},
@@ -82,7 +82,7 @@
 },
 {
 	"filename": "mam_tower",
-	"frame": {"x":450,"y":138,"w":60,"h":120},
+	"frame": {"x":450,"y":134,"w":60,"h":120},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":60,"h":120},
@@ -90,7 +90,7 @@
 },
 {
 	"filename": "storm_block",
-	"frame": {"x":80,"y":48,"w":66,"h":56},
+	"frame": {"x":168,"y":44,"w":66,"h":56},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":66,"h":56},
@@ -98,7 +98,7 @@
 },
 {
 	"filename": "storm_chest",
-	"frame": {"x":17,"y":0,"w":35,"h":14},
+	"frame": {"x":40,"y":0,"w":35,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":35,"h":14},
@@ -106,7 +106,7 @@
 },
 {
 	"filename": "storm_house",
-	"frame": {"x":366,"y":0,"w":53,"h":44},
+	"frame": {"x":416,"y":0,"w":53,"h":44},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":53,"h":44},
@@ -114,7 +114,7 @@
 },
 {
 	"filename": "storm_hut",
-	"frame": {"x":419,"y":0,"w":66,"h":44},
+	"frame": {"x":0,"y":44,"w":66,"h":44},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":66,"h":44},
@@ -122,7 +122,7 @@
 },
 {
 	"filename": "storm_statue",
-	"frame": {"x":100,"y":0,"w":34,"h":30},
+	"frame": {"x":123,"y":0,"w":34,"h":30},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":30},
@@ -130,27 +130,43 @@
 },
 {
 	"filename": "storm_vase",
-	"frame": {"x":0,"y":0,"w":17,"h":12},
+	"frame": {"x":23,"y":0,"w":17,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
 	"sourceSize": {"w":17,"h":12}
 },
 {
+	"filename": "tree_bush",
+	"frame": {"x":0,"y":0,"w":23,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":23,"h":10},
+	"sourceSize": {"w":23,"h":10}
+},
+{
 	"filename": "tree_evergreen",
-	"frame": {"x":198,"y":48,"w":25,"h":85},
+	"frame": {"x":286,"y":44,"w":25,"h":85},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":85},
 	"sourceSize": {"w":25,"h":85}
+},
+{
+	"filename": "tree_small",
+	"frame": {"x":157,"y":0,"w":27,"h":36},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":36},
+	"sourceSize": {"w":27,"h":36}
 }],
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "atlas.png",
 	"format": "RGBA8888",
-	"size": {"w":510,"h":258},
+	"size": {"w":510,"h":254},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:911ed8d8032004ad34d3930a2c8ef2ba:e477cf95f63d3957b64313db77908c23:cbce6b53f0f49e0bf15173c25c41f876$"
+	"smartupdate": "$TexturePacker:SmartUpdate:7daa956b64da91de7f2f84be7c4ebcd1:7229ef2f539ce676536808dcdfeb1382:cbce6b53f0f49e0bf15173c25c41f876$"
 }
 }

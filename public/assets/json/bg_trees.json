@@ -23,6 +23,20 @@
     ]
   },
   "fg": {
-    "mam": []
+    "mam": [
+      {"x": 670, "frame":"tree_small", "depth": 1},
+      {"x": 685, "frame":"tree_bush", "depth": 2},
+
+      {"x": 790, "frame":"tree_bush", "depth": 2},
+      {"x": 1110, "frame":"tree_small", "depth": 1},
+      {"x": 1145, "frame":"tree_bush", "depth": 2},
+
+      {"x": 1315, "frame":"tree_bush", "depth": 2},
+      {"x": 1335, "frame":"tree_bush", "depth": 2},
+      {"x": 1355, "frame":"tree_bush", "depth": 2},
+
+      {"x": 1415, "frame":"tree_small", "depth": 1},
+      {"x": 1505, "frame":"tree_small", "depth": 1}
+    ]
   }
 }

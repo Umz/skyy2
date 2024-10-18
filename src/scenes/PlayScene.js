@@ -29,6 +29,7 @@ export class PlayScene extends Scene {
 
     const bgLayer = this.add.layer();
     const buildingsLayer = this.add.layer();
+    const fgLayer = this.add.layer();
 
     // Background scene
 
@@ -45,7 +46,7 @@ export class PlayScene extends Scene {
     //  Add trees in BG
 
     const mapBuilder = new MapBuilder(this);
-    mapBuilder.loadMaM(bgLayer);
+    mapBuilder.loadMaM(bgLayer, fgLayer);
 
     //  Villages
 

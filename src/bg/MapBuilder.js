@@ -14,9 +14,11 @@ export default class MapBuilder extends BaseBuilder {
   }
 
   /** Moon at Midnight */
-  loadMaM(layer) {
-    const villageBuildings = this.scene.cache.json.get('json_mam_bg');
-    this.loadJSON(villageBuildings, layer);
+  loadMaM(bgLayer, fgLayer) {
+    const bgTrees = this.scene.cache.json.get('json_mam_bg');
+    const fgTrees = this.scene.cache.json.get('json_mam_fg');
+    this.loadJSON(bgTrees, bgLayer);
+    this.loadJSON(fgTrees, fgLayer);
   }
   
 }
