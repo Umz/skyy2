@@ -233,21 +233,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">buildings/house-ren1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,11,27,22</rect>
-                <key>scale9Paddings</key>
-                <rect>13,11,27,22</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">buildings/mam_barracks_full.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -369,6 +354,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">buildings/storm_house.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,11,27,22</rect>
+                <key>scale9Paddings</key>
+                <rect>13,11,27,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">buildings/storm_hut.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -414,6 +414,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">trees/tree_evergreen.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,21,13,43</rect>
+                <key>scale9Paddings</key>
+                <rect>6,21,13,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -422,6 +437,7 @@
                 <key>files</key>
                 <array>
                     <filename>buildings</filename>
+                    <filename>trees</filename>
                 </array>
             </struct>
         </map>

@@ -12,9 +12,10 @@ export default class TilemapBuilder {
     const bounds = camera.getBounds();
     const FLOOR_Y = 195;
 
-    const tmX = 32;
+    const tmX = -16;
     const tmY = FLOOR_Y;
-    const tmWidth = Math.floor((bounds.width - tmX * 2) / 16);
+    //const tmWidth = Math.floor((bounds.width - tmX * 2) / 16);
+    const tmWidth = Math.floor((bounds.width + 32) / 16);
 
     const tm = this.scene.make.tilemap({tileWidth: 16, tileHeight: 16, width: tmWidth, height: 6});
     const tileset = tm.addTilesetImage('tilemap');

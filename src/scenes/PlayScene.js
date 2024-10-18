@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
 import VillageBuilder from "../bg/VillageBuilder";
+import MapBuilder from "../bg/MapBuilder";
 
 export class PlayScene extends Scene {
 
@@ -25,6 +26,8 @@ export class PlayScene extends Scene {
 
     const sceneryLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
+
+    const bgLayer = this.add.layer();
     const buildingsLayer = this.add.layer();
 
     // Background scene
@@ -37,17 +40,19 @@ export class PlayScene extends Scene {
     const tmBuilder = new TilemapBuilder(this);
     tmBuilder.buildTilemap(tilemapLayer);
 
-    //  Add trees in BG
     //  Add bushes + fruit trees + veg in FG
+    
+    //  Add trees in BG
 
-    //  Buildings
+    const mapBuilder = new MapBuilder(this);
+    mapBuilder.loadMaM(bgLayer);
 
-    //  NEXT - Add the other villages
+    //  Villages
 
     const builder1 = new VillageBuilder(this);
-    //builder1.loadMaM(buildingsLayer);
+    builder1.loadMaM(buildingsLayer);
     //builder1.loadGreen(buildingsLayer);
-    builder1.loadStorm(buildingsLayer);
+    //builder1.loadStorm(buildingsLayer);
 
     //  Temp
 

@@ -1,0 +1,28 @@
+{
+  "bg": {
+    "mam": [
+      {"x": 135, "frame":"tree_evergreen", "depth": 1},
+      {"x": 190, "frame":"tree_evergreen", "depth": 1},
+      {"x": 280, "frame":"tree_evergreen", "depth": 1},
+      {"x": 530, "frame":"tree_evergreen", "depth": 1},
+      {"x": 575, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 710, "frame":"tree_evergreen", "depth": 1},
+      {"x": 750, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 1115, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 1305, "frame":"tree_evergreen", "depth": 1},
+      {"x": 1340, "frame":"tree_evergreen", "depth": 1},
+      {"x": 1485, "frame":"tree_evergreen", "depth": 1},
+      {"x": 1485, "frame":"tree_evergreen", "depth": 1},
+      {"x": 1630, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 1885, "frame":"tree_evergreen", "depth": 1},
+      {"x": 1880, "frame":"tree_evergreen", "depth": 1}
+    ]
+  },
+  "fg": {
+    "mam": []
+  }
+}

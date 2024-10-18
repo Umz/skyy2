@@ -30,6 +30,9 @@ export class Preloader extends Phaser.Scene {
         this.load.json('json_storm', 'json/villages.json', 'storm');
         this.load.json('json_green', 'json/villages.json', 'green');
 
+        this.load.json('json_mam_bg', 'json/bg_trees.json', 'bg.mam');
+        this.load.json('json_mam_fg', 'json/bg_trees.json', 'fg.mam');
+
         //  All below came with the builder - delete
 
         this.load.image("floor");
