@@ -16,6 +16,10 @@ export default class VillageBuilder extends BaseBuilder {
         image = this.add(startX + data.x, Vars.GROUND_TOP, data.frame);
       }
 
+      if (data.fx) {
+        image.postFX.addShine();
+      }
+
       image.setDepth(data.depth);
       layer.add(image);
     }

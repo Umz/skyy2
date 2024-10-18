@@ -3,6 +3,7 @@ import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
 import VillageBuilder from "../bg/VillageBuilder";
 import MapBuilder from "../bg/MapBuilder";
+import Shadows from "../bg/Shadows";
 
 export class PlayScene extends Scene {
 
@@ -18,6 +19,8 @@ export class PlayScene extends Scene {
     camera.setBounds(0, 0, width, camera.height);
     camera.centerOn(width * .5, camera.height / 2);
 
+    const graphics = this.add.graphics();
+
     //  Groups and layers
 
     const allGroup = this.add.group({
@@ -27,6 +30,7 @@ export class PlayScene extends Scene {
     const sceneryLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
 
+    const shadowLayer = this.add.layer();
     const bgLayer = this.add.layer();
     const buildingsLayer = this.add.layer();
     const fgLayer = this.add.layer();
@@ -41,8 +45,6 @@ export class PlayScene extends Scene {
     const tmBuilder = new TilemapBuilder(this);
     tmBuilder.buildTilemap(tilemapLayer);
 
-    //  Add bushes + fruit trees + veg in FG
-    
     //  Add trees in BG
 
     const mapBuilder = new MapBuilder(this);
@@ -54,6 +56,15 @@ export class PlayScene extends Scene {
     builder1.loadMaM(buildingsLayer);
     //builder1.loadGreen(buildingsLayer);
     //builder1.loadStorm(buildingsLayer);
+
+    //  Setup the Shadows
+
+    const shadows = new Shadows();
+
+    shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
+    shadows.addGraphics(graphics);
+    shadowLayer.add(graphics);
+    shadows.drawShadows(graphics);
 
     //  Temp
 
