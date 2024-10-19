@@ -33,7 +33,7 @@ export class Preloader extends Phaser.Scene {
 
         //  Load JSON files
 
-        const villages = ["mam", "storm"];
+        const villages = ["mam", "storm", "green"];
         for (let name of villages) {
 
             const villageRef = `json_${name}`;
@@ -45,9 +45,6 @@ export class Preloader extends Phaser.Scene {
             this.load.json(fgRef, 'json/bg_trees.json', `fg.${name}`);
         }
 
-        this.load.json('json_green', 'json/villages.json', 'green');
-
-        //  Animations
 
         //  All below came with the builder - delete
 

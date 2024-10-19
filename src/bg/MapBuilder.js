@@ -59,5 +59,10 @@ export default class MapBuilder extends BaseBuilder {
   loadStorm() {
     this.loadVillage("storm");
   }
-  
+
+  /** Green Village */
+  loadGreen() {
+    this.loadVillage("green");
+  }
+
 }

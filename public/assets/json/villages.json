@@ -66,10 +66,10 @@
   "green": [
     {"x": 195, "frame":"mam_spikes_left", "depth": 1},
 
-    {"x": 250, "frame":"green_banner", "depth": 1},
+    {"x": 250, "frame":"green_banner", "depth": 1, "fx":true},
     {"x": 280, "frame":"green_block", "depth": 1},
     {"x": 385, "frame":"green_house", "depth": 1},
-    {"x": 480, "frame":"green_banner", "depth": 1},
+    {"x": 480, "frame":"green_banner", "depth": 1, "fx":true},
 
     {"x": 530, "frame":"green_house", "depth": 5},
     {"x": 585, "frame":"green_house", "depth": 4},
@@ -77,20 +77,20 @@
     {"x": 710, "frame":"green_house", "depth": 2},
     {"x": 770, "frame":"green_block", "depth": 1},
 
-    {"x": 850, "frame":"green_banner", "depth": 1},
+    {"x": 850, "frame":"green_banner", "depth": 1, "fx":true},
     {"x": 875, "frame":"green_main", "depth": 1},
     
     {"x": 970, "frame":"green_house", "depth": 3},
     {"x": 1025, "frame":"green_house", "depth": 2},
     {"x": 1085, "frame":"green_block", "depth": 1},
 
-    {"x": 1170, "frame":"green_banner", "depth": 1},
+    {"x": 1170, "frame":"green_banner", "depth": 1, "fx":true},
     {"x": 1200, "frame":"green_house", "depth": 3},
     {"x": 1255, "frame":"green_house", "depth": 2},
     {"x": 1310, "frame":"green_house", "depth": 1},
 
     {"x": 1400, "frame":"green_block", "depth": 1},
-    {"x": 1460, "frame":"green_banner", "depth": 1},
+    {"x": 1460, "frame":"green_banner", "depth": 1, "fx":true},
 
     {"x": 1485, "frame":"mam_spikes", "depth": 1}
   ]
