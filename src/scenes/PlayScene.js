@@ -1,7 +1,6 @@
 import { Scene } from "phaser";
 import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
-import VillageBuilder from "../bg/VillageBuilder";
 import MapBuilder from "../bg/MapBuilder";
 import Shadows from "../bg/Shadows";
 
@@ -48,14 +47,10 @@ export class PlayScene extends Scene {
     //  Add trees in BG
 
     const mapBuilder = new MapBuilder(this);
-    mapBuilder.loadMaM(bgLayer, fgLayer);
+    mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
+    
+    mapBuilder.loadStorm();   // Load full village
 
-    //  Villages
-
-    const builder1 = new VillageBuilder(this);
-    builder1.loadMaM(buildingsLayer);
-    //builder1.loadGreen(buildingsLayer);
-    //builder1.loadStorm(buildingsLayer);
 
     //  Setup the Shadows
 

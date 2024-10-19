@@ -20,6 +20,27 @@
 
       {"x": 1845, "frame":"tree_evergreen", "depth": 1},
       {"x": 1880, "frame":"tree_evergreen", "depth": 1}
+    ],
+    "storm": [
+      {"x": 60, "frame":"tree_evergreen", "depth": 1},
+      {"x": 120, "frame":"tree_evergreen", "depth": 1},
+      {"x": 280, "frame":"tree_evergreen", "depth": 1},
+      {"x": 330, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 685, "frame":"tree_evergreen", "depth": 1},
+      {"x": 765, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 810, "frame":"tree_tall", "depth": 1},
+      {"x": 1055, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 1245, "frame":"tree_evergreen", "depth": 1},
+      {"x": 1280, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 1500, "frame":"tree_evergreen", "depth": 1},
+      {"x": 1590, "frame":"tree_tall", "depth": 1},
+      {"x": 1790, "frame":"tree_evergreen", "depth": 1},
+
+      {"x": 1840, "frame":"tree_evergreen", "depth": 1}
     ]
   },
   "fg": {
@@ -37,6 +58,31 @@
 
       {"x": 1415, "frame":"tree_small", "depth": 1},
       {"x": 1505, "frame":"tree_small", "depth": 1}
+    ],
+    "storm": [
+      {"x": 345, "frame":"tree_bush", "depth": 1},
+      {"x": 420, "frame":"tree_bush", "depth": 1},
+      {"x": 490, "frame":"tree_small", "depth": 1},
+      {"x": 520, "frame":"tree_bush", "depth": 1},
+
+      {"x": 600, "frame":"tree_tall", "depth": 1},
+      {"x": 630, "frame":"tree_bush", "depth": 1},
+
+      {"x": 855, "frame":"tree_small", "depth": 1},
+      {"x": 865, "frame":"tree_bush", "depth": 2},
+      {"x": 915, "frame":"tree_tall", "depth": 2},
+
+      {"x": 1000, "frame":"tree_bush", "depth": 1},
+      {"x": 1065, "frame":"tree_small", "depth": 1},
+      {"x": 1075, "frame":"tree_tall", "depth": 1},
+      {"x": 1140, "frame":"tree_tall", "depth": 1},
+
+      {"x": 1190, "frame":"tree_fruit", "depth": 1},
+      {"x": 1300, "frame":"tree_fruit", "depth": 1},
+      {"x": 1345, "frame":"tree_bush", "depth": 1},
+
+      {"x": 1400, "frame":"tree_tall", "depth": 1},
+      {"x": 1540, "frame":"tree_tall", "depth": 1}
     ]
   }
 }

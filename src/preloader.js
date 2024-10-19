@@ -33,12 +33,19 @@ export class Preloader extends Phaser.Scene {
 
         //  Load JSON files
 
-        this.load.json('json_mam', 'json/villages.json', 'mam');
-        this.load.json('json_storm', 'json/villages.json', 'storm');
-        this.load.json('json_green', 'json/villages.json', 'green');
+        const villages = ["mam", "storm"];
+        for (let name of villages) {
 
-        this.load.json('json_mam_bg', 'json/bg_trees.json', 'bg.mam');
-        this.load.json('json_mam_fg', 'json/bg_trees.json', 'fg.mam');
+            const villageRef = `json_${name}`;
+            const bgRef = `json_${name}_bg`;
+            const fgRef = `json_${name}_fg`;
+            
+            this.load.json(villageRef, 'json/villages.json', name);
+            this.load.json(bgRef, 'json/bg_trees.json', `bg.${name}`);
+            this.load.json(fgRef, 'json/bg_trees.json', `fg.${name}`);
+        }
+
+        this.load.json('json_green', 'json/villages.json', 'green');
 
         //  Animations
 
