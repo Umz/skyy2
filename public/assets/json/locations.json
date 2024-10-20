@@ -129,5 +129,10 @@
     {"x": 990, "frame":"rock_big", "depth": 1},
     {"x": 1030, "frame":"rock_small", "depth": 1},
     {"x": 1040, "frame":"rock_med", "depth": 2}
+  ],
+  "plains": [
+    {"x": 885, "frame":"plains_box", "depth": 1},
+    {"x": 955, "frame":"plains_box", "depth": 1},
+    {"x": 1025, "frame":"plains_box", "depth": 1}
   ]
 }

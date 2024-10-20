@@ -51,7 +51,7 @@ export class PlayScene extends Scene {
     
     //mapBuilder.loadMaM();   // Load full village
     //mapBuilder.loadBigForest("greenleaf");
-    mapBuilder.loadLocation("mines");
+    mapBuilder.loadLocation("plains");
 
     //  Setup the Shadows
 

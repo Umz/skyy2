@@ -44,6 +44,7 @@ export class Preloader extends Phaser.Scene {
         //  Other locations
 
         this.load.json("json_mines", "json/locations.json", "mines");
+        this.load.json("json_plains", "json/locations.json", "plains");
 
         this.load.json("json_blue_forest", "json/locations.json", "blue");
         this.load.json("json_rose_forest", "json/locations.json", "rose");
@@ -51,6 +52,7 @@ export class Preloader extends Phaser.Scene {
         
         this.load.json("json_big_forest_bg", "json/bg_trees.json", "bg.big_forest");
         this.load.json("json_mines_bg", "json/bg_trees.json", "bg.mines");
+        this.load.json("json_plains_bg", "json/bg_trees.json", "bg.plains");
 
         //  All below came with the builder - delete
 

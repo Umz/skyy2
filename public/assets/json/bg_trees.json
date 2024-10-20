@@ -128,6 +128,33 @@
       {"x": 1670, "frame":"tree_evergreen", "depth": 1},
       {"x": 1790, "frame":"tree_evergreen", "depth": 1},
       {"x": 1840, "frame":"tree_evergreen", "depth": 1}
+    ],
+    "plains": [
+
+      {"x": 15, "frame":"tree_bush", "depth": 1},
+      {"x": 35, "frame":"tree_evergreen", "depth": 1},
+      {"x": 55, "frame":"tree_bush", "depth": 1},
+      {"x": 85, "frame":"tree_bush", "depth": 1},
+
+      {"x": 225, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 270, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 490, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 520, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 660, "frame":"tree_dry_bush", "depth": 1},
+
+      {"x": 770, "frame":"tree_cactus_small", "depth": 1},
+      {"x": 800, "frame":"tree_cactus", "depth": 1},
+      {"x": 1145, "frame":"tree_cactus", "depth": 1},
+
+      {"x": 1230, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 1260, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 1325, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 1525, "frame":"tree_dry_bush", "depth": 1},
+      {"x": 1570, "frame":"tree_dry_bush", "depth": 1},
+      
+      {"x": 1820, "frame":"tree_bush", "depth": 1},
+      {"x": 1845, "frame":"tree_bush", "depth": 1},
+      {"x": 1870, "frame":"tree_evergreen", "depth": 1}
     ]
   },
   "fg": {
