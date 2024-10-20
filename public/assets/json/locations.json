@@ -93,5 +93,41 @@
     {"x": 1460, "frame":"green_banner", "depth": 1, "fx":true},
 
     {"x": 1485, "frame":"mam_spikes", "depth": 1}
+  ],
+  "blue": [
+    {"x": 940, "frame":"tree_teal", "depth": 1}
+  ],
+  "rose": [
+    {"x": 60, "frame":"tree_sandy", "depth": 1},
+    {"x": 165, "frame":"tree_sandy", "depth": 1},
+    {"x": 930, "frame":"tree_red", "depth": 1},
+    {"x": 1660, "frame":"tree_sandy", "depth": 1},
+    {"x": 1720, "frame":"tree_sandy", "depth": 1}
+  ],
+  "greenleaf": [
+    {"x": 345, "frame":"tree_green", "depth": 1},
+    {"x": 945, "frame":"tree_green_tall", "depth": 1},
+    {"x": 1680, "frame":"tree_green", "depth": 1}
+  ],
+  "mines": [
+    {"x": 270, "frame":"rock_big", "depth": 1},
+    {"x": 295, "frame":"rock_small", "depth": 2},
+    {"x": 325, "frame":"rock_med", "depth": 1},
+
+    {"x": 420, "frame":"rock_big", "depth": 1},
+    {"x": 440, "frame":"rock_med", "depth": 2},
+    {"x": 490, "frame":"rock_small", "depth": 1},
+    {"x": 645, "frame":"rock_big", "depth": 2},
+    {"x": 695, "frame":"rock_big", "depth": 1},
+
+    {"x": 765, "frame":"rock_thin", "depth": 1},
+
+    {"x": 805, "frame":"rock_med", "depth": 1},
+    {"x": 835, "frame":"rock_big", "depth": 1},
+    {"x": 890, "frame":"rock_big", "depth": 2},
+    {"x": 910, "frame":"rock_big", "depth": 1},
+    {"x": 990, "frame":"rock_big", "depth": 1},
+    {"x": 1030, "frame":"rock_small", "depth": 1},
+    {"x": 1040, "frame":"rock_med", "depth": 2}
   ]
 }

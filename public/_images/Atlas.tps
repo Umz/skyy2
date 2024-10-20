@@ -414,6 +414,81 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">rocks/rock_big.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,9,15,17</rect>
+                <key>scale9Paddings</key>
+                <rect>7,9,15,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">rocks/rock_med.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,4,13,9</rect>
+                <key>scale9Paddings</key>
+                <rect>7,4,13,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">rocks/rock_purple.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,11,10</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,11,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">rocks/rock_small.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,9,8</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,9,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">rocks/rock_thin.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,7,13,14</rect>
+                <key>scale9Paddings</key>
+                <rect>6,7,13,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">trees/tree_bush.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -459,6 +534,66 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">trees/tree_green.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,13,26,25</rect>
+                <key>scale9Paddings</key>
+                <rect>13,13,26,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">trees/tree_green_tall.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,22,23,44</rect>
+                <key>scale9Paddings</key>
+                <rect>12,22,23,44</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">trees/tree_red.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>21,17,43,35</rect>
+                <key>scale9Paddings</key>
+                <rect>21,17,43,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">trees/tree_sandy.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,9,17,17</rect>
+                <key>scale9Paddings</key>
+                <rect>8,9,17,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">trees/tree_small.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -489,6 +624,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">trees/tree_teal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,25,35,49</rect>
+                <key>scale9Paddings</key>
+                <rect>18,25,35,49</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">trees/tree_willow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -513,6 +663,7 @@
                 <array>
                     <filename>buildings</filename>
                     <filename>trees</filename>
+                    <filename>rocks</filename>
                 </array>
             </struct>
         </map>

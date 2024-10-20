@@ -50,6 +50,29 @@ export default class MapBuilder extends BaseBuilder {
     this.loadSprites(fgJSON, this.fg);
   }
 
+  /** Load all big forests with big forest background */
+  loadBigForest(name) {
+    
+    const forest = `json_${name}_forest`;
+    const bg = "json_big_forest_bg";
+
+    const forestJSON = this.scene.cache.json.get(forest);
+    const bgJSON = this.scene.cache.json.get(bg);
+    
+    this.loadSprites(forestJSON, this.buildings);
+    this.loadSprites(bgJSON, this.bg);
+  }
+
+  /** Load a simple location and background for location */
+  loadLocation(name) {
+    const location = `json_${name}`;
+    const bg = `json_${name}_bg`;
+    const locationJSON = this.scene.cache.json.get(location);
+    const bgJSON = this.scene.cache.json.get(bg);
+    this.loadSprites(locationJSON, this.buildings);
+    this.loadSprites(bgJSON, this.bg);
+  }
+
   /** Moon at Midnight */
   loadMaM() {
     this.loadVillage("mam");

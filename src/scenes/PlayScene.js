@@ -48,7 +48,10 @@ export class PlayScene extends Scene {
 
     const mapBuilder = new MapBuilder(this);
     mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
-    mapBuilder.loadGreen();   // Load full village
+    
+    //mapBuilder.loadMaM();   // Load full village
+    //mapBuilder.loadBigForest("greenleaf");
+    mapBuilder.loadLocation("mines");
 
     //  Setup the Shadows
 

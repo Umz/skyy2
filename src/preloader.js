@@ -27,10 +27,6 @@ export class Preloader extends Phaser.Scene {
 
         this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight:48});
 
-        //  Test items
-
-        this.load.image('base', 'test/mam_main.png');
-
         //  Load JSON files
 
         const villages = ["mam", "storm", "green"];
@@ -40,11 +36,21 @@ export class Preloader extends Phaser.Scene {
             const bgRef = `json_${name}_bg`;
             const fgRef = `json_${name}_fg`;
             
-            this.load.json(villageRef, 'json/villages.json', name);
+            this.load.json(villageRef, 'json/locations.json', name);
             this.load.json(bgRef, 'json/bg_trees.json', `bg.${name}`);
             this.load.json(fgRef, 'json/bg_trees.json', `fg.${name}`);
         }
 
+        //  Other locations
+
+        this.load.json("json_mines", "json/locations.json", "mines");
+
+        this.load.json("json_blue_forest", "json/locations.json", "blue");
+        this.load.json("json_rose_forest", "json/locations.json", "rose");
+        this.load.json("json_greenleaf_forest", "json/locations.json", "greenleaf");
+        
+        this.load.json("json_big_forest_bg", "json/bg_trees.json", "bg.big_forest");
+        this.load.json("json_mines_bg", "json/bg_trees.json", "bg.mines");
 
         //  All below came with the builder - delete
 
