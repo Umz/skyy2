@@ -1,0 +1,138 @@
+{
+  "mam": [
+    {"x": 40, "frame":"mam_spikes_left", "depth": 1},
+    {"x": 85, "frame":"mam_spikes_left", "depth": 1},
+    {"x": 145, "frame":"mam_barracks_full", "depth": 1},
+    {"x": 230, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
+    {"x": 485, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
+    {"x": 615, "frame":"mam_spikes_left", "depth": 1},
+
+    {"x": 740, "frame":"mam_store", "depth": 1},
+    {"x": 795, "frame":"mam_house", "depth": 2},
+    {"x": 825, "frame":"mam_base", "depth": 1},
+
+    {"x": 855, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
+    {"x": 980, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
+    {"x": 1000, "frame":"mam_store", "depth": 1},
+
+    {"x": 1050, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
+    {"x": 1070, "frame":"mam_tower", "depth": 1},
+
+    {"x": 1135, "frame":"mam_house", "depth": 2},
+    {"x": 1170, "frame":"mam_house", "depth": 1},
+    {"x": 1265, "frame":"mam_house", "depth": 1},
+    {"x": 1360, "frame":"mam_house", "depth": 1},
+    {"x": 1435, "frame":"mam_house", "depth": 1},
+
+    {"x": 1525, "frame":"mam_house", "depth": 1},
+    {"x": 1590, "frame":"mam_house", "depth": 1},
+
+    {"x": 1660, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
+    {"x": 1690, "frame":"mam_tower", "depth": 1},
+    {"x": 1745, "frame":"mam_spikes", "depth": 2}
+  ],
+  "storm": [
+    {"x": 355, "frame":"storm_hut", "depth": 1},
+    {"x": 430, "frame":"storm_block", "depth": 1},
+
+    {"x": 500, "frame":"storm_vase", "depth": 3},
+    {"x": 505, "frame":"storm_hut", "depth": 2},
+    {"x": 560, "frame":"storm_hut", "depth": 1},
+    {"x": 620, "frame":"storm_vase", "depth": 1},
+
+    {"x": 650, "frame":"storm_statue", "depth": 1},
+    {"x": 695, "frame":"storm_chest", "depth": 2},
+    {"x": 710, "frame":"storm_hut", "depth": 1},
+    {"x": 785, "frame":"storm_statue", "depth": 1},
+
+    {"x": 850, "frame":"storm_vase", "depth": 1},
+    {"x": 870, "frame":"storm_hut", "depth": 1},
+    {"x": 940, "frame":"storm_hut", "depth": 2},
+    {"x": 990, "frame":"storm_hut", "depth": 1},
+
+    {"x": 1055, "frame":"storm_vase", "depth": 1},
+    {"x": 1075, "frame":"storm_block", "depth": 1},
+    {"x": 1155, "frame":"storm_block", "depth": 1},
+
+    {"x": 1235, "frame":"storm_vase", "depth": 1},
+    {"x": 1245, "frame":"storm_vase", "depth": 2},
+    {"x": 1270, "frame":"storm_vase", "depth": 1},
+
+    {"x": 1350, "frame":"storm_block", "depth": 1},
+    {"x": 1430, "frame":"storm_block", "depth": 1},
+
+    {"x": 1550, "frame":"storm_hut", "depth": 1}
+  ],
+  "green": [
+    {"x": 195, "frame":"mam_spikes_left", "depth": 1},
+
+    {"x": 250, "frame":"green_banner", "depth": 1, "fx":true},
+    {"x": 280, "frame":"green_block", "depth": 1},
+    {"x": 385, "frame":"green_house", "depth": 1},
+    {"x": 480, "frame":"green_banner", "depth": 1, "fx":true},
+
+    {"x": 530, "frame":"green_house", "depth": 5},
+    {"x": 585, "frame":"green_house", "depth": 4},
+    {"x": 640, "frame":"green_house", "depth": 3},
+    {"x": 710, "frame":"green_house", "depth": 2},
+    {"x": 770, "frame":"green_block", "depth": 1},
+
+    {"x": 850, "frame":"green_banner", "depth": 1, "fx":true},
+    {"x": 875, "frame":"green_main", "depth": 1},
+    
+    {"x": 970, "frame":"green_house", "depth": 3},
+    {"x": 1025, "frame":"green_house", "depth": 2},
+    {"x": 1085, "frame":"green_block", "depth": 1},
+
+    {"x": 1170, "frame":"green_banner", "depth": 1, "fx":true},
+    {"x": 1200, "frame":"green_house", "depth": 3},
+    {"x": 1255, "frame":"green_house", "depth": 2},
+    {"x": 1310, "frame":"green_house", "depth": 1},
+
+    {"x": 1400, "frame":"green_block", "depth": 1},
+    {"x": 1460, "frame":"green_banner", "depth": 1, "fx":true},
+
+    {"x": 1485, "frame":"mam_spikes", "depth": 1}
+  ],
+  "blue": [
+    {"x": 940, "frame":"tree_teal", "depth": 1}
+  ],
+  "rose": [
+    {"x": 60, "frame":"tree_sandy", "depth": 1},
+    {"x": 165, "frame":"tree_sandy", "depth": 1},
+    {"x": 930, "frame":"tree_red", "depth": 1},
+    {"x": 1660, "frame":"tree_sandy", "depth": 1},
+    {"x": 1720, "frame":"tree_sandy", "depth": 1}
+  ],
+  "greenleaf": [
+    {"x": 345, "frame":"tree_green", "depth": 1},
+    {"x": 945, "frame":"tree_green_tall", "depth": 1},
+    {"x": 1680, "frame":"tree_green", "depth": 1}
+  ],
+  "mines": [
+    {"x": 270, "frame":"rock_big", "depth": 1},
+    {"x": 295, "frame":"rock_small", "depth": 2},
+    {"x": 325, "frame":"rock_med", "depth": 1},
+
+    {"x": 420, "frame":"rock_big", "depth": 1},
+    {"x": 440, "frame":"rock_med", "depth": 2},
+    {"x": 490, "frame":"rock_small", "depth": 1},
+    {"x": 645, "frame":"rock_big", "depth": 2},
+    {"x": 695, "frame":"rock_big", "depth": 1},
+
+    {"x": 765, "frame":"rock_thin", "depth": 1},
+
+    {"x": 805, "frame":"rock_med", "depth": 1},
+    {"x": 835, "frame":"rock_big", "depth": 1},
+    {"x": 890, "frame":"rock_big", "depth": 2},
+    {"x": 910, "frame":"rock_big", "depth": 1},
+    {"x": 990, "frame":"rock_big", "depth": 1},
+    {"x": 1030, "frame":"rock_small", "depth": 1},
+    {"x": 1040, "frame":"rock_med", "depth": 2}
+  ],
+  "plains": [
+    {"x": 885, "frame":"plains_box", "depth": 1},
+    {"x": 955, "frame":"plains_box", "depth": 1},
+    {"x": 1025, "frame":"plains_box", "depth": 1}
+  ]
+}
