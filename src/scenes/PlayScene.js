@@ -48,10 +48,13 @@ export class PlayScene extends Scene {
 
     const mapBuilder = new MapBuilder(this);
     mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
+    mapBuilder.loadMaM();   // Load full village
+
+    // Load Character
+    // Move about in world
     
-    //mapBuilder.loadMaM();   // Load full village
-    //mapBuilder.loadBigForest("greenleaf");
-    mapBuilder.loadLocation("plains");
+    //  Next branch >
+    //  Load world dynamically as character goes to edge of screen-
 
     //  Setup the Shadows
 
