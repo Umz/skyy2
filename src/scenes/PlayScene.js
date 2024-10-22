@@ -5,6 +5,9 @@ import MapBuilder from "../bg/MapBuilder";
 import Shadows from "../bg/Shadows";
 import Soldier from "../gameobjects/Soldier";
 import Vars from "../util/Vars";
+import KeyboardMapper from "../util/KeyboardMapper";
+import ControlKeys from "../util/ControlKeys";
+import SpriteController from "../util/SpriteController";
 
 export class PlayScene extends Scene {
 
@@ -37,6 +40,8 @@ export class PlayScene extends Scene {
     const fgLayer = this.add.layer();
 
     const lane_1 = this.add.layer();
+    const lane_2 = this.add.layer();
+    const lane_3 = this.add.layer();
 
     // Background scene
 
@@ -61,8 +66,7 @@ export class PlayScene extends Scene {
 
     lane_1.add(player);
 
-    // Move about in world
-    
+    //  Move about in world
     //  Next branch >
     //  Load world dynamically as character goes to edge of screen-
 
@@ -74,6 +78,14 @@ export class PlayScene extends Scene {
     shadows.addGraphics(graphics);
     shadowLayer.add(graphics);
     shadows.drawShadows(graphics);
+
+    //  Controller
+
+    const controllerKeys = new ControlKeys();
+    const keyMapper = new KeyboardMapper(this);
+    keyMapper.registerKeyboard(controllerKeys);
+    
+    this.controller = new SpriteController(player, controllerKeys);
 
     //  Temp
 
@@ -87,6 +99,7 @@ export class PlayScene extends Scene {
   }
 
   update(time, delta) {
-    this.cameras.main.scrollX += this.camMoveX;
+    //this.cameras.main.scrollX += this.camMoveX;
+    this.controller.update();
   }
 }

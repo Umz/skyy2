@@ -1,8 +1,5 @@
 
-
 // Action based (Slime Game) sprites 
-// 1- Display
-// 2- Animate
 // 3- Player Controlled
 // 4- Action controller
 
@@ -18,10 +15,32 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.setOrigin(.5, 1);
   }
 
+  update(time, delta) {
+
+  }
+
+  //  Controller functions
+
+  moveLeft() {}
+  moveRight() {}
+  moveUp() {}
+  moveDown() {}
+
+  attack() {}
+  defend() {}
+
   //  Viewer functions
 
   playIdle() {
     this.anims.play(this.prefix + Vars.ANIM_IDLE, true);
+  }
+
+  playRun() {
+    this.anims.play(this.prefix + Vars.ANIM_WALK, true);
+  }
+
+  playAttack() {
+    this.anims.play(this.prefix + Vars.ANIM_ATTACK, true);
   }
 
 }
