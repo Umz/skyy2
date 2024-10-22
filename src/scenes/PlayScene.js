@@ -3,6 +3,8 @@ import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
 import MapBuilder from "../bg/MapBuilder";
 import Shadows from "../bg/Shadows";
+import Soldier from "../gameobjects/Soldier";
+import Vars from "../util/Vars";
 
 export class PlayScene extends Scene {
 
@@ -34,6 +36,8 @@ export class PlayScene extends Scene {
     const buildingsLayer = this.add.layer();
     const fgLayer = this.add.layer();
 
+    const lane_1 = this.add.layer();
+
     // Background scene
 
     const scenery = new Scenery(this);
@@ -51,6 +55,12 @@ export class PlayScene extends Scene {
     mapBuilder.loadMaM();   // Load full village
 
     // Load Character
+
+    const player = new Soldier(this, width * .5, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
+    player.playIdle();
+
+    lane_1.add(player);
+
     // Move about in world
     
     //  Next branch >
