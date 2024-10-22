@@ -12,7 +12,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     
     this.prefix = texture;  // Prefix for animations
 
-    this.speed = 48;
+    this.speed = 96;  // Use 72-
 
     this.setOrigin(.5, 1);
   }
