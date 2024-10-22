@@ -12,19 +12,48 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     
     this.prefix = texture;  // Prefix for animations
 
+    this.speed = 48;
+
     this.setOrigin(.5, 1);
   }
 
   update(time, delta) {
 
+    //  View updating
+
+    const velX = this.body.velocity.x;
+   
+    if (velX !== 0) {
+      this.playRun();
+
+      if (!this.flipX && velX < 0) {
+        this.setFlipX(true);
+      }
+      else if (this.flipX && velX > 0) {
+        this.setFlipX(false);
+      }
+    }
+    else {
+      this.playIdle();
+    }
+    
   }
 
   //  Controller functions
 
-  moveLeft() {}
-  moveRight() {}
+  moveLeft() {
+    this.body.velocity.x = -this.speed;
+  }
+
+  moveRight() {
+    this.body.velocity.x = this.speed;
+  }
+
   moveUp() {}
-  moveDown() {}
+
+  moveDown() {
+    this.body.velocity.x = 0;
+  }
 
   attack() {}
   defend() {}

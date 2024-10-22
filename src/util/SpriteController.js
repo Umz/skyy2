@@ -9,10 +9,6 @@ export default class SpriteController {
 
     const { sprite, controller } = this;
 
-    if (!sprite.isControlled) {
-      return false;
-    }
-
     controller.getPress(controller.left, ()=>{
       sprite.moveLeft();
     });

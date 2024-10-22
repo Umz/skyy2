@@ -30,6 +30,7 @@ export class PlayScene extends Scene {
     const allGroup = this.add.group({
       runChildUpdate: true
     });
+    const group_soldiers = this.add.group({runChildUpdate:true});
 
     const sceneryLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
@@ -63,8 +64,12 @@ export class PlayScene extends Scene {
 
     const player = new Soldier(this, width * .5, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
     player.playIdle();
+    this.physics.add.existing(player);
 
     lane_1.add(player);
+    group_soldiers.add(player);
+
+    camera.startFollow(player, true, .8);
 
     //  Move about in world
     //  Next branch >
