@@ -3,6 +3,7 @@
 // 3- Player Controlled
 // 4- Action controller
 
+import Enum from "../util/Enum";
 import Vars from "../util/Vars";
 
 export default class Soldier extends Phaser.Physics.Arcade.Sprite {
@@ -12,18 +13,31 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     
     this.prefix = texture;  // Prefix for animations
 
+    this.movementSpeed = 0;
     this.speed = 96;  // Use 72-
-    this.isBlocking = false;
-
+    this.state = Enum.SS_READY;
+    
     this.setOrigin(.5, 1);
+
+    //  Action to perform when attacking animation completes
+    
+    this.on('animationcomplete', (animation, frame) => {
+      if (animation.key === this.prefix + Vars.ANIM_ATTACK) {
+        this.state = Enum.SS_READY;
+        this.movementSpeed = 0;
+      }
+    });
   }
 
   update(time, delta) {
 
-    const velX = this.body.velocity.x;
-
     //  Speed updating
+    
+    this.body.velocity.x = this.movementSpeed !== 0 ? this.movementSpeed : this.body.velocity.x;
 
+    //  Calculate the slow down
+
+    const velX = this.body.velocity.x;
     if (velX !== 0) {
       const newVelocity = velX * .95;
       this.body.velocity.x = Math.abs(newVelocity) < 4 ? 0 : newVelocity;
@@ -31,19 +45,28 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     //  View updating
 
-    // Add a State Check here . Blocking - Attacking -
-    if (velX !== 0) {
-      this.playRun();
-
-      if (!this.flipX && velX < 0 && !this.isTweening()) {
-        this.flipXTween();
-      }
-      else if (this.flipX && velX > 0 && !this.isTweening()) {
-        this.flipXTween();
-      }
-    }
-    else {
-      this.playIdle();
+    switch (this.state) {
+      case Enum.SS_READY:
+        if (velX !== 0) {
+          this.playRun();
+    
+          if (!this.flipX && velX < 0 && !this.isTweening()) {
+            this.flipXTween();
+          }
+          else if (this.flipX && velX > 0 && !this.isTweening()) {
+            this.flipXTween();
+          }
+        }
+        else {
+          this.playIdle();
+        }
+        break;
+      case Enum.SS_DEFEND:
+        this.playDefend();
+        break;
+      case Enum.SS_ATTACK:
+        this.playAttack();
+        break;
     }
   }
 
@@ -57,27 +80,35 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   moveLeft() {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    this.body.velocity.x = -moveSpeed;
+    this.movementSpeed = -moveSpeed;
   }
 
   moveRight() {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    this.body.velocity.x = moveSpeed;
+    this.movementSpeed = moveSpeed;
   }
 
-  moveUp() {}
+  stopMove() {
+    this.movementSpeed = 0;
+  }
+
+  moveUp() {
+  }
 
   moveDown() {
-    this.body.velocity.x = 0;
   }
 
   attack() {
-    this.isBlocking = false;
+    if (this.state === Enum.SS_READY) {
+      this.state = Enum.SS_ATTACK;
+      const dir = this.flipX ? -1 : 1;
+      this.movementSpeed = this.speed * 1.1 * dir;
+    }
   }
 
-  defend() {
-    this.isBlocking = true;
-    this.anims.play(this.prefix + Vars.ANIM_DEFEND, true);
+  defend(isDefending) {
+    this.state = isDefending ? Enum.SS_DEFEND : Enum.SS_READY;
+    this.movementSpeed = isDefending ? 0 : this.movementSpeed;
   }
 
   //  Viewer functions
@@ -132,6 +163,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   playAttack() {
     this.anims.play(this.prefix + Vars.ANIM_ATTACK, true);
+  }
+
+  playDefend() {
+    this.anims.play(this.prefix + Vars.ANIM_DEFEND, true);
   }
 
 }

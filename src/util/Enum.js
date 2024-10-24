@@ -1,0 +1,45 @@
+const Enum = {
+  
+  GS_IDLE: 1,
+  GS_MENU: 2,
+  GS_COUNTDOWN: 3,
+  GS_SPAWN: 4,
+  GS_BATTLE: 5,
+  GS_VICTORY: 6,
+  GS_DEFEAT: 7,
+  GS_PAUSE_LISTEN: 8,
+  GS_PAUSE: 9,
+  GS_VIEW: 10,
+  GS_ENDING: 11,
+
+  // Sprite States
+  
+  SS_READY: 1,
+  SS_DEFEND: 2,
+  SS_ATTACK: 3,
+  SS_BACKSTEP: 4,
+  SS_HURT: 5,
+  SS_REBOUND: 6,
+  SS_COOLDOWN: 7,
+  SS_DEAD: 8,
+
+  TT_PLAYER: 1,
+  TT_INFANTRY: 2,
+  TT_HEAVY_INFANTRY: 3,
+  TT_LANCER: 4,
+  TT_ADVISOR: 5,
+
+  TEAM_ALLY: 1,
+  TEAM_ENEMY: 2,
+
+  ACT_IDLE: 1,
+  ACT_GOTO_TARGET: 2,
+  ACT_BATTLE_CHECK: 3,
+  ACT_BATTLE_DECISION: 4,
+  ACT_BATTLE_ACTION: 5,
+  ACT_HURT: 6,
+  ACT_REBOUND: 7,
+
+  ACT_GOTO_PLAYER: 101
+}
+export default Enum;

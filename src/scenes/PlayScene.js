@@ -76,6 +76,7 @@ export class PlayScene extends Scene {
     //  Load world dynamically as character goes to edge of screen-
 
     //  Setup the Shadows
+    // Add dynamic shadows
 
     const shadows = new Shadows();
 

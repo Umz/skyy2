@@ -2,7 +2,7 @@
   "lancer": [
     {"suffix":"-idle", "start":0, "end":5, "frameRate": 10, "repeat":-1},
     {"suffix":"-walk", "start":10, "end":15, "frameRate": 16, "repeat":-1},
-    {"suffix":"-attack", "start":20, "end":28, "frameRate": 32, "repeat":-1},
+    {"suffix":"-attack", "start":20, "end":28, "frameRate": 32, "repeat":0},
     {"suffix":"-defend", "start":29, "end":29, "frameRate": 4, "repeat":-1}
   ],
   "infantry": [

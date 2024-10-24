@@ -15,6 +15,13 @@ export default class SpriteController {
     controller.getPress(controller.right, ()=>{
       sprite.moveRight();
     });
+    controller.getSingleRelease(controller.left, ()=>{
+      sprite.stopMove();
+    });
+    controller.getSingleRelease(controller.right, ()=>{
+      sprite.stopMove();
+    });
+
     controller.getSinglePress(controller.up, ()=>{
       sprite.moveUp();
     });
@@ -33,6 +40,7 @@ export default class SpriteController {
       sprite.defend(true);
     });
     controller.getSingleRelease(controller.defend, ()=>{
+      sprite.defend(false);
     });
   }
 }
