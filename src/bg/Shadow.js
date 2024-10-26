@@ -1,6 +1,9 @@
 export default class Shadow {
 
-  constructor() {
+  constructor(graphics) {
+
+    this.graphics = graphics;
+
     this.staticShadowLines = [];
     this.dynamicShadowLines = [];
     this.dynamicLayers = [];
@@ -66,10 +69,6 @@ export default class Shadow {
     }
   }
 
-  addGraphics(graphics) {
-    this.graphics = graphics;
-  }
-
   addDynamicLayers(...layers) {
     this.dynamicLayers.push(...layers);
   }
@@ -79,8 +78,9 @@ export default class Shadow {
     this.createDynamicShadowLines(...this.dynamicLayers);
   }
 
-  drawShadows(graphics) {
+  drawShadows() {
 
+    const graphics = this.graphics;
     graphics.clear();
 
     for (let line of this.staticShadowLines) {
@@ -98,16 +98,10 @@ export default class Shadow {
     }
 
     for (let line of this.dynamicShadowLines) {
-      
       const y1 = line.y - 1;
       const padding = 7;
-
-      graphics.lineStyle(1, 0x000000, .4);
+      graphics.lineStyle(1, 0x000000, .5);
       graphics.lineBetween(line.x1 + padding, y1, line.x2 - padding, y1);
-      
-      //graphics.lineStyle(1, 0x000000, .3);
-      //graphics.lineBetween(line.x1, y1, line.x1 + padding, y1);
-      //graphics.lineBetween(line.x2, y1, line.x2 - padding, y1);
     }
 
   }

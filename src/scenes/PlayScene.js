@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
 import MapBuilder from "../bg/MapBuilder";
-import Shadows from "../bg/Shadows";
+import Shadow from "../bg/Shadow";
 import Soldier from "../gameobjects/Soldier";
 import Vars from "../util/Vars";
 import KeyboardMapper from "../util/KeyboardMapper";
@@ -18,7 +18,7 @@ export class PlayScene extends Scene {
   create() {
 
     //  Set world size
-    
+
     const camera = this.cameras.main;
     const width = 1920;
     camera.setBounds(0, 0, width, camera.height);
@@ -61,7 +61,7 @@ export class PlayScene extends Scene {
     mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
     mapBuilder.loadMaM();   // Load full village
 
-    // Load Character
+    // Player Character   --------------------------------------------------------------------------
 
     const player = new Soldier(this, width * .5, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
     player.playIdle();
@@ -76,38 +76,25 @@ export class PlayScene extends Scene {
     //  Next branch >
     //  Load world dynamically as character goes to edge of screen-
 
-    //  Setup the Shadows
-    // Add dynamic shadows
+    //  Shadows   -----------------------------------------------------------------------------------
 
-    const shadows = new Shadows();
-
-    shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
-    shadows.addGraphics(graphics);
+    this.shadows = new Shadow(graphics);
+    this.shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
+    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3);
     shadowLayer.add(graphics);
-    shadows.drawShadows(graphics);
 
-    //  Controller
+    //  Controller    -------------------------------------------------------------------------------
 
     const controllerKeys = new ControlKeys();
     const keyMapper = new KeyboardMapper(this);
     keyMapper.registerKeyboard(controllerKeys);
     
     this.controller = new SpriteController(player, controllerKeys);
-
-    //  Temp
-
-    this.camMoveX = 0;
-    
-    this.input.keyboard.on('keydown-RIGHT', (event) => { this.camMoveX = 1 });
-    this.input.keyboard.on('keydown-LEFT', (event) => { this.camMoveX = -1 });
-
-    this.input.keyboard.on('keyup-RIGHT', (event) => { this.camMoveX = 0 });
-    this.input.keyboard.on('keyup-LEFT', (event) => { this.camMoveX = 0 });
   }
 
   update(time, delta) {
 
-    //  Updating sprite lane  -----------------------------
+    //  Updating sprite lane  -----------------------------------------
 
     const allSprites = this.group_soldiers.getChildren();
     for (let sprite of allSprites) {
@@ -133,7 +120,10 @@ export class PlayScene extends Scene {
       sprite.setY(laneY);
     }
 
-    //  Shadow updating   --------------------------------
+    //  Shadow updating   --------------------------------------------
+
+    this.shadows.updateDynamicShadows();
+    this.shadows.drawShadows();
 
     this.controller.update();   // Player Controller
   }
