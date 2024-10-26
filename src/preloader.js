@@ -26,8 +26,13 @@ export class Preloader extends Phaser.Scene {
         //  Spritesheets
 
         this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight:48});
+        this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight:30});
 
         //  Load JSON files
+
+        this.load.json('sprite_configs', 'json/sprite_configs.json');
+
+        //  Villages (BG, FG, Buildings)
 
         const villages = ["mam", "storm", "green"];
         for (let name of villages) {
@@ -41,7 +46,7 @@ export class Preloader extends Phaser.Scene {
             this.load.json(fgRef, 'json/bg_trees.json', `fg.${name}`);
         }
 
-        //  Other locations
+        //  Other locations (BG, Location)
 
         this.load.json("json_mines", "json/locations.json", "mines");
         this.load.json("json_plains", "json/locations.json", "plains");
@@ -55,6 +60,7 @@ export class Preloader extends Phaser.Scene {
         this.load.json("json_plains_bg", "json/bg_trees.json", "bg.plains");
 
         //  All below came with the builder - delete
+        //  ------------------------------------------------------------------------------------
 
         this.load.image("floor");
         this.load.image("background", "background.png");
@@ -63,14 +69,9 @@ export class Preloader extends Phaser.Scene {
         this.load.atlas("propulsion-fire", "player/propulsion/propulsion-fire.png", "player/propulsion/propulsion-fire_atlas.json");
         this.load.animation("propulsion-fire-anim", "player/propulsion/propulsion-fire_anim.json");
 
-        // Bullets
-        this.load.image("bullet", "player/bullet.png");
-        this.load.image("flares")
-
         // Enemies
         this.load.atlas("enemy-blue", "enemies/enemy-blue/enemy-blue.png", "enemies/enemy-blue/enemy-blue_atlas.json");
         this.load.animation("enemy-blue-anim", "enemies/enemy-blue/enemy-blue_anim.json");
-        this.load.image("enemy-bullet", "enemies/enemy-bullet.png");
 
         // Fonts
         this.load.bitmapFont("pixelfont", "fonts/pixelfont.png", "fonts/pixelfont.xml");
@@ -84,7 +85,7 @@ export class Preloader extends Phaser.Scene {
 
     create() {
 
-        //  Banner Flapping
+        //  MaM Banner Flapping
         this.anims.create({
             key: 'banner_mam',
             frames: this.anims.generateFrameNumbers(Vars.SHEET_ALL_BANNERS, { start: 0, end: 5 }),
@@ -92,18 +93,25 @@ export class Preloader extends Phaser.Scene {
             repeat: -1
         });
 
-        // Create bitmap font and load it in cache
-        const config = {
-            image: 'knighthawks',
-            width: 31,
-            height: 25,
-            chars: Phaser.GameObjects.RetroFont.TEXT_SET6,
-            charsPerRow: 10,
-            spacing: { x: 1, y: 1 }
-        };
-        this.cache.bitmapFont.add('knighthawks', Phaser.GameObjects.RetroFont.Parse(this, config));
+        //  Sprite animation
 
-        // When all the assets are loaded go to the next scene
-        this.scene.start("PlayScene");
+        const data = this.cache.json.get('sprite_configs');
+
+        this.createSpritesheetAnimation(Vars.SHEET_PLAYER, data.lancer);
+
+        this.scene.start("PlayScene");      // Next Scene when all assets are loaded
+    }
+
+    //  CREATE animations   -------------------------------------------------------------------------
+
+    createSpritesheetAnimation(texture, configs) {
+        for (let config of configs) {
+            this.anims.create({
+                key: `${texture}${config.suffix}`,
+                frames: this.anims.generateFrameNumbers(texture, { start: config.start, end: config.end }),
+                frameRate: config.frameRate,
+                repeat: config.repeat
+            });
+        }
     }
 }

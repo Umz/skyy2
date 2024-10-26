@@ -2,7 +2,12 @@ import { Scene } from "phaser";
 import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
 import MapBuilder from "../bg/MapBuilder";
-import Shadows from "../bg/Shadows";
+import Shadow from "../bg/Shadow";
+import Soldier from "../gameobjects/Soldier";
+import Vars from "../util/Vars";
+import KeyboardMapper from "../util/KeyboardMapper";
+import ControlKeys from "../util/ControlKeys";
+import SpriteController from "../util/SpriteController";
 
 export class PlayScene extends Scene {
 
@@ -13,6 +18,7 @@ export class PlayScene extends Scene {
   create() {
 
     //  Set world size
+
     const camera = this.cameras.main;
     const width = 1920;
     camera.setBounds(0, 0, width, camera.height);
@@ -25,6 +31,7 @@ export class PlayScene extends Scene {
     const allGroup = this.add.group({
       runChildUpdate: true
     });
+    this.group_soldiers = this.add.group({runChildUpdate:true});
 
     const sceneryLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
@@ -33,6 +40,10 @@ export class PlayScene extends Scene {
     const bgLayer = this.add.layer();
     const buildingsLayer = this.add.layer();
     const fgLayer = this.add.layer();
+
+    this.lane_1 = this.add.layer().setDepth(10);
+    this.lane_2 = this.add.layer().setDepth(20);
+    this.lane_3 = this.add.layer().setDepth(30);
 
     // Background scene
 
@@ -48,32 +59,72 @@ export class PlayScene extends Scene {
 
     const mapBuilder = new MapBuilder(this);
     mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
-    
-    //mapBuilder.loadMaM();   // Load full village
-    //mapBuilder.loadBigForest("greenleaf");
-    mapBuilder.loadLocation("plains");
+    mapBuilder.loadMaM();   // Load full village
 
-    //  Setup the Shadows
+    // Player Character   --------------------------------------------------------------------------
 
-    const shadows = new Shadows();
+    const player = new Soldier(this, width * .5, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
+    player.playIdle();
+    this.physics.add.existing(player);
 
-    shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
-    shadows.addGraphics(graphics);
+    this.lane_1.add(player);
+    this.group_soldiers.add(player);
+
+    camera.startFollow(player, true, .8);
+
+    //  Move about in world
+    //  Next branch >
+    //  Load world dynamically as character goes to edge of screen-
+
+    //  Shadows   -----------------------------------------------------------------------------------
+
+    this.shadows = new Shadow(graphics);
+    this.shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
+    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3);
     shadowLayer.add(graphics);
-    shadows.drawShadows(graphics);
 
-    //  Temp
+    //  Controller    -------------------------------------------------------------------------------
 
-    this.camMoveX = 0;
+    const controllerKeys = new ControlKeys();
+    const keyMapper = new KeyboardMapper(this);
+    keyMapper.registerKeyboard(controllerKeys);
     
-    this.input.keyboard.on('keydown-RIGHT', (event) => { this.camMoveX = 1 });
-    this.input.keyboard.on('keydown-LEFT', (event) => { this.camMoveX = -1 });
-
-    this.input.keyboard.on('keyup-RIGHT', (event) => { this.camMoveX = 0 });
-    this.input.keyboard.on('keyup-LEFT', (event) => { this.camMoveX = 0 });
+    this.controller = new SpriteController(player, controllerKeys);
   }
 
   update(time, delta) {
-    this.cameras.main.scrollX += this.camMoveX;
+
+    //  Updating sprite lane  -----------------------------------------
+
+    const allSprites = this.group_soldiers.getChildren();
+    for (let sprite of allSprites) {
+      
+      const lane = sprite.lane;
+      const layer = sprite.displayList;
+
+      if (lane === 1 && layer !== this.lane_1) {
+        this.lane_1.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 2 && layer !== this.lane_2) {
+        this.lane_2.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 3 && layer !== this.lane_3) {
+        this.lane_3.add(sprite);
+        sprite.laneSwitchTween();
+      }
+
+      const bottomLaneY = Vars.GROUND_TOP + 1;
+      const laneY = bottomLaneY + sprite.lane;
+      sprite.setY(laneY);
+    }
+
+    //  Shadow updating   --------------------------------------------
+
+    this.shadows.updateDynamicShadows();
+    this.shadows.drawShadows();
+
+    this.controller.update();   // Player Controller
   }
 }
