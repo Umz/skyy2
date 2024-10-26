@@ -12,10 +12,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture);
     
     this.prefix = texture;  // Prefix for animations
+    this.speed = 96;  // Use 72-
 
     this.movementSpeed = 0;
-    this.speed = 96;  // Use 72-
     this.state = Enum.SS_READY;
+    this.lane = 1;
     
     this.setOrigin(.5, 1);
 
@@ -93,9 +94,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   moveUp() {
+    if (!this.isTweening() && this.state === Enum.SS_READY) {
+      this.lane = Math.max(1, this.lane - 1);
+    }
   }
 
   moveDown() {
+    if (!this.isTweening() && this.state === Enum.SS_READY) {
+      this.lane = Math.min(3, this.lane + 1);
+    }
   }
 
   attack() {
@@ -148,6 +155,26 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
           scaleX: 1,
           duration: duration,
           ease: 'Power2'
+        }
+      ]
+    });
+  }
+
+  laneSwitchTween() {
+    
+    const duration = 250;
+    this.scene.tweens.chain({
+      targets: this,
+      tweens: [
+        {
+          scaleY: .7,
+          duration: 150,
+          ease: 'Power2'
+        },
+        {
+          scaleY: 1,
+          duration: duration,
+          ease: 'Bounce'
         }
       ]
     });

@@ -18,6 +18,7 @@ export class PlayScene extends Scene {
   create() {
 
     //  Set world size
+    
     const camera = this.cameras.main;
     const width = 1920;
     camera.setBounds(0, 0, width, camera.height);
@@ -30,7 +31,7 @@ export class PlayScene extends Scene {
     const allGroup = this.add.group({
       runChildUpdate: true
     });
-    const group_soldiers = this.add.group({runChildUpdate:true});
+    this.group_soldiers = this.add.group({runChildUpdate:true});
 
     const sceneryLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
@@ -40,9 +41,9 @@ export class PlayScene extends Scene {
     const buildingsLayer = this.add.layer();
     const fgLayer = this.add.layer();
 
-    const lane_1 = this.add.layer();
-    const lane_2 = this.add.layer();
-    const lane_3 = this.add.layer();
+    this.lane_1 = this.add.layer().setDepth(10);
+    this.lane_2 = this.add.layer().setDepth(20);
+    this.lane_3 = this.add.layer().setDepth(30);
 
     // Background scene
 
@@ -66,8 +67,8 @@ export class PlayScene extends Scene {
     player.playIdle();
     this.physics.add.existing(player);
 
-    lane_1.add(player);
-    group_soldiers.add(player);
+    this.lane_1.add(player);
+    this.group_soldiers.add(player);
 
     camera.startFollow(player, true, .8);
 
@@ -105,7 +106,35 @@ export class PlayScene extends Scene {
   }
 
   update(time, delta) {
-    //this.cameras.main.scrollX += this.camMoveX;
-    this.controller.update();
+
+    //  Updating sprite lane  -----------------------------
+
+    const allSprites = this.group_soldiers.getChildren();
+    for (let sprite of allSprites) {
+      
+      const lane = sprite.lane;
+      const layer = sprite.displayList;
+
+      if (lane === 1 && layer !== this.lane_1) {
+        this.lane_1.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 2 && layer !== this.lane_2) {
+        this.lane_2.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 3 && layer !== this.lane_3) {
+        this.lane_3.add(sprite);
+        sprite.laneSwitchTween();
+      }
+
+      const bottomLaneY = Vars.GROUND_TOP + 1;
+      const laneY = bottomLaneY + sprite.lane;
+      sprite.setY(laneY);
+    }
+
+    //  Shadow updating   --------------------------------
+
+    this.controller.update();   // Player Controller
   }
 }
