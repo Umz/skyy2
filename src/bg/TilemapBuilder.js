@@ -6,6 +6,27 @@ export default class TilemapBuilder {
     this.scene = scene;
   }
 
+  buildFullWidthFloor(viewLayer, startX, areaWidth) {
+
+    const camera = this.scene.cameras.main;
+    const FLOOR_Y = 195;
+
+    const tmX = startX;
+    const tmY = FLOOR_Y;
+    const tilemapWidth = Math.floor(areaWidth / 16);
+
+    const tilemap = this.scene.make.tilemap({tileWidth: 16, tileHeight: 16, width: tilemapWidth, height: 6});
+    const tileset = tilemap.addTilesetImage('tilemap');
+
+    const floor_layer = tilemap.createBlankLayer(`floor_${startX}`, tileset, tmX, tmY, tmWidth, 3);
+
+    tilemap.fill(1, 0, 0, tmWidth, 1, true, floor_layer);    // Top of repeating
+    tilemap.fill(4, 0, 1, tmWidth, 1, true, floor_layer);    // Middle of repeating
+    tilemap.fill(7, 0, 2, tmWidth, 1, true, floor_layer);    // Bottom of repeating    
+
+    viewLayer.add(floor_layer);
+  }
+
   buildTilemap(viewLayer) {
     
     const camera = this.scene.cameras.main;
