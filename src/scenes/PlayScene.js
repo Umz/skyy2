@@ -154,22 +154,25 @@ export class PlayScene extends Scene {
     const bump = areaWidth * .5;
 
     let mapCheckPos;
-    let newLeft;
+    let newLeft = -1;
+    let isMoveMap;
 
     //  Check either side of the camera for loading more of the map
 
     if (left > 0 && this.player.x < left + pad) {
       newLeft = left - bump;
       mapCheckPos = newLeft;
+      isMoveMap = true;
     }
     else if (right < fullWorld && this.player.x > right - pad) {
       newLeft = left + bump;
       mapCheckPos = right + bump;
+      isMoveMap = true;
     }
 
     //  Update world if there are changes
 
-    if (newLeft) {
+    if (isMoveMap) {
       
       camera.setBounds(newLeft, 0, areaWidth, camera.height);
 
