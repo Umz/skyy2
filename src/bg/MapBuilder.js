@@ -3,6 +3,7 @@ import Vars from "../util/Vars";
 
 const FOREST = "forest";
 const VILLAGE = "village";
+const RESOURCE = "resource";
 
 export default class MapBuilder extends BaseBuilder {
 
@@ -66,13 +67,13 @@ export default class MapBuilder extends BaseBuilder {
   }
 
   /** Load a simple location and background for location */
-  loadLocation(name) {
+  loadLocation(name, posX) {
     const location = `json_${name}`;
     const bg = `json_${name}_bg`;
     const locationJSON = this.scene.cache.json.get(location);
     const bgJSON = this.scene.cache.json.get(bg);
-    this.loadSprites(locationJSON, this.buildings);
-    this.loadSprites(bgJSON, this.bg);
+    this.loadSprites(locationJSON, posX, this.buildings);
+    this.loadSprites(bgJSON, posX, this.bg);
   }
 
   /** Moon at Midnight */
@@ -96,7 +97,12 @@ export default class MapBuilder extends BaseBuilder {
     const allLocations = [
       {json:"blue", type:FOREST},
       {json:"mam", type:VILLAGE},
-      {json:"rose", type:FOREST}
+      {json:"rose", type:FOREST},
+      {json:"storm", type:VILLAGE},
+      {json:"mines", type:RESOURCE},
+      {json:"plains", type:RESOURCE},
+      {json:"greenleaf", type:FOREST},
+      {json:"green", type:VILLAGE}
     ];
 
     const areaID = Math.ceil(posX / Vars.AREA_WIDTH);
@@ -105,11 +111,16 @@ export default class MapBuilder extends BaseBuilder {
 
     if (index >= 0 && index < allLocations.length) {
       const location = allLocations[index];
-      if (location.type === FOREST) {
-        this.loadBigForest(location.json, areaX);
-      }
-      else if (location.type === VILLAGE) {
-        this.loadVillage(location.json, areaX);
+      const json = location.json;
+      switch (location.type) {
+        case FOREST:
+          this.loadBigForest(json, areaX);
+          break;
+        case VILLAGE:
+          this.loadVillage(json, areaX);
+          break;
+        case RESOURCE:
+          this.loadLocation(json, areaX);
       }
     }
   }

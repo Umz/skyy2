@@ -148,6 +148,8 @@ export class PlayScene extends Scene {
     const right = bounds.right;
 
     const areaWidth = Vars.AREA_WIDTH;
+    const fullWorld = areaWidth * 8;
+
     const pad = areaWidth * .25;
     const bump = areaWidth * .5;
 
@@ -160,7 +162,7 @@ export class PlayScene extends Scene {
       newLeft = left - bump;
       mapCheckPos = newLeft;
     }
-    else if (right < areaWidth * 3 && this.player.x > right - pad) {
+    else if (right < fullWorld && this.player.x > right - pad) {
       newLeft = left + bump;
       mapCheckPos = right + bump;
     }
