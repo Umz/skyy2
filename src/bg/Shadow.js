@@ -58,6 +58,7 @@ export default class Shadow {
   }
 
   createStaticShadowLines(...layers) {
+    this.staticShadowLines.length = 0;
     const lines = this.createShadowsLines(...layers);
     this.staticShadowLines.push(...lines);
   }
