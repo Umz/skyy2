@@ -8,6 +8,7 @@ import Vars from "../util/Vars";
 import KeyboardMapper from "../util/KeyboardMapper";
 import ControlKeys from "../util/ControlKeys";
 import SpriteController from "../util/SpriteController";
+import MapTracker from "../util/MapTracker";
 
 export class PlayScene extends Scene {
 
@@ -21,8 +22,8 @@ export class PlayScene extends Scene {
 
     const camera = this.cameras.main;
     const width = 1920;
-    camera.setBounds(0, 0, width, camera.height);
-    camera.centerOn(width * .5, camera.height / 2);
+    //camera.setBounds(0, 0, width, camera.height);
+    //camera.centerOn(width * .5, camera.height / 2);
 
     const graphics = this.add.graphics();
 
@@ -41,9 +42,17 @@ export class PlayScene extends Scene {
     const buildingsLayer = this.add.layer();
     const fgLayer = this.add.layer();
 
+    this.bgL = bgLayer;
+    this.fgL = fgLayer;
+    this.bdL = buildingsLayer;
+
     this.lane_1 = this.add.layer().setDepth(10);
     this.lane_2 = this.add.layer().setDepth(20);
     this.lane_3 = this.add.layer().setDepth(30);
+
+    //  Utilities
+
+    this.mapTracker = new MapTracker();
 
     // Background scene
 
@@ -52,18 +61,20 @@ export class PlayScene extends Scene {
 
     //  Tilemap
 
-    const tmBuilder = new TilemapBuilder(this);
-    tmBuilder.buildTilemap(tilemapLayer);
+    const startX = 1920;
+
+    this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
+    this.tmBuilder.buildTilemapForArea(startX);
 
     //  Add trees in BG
 
-    const mapBuilder = new MapBuilder(this);
-    mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
-    mapBuilder.loadMaM();   // Load full village
+    this.mapBuilder = new MapBuilder(this);
+    this.mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
+    this.mapBuilder.buildMapForArea(startX);
 
     // Player Character   --------------------------------------------------------------------------
 
-    const player = new Soldier(this, width * .5, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
+    const player = new Soldier(this, startX + width * .5, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
     player.playIdle();
     this.physics.add.existing(player);
 
@@ -71,10 +82,7 @@ export class PlayScene extends Scene {
     this.group_soldiers.add(player);
 
     camera.startFollow(player, true, .8);
-
-    //  Move about in world
-    //  Next branch >
-    //  Load world dynamically as character goes to edge of screen-
+    this.player = player;
 
     //  Shadows   -----------------------------------------------------------------------------------
 
@@ -93,6 +101,8 @@ export class PlayScene extends Scene {
   }
 
   update(time, delta) {
+
+    this.updateCameraBounds();    //  Update bounds according to Player location
 
     //  Updating sprite lane  -----------------------------------------
 
@@ -126,5 +136,52 @@ export class PlayScene extends Scene {
     this.shadows.drawShadows();
 
     this.controller.update();   // Player Controller
+  }
+
+  /** Update the camrea bounds as the Player moves to grow world */
+  updateCameraBounds() {
+    
+    const camera = this.cameras.main;
+    const bounds = camera.getBounds();
+
+    const left = bounds.left;
+    const right = bounds.right;
+
+    const areaWidth = Vars.AREA_WIDTH;
+    const fullWorld = areaWidth * 8;
+
+    const pad = areaWidth * .25;
+    const bump = areaWidth * .5;
+
+    let mapCheckPos;
+    let newLeft = -1;
+    let isMoveMap;
+
+    //  Check either side of the camera for loading more of the map
+
+    if (left > 0 && this.player.x < left + pad) {
+      newLeft = left - bump;
+      mapCheckPos = newLeft;
+      isMoveMap = true;
+    }
+    else if (right < fullWorld && this.player.x > right - pad) {
+      newLeft = left + bump;
+      mapCheckPos = right + bump;
+      isMoveMap = true;
+    }
+
+    //  Update world if there are changes
+
+    if (isMoveMap) {
+      
+      camera.setBounds(newLeft, 0, areaWidth, camera.height);
+
+      if (this.mapTracker.isFirstTimeInAreaThisSession(mapCheckPos)) {
+        this.tmBuilder.buildTilemapForArea(mapCheckPos);
+        this.mapBuilder.buildMapForArea(mapCheckPos);
+        this.shadows.createStaticShadowLines(this.bdL, this.bgL, this.fgL);
+      }
+    }
+
   }
 }

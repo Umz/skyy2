@@ -1,6 +1,10 @@
 import BaseBuilder from "../classes/BaseBuilder";
 import Vars from "../util/Vars";
 
+const FOREST = "forest";
+const VILLAGE = "village";
+const RESOURCE = "resource";
+
 export default class MapBuilder extends BaseBuilder {
 
   /** Set the layers to be used for building the map scenes */
@@ -11,14 +15,13 @@ export default class MapBuilder extends BaseBuilder {
   }
 
   /** Full function to load all background images from the json data */
-  loadSprites(json_data, layer) {
+  loadSprites(json_data, startX, layer) {
 
-    const startX = 0;
     for (let data of json_data) {
 
       let sprite;
       if (data.animation) {
-        sprite = this.addAnimated(data.x, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, data.animation);
+        sprite = this.addAnimated(startX + data.x, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, data.animation);
       }
       else {
         sprite = this.add(startX + data.x, Vars.GROUND_TOP, data.frame);
@@ -35,7 +38,7 @@ export default class MapBuilder extends BaseBuilder {
   }
 
   /** Load a village completely, with flora */
-  loadVillage(name) {
+  loadVillage(name, posX) {
 
     const village = `json_${name}`;
     const bg = `json_${name}_bg`;
@@ -45,13 +48,13 @@ export default class MapBuilder extends BaseBuilder {
     const bgJSON = this.scene.cache.json.get(bg);
     const fgJSON = this.scene.cache.json.get(fg);
 
-    this.loadSprites(villageJSON, this.buildings);
-    this.loadSprites(bgJSON, this.bg);
-    this.loadSprites(fgJSON, this.fg);
+    this.loadSprites(villageJSON, posX, this.buildings);
+    this.loadSprites(bgJSON, posX, this.bg);
+    this.loadSprites(fgJSON, posX, this.fg);
   }
 
   /** Load all big forests with big forest background */
-  loadBigForest(name) {
+  loadBigForest(name, posX) {
     
     const forest = `json_${name}_forest`;
     const bg = "json_big_forest_bg";
@@ -59,18 +62,18 @@ export default class MapBuilder extends BaseBuilder {
     const forestJSON = this.scene.cache.json.get(forest);
     const bgJSON = this.scene.cache.json.get(bg);
     
-    this.loadSprites(forestJSON, this.buildings);
-    this.loadSprites(bgJSON, this.bg);
+    this.loadSprites(forestJSON, posX, this.buildings);
+    this.loadSprites(bgJSON, posX, this.bg);
   }
 
   /** Load a simple location and background for location */
-  loadLocation(name) {
+  loadLocation(name, posX) {
     const location = `json_${name}`;
     const bg = `json_${name}_bg`;
     const locationJSON = this.scene.cache.json.get(location);
     const bgJSON = this.scene.cache.json.get(bg);
-    this.loadSprites(locationJSON, this.buildings);
-    this.loadSprites(bgJSON, this.bg);
+    this.loadSprites(locationJSON, posX, this.buildings);
+    this.loadSprites(bgJSON, posX, this.bg);
   }
 
   /** Moon at Midnight */
@@ -88,4 +91,37 @@ export default class MapBuilder extends BaseBuilder {
     this.loadVillage("green");
   }
 
+  /** Get the location of the current area from the given X position */
+  buildMapForArea(posX) {
+
+    const allLocations = [
+      {json:"blue", type:FOREST},
+      {json:"mam", type:VILLAGE},
+      {json:"rose", type:FOREST},
+      {json:"storm", type:VILLAGE},
+      {json:"mines", type:RESOURCE},
+      {json:"plains", type:RESOURCE},
+      {json:"greenleaf", type:FOREST},
+      {json:"green", type:VILLAGE}
+    ];
+
+    const areaID = Math.ceil(posX / Vars.AREA_WIDTH);
+    const index = areaID - 1;
+    const areaX = index * Vars.AREA_WIDTH;
+
+    if (index >= 0 && index < allLocations.length) {
+      const location = allLocations[index];
+      const json = location.json;
+      switch (location.type) {
+        case FOREST:
+          this.loadBigForest(json, areaX);
+          break;
+        case VILLAGE:
+          this.loadVillage(json, areaX);
+          break;
+        case RESOURCE:
+          this.loadLocation(json, areaX);
+      }
+    }
+  }
 }

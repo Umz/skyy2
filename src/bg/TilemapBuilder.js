@@ -1,9 +1,39 @@
 //import Vars from "../util/Vars";
 
+import Vars from "../util/Vars";
+
 export default class TilemapBuilder {
 
-  constructor(scene) {
+  constructor(scene, layer) {
     this.scene = scene;
+    this.viewLayer = layer;
+  }
+
+  buildFullWidthFloor(startX, areaWidth) {
+
+    const FLOOR_Y = 195;
+
+    const tmX = startX;
+    const tmY = FLOOR_Y;
+    const tilemapWidth = Math.floor(areaWidth / 16);
+
+    const tilemap = this.scene.make.tilemap({tileWidth: 16, tileHeight: 16, width: tilemapWidth, height: 6});
+    const tileset = tilemap.addTilesetImage('tilemap');
+
+    const floor_layer = tilemap.createBlankLayer(`floor_${startX}`, tileset, tmX, tmY, tilemapWidth, 3);
+
+    tilemap.fill(1, 0, 0, tilemapWidth, 1, true, floor_layer);    // Top of repeating
+    tilemap.fill(4, 0, 1, tilemapWidth, 1, true, floor_layer);    // Middle of repeating
+    tilemap.fill(7, 0, 2, tilemapWidth, 1, true, floor_layer);    // Bottom of repeating    
+
+    this.viewLayer.add(floor_layer);
+  }
+
+  /** Check if the tilemap has been added for the current location, and add it otherwise */
+  buildTilemapForArea(posX) {
+    const areaID = Math.ceil(posX / Vars.AREA_WIDTH);
+    const startX = (areaID - 1) * Vars.AREA_WIDTH;
+    this.buildFullWidthFloor(startX, Vars.AREA_WIDTH);
   }
 
   buildTilemap(viewLayer) {
