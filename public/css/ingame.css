@@ -8,3 +8,15 @@
   text-align: center;
   white-space: nowrap;
 }
+
+.area-enter-name {
+  color: #fff;
+  font-size: .5rem;
+  text-shadow: 1px 1px 0px #000;
+}
+.area-enter-name::before {
+  content: "- ";
+}
+.area-enter-name::after {
+  content: " -";
+}

@@ -1,5 +1,6 @@
 {
   "area_label":"<div class='area-label'>_label_</div>",
+  "area_enter_label": "<div class='area-enter-name'>_label_</div>",
 
   "ally_indicator": "<div class='indicator indicator-ally'>&#x2BC3;</div>",
   "enemy_indicator": "<div class='indicator indicator-enemy'>&#x2BC1;</div>",

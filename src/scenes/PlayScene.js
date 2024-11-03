@@ -105,6 +105,11 @@ export class PlayScene extends Scene {
 
     this.updateCameraBounds();    //  Update bounds according to Player location
 
+    const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
+    if (newAreaID >= 0) {
+      this.showAreaName(newAreaID);
+    }
+
     //  Updating sprite lane  -----------------------------------------
 
     const allSprites = this.group_soldiers.getChildren();
@@ -137,6 +142,41 @@ export class PlayScene extends Scene {
     this.shadows.drawShadows();
 
     this.controller.update();   // Player Controller
+  }
+
+
+  /** Show the name of the entered area shortly on screen */
+  showAreaName(areaID) {
+
+    //  Move this MapInfo to Vars or to it's own JSON
+    const mapInfo = [
+      {locID:1, name:"Blue Forest"},
+      {locID:2, name:"Moon at Midnight"},
+      {locID:3, name:"Rose Forest"},
+      {locID:4, name:"Storm Village"},
+      {locID:5, name:"The Mines"},
+      {locID:6, name:"Mario Plains"},
+      {locID:7, name:"Greenleaf Forest"},
+      {locID:8, name:"Green Village"}
+    ]
+
+    const data = mapInfo.find(info => info.locID === areaID);
+
+    const json = this.cache.json.get('hud_html');
+    const template = json.area_enter_label;
+    const html = template.replace('_label_', data.name);
+
+    const camera = this.cameras.main;
+    const domLabel = this.add.dom(camera.width * .5, camera.height * .6).createFromHTML(html).setOrigin(.5).setScrollFactor(0);
+    this.tweens.add({
+      targets: domLabel,
+      duration: 500,
+      delay: 2000,
+      alpha: {from:1, to:0},
+      onComplete: ()=>{
+        domLabel.destroy(true);
+      }
+    });
   }
 
   /** Update the camrea bounds as the Player moves to grow world */
