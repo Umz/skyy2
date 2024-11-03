@@ -2,7 +2,7 @@
 
 A simple hack n slash arcade game that builds on the first title. Take on masses of enemies while expanding the claim on the land. Improve quality of life for citizens and build the city better.
 
-![screenshot](screenshot.png)
+![screenshot](screenshot-wip.png)
 
 ### Story
 Following his feats in the Battle of the New Moon, Moon Chief, now Chief in Command of the tribe, focused on strengthening his people.

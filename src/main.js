@@ -29,6 +29,10 @@ const config = {
     pixelArt: true,
     roundPixel: true,
 
+    dom: {
+        createContainer: true
+    },
+
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH

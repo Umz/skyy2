@@ -1,0 +1,8 @@
+{
+  "area_label":"<div class='area-label'>_label_</div>",
+
+  "ally_indicator": "<div class='indicator indicator-ally'>&#x2BC3;</div>",
+  "enemy_indicator": "<div class='indicator indicator-enemy'>&#x2BC1;</div>",
+  "player_label": "<div class='label label-ally'>Moon Chief</div>",
+  "enemy_label": "<div class='label label-enemy'>_name_</div>"
+}
