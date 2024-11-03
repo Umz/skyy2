@@ -85,6 +85,36 @@ export class PlayScene extends Scene {
     camera.startFollow(player, true, .8);
     this.player = player;
 
+    //  Collectible
+
+    const item = this.physics.add.sprite(startX + width * .5 + 40, Vars.GROUND_TOP + 2, "atlas", "collect_troops");
+    item.setOrigin(.5, 1);
+    item.isCollected = false;
+
+    this.add.tween({
+      targets: item,
+      duration: 750,
+      ease: "Power2",
+      repeat: -1,
+      yoyo: true,
+      y: {from:item.y, to: item.y - 4},
+      alpha: {from:.3, to:1},
+    });
+
+    //  Collision
+
+    this.physics.add.overlap(player, item, itemCollect, null, this); 
+    function itemCollect(player, item) {
+      
+      if (!item.isCollected) {
+        console.log('Collision detected!');
+
+        item.body.checkCollision.none = true;   // Disable collisions
+        item.destroy();
+        item.isCollected = true;
+      }
+    }
+
     //  Shadows   -----------------------------------------------------------------------------------
 
     this.shadows = new Shadow(graphics);
