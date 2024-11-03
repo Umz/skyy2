@@ -61,7 +61,8 @@ export class PlayScene extends Scene {
 
     //  Tilemap
 
-    const startX = 1920;
+    const ww = 1920;
+    const startX = (ww * 1);
 
     this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
     this.tmBuilder.buildTilemapForArea(startX);

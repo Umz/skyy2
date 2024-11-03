@@ -9,7 +9,7 @@
 
     {"x": 740, "frame":"mam_store", "depth": 1},
     {"x": 795, "frame":"mam_house", "depth": 2},
-    {"x": 825, "frame":"mam_base", "depth": 1},
+    {"x": 825, "frame":"mam_base", "depth": 1, "area": "Moon at Midnight"},
 
     {"x": 855, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
     {"x": 980, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
@@ -42,7 +42,7 @@
 
     {"x": 650, "frame":"storm_statue", "depth": 1},
     {"x": 695, "frame":"storm_chest", "depth": 2},
-    {"x": 710, "frame":"storm_hut", "depth": 1},
+    {"x": 710, "frame":"storm_hut", "depth": 1, "area": "Storm Village"},
     {"x": 785, "frame":"storm_statue", "depth": 1},
 
     {"x": 850, "frame":"storm_vase", "depth": 1},
@@ -78,7 +78,7 @@
     {"x": 770, "frame":"green_block", "depth": 1},
 
     {"x": 850, "frame":"green_banner", "depth": 1, "fx":true},
-    {"x": 875, "frame":"green_main", "depth": 1},
+    {"x": 875, "frame":"green_main", "depth": 1, "area": "Green Village"},
     
     {"x": 970, "frame":"green_house", "depth": 3},
     {"x": 1025, "frame":"green_house", "depth": 2},
@@ -95,18 +95,18 @@
     {"x": 1485, "frame":"mam_spikes", "depth": 1}
   ],
   "blue": [
-    {"x": 940, "frame":"tree_teal", "depth": 1}
+    {"x": 940, "frame":"tree_teal", "depth": 1, "area": "Blue Forest"}
   ],
   "rose": [
     {"x": 60, "frame":"tree_sandy", "depth": 1},
     {"x": 165, "frame":"tree_sandy", "depth": 1},
-    {"x": 930, "frame":"tree_red", "depth": 1},
+    {"x": 930, "frame":"tree_red", "depth": 1, "area": "Rose Forest"},
     {"x": 1660, "frame":"tree_sandy", "depth": 1},
     {"x": 1720, "frame":"tree_sandy", "depth": 1}
   ],
   "greenleaf": [
     {"x": 345, "frame":"tree_green", "depth": 1},
-    {"x": 945, "frame":"tree_green_tall", "depth": 1},
+    {"x": 945, "frame":"tree_green_tall", "depth": 1, "area": "Greenleaf Forest"},
     {"x": 1680, "frame":"tree_green", "depth": 1}
   ],
   "mines": [
@@ -120,7 +120,7 @@
     {"x": 645, "frame":"rock_big", "depth": 2},
     {"x": 695, "frame":"rock_big", "depth": 1},
 
-    {"x": 765, "frame":"rock_thin", "depth": 1},
+    {"x": 765, "frame":"rock_thin", "depth": 1, "area": "The Mines"},
 
     {"x": 805, "frame":"rock_med", "depth": 1},
     {"x": 835, "frame":"rock_big", "depth": 1},
@@ -132,7 +132,7 @@
   ],
   "plains": [
     {"x": 885, "frame":"plains_box", "depth": 1},
-    {"x": 955, "frame":"plains_box", "depth": 1},
+    {"x": 955, "frame":"plains_box", "depth": 1, "area": "Mario Plains"},
     {"x": 1025, "frame":"plains_box", "depth": 1}
   ]
 }

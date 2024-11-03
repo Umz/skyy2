@@ -1,0 +1,10 @@
+/* In-Game styles used by DomElement Phaser objects */
+
+.area-label {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 1rem;
+  letter-spacing: .7rem;
+  -webkit-text-stroke: 1px #fff;
+  text-align: center;
+  white-space: nowrap;
+}

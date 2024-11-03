@@ -31,6 +31,7 @@ export class Preloader extends Phaser.Scene {
         //  Load JSON files
 
         this.load.json('sprite_configs', 'json/sprite_configs.json');
+        this.load.json("hud_html", "json/hud_html.json");
 
         //  Villages (BG, FG, Buildings)
 

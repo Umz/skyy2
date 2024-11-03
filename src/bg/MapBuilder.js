@@ -27,9 +27,18 @@ export default class MapBuilder extends BaseBuilder {
         sprite = this.add(startX + data.x, Vars.GROUND_TOP, data.frame);
       }
 
-      //  Shine effect on all main buildings
+      //  Shine effect
       if (data.fx) {
         sprite.postFX.addShine();
+      }
+
+      //  Area label in the sky
+      if (data.area) {
+        const json = this.scene.cache.json.get('hud_html');
+        const template = json.area_label;
+        const html = template.replace('_label_', data.area);
+
+        this.scene.add.dom(sprite.getCenter().x, 32).createFromHTML(html).setOrigin(.4, 0);
       }
 
       sprite.setDepth(data.depth);
@@ -76,21 +85,6 @@ export default class MapBuilder extends BaseBuilder {
     this.loadSprites(bgJSON, posX, this.bg);
   }
 
-  /** Moon at Midnight */
-  loadMaM() {
-    this.loadVillage("mam");
-  }
-
-  /** Storm Village */
-  loadStorm() {
-    this.loadVillage("storm");
-  }
-
-  /** Green Village */
-  loadGreen() {
-    this.loadVillage("green");
-  }
-
   /** Get the location of the current area from the given X position */
   buildMapForArea(posX) {
 
@@ -124,4 +118,5 @@ export default class MapBuilder extends BaseBuilder {
       }
     }
   }
+
 }
