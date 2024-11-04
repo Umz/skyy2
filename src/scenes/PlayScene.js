@@ -9,6 +9,7 @@ import KeyboardMapper from "../util/KeyboardMapper";
 import ControlKeys from "../util/ControlKeys";
 import SpriteController from "../util/SpriteController";
 import MapTracker from "../util/MapTracker";
+import Collectible from "../gameobjects/Collectible";
 
 export class PlayScene extends Scene {
 
@@ -84,6 +85,22 @@ export class PlayScene extends Scene {
 
     camera.startFollow(player, true, .8);
     this.player = player;
+
+    //  Collectible
+
+    const item = new Collectible(this, startX + width * .5 + 40, 0, "collect_heart");
+    item.initCollectible(2);
+    this.add.existing(item);
+    this.physics.add.existing(item);
+
+    //  Collision with Collectibles
+
+    this.physics.add.overlap(player, item, itemCollect, null, this); 
+    function itemCollect(player, item) {
+      if (player.lane === item.lane) {
+        item.collectAndDestroy();
+      }
+    }
 
     //  Shadows   -----------------------------------------------------------------------------------
 
