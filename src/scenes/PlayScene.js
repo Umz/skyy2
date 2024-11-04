@@ -92,6 +92,20 @@ export class PlayScene extends Scene {
     this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3);
     shadowLayer.add(graphics);
 
+    //  Particles   ---------------------------------------------------------------------------------
+
+    this.emitter = this.add.particles(0, 0, 'atlas', {
+      frame: ["pj_stone"],
+      scale: { start: 1, end: .5 },
+      alpha: { start: .6, end: 0 },
+      speedX: { min: -50, max: 50 },
+      speedY: { min: -10, max: 4 },
+      lifespan: 1000,
+      emitting: false,
+      tint: 0xaaaaaa,
+      tintFill: true
+    });
+
     //  Controller    -------------------------------------------------------------------------------
 
     const controllerKeys = new ControlKeys();
@@ -183,6 +197,10 @@ export class PlayScene extends Scene {
         this.shadows.createStaticShadowLines(this.bdL, this.bgL, this.fgL);
       }
     }
+  }
 
+  emitDust(x, y, lane) {
+    this.emitter.setDepth(lane * 10 + 1);
+    this.emitter.emitParticleAt(x, y, 6);
   }
 }
