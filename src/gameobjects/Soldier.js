@@ -32,8 +32,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   update(time, delta) {
 
-    //  Speed updating
+    const isStaticStart = this.body.velocity.x === 0;
     
+    //  Speed updating
+
     this.body.velocity.x = this.movementSpeed !== 0 ? this.movementSpeed : this.body.velocity.x;
 
     //  Calculate the slow down
@@ -46,6 +48,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     //  View updating
 
+    const viewVelX = this.body.velocity.x;
+
     switch (this.state) {
       case Enum.SS_READY:
         if (velX !== 0) {
@@ -57,6 +61,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
           else if (this.flipX && velX > 0 && !this.isTweening()) {
             this.flipXTween();
           }
+          else if (isStaticStart) {
+            this.showMovementDust();
+          }
         }
         else {
           this.playIdle();
@@ -64,6 +71,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
         break;
       case Enum.SS_DEFEND:
         this.playDefend();
+        if (!isStaticStart && viewVelX === 0) {
+          this.showMovementDust();
+        }
         break;
       case Enum.SS_ATTACK:
         this.playAttack();
@@ -110,6 +120,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.state = Enum.SS_ATTACK;
       const dir = this.flipX ? -1 : 1;
       this.movementSpeed = this.speed * 1.1 * dir;
+      this.showMovementDust();
     }
   }
 
@@ -119,6 +130,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   //  Viewer functions
+
+  showMovementDust() {
+    this.scene.emitDust(this.x, this.y - 2, this.lane);
+  }
 
   isTweening() {
     return this.scene.tweens.isTweening(this);
