@@ -9,6 +9,7 @@ import KeyboardMapper from "../util/KeyboardMapper";
 import ControlKeys from "../util/ControlKeys";
 import SpriteController from "../util/SpriteController";
 import MapTracker from "../util/MapTracker";
+import Collectible from "../gameobjects/Collectible";
 
 export class PlayScene extends Scene {
 
@@ -87,31 +88,17 @@ export class PlayScene extends Scene {
 
     //  Collectible
 
-    const item = this.physics.add.sprite(startX + width * .5 + 40, Vars.GROUND_TOP + 2, "atlas", "collect_troops");
-    item.setOrigin(.5, 1);
-    item.isCollected = false;
+    const item = new Collectible(this, startX + width * .5 + 40, 0, "collect_heart");
+    item.initCollectible(2);
+    this.add.existing(item);
+    this.physics.add.existing(item);
 
-    this.add.tween({
-      targets: item,
-      duration: 750,
-      ease: "Power2",
-      repeat: -1,
-      yoyo: true,
-      y: {from:item.y, to: item.y - 4},
-      alpha: {from:.3, to:1},
-    });
-
-    //  Collision
+    //  Collision with Collectibles
 
     this.physics.add.overlap(player, item, itemCollect, null, this); 
     function itemCollect(player, item) {
-      
-      if (!item.isCollected) {
-        console.log('Collision detected!');
-
-        item.body.checkCollision.none = true;   // Disable collisions
-        item.destroy();
-        item.isCollected = true;
+      if (player.lane === item.lane) {
+        item.collectAndDestroy();
       }
     }
 
