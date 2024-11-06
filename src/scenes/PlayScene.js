@@ -36,6 +36,7 @@ export class PlayScene extends Scene {
     this.group_soldiers = this.add.group({runChildUpdate:true});
 
     const sceneryLayer = this.add.layer();
+    const birdLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
 
     const shadowLayer = this.add.layer();
@@ -73,6 +74,15 @@ export class PlayScene extends Scene {
     this.mapBuilder = new MapBuilder(this);
     this.mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
     this.mapBuilder.buildMapForArea(startX);
+
+    // Background birds   --------------------------------------------------------------------------
+
+    let bird = this.physics.add.sprite(startX + width * .6, 40, Vars.SHEET_BIRDS1);
+    bird.play("anim_bird_grey");
+    birdLayer.add(bird);
+
+    bird.setVelocityX(10);
+    bird.setVelocityY(-20);
 
     // Player Character   --------------------------------------------------------------------------
 
