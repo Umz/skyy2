@@ -77,12 +77,16 @@ export class PlayScene extends Scene {
 
     // Background birds   --------------------------------------------------------------------------
 
-    let bird = this.physics.add.sprite(startX + width * .6, 40, Vars.SHEET_BIRDS1);
-    bird.play("anim_bird_grey");
-    birdLayer.add(bird);
+    let grey = this.physics.add.sprite(startX + width * .6, 40, Vars.SHEET_BIRDS1);
+    grey.play("anim_bird_grey");
+    birdLayer.add(grey);
+    //grey.setVelocityX(10);
+    //grey.setVelocityY(-20);
 
-    bird.setVelocityX(10);
-    bird.setVelocityY(-20);
+    let brown = this.physics.add.sprite(startX + width * .5, 40, Vars.SHEET_BIRDS1);
+    brown.play("anim_bird_brown");
+    birdLayer.add(brown);
+    //brown.setVelocityX(-48);
 
     // Player Character   --------------------------------------------------------------------------
 

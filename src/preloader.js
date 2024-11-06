@@ -102,14 +102,13 @@ export class Preloader extends Phaser.Scene {
             key: 'anim_bird_grey',
             frames: this.anims.generateFrameNumbers(Vars.SHEET_BIRDS1, { start: 0, end: 4 }),
             frameRate: 12,
-            repeat: -1,
-            
+            repeat: -1
         });
 
         this.anims.create({
             key: 'anim_bird_brown',
             frames: this.anims.generateFrameNumbers(Vars.SHEET_BIRDS1, { start: 5, end: 9 }),
-            frameRate: 12,
+            frameRate: 16,
             repeat: -1
         });
 
