@@ -10,6 +10,21 @@ import ControlKeys from "../util/ControlKeys";
 import SpriteController from "../util/SpriteController";
 import MapTracker from "../util/MapTracker";
 import Collectible from "../gameobjects/Collectible";
+import BirdHandler from "../bg/BirdHandler";
+import AnimalHandler from "../bg/AnimalHandler";
+import Enum from "../util/Enum";
+
+//  Move this MapInfo to Vars or to it's own JSON
+const mapInfo = [
+  {locID:1, name:"Blue Forest", type: Enum.AREA_FOREST},
+  {locID:2, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
+  {locID:3, name:"Rose Forest", type: Enum.AREA_FOREST},
+  {locID:4, name:"Storm Village", type: Enum.AREA_VILLAGE},
+  {locID:5, name:"The Mines", type: Enum.AREA_MISC},
+  {locID:6, name:"Mario Plains", type: Enum.AREA_MISC},
+  {locID:7, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
+  {locID:8, name:"Green Village", type: Enum.AREA_VILLAGE}
+];
 
 export class PlayScene extends Scene {
 
@@ -33,9 +48,11 @@ export class PlayScene extends Scene {
     const allGroup = this.add.group({
       runChildUpdate: true
     });
+    const birdGroup = this.add.group({runChildUpdate:true});
     this.group_soldiers = this.add.group({runChildUpdate:true});
 
     const sceneryLayer = this.add.layer();
+    const birdLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
 
     const shadowLayer = this.add.layer();
@@ -46,6 +63,8 @@ export class PlayScene extends Scene {
     this.bgL = bgLayer;
     this.fgL = fgLayer;
     this.bdL = buildingsLayer;
+
+    const animalLayer = this.add.layer();
 
     this.lane_1 = this.add.layer().setDepth(10);
     this.lane_2 = this.add.layer().setDepth(20);
@@ -73,6 +92,18 @@ export class PlayScene extends Scene {
     this.mapBuilder = new MapBuilder(this);
     this.mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
     this.mapBuilder.buildMapForArea(startX);
+
+    // Background birds   --------------------------------------------------------------------------
+
+    this.birdSpawner = new BirdHandler(this, birdLayer, birdGroup);
+    this.wildlifeSpawner = new AnimalHandler(this, animalLayer, birdGroup);
+
+    const startID = this.mapTracker.getCurrentAreaID(startX + width * .5);
+    const initArea = mapInfo.find(info => info.locID === startID);
+
+    const isForest = initArea.type === Enum.AREA_FOREST;
+    this.birdSpawner.isForestArea = isForest;
+    this.wildlifeSpawner.isForestArea = isForest;
 
     // Player Character   --------------------------------------------------------------------------
 
@@ -106,7 +137,7 @@ export class PlayScene extends Scene {
 
     this.shadows = new Shadow(graphics);
     this.shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
-    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3);
+    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, animalLayer);
     shadowLayer.add(graphics);
 
     //  Particles   ---------------------------------------------------------------------------------
@@ -139,7 +170,18 @@ export class PlayScene extends Scene {
     const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
     if (newAreaID >= 0) {
       this.showAreaName(newAreaID);
+
+      const areaInfo = mapInfo.find(info => info.locID === newAreaID);
+
+      this.birdSpawner.resetCounts();
+      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+
+      this.wildlifeSpawner.resetCounts();
+      this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
     }
+
+    this.birdSpawner.update(time, delta);
+    this.wildlifeSpawner.update(time, delta);
 
     //  Updating sprite lane  -----------------------------------------
 
@@ -178,18 +220,6 @@ export class PlayScene extends Scene {
 
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
-
-    //  Move this MapInfo to Vars or to it's own JSON
-    const mapInfo = [
-      {locID:1, name:"Blue Forest"},
-      {locID:2, name:"Moon at Midnight"},
-      {locID:3, name:"Rose Forest"},
-      {locID:4, name:"Storm Village"},
-      {locID:5, name:"The Mines"},
-      {locID:6, name:"Mario Plains"},
-      {locID:7, name:"Greenleaf Forest"},
-      {locID:8, name:"Green Village"}
-    ]
 
     const data = mapInfo.find(info => info.locID === areaID);
 

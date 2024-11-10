@@ -4,7 +4,8 @@ const Vars = {
   EVENT_GAME_STARTED: 'event-game-started',
   EVENT_GAME_EXIT: 'event-game-exit',
 
-  SHEET_BIRDS: 'bg_bird',
+  SHEET_BIRDS1: 'bg_birds',
+  SHEET_BIRDS2: 'bg_bird',
   SHEET_ALL_BANNERS: 'all_banners',
   SHEET_ALL_FLAGS: 'all_flags',
 

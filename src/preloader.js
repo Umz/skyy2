@@ -25,8 +25,12 @@ export class Preloader extends Phaser.Scene {
 
         //  Spritesheets
 
-        this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight:48});
-        this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight:30});
+        this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
+        this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight: 30});
+
+        this.load.spritesheet(Vars.SHEET_BIRDS1, 'spritesheets/bg_birds.png', { frameWidth: 32, frameHeight: 43});
+
+        this.load.spritesheet("doe_test", 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
 
         //  Load JSON files
 
@@ -91,6 +95,45 @@ export class Preloader extends Phaser.Scene {
             key: 'banner_mam',
             frames: this.anims.generateFrameNumbers(Vars.SHEET_ALL_BANNERS, { start: 0, end: 5 }),
             frameRate: 6,
+            repeat: -1
+        });
+
+        //  BG Birds 1
+
+        this.anims.create({
+            key: 'anim_bird_grey',
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_BIRDS1, { start: 0, end: 4 }),
+            frameRate: 18,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'anim_bird_brown',
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_BIRDS1, { start: 5, end: 9 }),
+            frameRate: 16,
+            repeat: -1
+        });
+
+        //  DOES
+
+        this.anims.create({
+            key: 'doe1',
+            frames: this.anims.generateFrameNumbers("doe_test", { start: 6, end: 9 }),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'doe2',
+            frames: this.anims.generateFrameNumbers("doe_test", { start: 42, end: 45 }),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'doe3',
+            frames: this.anims.generateFrameNumbers("doe_test", { start: 78, end: 81 }),
+            frameRate: 12,
             repeat: -1
         });
 
