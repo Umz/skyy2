@@ -41,6 +41,7 @@ export default class SpriteController {
     });
     controller.getSingleRelease(controller.defend, ()=>{
       sprite.defend(false);
+      sprite.scene.birdTest();
     });
   }
 }

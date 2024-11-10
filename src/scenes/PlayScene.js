@@ -10,6 +10,8 @@ import ControlKeys from "../util/ControlKeys";
 import SpriteController from "../util/SpriteController";
 import MapTracker from "../util/MapTracker";
 import Collectible from "../gameobjects/Collectible";
+import BirdHandler from "../bg/BirdHandler";
+import AnimalHandler from "../bg/AnimalHandler";
 
 export class PlayScene extends Scene {
 
@@ -33,6 +35,7 @@ export class PlayScene extends Scene {
     const allGroup = this.add.group({
       runChildUpdate: true
     });
+    const birdGroup = this.add.group({runChildUpdate:true});
     this.group_soldiers = this.add.group({runChildUpdate:true});
 
     const sceneryLayer = this.add.layer();
@@ -47,6 +50,8 @@ export class PlayScene extends Scene {
     this.bgL = bgLayer;
     this.fgL = fgLayer;
     this.bdL = buildingsLayer;
+
+    const animalLayer = this.add.layer();
 
     this.lane_1 = this.add.layer().setDepth(10);
     this.lane_2 = this.add.layer().setDepth(20);
@@ -64,7 +69,7 @@ export class PlayScene extends Scene {
     //  Tilemap
 
     const ww = 1920;
-    const startX = (ww * 1);
+    const startX = (ww * 2);
 
     this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
     this.tmBuilder.buildTilemapForArea(startX);
@@ -77,16 +82,15 @@ export class PlayScene extends Scene {
 
     // Background birds   --------------------------------------------------------------------------
 
-    let grey = this.physics.add.sprite(startX + width * .6, 40, Vars.SHEET_BIRDS1);
-    grey.play("anim_bird_grey");
-    birdLayer.add(grey);
-    //grey.setVelocityX(10);
-    //grey.setVelocityY(-20);
+    let bgBirds = new BirdHandler(this, birdLayer, birdGroup);
+    let bgAnimals = new AnimalHandler(this, animalLayer, birdGroup);
 
-    let brown = this.physics.add.sprite(startX + width * .5, 40, Vars.SHEET_BIRDS1);
-    brown.play("anim_bird_brown");
-    birdLayer.add(brown);
-    //brown.setVelocityX(-48);
+    this.birdTest = function() {
+      bgBirds.deployGreys();
+      bgBirds.deployBrowns();
+      bgAnimals.deployDoes();
+    }
+
 
     // Player Character   --------------------------------------------------------------------------
 
@@ -120,7 +124,7 @@ export class PlayScene extends Scene {
 
     this.shadows = new Shadow(graphics);
     this.shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
-    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3);
+    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, animalLayer);
     shadowLayer.add(graphics);
 
     //  Particles   ---------------------------------------------------------------------------------
