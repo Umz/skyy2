@@ -12,6 +12,10 @@ const Enum = {
   GS_VIEW: 10,
   GS_ENDING: 11,
 
+  AREA_VILLAGE: 101,
+  AREA_FOREST: 102,
+  AREA_MISC: 103,
+
   // Sprite States
   
   SS_READY: 1,

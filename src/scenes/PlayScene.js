@@ -12,6 +12,19 @@ import MapTracker from "../util/MapTracker";
 import Collectible from "../gameobjects/Collectible";
 import BirdHandler from "../bg/BirdHandler";
 import AnimalHandler from "../bg/AnimalHandler";
+import Enum from "../util/Enum";
+
+//  Move this MapInfo to Vars or to it's own JSON
+const mapInfo = [
+  {locID:1, name:"Blue Forest", type: Enum.AREA_FOREST},
+  {locID:2, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
+  {locID:3, name:"Rose Forest", type: Enum.AREA_FOREST},
+  {locID:4, name:"Storm Village", type: Enum.AREA_VILLAGE},
+  {locID:5, name:"The Mines", type: Enum.AREA_MISC},
+  {locID:6, name:"Mario Plains", type: Enum.AREA_MISC},
+  {locID:7, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
+  {locID:8, name:"Green Village", type: Enum.AREA_VILLAGE}
+];
 
 export class PlayScene extends Scene {
 
@@ -69,7 +82,7 @@ export class PlayScene extends Scene {
     //  Tilemap
 
     const ww = 1920;
-    const startX = (ww * 2);
+    const startX = (ww * 1);
 
     this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
     this.tmBuilder.buildTilemapForArea(startX);
@@ -82,15 +95,15 @@ export class PlayScene extends Scene {
 
     // Background birds   --------------------------------------------------------------------------
 
-    let bgBirds = new BirdHandler(this, birdLayer, birdGroup);
-    let bgAnimals = new AnimalHandler(this, animalLayer, birdGroup);
+    this.birdSpawner = new BirdHandler(this, birdLayer, birdGroup);
+    this.wildlifeSpawner = new AnimalHandler(this, animalLayer, birdGroup);
 
-    this.birdTest = function() {
-      bgBirds.deployGreys();
-      bgBirds.deployBrowns();
-      bgAnimals.deployDoes();
-    }
+    const startID = this.mapTracker.getCurrentAreaID(startX + width * .5);
+    const initArea = mapInfo.find(info => info.locID === startID);
 
+    const isForest = initArea.type === Enum.AREA_FOREST;
+    this.birdSpawner.isForestArea = isForest;
+    this.wildlifeSpawner.isForestArea = isForest;
 
     // Player Character   --------------------------------------------------------------------------
 
@@ -157,7 +170,18 @@ export class PlayScene extends Scene {
     const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
     if (newAreaID >= 0) {
       this.showAreaName(newAreaID);
+
+      const areaInfo = mapInfo.find(info => info.locID === newAreaID);
+
+      this.birdSpawner.resetCounts();
+      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+
+      this.wildlifeSpawner.resetCounts();
+      this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
     }
+
+    this.birdSpawner.update(time, delta);
+    this.wildlifeSpawner.update(time, delta);
 
     //  Updating sprite lane  -----------------------------------------
 
@@ -196,18 +220,6 @@ export class PlayScene extends Scene {
 
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
-
-    //  Move this MapInfo to Vars or to it's own JSON
-    const mapInfo = [
-      {locID:1, name:"Blue Forest"},
-      {locID:2, name:"Moon at Midnight"},
-      {locID:3, name:"Rose Forest"},
-      {locID:4, name:"Storm Village"},
-      {locID:5, name:"The Mines"},
-      {locID:6, name:"Mario Plains"},
-      {locID:7, name:"Greenleaf Forest"},
-      {locID:8, name:"Green Village"}
-    ]
 
     const data = mapInfo.find(info => info.locID === areaID);
 

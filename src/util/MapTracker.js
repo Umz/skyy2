@@ -14,7 +14,7 @@ export default class MapTracker {
   /** Check if the player has entered a new area (only accepts after cooldown) */
   checkForNewArea(delta, posX) {
     
-    const posAreaID = Math.ceil(posX / Vars.AREA_WIDTH);
+    const posAreaID = this.getCurrentAreaID(posX);
 
     //  Initially just set the value
     if (this.currentAreaID === -1) {
@@ -37,10 +37,16 @@ export default class MapTracker {
     return -1;
   }
 
+  /** The ID for the current area based on position and uniform area size */
+  getCurrentAreaID(posX) {
+    const areaID = Math.ceil(posX / Vars.AREA_WIDTH);
+    return areaID;
+  }
+
   /** Check if the area is being visited for the first time this session */
   isFirstTimeInAreaThisSession(posX) {
     
-    const areaID = Math.ceil(posX / Vars.AREA_WIDTH);
+    const areaID = this.getCurrentAreaID(posX);
     if (!this.visitedAreas.includes(areaID)) {
       this.visitedAreas.push(areaID);
       return true;

@@ -1,3 +1,4 @@
+import Counter from "../util/Counter";
 import Vars from "../util/Vars";
 
 export default class AnimalHandler {
@@ -6,12 +7,33 @@ export default class AnimalHandler {
     this.scene = scene;
     this.layer = layer;
     this.group = group;
+
+    this.doeCounter = new Counter(14000);
+    this.isForestArea = true;
+  }
+
+  update(_, delta) {
+    
+    //  Greys only deploy in forests
+
+    let isDoeTime = false;
+    if (this.isForestArea) {
+      isDoeTime = this.doeCounter.update(delta);
+    }
+
+    if (isDoeTime) {
+      this.deployDoes();
+    }
+  }
+
+  resetCounts() {
+    this.doeCounter.resetCount();
   }
 
   deployDoes() {
 
     const camera = this.scene.cameras.main;
-    const amount = Phaser.Math.Between(3, 6);
+    const amount = Phaser.Math.Between(1, 3);
 
     const baseX = camera.scrollX + camera.width * .5;
     const flipX = Math.random() > .5;
