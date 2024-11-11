@@ -82,7 +82,7 @@ export class PlayScene extends Scene {
     //  Tilemap
 
     const ww = 1920;
-    const startX = (ww * 1);
+    const startX = (ww * 4);
 
     this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
     this.tmBuilder.buildTilemapForArea(startX);
@@ -132,6 +132,40 @@ export class PlayScene extends Scene {
         item.collectAndDestroy();
       }
     }
+
+    //  Mining rocks
+
+    let rock = this.physics.add.image(startX + width * .53, Vars.GROUND_TOP + 2, "atlas", "rock_purple");
+    rock.setOrigin(.5, 1);
+    rock.update = function(_, delta) {
+      let alpha = player.lane === 1 ? 1 : .5;
+      this.setAlpha(alpha);
+    }
+    allGroup.add(rock);
+
+    this.physics.add.existing(rock);
+
+    let circle = this.add.circle(0, 0, 2, 0xFFFFFF, 1);
+    
+    this.physics.add.existing(circle);
+    
+    this.test = function() {
+      
+      let cn = player.getCenter();
+      let spearPoint = {x: cn.x + (player.flipX ? -14 : 14), y: cn.y + 3};
+      circle.setPosition(spearPoint.x, spearPoint.y);
+
+      graphics.fillStyle(0xffffff, 1);
+      graphics.fillCircleShape(circle);
+    }
+
+    this.physics.add.overlap(circle, rock,
+      (sprite, rock)=>{
+        if (player.lane === 1) {
+          rock.x += 12;
+        }
+      },
+      null, this);
 
     //  Shadows   -----------------------------------------------------------------------------------
 
@@ -213,6 +247,7 @@ export class PlayScene extends Scene {
 
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
+    this.test();
 
     this.controller.update();   // Player Controller
   }
