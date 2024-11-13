@@ -137,18 +137,27 @@ export class PlayScene extends Scene {
     }
 
     //  Mining rocks
+    for (let i=0; i< 20; i++) {
 
-    let rock = this.physics.add.image(startX + width * .53, Vars.GROUND_TOP + 2, "atlas", "rock_purple");
-    rock.setOrigin(.5, 1);
-    rock.update = function(_, delta) {
-      let alpha = player.lane === 1 ? 1 : .5;
-      this.setAlpha(alpha);
+      const spawnL = startX + width * .4;
+      const spawnR = startX + width * .53;
+
+      const rX = Phaser.Math.Between(spawnL, spawnR);
+      const rLane = Phaser.Math.Between(1, 3);
+      
+      let rock = this.physics.add.image(rX, Vars.GROUND_TOP + (rLane + 1), "atlas", "rock_purple");
+      rock.setOrigin(.5, 1);
+      rock.setDepth(rLane);
+      rock.update = function(_, delta) {
+        const alpha = this.lane === player.lane ? 1 : .25;
+        this.setAlpha(alpha);
+      }
+      allGroup.add(rock);
+      rock.lane = rLane;
+
+      this.physics.add.existing(rock);
+      this.group_rocks.add(rock);
     }
-    allGroup.add(rock);
-    rock.lane = 1;
-
-    this.physics.add.existing(rock);
-    this.group_rocks.add(rock);
 
     let circle = this.add.circle(0, 0, 2, 0xFFFFFF, 1);
     this.physics.add.existing(circle);
@@ -185,6 +194,16 @@ export class PlayScene extends Scene {
       emitting: false,
       tint: 0xaaaaaa,
       tintFill: true
+    });
+
+    this.rockEmitter = this.add.particles(0,0, "atlas", {
+      frame: ["particle_rock"],
+      scale: { start: 1, end: .2 },
+      alpha: { start: .6, end: .5 },
+      speedX: { min: -50, max: 50 },
+      speedY: { min: -50, max: 10 },
+      lifespan: 500,
+      emitting: false
     });
 
     //  Controller    -------------------------------------------------------------------------------
@@ -265,6 +284,21 @@ export class PlayScene extends Scene {
     if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
       sprite.recoil(2);
       // Rock destruction - 1 hit each
+      // Animation effect black-
+      // Show emitter * 2 // Dust and rock particles
+      this.emitDust(rock.x, rock.y, rock.lane);
+      this.emitRock(rock.x, rock.getCenter().y);
+      // Tween expand and vanish
+      this.tweens.add({
+        targets: rock,
+        duration: 500,
+        scaleX: {from:1, to:1.5},
+        scaleY: {from:1, to:1.5},
+        alpha: {from:1, to:0},
+        onComplete: ()=>{
+          rock.destroy();
+        }
+      });
       // Rock spawn on leave and enter area only
     }
   }
@@ -340,5 +374,10 @@ export class PlayScene extends Scene {
   emitDust(x, y, lane) {
     this.emitter.setDepth(lane * 10 + 1);
     this.emitter.emitParticleAt(x, y, 6);
+  }
+
+  emitRock(x, y, lane) {
+    this.rockEmitter.setDepth(lane * 10 + 1);
+    this.rockEmitter.emitParticleAt(x, y, 12);
   }
 }
