@@ -120,12 +120,16 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   moveLeft() {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    this.movementSpeed = -moveSpeed;
+    if (this.isState(Enum.SS_READY)) {
+      this.movementSpeed = -moveSpeed;
+    }
   }
 
   moveRight() {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    this.movementSpeed = moveSpeed;
+    if (this.isState(Enum.SS_READY)) {
+      this.movementSpeed = moveSpeed;
+    }
   }
 
   stopMove() {

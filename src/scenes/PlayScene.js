@@ -264,6 +264,8 @@ export class PlayScene extends Scene {
     
     if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
       sprite.recoil(2);
+      // Rock destruction - 1 hit each
+      // Rock spawn on leave and enter area only
     }
   }
 
