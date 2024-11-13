@@ -38,18 +38,21 @@ export class PlayScene extends Scene {
 
     const camera = this.cameras.main;
     const width = 1920;
-    //camera.setBounds(0, 0, width, camera.height);
-    //camera.centerOn(width * .5, camera.height / 2);
 
     const graphics = this.add.graphics();
 
-    //  Groups and layers
+    //  Groups
 
     const allGroup = this.add.group({
       runChildUpdate: true
     });
     const birdGroup = this.add.group({runChildUpdate:true});
     this.group_soldiers = this.add.group({runChildUpdate:true});
+
+    this.group_attackCircles = this.add.group();
+    this.group_rocks = this.add.group();
+
+    //  Display layers
 
     const sceneryLayer = this.add.layer();
     const birdLayer = this.add.layer();
@@ -142,12 +145,14 @@ export class PlayScene extends Scene {
       this.setAlpha(alpha);
     }
     allGroup.add(rock);
+    rock.lane = 1;
 
     this.physics.add.existing(rock);
+    this.group_rocks.add(rock);
 
     let circle = this.add.circle(0, 0, 2, 0xFFFFFF, 1);
-    
     this.physics.add.existing(circle);
+    this.group_attackCircles.add(circle);
     
     this.test = function() {
       
@@ -158,14 +163,8 @@ export class PlayScene extends Scene {
       graphics.fillStyle(0xffffff, 1);
       graphics.fillCircleShape(circle);
     }
-
-    this.physics.add.overlap(circle, rock,
-      (sprite, rock)=>{
-        if (player.lane === 1) {
-          rock.x += 12;
-        }
-      },
-      null, this);
+    
+    this.physics.add.overlap(this.group_soldiers, this.group_rocks, this.rockAttack, null, this);
 
     //  Shadows   -----------------------------------------------------------------------------------
 
@@ -252,6 +251,21 @@ export class PlayScene extends Scene {
     this.controller.update();   // Player Controller
   }
 
+  /** Rock when soldier attacks a rock overlap */
+  rockAttack(sprite, rock) {
+
+    const point = sprite.getAttackPoint();
+    
+    const r = rock.getBounds();
+    const rockLeft = r.left;
+    const rockRight = r.right;
+    
+    const contains = (point.x >= rockLeft && point.x <= rockRight);
+    
+    if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
+      sprite.recoil(2);
+    }
+  }
 
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
