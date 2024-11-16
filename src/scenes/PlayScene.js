@@ -13,17 +13,18 @@ import Collectible from "../gameobjects/Collectible";
 import BirdHandler from "../bg/BirdHandler";
 import AnimalHandler from "../bg/AnimalHandler";
 import Enum from "../util/Enum";
+import Rock from "../gameobjects/Rock";
 
 //  Move this MapInfo to Vars or to it's own JSON
 const mapInfo = [
-  {locID:1, name:"Blue Forest", type: Enum.AREA_FOREST},
-  {locID:2, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
-  {locID:3, name:"Rose Forest", type: Enum.AREA_FOREST},
-  {locID:4, name:"Storm Village", type: Enum.AREA_VILLAGE},
-  {locID:5, name:"The Mines", type: Enum.AREA_MISC},
-  {locID:6, name:"Mario Plains", type: Enum.AREA_MISC},
-  {locID:7, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
-  {locID:8, name:"Green Village", type: Enum.AREA_VILLAGE}
+  {locID: Enum.LOC_BLUE_FOREST, name:"Blue Forest", type: Enum.AREA_FOREST},
+  {locID: Enum.LOC_MAM, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
+  {locID: Enum.LOC_ROSE_FOREST, name:"Rose Forest", type: Enum.AREA_FOREST},
+  {locID: Enum.LOC_STORM, name:"Storm Village", type: Enum.AREA_VILLAGE},
+  {locID: Enum.LOC_MINES, name:"The Mines", type: Enum.AREA_MISC},
+  {locID: Enum.LOC_PLAINS, name:"Mario Plains", type: Enum.AREA_MISC},
+  {locID: Enum.LOC_GREEN_FOREST, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
+  {locID: Enum.LOC_GREEN, name:"Green Village", type: Enum.AREA_VILLAGE}
 ];
 
 export class PlayScene extends Scene {
@@ -38,18 +39,21 @@ export class PlayScene extends Scene {
 
     const camera = this.cameras.main;
     const width = 1920;
-    //camera.setBounds(0, 0, width, camera.height);
-    //camera.centerOn(width * .5, camera.height / 2);
 
     const graphics = this.add.graphics();
 
-    //  Groups and layers
+    //  Groups
 
     const allGroup = this.add.group({
       runChildUpdate: true
     });
     const birdGroup = this.add.group({runChildUpdate:true});
     this.group_soldiers = this.add.group({runChildUpdate:true});
+
+    this.group_attackCircles = this.add.group();
+    this.group_rocks = this.add.group();
+
+    //  Display layers
 
     const sceneryLayer = this.add.layer();
     const birdLayer = this.add.layer();
@@ -82,7 +86,12 @@ export class PlayScene extends Scene {
     //  Tilemap
 
     const ww = 1920;
-    const startX = (ww * 1);
+    const startX = (ww * 4);
+
+    this.mapTracker.updateAreaID(startX);
+    if (this.mapTracker.getCurrentAreaID(startX) === Enum.LOC_MINES) {
+      this.spawnRocks(20);
+    }
 
     this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
     this.tmBuilder.buildTilemapForArea(startX);
@@ -133,6 +142,50 @@ export class PlayScene extends Scene {
       }
     }
 
+    this.spawnRocks = function(amt) {
+
+      for (let i=0; i<amt; i++) {
+
+        const areaX = this.mapTracker.getAreaLeftX();
+        const minX = areaX + Vars.AREA_WIDTH * .15;
+        const maxX = areaX + Vars.AREA_WIDTH * .65;
+
+        const rockX = Phaser.Math.Between(minX, maxX);
+        const rockLane = Phaser.Math.Between(1, 3);
+
+        const rock = new Rock(this, rockX, Vars.GROUND_TOP);
+        rock.setLane(rockLane);
+
+        allGroup.add(rock);
+        this.group_rocks.add(rock);
+        this.add.existing(rock);
+        this.physics.add.existing(rock);
+      }
+      
+    }
+
+    this.clearRocks = function() {
+      this.group_rocks.clear(true, true);
+    }
+
+    //  Mining rocks
+    
+    let circle = this.add.circle(0, 0, 2, 0xFFFFFF, 1);
+    this.physics.add.existing(circle);
+    this.group_attackCircles.add(circle);
+    
+    this.test = function() {
+      
+      let cn = player.getCenter();
+      let spearPoint = {x: cn.x + (player.flipX ? -14 : 14), y: cn.y + 3};
+      circle.setPosition(spearPoint.x, spearPoint.y);
+
+      graphics.fillStyle(0xffffff, 1);
+      graphics.fillCircleShape(circle);
+    }
+    
+    this.physics.add.overlap(this.group_soldiers, this.group_rocks, this.rockAttack, null, this);
+
     //  Shadows   -----------------------------------------------------------------------------------
 
     this.shadows = new Shadow(graphics);
@@ -154,6 +207,16 @@ export class PlayScene extends Scene {
       tintFill: true
     });
 
+    this.rockEmitter = this.add.particles(0,0, "atlas", {
+      frame: ["particle_rock"],
+      scale: { start: 1, end: .2 },
+      alpha: { start: .6, end: .5 },
+      speedX: { min: -50, max: 50 },
+      speedY: { min: -50, max: 10 },
+      lifespan: 500,
+      emitting: false
+    });
+
     //  Controller    -------------------------------------------------------------------------------
 
     const controllerKeys = new ControlKeys();
@@ -172,6 +235,13 @@ export class PlayScene extends Scene {
       this.showAreaName(newAreaID);
 
       const areaInfo = mapInfo.find(info => info.locID === newAreaID);
+
+      if (areaInfo.locID == Enum.LOC_MINES) {
+        this.spawnRocks(20);
+      }
+      else {
+        this.clearRocks();
+      }
 
       this.birdSpawner.resetCounts();
       this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
@@ -213,10 +283,39 @@ export class PlayScene extends Scene {
 
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
+    //this.test();
 
     this.controller.update();   // Player Controller
   }
 
+  /** Rock when soldier attacks a rock overlap */
+  rockAttack(sprite, rock) {
+
+    const point = sprite.getAttackPoint();
+    
+    const r = rock.getBounds();
+    const rockLeft = r.left;
+    const rockRight = r.right;
+    
+    const contains = (point.x >= rockLeft && point.x <= rockRight);
+    
+    if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
+      sprite.recoil(2);
+      this.emitDust(rock.x, rock.y, rock.lane);
+      this.emitRock(rock.x, rock.getCenter().y);
+      // Tween expand and vanish
+      this.tweens.add({
+        targets: rock,
+        duration: 500,
+        scaleX: {from:1, to:1.5},
+        scaleY: {from:1, to:1.5},
+        alpha: {from:1, to:0},
+        onComplete: ()=>{
+          rock.destroy();
+        }
+      });
+    }
+  }
 
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
@@ -289,5 +388,10 @@ export class PlayScene extends Scene {
   emitDust(x, y, lane) {
     this.emitter.setDepth(lane * 10 + 1);
     this.emitter.emitParticleAt(x, y, 6);
+  }
+
+  emitRock(x, y, lane) {
+    this.rockEmitter.setDepth(lane * 10 + 1);
+    this.rockEmitter.emitParticleAt(x, y, 12);
   }
 }

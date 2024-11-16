@@ -730,6 +730,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">vfx/particle_rock.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">vfx/pj_stone.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -12,9 +12,20 @@ const Enum = {
   GS_VIEW: 10,
   GS_ENDING: 11,
 
+  //  Locations
+
   AREA_VILLAGE: 101,
   AREA_FOREST: 102,
   AREA_MISC: 103,
+
+  LOC_BLUE_FOREST: 1,
+  LOC_MAM: 2,
+  LOC_ROSE_FOREST: 3,
+  LOC_STORM: 4,
+  LOC_MINES: 5,
+  LOC_PLAINS: 6,
+  LOC_GREEN_FOREST: 7,
+  LOC_GREEN: 8,
 
   // Sprite States
   

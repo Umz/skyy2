@@ -23,7 +23,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     //  Action to perform when attacking animation completes
     
     this.on('animationcomplete', (animation, frame) => {
-      if (animation.key === this.prefix + Vars.ANIM_ATTACK) {
+      if (animation.key === this.prefix + Vars.ANIM_ATTACK && this.isState(Enum.SS_ATTACK)) {
         this.state = Enum.SS_READY;
         this.movementSpeed = 0;
       }
@@ -46,8 +46,17 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.body.velocity.x = Math.abs(newVelocity) < 4 ? 0 : newVelocity;
     }
 
+    //  State updating
+    
+    if (this.isState(Enum.SS_REBOUND)) {
+      this.movementSpeed = 0;
+      if (velX === 0) {
+        this.state = Enum.SS_READY;
+      }
+    }
+    
     //  View updating
-
+    
     const viewVelX = this.body.velocity.x;
 
     switch (this.state) {
@@ -81,6 +90,26 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  isState(state) {
+    return this.state === state;
+  }
+
+  isLane(lane) {
+    return this.lane === lane;
+  }
+
+  getAttackPoint() {
+    return {x: this.x + (this.flipX ? -14 : 14), y: this.y + 3};
+  }
+
+  recoil(intensity = 1) {
+    const vX = this.body.velocity.x;
+    const recoilSpeed = vX > 0 ? -this.getSpeed() : this.getSpeed();
+
+    this.movementSpeed = recoilSpeed * (intensity * .1);
+    this.state = Enum.SS_REBOUND;
+  }
+
   //  Calculated values
 
   getSpeed() {
@@ -91,12 +120,16 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   moveLeft() {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    this.movementSpeed = -moveSpeed;
+    if (this.isState(Enum.SS_READY)) {
+      this.movementSpeed = -moveSpeed;
+    }
   }
 
   moveRight() {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    this.movementSpeed = moveSpeed;
+    if (this.isState(Enum.SS_READY)) {
+      this.movementSpeed = moveSpeed;
+    }
   }
 
   stopMove() {
