@@ -13,17 +13,18 @@ import Collectible from "../gameobjects/Collectible";
 import BirdHandler from "../bg/BirdHandler";
 import AnimalHandler from "../bg/AnimalHandler";
 import Enum from "../util/Enum";
+import Rock from "../gameobjects/Rock";
 
 //  Move this MapInfo to Vars or to it's own JSON
 const mapInfo = [
-  {locID:1, name:"Blue Forest", type: Enum.AREA_FOREST},
-  {locID:2, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
-  {locID:3, name:"Rose Forest", type: Enum.AREA_FOREST},
-  {locID:4, name:"Storm Village", type: Enum.AREA_VILLAGE},
-  {locID:5, name:"The Mines", type: Enum.AREA_MISC},
-  {locID:6, name:"Mario Plains", type: Enum.AREA_MISC},
-  {locID:7, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
-  {locID:8, name:"Green Village", type: Enum.AREA_VILLAGE}
+  {locID: Enum.LOC_BLUE_FOREST, name:"Blue Forest", type: Enum.AREA_FOREST},
+  {locID: Enum.LOC_MAM, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
+  {locID: Enum.LOC_ROSE_FOREST, name:"Rose Forest", type: Enum.AREA_FOREST},
+  {locID: Enum.LOC_STORM, name:"Storm Village", type: Enum.AREA_VILLAGE},
+  {locID: Enum.LOC_MINES, name:"The Mines", type: Enum.AREA_MISC},
+  {locID: Enum.LOC_PLAINS, name:"Mario Plains", type: Enum.AREA_MISC},
+  {locID: Enum.LOC_GREEN_FOREST, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
+  {locID: Enum.LOC_GREEN, name:"Green Village", type: Enum.AREA_VILLAGE}
 ];
 
 export class PlayScene extends Scene {
@@ -87,6 +88,11 @@ export class PlayScene extends Scene {
     const ww = 1920;
     const startX = (ww * 4);
 
+    this.mapTracker.updateAreaID(startX);
+    if (this.mapTracker.getCurrentAreaID(startX) === Enum.LOC_MINES) {
+      this.spawnRocks(20);
+    }
+
     this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
     this.tmBuilder.buildTilemapForArea(startX);
 
@@ -136,29 +142,34 @@ export class PlayScene extends Scene {
       }
     }
 
-    //  Mining rocks
-    for (let i=0; i< 20; i++) {
+    this.spawnRocks = function(amt) {
 
-      const spawnL = startX + width * .4;
-      const spawnR = startX + width * .53;
+      for (let i=0; i<amt; i++) {
 
-      const rX = Phaser.Math.Between(spawnL, spawnR);
-      const rLane = Phaser.Math.Between(1, 3);
-      
-      let rock = this.physics.add.image(rX, Vars.GROUND_TOP + (rLane + 1), "atlas", "rock_purple");
-      rock.setOrigin(.5, 1);
-      rock.setDepth(rLane);
-      rock.update = function(_, delta) {
-        const alpha = this.lane === player.lane ? 1 : .25;
-        this.setAlpha(alpha);
+        const areaX = this.mapTracker.getAreaLeftX();
+        const minX = areaX + Vars.AREA_WIDTH * .15;
+        const maxX = areaX + Vars.AREA_WIDTH * .65;
+
+        const rockX = Phaser.Math.Between(minX, maxX);
+        const rockLane = Phaser.Math.Between(1, 3);
+
+        const rock = new Rock(this, rockX, Vars.GROUND_TOP);
+        rock.setLane(rockLane);
+
+        allGroup.add(rock);
+        this.group_rocks.add(rock);
+        this.add.existing(rock);
+        this.physics.add.existing(rock);
       }
-      allGroup.add(rock);
-      rock.lane = rLane;
-
-      this.physics.add.existing(rock);
-      this.group_rocks.add(rock);
+      
     }
 
+    this.clearRocks = function() {
+      this.group_rocks.clear(true, true);
+    }
+
+    //  Mining rocks
+    
     let circle = this.add.circle(0, 0, 2, 0xFFFFFF, 1);
     this.physics.add.existing(circle);
     this.group_attackCircles.add(circle);
@@ -225,6 +236,13 @@ export class PlayScene extends Scene {
 
       const areaInfo = mapInfo.find(info => info.locID === newAreaID);
 
+      if (areaInfo.locID == Enum.LOC_MINES) {
+        this.spawnRocks(20);
+      }
+      else {
+        this.clearRocks();
+      }
+
       this.birdSpawner.resetCounts();
       this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
 
@@ -265,7 +283,7 @@ export class PlayScene extends Scene {
 
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
-    this.test();
+    //this.test();
 
     this.controller.update();   // Player Controller
   }
@@ -283,9 +301,6 @@ export class PlayScene extends Scene {
     
     if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
       sprite.recoil(2);
-      // Rock destruction - 1 hit each
-      // Animation effect black-
-      // Show emitter * 2 // Dust and rock particles
       this.emitDust(rock.x, rock.y, rock.lane);
       this.emitRock(rock.x, rock.getCenter().y);
       // Tween expand and vanish
@@ -299,7 +314,6 @@ export class PlayScene extends Scene {
           rock.destroy();
         }
       });
-      // Rock spawn on leave and enter area only
     }
   }
 
