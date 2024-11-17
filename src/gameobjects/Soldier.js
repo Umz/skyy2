@@ -21,7 +21,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.setOrigin(.5, 1);
 
     //  Action to perform when attacking animation completes
-    
+
     this.on('animationcomplete', (animation, frame) => {
       if (animation.key === this.prefix + Vars.ANIM_ATTACK && this.isState(Enum.SS_ATTACK)) {
         this.state = Enum.SS_READY;

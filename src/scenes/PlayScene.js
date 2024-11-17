@@ -86,7 +86,7 @@ export class PlayScene extends Scene {
     //  Tilemap
 
     const ww = 1920;
-    const startX = (ww * 4);
+    const startX = (ww * 0);
 
     this.mapTracker.updateAreaID(startX);
     if (this.mapTracker.getCurrentAreaID(startX) === Enum.LOC_MINES) {
@@ -125,6 +125,38 @@ export class PlayScene extends Scene {
 
     camera.startFollow(player, true, .8);
     this.player = player;
+
+    // Enemy
+
+    const enemy = new Soldier(this, startX + width * .45, Vars.GROUND_TOP + 1, Vars.SHEET_BANDIT_BLUE);
+    enemy.playIdle();
+
+    this.lane_1.add(enemy);
+    this.group_soldiers.add(enemy);
+    this.physics.add.existing(enemy);
+
+    // Define enemy AI
+
+    let distance = 120;
+
+    // Think about timings, delay, hesitation, reaction speed, facing target
+
+    this.test = function() {
+
+      if (enemy.isState(Enum.SS_READY) && Math.abs(player.x - enemy.x) < 20)   {
+        enemy.attack();
+      }
+      else if (player.x > enemy.x + distance) {
+        enemy.moveRight();
+      }
+      else if (player.x < enemy.x - distance) {
+        enemy.moveLeft();
+      }
+      else {
+        enemy.stopMove();
+      }
+
+    }
 
     //  Collectible
 
@@ -169,20 +201,6 @@ export class PlayScene extends Scene {
     }
 
     //  Mining rocks
-    
-    let circle = this.add.circle(0, 0, 2, 0xFFFFFF, 1);
-    this.physics.add.existing(circle);
-    this.group_attackCircles.add(circle);
-    
-    this.test = function() {
-      
-      let cn = player.getCenter();
-      let spearPoint = {x: cn.x + (player.flipX ? -14 : 14), y: cn.y + 3};
-      circle.setPosition(spearPoint.x, spearPoint.y);
-
-      graphics.fillStyle(0xffffff, 1);
-      graphics.fillCircleShape(circle);
-    }
     
     this.physics.add.overlap(this.group_soldiers, this.group_rocks, this.rockAttack, null, this);
 
@@ -283,7 +301,7 @@ export class PlayScene extends Scene {
 
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
-    //this.test();
+    this.test();
 
     this.controller.update();   // Player Controller
   }
