@@ -49,8 +49,9 @@ export class PlayScene extends Scene {
     });
     const birdGroup = this.add.group({runChildUpdate:true});
     this.group_soldiers = this.add.group({runChildUpdate:true});
+    this.group_allies = this.add.group();
+    this.group_enemies = this.add.group();
 
-    this.group_attackCircles = this.add.group();
     this.group_rocks = this.add.group();
 
     //  Display layers
@@ -122,6 +123,7 @@ export class PlayScene extends Scene {
 
     this.lane_1.add(player);
     this.group_soldiers.add(player);
+    this.group_allies.add(player);
 
     camera.startFollow(player, true, .8);
     this.player = player;
@@ -133,29 +135,103 @@ export class PlayScene extends Scene {
 
     this.lane_1.add(enemy);
     this.group_soldiers.add(enemy);
+    this.group_enemies.add(enemy);
     this.physics.add.existing(enemy);
 
     // Define enemy AI
 
     let distance = 120;
+    let cooldown = 0;
+    let delay = 150;
 
-    // Think about timings, delay, hesitation, reaction speed, facing target
+    // Think about timings, reaction speed
+
+    this.brain = function(delta) {
+
+      const target = player;
+      cooldown -= delta;
+
+      switch (enemy.state) {
+        case Enum.SS_READY:
+          if (Math.abs(target.x - enemy.x) < 30 && cooldown <= 0 && target.lane === enemy.lane) {
+            delay -= delta;
+            if (delay <= 0) {
+              enemy.attack();
+              cooldown = 500;
+              delay = 150;
+            }
+          }
+          else if (target.x > enemy.x + distance) {
+            enemy.moveRight();
+          }
+          else if (target.x < enemy.x - distance) {
+            enemy.moveLeft();
+          }
+          else {
+            enemy.stopMove();
+            enemy.faceX(target.x);
+            enemy.clearTint();
+            delay = 150;
+          }
+        break;
+      }
+    }
+
+    let checkAttack = function(attacker, defender) {
+      const point = attacker.getAttackPoint();
+      if (defender.hitboxContainsX(point.x)) {
+
+        // M<ust be facing enemy to defend
+
+        if (defender.isState(Enum.SS_DEFEND)) {
+          attacker.recoil(16);
+          attacker.setTint(0xffa500);
+          // And delay
+        }
+        else {
+          attacker.recoil(4);
+          defender.hit(attacker);
+        }
+      }
+    }
+
+    // Battle smarts - Block more when HP low
+    // Flee battle if losing
+
+    this.physics.add.overlap(this.group_allies, this.group_enemies, (ally, en) => {
+      
+      const sameLane = ally.isLane(en.lane);
+      
+      // Change this into a function and just call with attacker defender
+      if (sameLane) {
+
+        // if both attacking - check clash (some types, beat others)
+        // some blocks are parries
+
+        if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
+          ally.recoil(16);
+          en.recoil(16);
+          ally.setTintFill(0xFFFFFF);
+          en.setTintFill(0xFFFFFF);
+        }
+        if (ally.isState(Enum.SS_ATTACK)) {
+          checkAttack(ally, en);
+        }
+        else if (en.isState(Enum.SS_ATTACK)) {
+          checkAttack(en, ally);
+        }
+      }
+
+      // scaleX .9
+      // kick back
+
+    }, null, this);
 
     this.test = function() {
-
-      if (enemy.isState(Enum.SS_READY) && Math.abs(player.x - enemy.x) < 20)   {
-        enemy.attack();
-      }
-      else if (player.x > enemy.x + distance) {
-        enemy.moveRight();
-      }
-      else if (player.x < enemy.x - distance) {
-        enemy.moveLeft();
-      }
-      else {
-        enemy.stopMove();
-      }
-
+      let target = enemy;
+      let pp = target.getAttackPoint();
+      //graphics.fillStyle(0xffffff, 1);
+      //graphics.fillCircle(pp.x, pp.y, 1);
     }
 
     //  Collectible
@@ -301,6 +377,7 @@ export class PlayScene extends Scene {
 
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
+    this.brain(delta);
     this.test();
 
     this.controller.update();   // Player Controller
