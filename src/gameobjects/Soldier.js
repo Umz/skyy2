@@ -151,11 +151,16 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   //  Controller functions
+  //  Add in a backstep with animation
 
   moveLeft() {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
     if (this.isState(Enum.SS_READY)) {
       this.movementSpeed = -moveSpeed;
+    }
+    else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && !this.flipX) {
+      this.body.velocity.x = -moveSpeed * 1.3;
+      this.showMovementDust();
     }
   }
 
@@ -163,6 +168,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
     if (this.isState(Enum.SS_READY)) {
       this.movementSpeed = moveSpeed;
+    }
+    else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && this.flipX) {
+      this.body.velocity.x = moveSpeed * 1.3;
+      this.showMovementDust();
     }
   }
 
