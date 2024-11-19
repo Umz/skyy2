@@ -65,6 +65,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       case Enum.SS_READY:
         if (velX !== 0) {
           this.playRun();
+
+          // Don't always flip tween
     
           if (!this.flipX && velX < 0 && !this.isTweening()) {
             this.flipXTween();
@@ -138,10 +140,24 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.state = Enum.SS_REBOUND;
   }
 
+  kickback(intensity, pX) {
+    const speed = pX > this.x ? -this.getSpeed() : this.getSpeed();
+    this.body.velocity.x = speed * (intensity * .1);
+  }
+
   hit(attacker) {
     // only do damage if not already HURT state- no double hits
     this.state = Enum.SS_HURT;
     this.movementSpeed = (attacker.x > this.x) ? -this.getSpeed() : this.getSpeed();
+  }
+
+  towardsLane(lane) {
+    if (this.lane < lane) {
+      this.moveDown();
+    }
+    else if (this.lane > lane) {
+      this.moveUp();
+    }
   }
 
   //  Calculated values

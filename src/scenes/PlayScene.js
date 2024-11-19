@@ -151,30 +151,35 @@ export class PlayScene extends Scene {
       const target = player;
       cooldown -= delta;
 
-      switch (enemy.state) {
-        case Enum.SS_READY:
-          if (Math.abs(target.x - enemy.x) < 30 && cooldown <= 0 && target.lane === enemy.lane) {
-            delay -= delta;
-            if (delay <= 0) {
-              enemy.attack();
-              cooldown = 500;
-              delay = 150;
-            }
-          }
-          else if (target.x > enemy.x + distance) {
-            enemy.moveRight();
-          }
-          else if (target.x < enemy.x - distance) {
-            enemy.moveLeft();
-          }
-          else {
-            enemy.stopMove();
-            enemy.faceX(target.x);
-            enemy.clearTint();
+      if (enemy.isState(Enum.SS_READY)) {
+        if (Math.abs(target.x - enemy.x) < 30 && cooldown <= 0 && enemy.isLane(target.lane)) {
+          delay -= delta;
+          if (delay <= 0) {
+            enemy.attack();
+            cooldown = 500;
             delay = 150;
           }
-        break;
+        }
+        else if (target.x > enemy.x + distance) {
+          enemy.moveRight();
+        }
+        else if (target.x < enemy.x - distance) {
+          enemy.moveLeft();
+        }
+        else if (!enemy.isLane(target.lane)) {
+          delay -= delta;
+          if (delay <= 0) {
+            enemy.towardsLane(target.lane);
+            delay = 750;
+          }
+        }
+        else {
+          enemy.stopMove();
+          enemy.faceX(target.x);
+          enemy.clearTint();
+        }
       }
+
     }
 
     let checkAttack = function(attacker, defender) {
@@ -186,6 +191,7 @@ export class PlayScene extends Scene {
         if (defender.isState(Enum.SS_DEFEND)) {
           attacker.recoil(16);
           attacker.setTint(0xffa500);
+          defender.kickback(2, attacker.x);
           // And delay
         }
         else {
