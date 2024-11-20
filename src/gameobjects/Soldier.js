@@ -3,6 +3,7 @@
 // 3- Player Controlled
 // 4- Action controller
 
+import EnemyBrain from "../ai/EnemyBrain";
 import Enum from "../util/Enum";
 import Vars from "../util/Vars";
 
@@ -17,6 +18,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.movementSpeed = 0;
     this.state = Enum.SS_READY;
     this.lane = 1;
+
+    this.brain;
 
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
     
@@ -33,6 +36,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time, delta) {
+
+    if (this.brain) {
+      this.brain.update(delta);
+    }
 
     const isStaticStart = this.body.velocity.x === 0;
     
@@ -96,6 +103,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0xff5555);
         break;
     }
+  }
+
+  setEnemyBrain() {
+    this.brain = new EnemyBrain(this);
+    return this;
   }
 
   isState(state) {
@@ -188,6 +200,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && this.flipX) {
       this.body.velocity.x = moveSpeed * 1.3;
       this.showMovementDust();
+    }
+  }
+
+  moveTowards(x) {
+    if (x > this.x) {
+      this.moveRight();
+    }
+    else {
+      this.moveLeft();
     }
   }
 
