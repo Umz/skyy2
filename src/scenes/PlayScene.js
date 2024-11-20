@@ -49,8 +49,9 @@ export class PlayScene extends Scene {
     });
     const birdGroup = this.add.group({runChildUpdate:true});
     this.group_soldiers = this.add.group({runChildUpdate:true});
+    this.group_allies = this.add.group();
+    this.group_enemies = this.add.group();
 
-    this.group_attackCircles = this.add.group();
     this.group_rocks = this.add.group();
 
     //  Display layers
@@ -86,7 +87,7 @@ export class PlayScene extends Scene {
     //  Tilemap
 
     const ww = 1920;
-    const startX = (ww * 4);
+    const startX = (ww * 0);
 
     this.mapTracker.updateAreaID(startX);
     if (this.mapTracker.getCurrentAreaID(startX) === Enum.LOC_MINES) {
@@ -122,9 +123,92 @@ export class PlayScene extends Scene {
 
     this.lane_1.add(player);
     this.group_soldiers.add(player);
+    this.group_allies.add(player);
 
     camera.startFollow(player, true, .8);
     this.player = player;
+
+    // Enemy
+
+    const deployEnemy = () =>{
+      
+      const count = this.group_enemies.countActive();
+      const deployX = startX + width * .45 + (48 * count);
+
+      console.log(deployX)
+
+      const enemy = new Soldier(this, deployX, Vars.GROUND_TOP + 1, Vars.SHEET_BANDIT_BLUE);
+      enemy.playIdle();
+      enemy.setEnemyBrain();
+  
+      this.lane_1.add(enemy);
+      this.group_soldiers.add(enemy);
+      this.group_enemies.add(enemy);
+      this.physics.add.existing(enemy);
+    }
+
+    deployEnemy();
+    deployEnemy();
+
+    // Define enemy AI
+
+    const checkAttack = function(attacker, defender) {
+      const point = attacker.getAttackPoint();
+      if (defender.hitboxContainsX(point.x)) {
+
+        // M<ust be facing enemy to defend
+
+        if (defender.isState(Enum.SS_DEFEND)) {
+          attacker.recoil(16);
+          attacker.setTint(0xffa500);
+          defender.kickback(2, attacker.x);
+          // And delay
+        }
+        else {
+          attacker.recoil(4);
+          defender.hit(attacker);
+        }
+      }
+    }
+
+    // Battle smarts - Block more when HP low
+    // Flee battle if losing
+
+    this.physics.add.overlap(this.group_allies, this.group_enemies, (ally, en) => {
+      
+      const sameLane = ally.isLane(en.lane);
+      
+      // Change this into a function and just call with attacker defender
+      if (sameLane) {
+
+        // if both attacking - check clash (some types, beat others)
+        // some blocks are parries
+
+        if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
+          ally.recoil(16);
+          en.recoil(16);
+          ally.setTintFill(0xFFFFFF);
+          en.setTintFill(0xFFFFFF);
+        }
+        if (ally.isState(Enum.SS_ATTACK)) {
+          checkAttack(ally, en);
+        }
+        else if (en.isState(Enum.SS_ATTACK)) {
+          checkAttack(en, ally);
+        }
+      }
+
+      // scaleX .9
+      // kick back
+
+    }, null, this);
+
+    this.test = function() {
+      let target = player;
+      let pp = target.getAttackPoint();
+      //graphics.fillStyle(0xffffff, 1);
+      //graphics.fillCircle(pp.x, pp.y, 1);
+    }
 
     //  Collectible
 
@@ -169,20 +253,6 @@ export class PlayScene extends Scene {
     }
 
     //  Mining rocks
-    
-    let circle = this.add.circle(0, 0, 2, 0xFFFFFF, 1);
-    this.physics.add.existing(circle);
-    this.group_attackCircles.add(circle);
-    
-    this.test = function() {
-      
-      let cn = player.getCenter();
-      let spearPoint = {x: cn.x + (player.flipX ? -14 : 14), y: cn.y + 3};
-      circle.setPosition(spearPoint.x, spearPoint.y);
-
-      graphics.fillStyle(0xffffff, 1);
-      graphics.fillCircleShape(circle);
-    }
     
     this.physics.add.overlap(this.group_soldiers, this.group_rocks, this.rockAttack, null, this);
 
@@ -283,7 +353,7 @@ export class PlayScene extends Scene {
 
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
-    //this.test();
+    this.test();
 
     this.controller.update();   // Player Controller
   }

@@ -14,10 +14,14 @@ const Vars = {
   SHEET_MAM_INFANTRY: 'mam_infantry_sheet',
   SHEET_MAM_HEAVY: 'mam_heavy_infantry_sheet',
 
+  SHEET_WILDMAN: "mam_wildman",
+
   SHEET_GR_LANCER: 'gr_lancer_sheet',
   SHEET_GR_INFANTRY: 'gr_infantry_sheet',
   SHEET_GR_HEAVY: 'gr_heavy_infantry_sheet',
   SHEET_GR_FLAGGER: 'gr_advisor_sheet',
+
+  SHEET_BANDIT_BLUE: 'blue_bandit_sheet',
 
   ANIM_IDLE: '-idle',
   ANIM_WALK: '-walk',

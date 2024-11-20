@@ -28,6 +28,9 @@ export class Preloader extends Phaser.Scene {
         this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
         this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight: 30});
 
+        this.load.spritesheet(Vars.SHEET_BANDIT_BLUE, 'spritesheets/Infantry_Bandit_Blue.png', { frameWidth: 38, frameHeight:34});
+        this.load.spritesheet(Vars.SHEET_WILDMAN, 'spritesheets/Infantry_Wildman.png', { frameWidth: 38, frameHeight:34});
+
         this.load.spritesheet(Vars.SHEET_BIRDS1, 'spritesheets/bg_birds.png', { frameWidth: 32, frameHeight: 43});
 
         this.load.spritesheet("doe_test", 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
@@ -142,6 +145,8 @@ export class Preloader extends Phaser.Scene {
         const data = this.cache.json.get('sprite_configs');
 
         this.createSpritesheetAnimation(Vars.SHEET_PLAYER, data.lancer);
+        this.createSpritesheetAnimation(Vars.SHEET_BANDIT_BLUE, data.infantry);
+        this.createSpritesheetAnimation(Vars.SHEET_WILDMAN, data.infantry);
 
         this.scene.start("PlayScene");      // Next Scene when all assets are loaded
     }
