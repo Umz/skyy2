@@ -19,6 +19,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.state = Enum.SS_READY;
     this.lane = 1;
 
+    this.maxHP = 3;
+    this.hp = this.maxHP;
+
     this.brain;
 
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
@@ -158,6 +161,13 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   hit(attacker) {
+
+    if (!this.isState(Enum.SS_HURT)) {
+      this.hp = Math.max(0, this.hp - 1);
+      if (this.hp === 0) {
+        this.destroy(true);
+      }
+    }
     // only do damage if not already HURT state- no double hits
     this.state = Enum.SS_HURT;
     this.movementSpeed = (attacker.x > this.x) ? -this.getSpeed() : this.getSpeed();
