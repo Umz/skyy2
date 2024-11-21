@@ -258,9 +258,10 @@ export class PlayScene extends Scene {
 
     //  Shadows   -----------------------------------------------------------------------------------
 
-    this.shadows = new Shadow(graphics);
+    this.shadows = new Shadow(camera, graphics);
     this.shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
     this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, animalLayer);
+    this.shadows.setActiveLane(player);
     shadowLayer.add(graphics);
 
     //  Particles   ---------------------------------------------------------------------------------

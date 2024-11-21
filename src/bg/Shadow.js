@@ -1,7 +1,10 @@
 export default class Shadow {
 
-  constructor(graphics) {
+  constructor(camera, graphics) {
 
+    this.activeLaneTrack;
+
+    this.camera = camera;
     this.graphics = graphics;
 
     this.staticShadowLines = [];
@@ -74,6 +77,10 @@ export default class Shadow {
     this.dynamicLayers.push(...layers);
   }
 
+  setActiveLane(sprite) {
+    this.activeLaneTrack = sprite;
+  }
+
   updateDynamicShadows() {
     this.dynamicShadowLines.length = 0;
     this.createDynamicShadowLines(...this.dynamicLayers);
@@ -83,6 +90,17 @@ export default class Shadow {
 
     const graphics = this.graphics;
     graphics.clear();
+
+    if (this.activeLaneTrack) {
+
+      const camera = this.camera;
+      const target = this.activeLaneTrack;
+      const view = camera.worldView;
+      
+      //graphics.lineStyle(1, 0x00aa00, .7);
+      graphics.lineStyle(1, 0xffffff, .35);
+      graphics.lineBetween(view.x, target.y - 1, view.right, target.y - 1);
+    }
 
     for (let line of this.staticShadowLines) {
       
