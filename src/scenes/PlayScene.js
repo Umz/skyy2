@@ -139,7 +139,7 @@ export class PlayScene extends Scene {
       const spawnPoint = Math.random() > .5 ? view.right : view.left;
       const dpX = spawnPoint;
 
-      const enemy = new Soldier(this, dpX, Vars.GROUND_TOP + 1, Vars.SHEET_BANDIT_BLUE);
+      const enemy = new Soldier(this, dpX, Vars.GROUND_TOP + 1, Vars.SHEET_WILDMAN);
       enemy.playIdle();
       enemy.setEnemyBrain();
   
