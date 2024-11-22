@@ -41,6 +41,7 @@ export class PlayScene extends Scene {
     const width = 1920;
 
     const graphics = this.add.graphics();
+    const hpGraphics = this.add.graphics().setDepth(35);
 
     //  Groups
 
@@ -127,17 +128,18 @@ export class PlayScene extends Scene {
 
     camera.startFollow(player, true, .8);
     this.player = player;
+    player.hp = 10000000000;
 
     // Enemy
 
-    const deployEnemy = () =>{
+    this.spawnEnemy = () =>{
       
-      const count = this.group_enemies.countActive();
-      const deployX = startX + width * .45 + (48 * count);
+      const cam = this.cameras.main;
+      const view = cam.worldView;
+      const spawnPoint = Math.random() > .5 ? view.right : view.left;
+      const dpX = spawnPoint;
 
-      console.log(deployX)
-
-      const enemy = new Soldier(this, deployX, Vars.GROUND_TOP + 1, Vars.SHEET_BANDIT_BLUE);
+      const enemy = new Soldier(this, dpX, Vars.GROUND_TOP + 1, Vars.SHEET_BANDIT_BLUE);
       enemy.playIdle();
       enemy.setEnemyBrain();
   
@@ -146,9 +148,6 @@ export class PlayScene extends Scene {
       this.group_enemies.add(enemy);
       this.physics.add.existing(enemy);
     }
-
-    deployEnemy();
-    deployEnemy();
 
     // Define enemy AI
 
@@ -204,10 +203,46 @@ export class PlayScene extends Scene {
     }, null, this);
 
     this.test = function() {
+
       let target = player;
       let pp = target.getAttackPoint();
       //graphics.fillStyle(0xffffff, 1);
       //graphics.fillCircle(pp.x, pp.y, 1);
+
+      const wv = camera.worldView;
+      const count = this.group_enemies.countActive();
+      if (count === 0 && wv.left > 0 && player.x !== wv.left) {
+        for (let i=0; i<4; i++) {
+          this.spawnEnemy();
+        }
+      }
+    }
+
+    this.drawHP = function() {
+
+      hpGraphics.clear();
+      
+      let soldiers = this.group_enemies.getChildren();
+
+      for (let soldier of soldiers) {
+
+        const lt = soldier.getTopLeft();
+        const barX = lt.x;
+        const barY = lt.y - 2;
+
+        const barMax = soldier.width;
+        const percent = soldier.hp / soldier.maxHP;
+        const barWidth = (barMax - 2) * percent;
+        const barHeight = 3;
+
+        // Black bar
+        if (soldier.hp < soldier.maxHP) {
+          hpGraphics.fillStyle(0x000000, .5);
+          hpGraphics.fillRect(barX, barY, barMax, barHeight);
+          hpGraphics.fillStyle(0xff0000, 1);
+          hpGraphics.fillRect(barX + 1, barY + 1, barWidth, barHeight - 2);
+        }
+      }
     }
 
     //  Collectible
@@ -355,6 +390,7 @@ export class PlayScene extends Scene {
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
     this.test();
+    this.drawHP();
 
     this.controller.update();   // Player Controller
   }
