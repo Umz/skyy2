@@ -136,8 +136,8 @@ export class PlayScene extends Scene {
       
       const cam = this.cameras.main;
       const view = cam.worldView;
-      const spawnPoint = Math.random() > .5 ? view.right : view.left;
-      const dpX = spawnPoint;
+      const spawnPoint = Math.random() > .5 ? view.right + 20 : view.left - 20;
+      const dpX = spawnPoint + Phaser.Math.Between(-30, 30);
 
       const enemy = new Soldier(this, dpX, Vars.GROUND_TOP + 1, Vars.SHEET_BANDIT_BLUE);
       enemy.playIdle();
