@@ -132,8 +132,6 @@ export class PlayScene extends Scene {
 
     // Enemy
 
-    //  Multiple enemy behaviour - each keeps distance from other
-
     this.spawnEnemy = () =>{
       
       const cam = this.cameras.main;
