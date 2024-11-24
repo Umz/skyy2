@@ -1,8 +1,3 @@
-
-// Action based (Slime Game) sprites 
-// 3- Player Controlled
-// 4- Action controller
-
 import EnemyBrain from "../ai/EnemyBrain";
 import Enum from "../util/Enum";
 import Vars from "../util/Vars";
@@ -283,7 +278,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   flipXTween(flipDirection = 0) {
     
     let skipFirst = false;
-    const duration = 250;
+    const duration = 150;
 
     this.scene.tweens.chain({
       targets: this,
@@ -314,7 +309,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   laneSwitchTween() {
     
-    const duration = 250;
+    const duration = 150;
     this.scene.tweens.chain({
       targets: this,
       tweens: [
