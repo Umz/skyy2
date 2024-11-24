@@ -212,7 +212,7 @@ export class PlayScene extends Scene {
       const wv = camera.worldView;
       const count = this.group_enemies.countActive();
       if (count === 0 && wv.left > 0 && player.x !== wv.left) {
-        for (let i=0; i<4; i++) {
+        for (let i=0; i<6; i++) {
           this.spawnEnemy();
         }
       }
