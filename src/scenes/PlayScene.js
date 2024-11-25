@@ -14,6 +14,7 @@ import BirdHandler from "../bg/BirdHandler";
 import AnimalHandler from "../bg/AnimalHandler";
 import Enum from "../util/Enum";
 import Rock from "../gameobjects/Rock";
+import SaveData from "../util/SaveData";
 
 //  Move this MapInfo to Vars or to it's own JSON
 const mapInfo = [
@@ -33,7 +34,7 @@ export class PlayScene extends Scene {
     super("PlayScene");
   }
 
-  create() {
+  async create() {
 
     //  Set world size
 
@@ -118,7 +119,9 @@ export class PlayScene extends Scene {
 
     // Player Character   --------------------------------------------------------------------------
 
-    const player = new Soldier(this, startX + width * .5, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
+    const posX = await SaveData.GET_PLAYER_POS();
+
+    const player = new Soldier(this, posX, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
     player.playIdle();
     this.physics.add.existing(player);
 
@@ -330,14 +333,22 @@ export class PlayScene extends Scene {
     keyMapper.registerKeyboard(controllerKeys);
     
     this.controller = new SpriteController(player, controllerKeys);
+
+    this.isLoaded = posX;
   }
 
   update(time, delta) {
+
+    if (!this.isLoaded)
+      return
 
     this.updateCameraBounds();    //  Update bounds according to Player location
 
     const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
     if (newAreaID >= 0) {
+
+      SaveData.SAVE_POS(this.player.x);
+
       this.showAreaName(newAreaID);
 
       const areaInfo = mapInfo.find(info => info.locID === newAreaID);
