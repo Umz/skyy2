@@ -1,3 +1,4 @@
+import SaveData from "./util/SaveData";
 import Vars from "./util/Vars";
 
 export class Preloader extends Phaser.Scene {
@@ -92,6 +93,8 @@ export class Preloader extends Phaser.Scene {
     }
 
     create() {
+
+        SaveData.SETUP_LOCALFORAGE_CONFIG();
 
         //  MaM Banner Flapping
         this.anims.create({
