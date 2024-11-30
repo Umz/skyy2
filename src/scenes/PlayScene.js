@@ -15,6 +15,7 @@ import AnimalHandler from "../bg/AnimalHandler";
 import Enum from "../util/Enum";
 import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
+import Story from "../util/Story";
 
 //  Move this MapInfo to Vars or to it's own JSON
 const mapInfo = [
@@ -133,6 +134,8 @@ export class PlayScene extends Scene {
     this.player = player;
     player.hp = 10000000000;
 
+    Story.ShowStory(Enum.STORY_1A_APPRENTICE);
+
     // Enemy
 
     this.spawnEnemy = () =>{
@@ -212,6 +215,7 @@ export class PlayScene extends Scene {
       //graphics.fillStyle(0xffffff, 1);
       //graphics.fillCircle(pp.x, pp.y, 1);
 
+      /*
       const wv = camera.worldView;
       const count = this.group_enemies.countActive();
       if (count === 0 && wv.left > 0 && player.x !== wv.left) {
@@ -219,6 +223,7 @@ export class PlayScene extends Scene {
           this.spawnEnemy();
         }
       }
+      */
     }
 
     this.drawHP = function() {
