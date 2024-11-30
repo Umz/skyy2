@@ -1,22 +1,45 @@
-/*
+import Enum from "./Enum";
 
-Part 0: Introduction.
+export default class Story {
+  
+  static ShowStory(storyID) {
+    const parts = getParts(storyID);
+    addElements(parts.p);
+    showBox();
+  }
 
-After his heroic feats during the Battle of New Moon, Moon Chief was appointed Chief in Command of Moon at Midnight. He was celebrated by the tribe for his courage and might.
+  static HideStory() {
+    hideBox();
+  }
+}
 
-Strictly visual
+function addElements(parts) {
+  const container = document.getElementById("storybox");
+  for (let paragraph of parts) {
+    const ele = document.createElement("p");
+    ele.innerText = paragraph;
+    container.appendChild(ele);
+  }
+}
 
-Part 1: Protect the land.
+function showBox() {
+  const container = document.getElementById("storybox");
+  container.classList.remove("hidden");
+}
 
-There are still enemies in the region who dare to attack and raid our tribe.
-Destroy them completely, until just the mention of Moon Chief will be our protection.
-Be ruthless.
+function hideBox() {
+  const container = document.getElementById("storybox");
+  container.classList.add("hidden");
+  container.innerHTML = "";
+}
 
-Find and destroy clusters of enemies.
+function getParts(id) {
+  return StoryParts.find(obj => obj.id === id);
+}
 
+const StoryParts = [
+  {id:Enum.STORY_0_INTRO, p:["After his heroic feats during the Battle of the New Moon, Moon Chief was appointed army commander.", "He now seeks the path to glory by securing these lands."]},
+  {id:Enum.STORY_1A_APPRENTICE, p:["Raiders dare to attack our tribe. Pierce through them. This will be their demise."]},
 
-// Show this text on screen
-// Darken the screen and stop the game flow while story is showing?
-// Move along the game progress from 0 (Introduction) to 1 (Enemies attacking)
-
-*/
+  {id:Enum.ACT_GOTO_PLAYER, p:[""]}   // Just to copy
+];
