@@ -1,6 +1,7 @@
 import localforage from "localforage";
 
 const PLAYER_POS = "PLAYER_POSITION";
+const GAME_DATA = "GAME_DATA";
 
 export default class SaveData {
 
@@ -15,6 +16,22 @@ export default class SaveData {
     const savedX = await localforage.getItem(PLAYER_POS);
 
     return savedX || initPlayerX;
+  }
+
+  static SAVE_GAME_DATA(obj) {
+    localforage.setItem(GAME_DATA, obj);
+  }
+
+  static async LOAD_GAME_DATA() {
+
+    const data = {
+      playtime: 0,
+      playerX: 240,
+      playerLane: 1
+    }
+    const savedData = await localforage.getItem(GAME_DATA);
+
+    return savedData || data;
   }
 
   static SETUP_LOCALFORAGE_CONFIG() {

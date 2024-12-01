@@ -183,6 +183,12 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     return this.isBlocking ? 0 : this.speed;
   }
 
+  setLane(lane) {
+    const laneY = Vars.GROUND_TOP + 1 + lane;
+    this.lane = lane;
+    this.setY(laneY);
+  }
+
   //  Controller functions
   //  Add in a backstep with animation
 
@@ -273,6 +279,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       const dir = isTargetRight !== 0 ? isTargetRight : isTargetLeft;
       this.flipXTween(dir);
     }
+  }
+
+  isFacing(x) {
+    const isRight = x > this.x;
+    return (isRight && !this.flipX) || (!isRight && this.flipX);
   }
 
   flipXTween(flipDirection = 0) {
