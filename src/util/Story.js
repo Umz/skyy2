@@ -15,11 +15,19 @@ export default class Story {
 
 function addElements(parts) {
   const container = document.getElementById("storybox");
+
+  //  Story text
+
   for (let paragraph of parts) {
     const ele = document.createElement("p");
     ele.innerText = paragraph;
     container.appendChild(ele);
   }
+
+  //  Press Z
+  const div = document.createElement("div");
+  div.innerHTML = "Press <span class='keyboard-key'>Z</span>"
+  container.appendChild(div);
 }
 
 function showBox() {
@@ -40,6 +48,12 @@ function getParts(id) {
 const StoryParts = [
   {id:Enum.STORY_0_INTRO, p:["After his heroic feats during the Battle of the New Moon, Moon Chief was appointed army commander.", "He now seeks the path to glory by securing these lands."]},
   {id:Enum.STORY_1A_APPRENTICE, p:["Raiders dare to attack our tribe. Pierce through them. This will be their demise."]},
+  {id:Enum.STORY_1B_APPRENTICE, p:["There are still enemies here. Find them. Destroy them. Be ruthless."]},
+  {id:Enum.STORY_1C_BLUEFOREST, p:["They came from Blue Forest to the West. Go there."]},
+  {id:Enum.STORY_2A_CLAIM_BLUE, p:["Leave no enemies alive. They submit or they die.", "This forest will fly the flag of our tribe now."]},
+  {id:Enum.STORY_2B_GO_EAST, p:["Now take our forces east to conquer."]},
+  {id:Enum.STORY_3_DESTROY_ROSE, p:["There are still some who would oppose us here? Take out any who dare."]},
+  {id:Enum.STORY_4_CLAIM_STORM, p:["This village must fly with our tribe now. They submit or they die."]},
 
   {id:Enum.ACT_GOTO_PLAYER, p:[""]}   // Just to copy
 ];

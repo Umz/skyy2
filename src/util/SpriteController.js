@@ -3,9 +3,23 @@ export default class SpriteController {
   constructor(sprite, controller) {
     this.sprite = sprite;
     this.controller = controller;
+    this.active = true;
+  }
+
+  setActive(b = true) {
+    this.active = b;
+    if (!b) {
+      const { sprite, controller } = this;
+      sprite.stopMove();
+      sprite.defend(false);
+    }
   }
 
   update() {
+
+    if (!this.active) {
+      return;
+    }
 
     const { sprite, controller } = this;
 

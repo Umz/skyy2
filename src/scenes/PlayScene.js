@@ -15,7 +15,7 @@ import AnimalHandler from "../bg/AnimalHandler";
 import Enum from "../util/Enum";
 import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
-import Story from "../util/Story";
+import Tutorial from "../classes/Tutorial";
 
 //  Move this MapInfo to Vars or to it's own JSON
 const mapInfo = [
@@ -29,6 +29,10 @@ const mapInfo = [
   {locID: Enum.LOC_GREEN, name:"Green Village", type: Enum.AREA_VILLAGE}
 ];
 
+//  Tutorial - 
+//  Go through the tutorial (1)
+//  Refactory this scene
+
 export class PlayScene extends Scene {
 
   constructor() {
@@ -37,40 +41,33 @@ export class PlayScene extends Scene {
 
   async create() {
 
-    //  Set world size
-
-    const camera = this.cameras.main;
-    const width = 1920;
+    //  Graphics objects
 
     const graphics = this.add.graphics();
-    const hpGraphics = this.add.graphics().setDepth(35);
+    this.hpGraphics = this.add.graphics().setDepth(35);
 
     //  Groups
 
-    const allGroup = this.add.group({
-      runChildUpdate: true
-    });
     const birdGroup = this.add.group({runChildUpdate:true});
+
+    this.allGroup = this.add.group({runChildUpdate: true});
+    this.groupRocks = this.add.group();
+    this.groupCollectibles = this.add.group();
+    
     this.group_soldiers = this.add.group({runChildUpdate:true});
     this.group_allies = this.add.group();
     this.group_enemies = this.add.group();
 
-    this.group_rocks = this.add.group();
-
     //  Display layers
 
-    const sceneryLayer = this.add.layer();
+    this.sceneryLayer = this.add.layer();
     const birdLayer = this.add.layer();
     const tilemapLayer = this.add.layer();
 
     const shadowLayer = this.add.layer();
-    const bgLayer = this.add.layer();
-    const buildingsLayer = this.add.layer();
-    const fgLayer = this.add.layer();
-
-    this.bgL = bgLayer;
-    this.fgL = fgLayer;
-    this.bdL = buildingsLayer;
+    this.bgLayer = this.add.layer();
+    this.buildingsLayer = this.add.layer();
+    this.fgLayer = this.add.layer();
 
     const animalLayer = this.add.layer();
 
@@ -78,281 +75,114 @@ export class PlayScene extends Scene {
     this.lane_2 = this.add.layer().setDepth(20);
     this.lane_3 = this.add.layer().setDepth(30);
 
-    //  Utilities
+    //  Objects
 
-    this.mapTracker = new MapTracker();
+    const camera = this.cameras.main;
 
-    // Background scene
+    //  Create Player Here
 
-    const scenery = new Scenery(this);
-    scenery.addFullScene(sceneryLayer, allGroup);
+    this.player = this.spawnPlayer();
 
-    //  Tilemap
+    //  Utilities and Game objects
 
-    const ww = 1920;
-    const startX = (ww * 0);
+    this.mapTracker = new MapTracker();   // Player location on map
+    this.scenery = new Scenery(this);     // Background scenery
 
-    this.mapTracker.updateAreaID(startX);
-    if (this.mapTracker.getCurrentAreaID(startX) === Enum.LOC_MINES) {
-      this.spawnRocks(20);
-    }
-
-    this.tmBuilder = new TilemapBuilder(this, tilemapLayer);
-    this.tmBuilder.buildTilemapForArea(startX);
-
-    //  Add trees in BG
-
-    this.mapBuilder = new MapBuilder(this);
-    this.mapBuilder.setLayers({bgLayer, fgLayer, buildingsLayer});
-    this.mapBuilder.buildMapForArea(startX);
-
-    // Background birds   --------------------------------------------------------------------------
-
-    this.birdSpawner = new BirdHandler(this, birdLayer, birdGroup);
-    this.wildlifeSpawner = new AnimalHandler(this, animalLayer, birdGroup);
-
-    const startID = this.mapTracker.getCurrentAreaID(startX + width * .5);
-    const initArea = mapInfo.find(info => info.locID === startID);
-
-    const isForest = initArea.type === Enum.AREA_FOREST;
-    this.birdSpawner.isForestArea = isForest;
-    this.wildlifeSpawner.isForestArea = isForest;
-
-    // Player Character   --------------------------------------------------------------------------
-
-    const posX = await SaveData.GET_PLAYER_POS();
-
-    const player = new Soldier(this, posX, Vars.GROUND_TOP + 1, Vars.SHEET_PLAYER);
-    player.playIdle();
-    this.physics.add.existing(player);
-
-    this.lane_1.add(player);
-    this.group_soldiers.add(player);
-    this.group_allies.add(player);
-
-    camera.startFollow(player, true, .8);
-    this.player = player;
-    player.hp = 10000000000;
-
-    Story.ShowStory(Enum.STORY_1A_APPRENTICE);
-
-    // Enemy
-
-    this.spawnEnemy = () =>{
-      
-      const cam = this.cameras.main;
-      const view = cam.worldView;
-      const spawnPoint = Math.random() > .5 ? view.right + 20 : view.left - 20;
-      const dpX = spawnPoint + Phaser.Math.Between(-30, 30);
-
-      const enemy = new Soldier(this, dpX, Vars.GROUND_TOP + 1, Vars.SHEET_BANDIT_BLUE);
-      enemy.playIdle();
-      enemy.setEnemyBrain();
-  
-      this.lane_1.add(enemy);
-      this.group_soldiers.add(enemy);
-      this.group_enemies.add(enemy);
-      this.physics.add.existing(enemy);
-    }
-
-    // Define enemy AI
-
-    const checkAttack = function(attacker, defender) {
-      const point = attacker.getAttackPoint();
-      if (defender.hitboxContainsX(point.x)) {
-
-        // M<ust be facing enemy to defend
-
-        if (defender.isState(Enum.SS_DEFEND)) {
-          attacker.recoil(16);
-          attacker.setTint(0xffa500);
-          defender.kickback(2, attacker.x);
-          // And delay
-        }
-        else {
-          attacker.recoil(4);
-          defender.hit(attacker);
-        }
-      }
-    }
-
-    // Battle smarts - Block more when HP low
-    // Flee battle if losing
-
-    this.physics.add.overlap(this.group_allies, this.group_enemies, (ally, en) => {
-      
-      const sameLane = ally.isLane(en.lane);
-      
-      // Change this into a function and just call with attacker defender
-      if (sameLane) {
-
-        // if both attacking - check clash (some types, beat others)
-        // some blocks are parries
-
-        if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
-          ally.recoil(16);
-          en.recoil(16);
-          ally.setTintFill(0xFFFFFF);
-          en.setTintFill(0xFFFFFF);
-        }
-        if (ally.isState(Enum.SS_ATTACK)) {
-          checkAttack(ally, en);
-        }
-        else if (en.isState(Enum.SS_ATTACK)) {
-          checkAttack(en, ally);
-        }
-      }
-
-      // scaleX .9
-      // kick back
-
-    }, null, this);
-
-    this.test = function() {
-
-      let target = player;
-      let pp = target.getAttackPoint();
-      //graphics.fillStyle(0xffffff, 1);
-      //graphics.fillCircle(pp.x, pp.y, 1);
-
-      /*
-      const wv = camera.worldView;
-      const count = this.group_enemies.countActive();
-      if (count === 0 && wv.left > 0 && player.x !== wv.left) {
-        for (let i=0; i<6; i++) {
-          this.spawnEnemy();
-        }
-      }
-      */
-    }
-
-    this.drawHP = function() {
-
-      hpGraphics.clear();
-      
-      let soldiers = this.group_enemies.getChildren();
-
-      for (let soldier of soldiers) {
-
-        const lt = soldier.getTopLeft();
-        const barX = lt.x;
-        const barY = lt.y - 2;
-
-        const barMax = soldier.width;
-        const percent = soldier.hp / soldier.maxHP;
-        const barWidth = (barMax - 2) * percent;
-        const barHeight = 3;
-
-        // Black bar
-        if (soldier.hp < soldier.maxHP) {
-          hpGraphics.fillStyle(0x000000, .5);
-          hpGraphics.fillRect(barX, barY, barMax, barHeight);
-          hpGraphics.fillStyle(0xff0000, 1);
-          hpGraphics.fillRect(barX + 1, barY + 1, barWidth, barHeight - 2);
-        }
-      }
-    }
-
-    //  Collectible
-
-    const item = new Collectible(this, startX + width * .5 + 40, 0, "collect_heart");
-    item.initCollectible(2);
-    this.add.existing(item);
-    this.physics.add.existing(item);
-
-    //  Collision with Collectibles
-
-    this.physics.add.overlap(player, item, itemCollect, null, this); 
-    function itemCollect(player, item) {
-      if (player.lane === item.lane) {
-        item.collectAndDestroy();
-      }
-    }
-
-    this.spawnRocks = function(amt) {
-
-      for (let i=0; i<amt; i++) {
-
-        const areaX = this.mapTracker.getAreaLeftX();
-        const minX = areaX + Vars.AREA_WIDTH * .15;
-        const maxX = areaX + Vars.AREA_WIDTH * .65;
-
-        const rockX = Phaser.Math.Between(minX, maxX);
-        const rockLane = Phaser.Math.Between(1, 3);
-
-        const rock = new Rock(this, rockX, Vars.GROUND_TOP);
-        rock.setLane(rockLane);
-
-        allGroup.add(rock);
-        this.group_rocks.add(rock);
-        this.add.existing(rock);
-        this.physics.add.existing(rock);
-      }
-      
-    }
-
-    this.clearRocks = function() {
-      this.group_rocks.clear(true, true);
-    }
-
-    //  Mining rocks
+    this.tmBuilder = new TilemapBuilder(this, tilemapLayer);    // Tilemap builder (ground tiles)
     
-    this.physics.add.overlap(this.group_soldiers, this.group_rocks, this.rockAttack, null, this);
+    this.mapBuilder = new MapBuilder(this);   // Map builder (trees, locations)
+    this.mapBuilder.setLayers({bgLayer:this.bgLayer, fgLayer:this.fgLayer, buildingsLayer:this.buildingsLayer});
 
-    //  Shadows   -----------------------------------------------------------------------------------
+    this.birdSpawner = new BirdHandler(this, birdLayer, birdGroup); // Background birds spawner
+    this.wildlifeSpawner = new AnimalHandler(this, animalLayer, birdGroup); // Background animals spawner
 
     this.shadows = new Shadow(camera, graphics);
-    this.shadows.createStaticShadowLines(buildingsLayer, bgLayer, fgLayer);
+    this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
     this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, animalLayer);
-    this.shadows.setActiveLane(player);
+    this.shadows.setActiveLane(this.player);
     shadowLayer.add(graphics);
 
-    //  Particles   ---------------------------------------------------------------------------------
+    //  Collisions
 
-    this.emitter = this.add.particles(0, 0, 'atlas', {
-      frame: ["pj_stone"],
-      scale: { start: 1, end: .5 },
-      alpha: { start: .6, end: 0 },
-      speedX: { min: -50, max: 50 },
-      speedY: { min: -10, max: 4 },
-      lifespan: 1000,
-      emitting: false,
-      tint: 0xaaaaaa,
-      tintFill: true
-    });
+    this.physics.add.overlap(this.group_allies, this.group_enemies, this.allyEnemyCollision, null, this);   // Battle collisions
+    this.physics.add.overlap(this.player, this.groupCollectibles, this.playerItemCollision, null, this); 
+    this.physics.add.overlap(this.player, this.groupRocks, this.playerRockCollision, null, this);
 
-    this.rockEmitter = this.add.particles(0,0, "atlas", {
-      frame: ["particle_rock"],
-      scale: { start: 1, end: .2 },
-      alpha: { start: .6, end: .5 },
-      speedX: { min: -50, max: 50 },
-      speedY: { min: -50, max: 10 },
-      lifespan: 500,
-      emitting: false
-    });
+    this.createEmitters();
 
-    //  Controller    -------------------------------------------------------------------------------
+    //  Controller
 
     const controllerKeys = new ControlKeys();
     const keyMapper = new KeyboardMapper(this);
     keyMapper.registerKeyboard(controllerKeys);
-    
-    this.controller = new SpriteController(player, controllerKeys);
+    this.controller = new SpriteController(this.player, controllerKeys);
 
-    this.isLoaded = posX;
+    this.initLoad = false;
+    this.gameData = await SaveData.LOAD_GAME_DATA();
+
+    //  DEV  --------------------------------------------------------------------------
+
+    this.tutorial = new Tutorial(this, controllerKeys, this.controller);
+
+    this.test = function() {
+
+      let target = this.player;
+      let pp = target.getAttackPoint();
+      //graphics.fillStyle(0xffffff, 1);
+      //graphics.fillCircle(pp.x, pp.y, 1);
+    }
+  }
+
+  /** Initial scene setup (first load) */
+  setupScene() {
+
+    const playerX = this.gameData.playerX;
+    const playerLane = this.gameData.playerLane;
+
+    this.player.setX(playerX);
+    this.player.setLane(playerLane);
+
+    const areaID = this.mapTracker.getCurrentAreaID(playerX);
+    
+    //  Build scene for area
+
+    this.scenery.addFullScene(this.sceneryLayer, this.allGroup);
+    this.tmBuilder.buildTilemapForArea(playerX);
+    this.mapBuilder.buildMapForArea(playerX);
+
+    //  Initialise map area
+
+    const areaInfo = mapInfo.find(info => info.locID === areaID);
+    const isForest = areaInfo.type === Enum.AREA_FOREST;
+    this.birdSpawner.isForestArea = isForest;
+    this.wildlifeSpawner.isForestArea = isForest;
+
+    //  Map Tracker
+
+    this.mapTracker.updateAreaID(playerX);
+    if (areaID === Enum.LOC_MINES) {
+      this.spawnRocks(20);
+    }
   }
 
   update(time, delta) {
 
-    if (!this.isLoaded)
-      return
+    if (!this.initLoad) {
+      if (this.gameData) {
+        this.setupScene();
+        this.initLoad = true;
+      }
+      return;
+    }
 
+    this.gameData.playerX = this.player.x;
+    
     this.updateCameraBounds();    //  Update bounds according to Player location
 
     const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
     if (newAreaID >= 0) {
 
-      SaveData.SAVE_POS(this.player.x);
+      SaveData.SAVE_GAME_DATA(this.gameData);
 
       this.showAreaName(newAreaID);
 
@@ -374,6 +204,10 @@ export class PlayScene extends Scene {
 
     this.birdSpawner.update(time, delta);
     this.wildlifeSpawner.update(time, delta);
+
+    //  Tutorial  -------------------
+
+    this.tutorial.update();
 
     //  Updating sprite lane  -----------------------------------------
 
@@ -405,39 +239,10 @@ export class PlayScene extends Scene {
 
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
+    this.drawSoldierHP();
     this.test();
-    this.drawHP();
 
     this.controller.update();   // Player Controller
-  }
-
-  /** Rock when soldier attacks a rock overlap */
-  rockAttack(sprite, rock) {
-
-    const point = sprite.getAttackPoint();
-    
-    const r = rock.getBounds();
-    const rockLeft = r.left;
-    const rockRight = r.right;
-    
-    const contains = (point.x >= rockLeft && point.x <= rockRight);
-    
-    if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
-      sprite.recoil(2);
-      this.emitDust(rock.x, rock.y, rock.lane);
-      this.emitRock(rock.x, rock.getCenter().y);
-      // Tween expand and vanish
-      this.tweens.add({
-        targets: rock,
-        duration: 500,
-        scaleX: {from:1, to:1.5},
-        scaleY: {from:1, to:1.5},
-        alpha: {from:1, to:0},
-        onComplete: ()=>{
-          rock.destroy();
-        }
-      });
-    }
   }
 
   /** Show the name of the entered area shortly on screen */
@@ -503,18 +308,259 @@ export class PlayScene extends Scene {
       if (this.mapTracker.isFirstTimeInAreaThisSession(mapCheckPos)) {
         this.tmBuilder.buildTilemapForArea(mapCheckPos);
         this.mapBuilder.buildMapForArea(mapCheckPos);
-        this.shadows.createStaticShadowLines(this.bdL, this.bgL, this.fgL);
+        this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
       }
     }
   }
 
+  //  -----------------------------------------------------------------------------------------
+
+  createEmitters() {
+
+    this.dustEmitter = this.add.particles(0, 0, 'atlas', {
+      frame: ["pj_stone"],
+      scale: { start: 1, end: .5 },
+      alpha: { start: .6, end: 0 },
+      speedX: { min: -50, max: 50 },
+      speedY: { min: -10, max: 4 },
+      lifespan: 1000,
+      emitting: false,
+      tint: 0xaaaaaa,
+      tintFill: true
+    });
+
+    this.rockEmitter = this.add.particles(0,0, "atlas", {
+      frame: ["particle_rock"],
+      scale: { start: 1, end: .2 },
+      alpha: { start: .6, end: .5 },
+      speedX: { min: -50, max: 50 },
+      speedY: { min: -50, max: 10 },
+      lifespan: 500,
+      emitting: false
+    });
+
+  }
+
   emitDust(x, y, lane) {
-    this.emitter.setDepth(lane * 10 + 1);
-    this.emitter.emitParticleAt(x, y, 6);
+    this.dustEmitter.setDepth(lane * 10 + 1);
+    this.dustEmitter.emitParticleAt(x, y, 6);
   }
 
   emitRock(x, y, lane) {
     this.rockEmitter.setDepth(lane * 10 + 1);
     this.rockEmitter.emitParticleAt(x, y, 12);
+  }
+
+  //  -----------------------------------------------------------------------------------------
+
+  spawnSoldier(posX, lane, sheet) {
+
+    const sprite = new Soldier(this, posX, Vars.GROUND_TOP + 1 + lane, sheet);
+    sprite.playIdle();
+
+    this.physics.add.existing(sprite);
+    this.group_soldiers.add(sprite);
+
+    return sprite;
+  }
+
+  spawnPlayer() {
+
+    const camera = this.cameras.main;
+    const player = this.spawnSoldier(0, 1, Vars.SHEET_PLAYER);
+    this.group_allies.add(player);
+
+    camera.startFollow(player, true, .8);
+    player.hp = 10000000000;
+
+    return player;
+  }
+
+  spawnAlly() {
+  }
+
+  spawnEnemy() {
+      
+    const camera = this.cameras.main;
+    const worldView = camera.worldView;
+    const spawnPoint = Math.random() > .5 ? worldView.right + 20 : worldView.left - 20;
+
+    const deployX = spawnPoint + Phaser.Math.Between(-30, 30);
+    const deployLane = Phaser.Math.Between(1, 3);
+
+    const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
+    enemy.setEnemyBrain();
+    this.group_enemies.add(enemy);
+
+    return enemy;
+  }
+
+  spawnCollectible(posX, lane, type) {
+    
+    //  Collectible
+
+    const frame = "collect_heart";
+    // getFrame -
+
+    const item = new Collectible(this, posX, 0, frame);
+    item.initCollectible(lane);
+    //item.setType(type);
+
+    this.add.existing(item);
+    this.physics.add.existing(item);
+    this.groupCollectibles.add(item);
+  }
+
+  spawnRocks(amt) {
+
+    for (let i=0; i<amt; i++) {
+
+      const areaX = this.mapTracker.getAreaLeftX();
+      const minX = areaX + Vars.AREA_WIDTH * .15;
+      const maxX = areaX + Vars.AREA_WIDTH * .65;
+
+      const rockX = Phaser.Math.Between(minX, maxX);
+      const rockLane = Phaser.Math.Between(1, 3);
+
+      const rock = new Rock(this, rockX, Vars.GROUND_TOP);
+      rock.setLane(rockLane);
+
+      this.allGroup.add(rock);
+      this.groupRocks.add(rock);
+      this.add.existing(rock);
+      this.physics.add.existing(rock);
+    }
+    
+  }
+
+  clearRocks() {
+    this.groupRocks.clear(true, true);
+  }
+
+  spawnEnemies(amt) {
+    const count = this.group_enemies.countActive();
+    for (let i=0; i<amt; i++) {
+      this.spawnEnemy();
+    }
+  }
+
+  //  -
+
+  countEnemies() {
+    const count = this.group_enemies.countActive();
+    return count;
+  }
+
+  //  -----------------------------------------------------------------------------------------
+
+  allyEnemyCollision(ally, en) {
+
+    const checkAttack = function(attacker, defender) {
+      const point = attacker.getAttackPoint();
+      if (defender.hitboxContainsX(point.x)) {
+
+        // M<ust be facing enemy to defend
+        if (defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x)) {
+          attacker.recoil(16);
+          attacker.setTint(0xffa500);
+          defender.kickback(2, attacker.x);
+          // And delay
+        }
+        else {
+          attacker.recoil(4);
+          defender.hit(attacker);
+        }
+      }
+    }
+  
+    const sameLane = ally.isLane(en.lane);
+    if (sameLane) {
+
+      // if both attacking - check clash (some types, beat others)
+      // some blocks are parries
+
+      if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
+        ally.recoil(16);
+        en.recoil(16);
+        ally.setTintFill(0xFFFFFF);
+        en.setTintFill(0xFFFFFF);
+      }
+      if (ally.isState(Enum.SS_ATTACK)) {
+        checkAttack(ally, en);
+      }
+      else if (en.isState(Enum.SS_ATTACK)) {
+        checkAttack(en, ally);
+      }
+    }
+
+    // scaleX .9
+    // kick back
+  }
+
+  playerItemCollision(player, item) {
+    if (player.lane === item.lane) {
+      item.collectAndDestroy();
+      //  Apply effects of collected item and VFX
+    }
+  }
+
+  /** Rock when soldier attacks a rock overlap */
+  playerRockCollision(sprite, rock) {
+
+    const point = sprite.getAttackPoint();
+    
+    const r = rock.getBounds();
+    const rockLeft = r.left;
+    const rockRight = r.right;
+    
+    const contains = (point.x >= rockLeft && point.x <= rockRight);
+    
+    if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
+      sprite.recoil(2);
+      this.emitDust(rock.x, rock.y, rock.lane);
+      this.emitRock(rock.x, rock.getCenter().y);
+      // Tween expand and vanish
+      this.tweens.add({
+        targets: rock,
+        duration: 500,
+        scaleX: {from:1, to:1.5},
+        scaleY: {from:1, to:1.5},
+        alpha: {from:1, to:0},
+        onComplete: ()=>{
+          rock.destroy();
+        }
+      });
+    }
+  }
+
+  //  -----------------------------------------------------------------------------------------
+
+  drawSoldierHP() {
+
+    this.hpGraphics.clear();
+    
+    let soldiers = this.group_enemies.getChildren();
+
+    for (let soldier of soldiers) {
+
+      const lt = soldier.getTopLeft();
+      const barX = lt.x;
+      const barY = lt.y - 2;
+
+      const barMax = soldier.width;
+      const percent = soldier.hp / soldier.maxHP;
+      const barWidth = (barMax - 2) * percent;
+      const barHeight = 3;
+
+      // Black bar with hp inside it
+
+      if (soldier.hp < soldier.maxHP) {
+        this.hpGraphics.fillStyle(0x000000, .5);
+        this.hpGraphics.fillRect(barX, barY, barMax, barHeight);
+        this.hpGraphics.fillStyle(0xff0000, 1);
+        this.hpGraphics.fillRect(barX + 1, barY + 1, barWidth, barHeight - 2);
+      }
+
+    }
   }
 }

@@ -25,6 +25,9 @@ export default class EnemyBrain {
 
   // 1- Go to enemy and attack, back off, attack
 
+  // Battle smarts - Block more when HP low
+  // Flee battle if losing
+
   update(delta) {
 
     switch (this.mode) {
