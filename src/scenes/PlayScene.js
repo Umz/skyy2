@@ -130,16 +130,6 @@ export class PlayScene extends Scene {
       let pp = target.getAttackPoint();
       //graphics.fillStyle(0xffffff, 1);
       //graphics.fillCircle(pp.x, pp.y, 1);
-
-      /*
-      const wv = camera.worldView;
-      const count = this.group_enemies.countActive();
-      if (count === 0 && wv.left > 0 && player.x !== wv.left) {
-        for (let i=0; i<6; i++) {
-          this.spawnEnemy();
-        }
-      }
-      */
     }
   }
 
