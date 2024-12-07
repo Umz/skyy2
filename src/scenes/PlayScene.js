@@ -15,7 +15,7 @@ import AnimalHandler from "../bg/AnimalHandler";
 import Enum from "../util/Enum";
 import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
-import Story from "../util/Story";
+import Tutorial from "../classes/Tutorial";
 
 //  Move this MapInfo to Vars or to it's own JSON
 const mapInfo = [
@@ -122,6 +122,7 @@ export class PlayScene extends Scene {
 
     //  DEV  --------------------------------------------------------------------------
 
+    this.tutorial = new Tutorial(controllerKeys, this.controller);
 
     this.test = function() {
 
@@ -172,8 +173,6 @@ export class PlayScene extends Scene {
     if (areaID === Enum.LOC_MINES) {
       this.spawnRocks(20);
     }
-
-    //Story.ShowStory(Enum.STORY_1A_APPRENTICE);
   }
 
   update(time, delta) {
@@ -215,6 +214,10 @@ export class PlayScene extends Scene {
 
     this.birdSpawner.update(time, delta);
     this.wildlifeSpawner.update(time, delta);
+
+    //  Tutorial  -------------------
+
+    this.tutorial.update();
 
     //  Updating sprite lane  -----------------------------------------
 

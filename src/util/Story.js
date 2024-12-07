@@ -15,11 +15,19 @@ export default class Story {
 
 function addElements(parts) {
   const container = document.getElementById("storybox");
+
+  //  Story text
+
   for (let paragraph of parts) {
     const ele = document.createElement("p");
     ele.innerText = paragraph;
     container.appendChild(ele);
   }
+
+  //  Press Z
+  const div = document.createElement("div");
+  div.innerHTML = "Press <span class='keyboard-key'>Z</span>"
+  container.appendChild(div);
 }
 
 function showBox() {

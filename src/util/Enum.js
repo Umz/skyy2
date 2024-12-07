@@ -61,6 +61,8 @@ const Enum = {
   ACT_HURT: 6,
   ACT_REBOUND: 7,
 
+  //  Story References
+
   STORY_0_INTRO: 0,
   STORY_1A_APPRENTICE: 1,
   STORY_1B_APPRENTICE: 2,
