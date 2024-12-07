@@ -1,8 +1,12 @@
 export default class TutorialPart {
   
   constructor(tut) {
+    
     this.parent = tut;
+    this.scene = tut.scene;
+
     this.step = 0;
+    this.once = -1;
     this.date = new Date();
   }
 
@@ -20,9 +24,18 @@ export default class TutorialPart {
 
   nextStep() {
     this.step ++;
+    this.date = new Date();
   }
 
   prevStep() {
     this.step --;
+  }
+
+  doOnce() {
+    if (this.once !== this.step) {
+      this.once = this.step;
+      return true;
+    }
+    return false;
   }
 }

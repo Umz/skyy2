@@ -5,6 +5,8 @@ export default class P2 extends TutorialPart {
 
   update() {
 
+    const { scene } = this;
+
     switch (this.step) {
       
       case 0:        
@@ -12,12 +14,22 @@ export default class P2 extends TutorialPart {
           this.nextStep();
         }
         break;
+
       case 1:
-        this.parent.showInstructions(Enum.STORY_1A_APPRENTICE);
+        if (this.doOnce()) {
+          this.parent.showInstructions(Enum.STORY_1A_APPRENTICE);
+        }
+        break;
+
+      // Kill enemies
+      case 2:
+        scene.spawnEnemies(2);
         this.nextStep();
-        break;  // Waiting
-      case 2: // Kill enemies?
-        return false;
+        break;
+
+      case 3:
+        const enemyCount = scene.countEnemies();
+        return enemyCount === 0;
     }
 
     return false;

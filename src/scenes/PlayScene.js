@@ -122,7 +122,7 @@ export class PlayScene extends Scene {
 
     //  DEV  --------------------------------------------------------------------------
 
-    this.tutorial = new Tutorial(controllerKeys, this.controller);
+    this.tutorial = new Tutorial(this, controllerKeys, this.controller);
 
     this.test = function() {
 
@@ -445,6 +445,20 @@ export class PlayScene extends Scene {
 
   clearRocks() {
     this.groupRocks.clear(true, true);
+  }
+
+  spawnEnemies(amt) {
+    const count = this.group_enemies.countActive();
+    for (let i=0; i<amt; i++) {
+      this.spawnEnemy();
+    }
+  }
+
+  //  -
+
+  countEnemies() {
+    const count = this.group_enemies.countActive();
+    return count;
   }
 
   //  -----------------------------------------------------------------------------------------

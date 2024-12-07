@@ -1,15 +1,17 @@
 import P1 from "../tutorial/P1";
 import P2 from "../tutorial/P2";
-import Enum from "../util/Enum";
+import P3 from "../tutorial/P3";
+import P4 from "../tutorial/P4";
 import Story from "../util/Story";
 
 export default class Tutorial {
 
-  constructor(controller, spriteController) {
+  constructor(scene, controller, spriteController) {
     
-    this.controllerActive = false;
+    this.scene = scene;
     this.controller = controller;
     this.spriteController = spriteController;
+    this.controllerActive = false;
 
     this.tutorialNumber = 1;
     this.part = null;
@@ -58,6 +60,8 @@ export default class Tutorial {
     switch (this.tutorialNumber) {
       case 1: return new P1(this);
       case 2: return new P2(this);
+      case 3: return new P3(this);
+      case 4: return new P4(this);
     }
     return null;
   }
