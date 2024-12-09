@@ -240,6 +240,7 @@ export class PlayScene extends Scene {
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
     this.drawSoldierHP();
+    this.showSoldierNames();
     this.test();
 
     this.controller.update();   // Player Controller
@@ -265,6 +266,13 @@ export class PlayScene extends Scene {
         domLabel.destroy(true);
       }
     });
+  }
+
+  addDomName(name) {
+
+    const html = `<p>${name}</p>`;
+    const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5);
+    return domLabel;
   }
 
   /** Update the camrea bounds as the Player moves to grow world */
@@ -372,6 +380,7 @@ export class PlayScene extends Scene {
 
     camera.startFollow(player, true, .8);
     player.hp = 10000000000;
+    player.displayName = this.addDomName("Moon Chief");
 
     return player;
   }
@@ -562,5 +571,23 @@ export class PlayScene extends Scene {
       }
 
     }
+  }
+
+  showSoldierNames() {
+
+    const allies = this.group_allies.getChildren();
+    for (let ally of allies) {
+
+      if (ally.displayName) {
+        const dom = ally.displayName;
+        const pos = ally.getTopCenter();
+        dom.setPosition(pos.x, pos.y);
+      }
+    }
+
+  }
+
+  showSoldierIcon() {
+    console.log("Showing Icon for soldiers on lane?");
   }
 }
