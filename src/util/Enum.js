@@ -52,6 +52,7 @@ const Enum = {
 
   TEAM_ALLY: 1,
   TEAM_ENEMY: 2,
+  TEAM_PLAYER: 3,
 
   ACT_IDLE: 1,
   ACT_GOTO_TARGET: 2,

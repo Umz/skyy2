@@ -29,6 +29,12 @@ const mapInfo = [
   {locID: Enum.LOC_GREEN, name:"Green Village", type: Enum.AREA_VILLAGE}
 ];
 
+const labelClassCSS = new Map([
+  [Enum.TEAM_PLAYER, "player-name"],
+  [Enum.TEAM_ALLY, "ally-name"],
+  [Enum.TEAM_ENEMY, "enemy-name"]
+]);
+
 //  Tutorial - 
 //  Go through the tutorial (1)
 //  Refactory this scene
@@ -268,9 +274,10 @@ export class PlayScene extends Scene {
     });
   }
 
-  addDomName(name) {
-
-    const html = `<p class="name enemy-name">${name}</p>`;
+  addDomName(name, type) {
+    
+    const css = labelClassCSS.get(type);
+    const html = `<p class="name ${css}">${name}</p>`;
     const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
     return domLabel;
   }
@@ -380,7 +387,7 @@ export class PlayScene extends Scene {
 
     camera.startFollow(player, true, .8);
     player.hp = 10000000000;
-    player.displayName = this.addDomName("Moon Chief");
+    player.displayName = this.addDomName("Moon Chief", Enum.TEAM_PLAYER);
 
     return player;
   }
@@ -401,7 +408,7 @@ export class PlayScene extends Scene {
     enemy.setEnemyBrain();
     this.group_enemies.add(enemy);
 
-    enemy.displayName = this.addDomName("Enemy");
+    enemy.displayName = this.addDomName("Enemy", Enum.TEAM_ENEMY);
 
     return enemy;
   }

@@ -161,6 +161,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.hp = Math.max(0, this.hp - 1);
       if (this.hp === 0) {
         this.destroy(true);
+        if (this.displayName) {
+          this.displayName.destroy(true);
+        }
       }
     }
     // only do damage if not already HURT state- no double hits
