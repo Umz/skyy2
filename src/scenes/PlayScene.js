@@ -270,8 +270,8 @@ export class PlayScene extends Scene {
 
   addDomName(name) {
 
-    const html = `<p>${name}</p>`;
-    const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5);
+    const html = `<p class="name enemy-name">${name}</p>`;
+    const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
     return domLabel;
   }
 
@@ -400,6 +400,8 @@ export class PlayScene extends Scene {
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
     enemy.setEnemyBrain();
     this.group_enemies.add(enemy);
+
+    enemy.displayName = this.addDomName("Enemy");
 
     return enemy;
   }
@@ -575,13 +577,17 @@ export class PlayScene extends Scene {
 
   showSoldierNames() {
 
-    const allies = this.group_allies.getChildren();
+    //const allies = this.group_allies.getChildren();
+    const allies = this.group_soldiers.getChildren();
     for (let ally of allies) {
 
       if (ally.displayName) {
         const dom = ally.displayName;
         const pos = ally.getTopCenter();
-        dom.setPosition(pos.x, pos.y);
+        
+        const velX = Math.abs(ally.velocityX);
+        const pY = (velX > 24) ? -24 : pos.y;
+        dom.setPosition(pos.x, pY);
       }
     }
 
