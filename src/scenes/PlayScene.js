@@ -152,7 +152,8 @@ export class PlayScene extends Scene {
 
     //  Initialise map area
 
-    const areaInfo = mapInfo.find(info => info.locID === areaID);
+    let aID = Math.max(1, areaID);
+    const areaInfo = mapInfo.find(info => info.locID === aID);
     const isForest = areaInfo.type === Enum.AREA_FOREST;
     this.birdSpawner.isForestArea = isForest;
     this.wildlifeSpawner.isForestArea = isForest;
