@@ -545,7 +545,10 @@ export class PlayScene extends Scene {
 
       const lt = soldier.getTopLeft();
       const barX = lt.x;
-      const barY = lt.y - 2;
+
+      const guardY = lt.y - 2;
+      //const hpY = soldier.isGuarding ? guardY - 6 : lt.y - 2;
+      const hpY = ly.y - 8;
 
       const barMax = soldier.width;
       const percent = soldier.hp / soldier.maxHP;
@@ -556,11 +559,20 @@ export class PlayScene extends Scene {
 
       if (soldier.hp < soldier.maxHP) {
         this.hpGraphics.fillStyle(0x000000, .5);
-        this.hpGraphics.fillRect(barX, barY, barMax, barHeight);
+        this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
         this.hpGraphics.fillStyle(0xff0000, 1);
-        this.hpGraphics.fillRect(barX + 1, barY + 1, barWidth, barHeight - 2);
+        this.hpGraphics.fillRect(barX + 1, hpY + 1, barWidth, barHeight - 2);
       }
 
+      //  Draw Guard bar when defending
+
+      if (soldier.isDefending || true) {
+        this.hpGraphics.fillStyle(0x000000, .5);
+        this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
+        this.hpGraphics.fillStyle(0x0000ff, 1);
+        this.hpGraphics.fillRect(barX + 1, hpY + 1, barWidth, barHeight - 2);
+      }
     }
   }
+
 }
