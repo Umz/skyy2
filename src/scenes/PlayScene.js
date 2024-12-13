@@ -158,7 +158,8 @@ export class PlayScene extends Scene {
 
     //  Initialise map area
 
-    const areaInfo = mapInfo.find(info => info.locID === areaID);
+    let aID = Math.max(1, areaID);
+    const areaInfo = mapInfo.find(info => info.locID === aID);
     const isForest = areaInfo.type === Enum.AREA_FOREST;
     this.birdSpawner.isForestArea = isForest;
     this.wildlifeSpawner.isForestArea = isForest;
@@ -563,22 +564,36 @@ export class PlayScene extends Scene {
 
       const lt = soldier.getTopLeft();
       const barX = lt.x;
-      const barY = lt.y - 2;
+
+      const guardY = lt.y - 2;
+      const hpY = soldier.isDefending ? guardY - 4 : lt.y - 1;
 
       const barMax = soldier.width;
-      const percent = soldier.hp / soldier.maxHP;
-      const barWidth = (barMax - 2) * percent;
       const barHeight = 3;
+      
+      const percentHP = soldier.hp / soldier.maxHP;
+      const hpBar = (barMax - 2) * percentHP;
+
+      const percentGuard = soldier.guard / soldier.maxGuard;
+      const guardBar = (barMax - 2) * percentGuard;
 
       // Black bar with hp inside it
 
       if (soldier.hp < soldier.maxHP) {
         this.hpGraphics.fillStyle(0x000000, .5);
-        this.hpGraphics.fillRect(barX, barY, barMax, barHeight);
+        this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
         this.hpGraphics.fillStyle(0xff0000, 1);
-        this.hpGraphics.fillRect(barX + 1, barY + 1, barWidth, barHeight - 2);
+        this.hpGraphics.fillRect(barX + 1, hpY + 1, hpBar, barHeight - 2);
       }
 
+      //  Draw Guard bar when defending
+
+      if (soldier.isDefending) {
+        this.hpGraphics.fillStyle(0x000000, .5);
+        this.hpGraphics.fillRect(barX, guardY, barMax, barHeight);
+        this.hpGraphics.fillStyle(0x0000ff, 1);
+        this.hpGraphics.fillRect(barX + 1, guardY + 1, guardBar, barHeight - 2);
+      }
     }
   }
 
@@ -597,7 +612,6 @@ export class PlayScene extends Scene {
         dom.setPosition(pos.x, pY);
       }
     }
-
   }
 
   showSoldierIcon() {
