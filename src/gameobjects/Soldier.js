@@ -161,6 +161,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.hp = Math.max(0, this.hp - 1);
       if (this.hp === 0) {
         this.destroy(true);
+        if (this.displayName) {
+          this.displayName.destroy(true);
+        }
       }
     }
     // only do damage if not already HURT state- no double hits
@@ -187,6 +190,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     const laneY = Vars.GROUND_TOP + 1 + lane;
     this.lane = lane;
     this.setY(laneY);
+  }
+
+  setDisplayName(n) {
+    this.displayName = n;
   }
 
   //  Controller functions
@@ -354,4 +361,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.anims.play(this.prefix + Vars.ANIM_DEFEND, true);
   }
 
+  get velocityX() {
+    return this.body.velocity.x;
+  }
+
+  get velocityY() {
+    return this.body.velocity.y;
+  }
 }

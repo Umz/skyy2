@@ -29,6 +29,12 @@ const mapInfo = [
   {locID: Enum.LOC_GREEN, name:"Green Village", type: Enum.AREA_VILLAGE}
 ];
 
+const labelClassCSS = new Map([
+  [Enum.TEAM_PLAYER, "player-name"],
+  [Enum.TEAM_ALLY, "ally-name"],
+  [Enum.TEAM_ENEMY, "enemy-name"]
+]);
+
 //  Tutorial - 
 //  Go through the tutorial (1)
 //  Refactory this scene
@@ -241,6 +247,7 @@ export class PlayScene extends Scene {
     this.shadows.updateDynamicShadows();
     this.shadows.drawShadows();
     this.drawSoldierHP();
+    this.showSoldierNames();
     this.test();
 
     this.controller.update();   // Player Controller
@@ -266,6 +273,14 @@ export class PlayScene extends Scene {
         domLabel.destroy(true);
       }
     });
+  }
+
+  addDomName(name, type) {
+    
+    const css = labelClassCSS.get(type);
+    const html = `<p class="name ${css}">${name}</p>`;
+    const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
+    return domLabel;
   }
 
   /** Update the camrea bounds as the Player moves to grow world */
@@ -373,6 +388,7 @@ export class PlayScene extends Scene {
 
     camera.startFollow(player, true, .8);
     player.hp = 10000000000;
+    player.displayName = this.addDomName("Moon Chief", Enum.TEAM_PLAYER);
 
     return player;
   }
@@ -392,6 +408,8 @@ export class PlayScene extends Scene {
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
     enemy.setEnemyBrain();
     this.group_enemies.add(enemy);
+
+    enemy.displayName = this.addDomName("Enemy", Enum.TEAM_ENEMY);
 
     return enemy;
   }
@@ -576,4 +594,25 @@ export class PlayScene extends Scene {
     }
   }
 
+  showSoldierNames() {
+
+    //const allies = this.group_allies.getChildren();
+    const allies = this.group_soldiers.getChildren();
+    for (let ally of allies) {
+
+      if (ally.displayName) {
+        const dom = ally.displayName;
+        const pos = ally.getTopCenter();
+        
+        const velX = Math.abs(ally.velocityX);
+        const pY = (velX > 24) ? -24 : pos.y;
+        dom.setPosition(pos.x, pY);
+      }
+    }
+
+  }
+
+  showSoldierIcon() {
+    console.log("Showing Icon for soldiers on lane?");
+  }
 }
