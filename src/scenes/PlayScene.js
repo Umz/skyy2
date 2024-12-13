@@ -566,13 +566,16 @@ export class PlayScene extends Scene {
       const barX = lt.x;
 
       const guardY = lt.y - 2;
-      //const hpY = soldier.isGuarding ? guardY - 6 : lt.y - 2;
-      const hpY = ly.y - 8;
+      const hpY = soldier.isDefending ? guardY - 4 : lt.y - 1;
 
       const barMax = soldier.width;
-      const percent = soldier.hp / soldier.maxHP;
-      const barWidth = (barMax - 2) * percent;
       const barHeight = 3;
+      
+      const percentHP = soldier.hp / soldier.maxHP;
+      const hpBar = (barMax - 2) * percentHP;
+
+      const percentGuard = soldier.guard / soldier.maxGuard;
+      const guardBar = (barMax - 2) * percentGuard;
 
       // Black bar with hp inside it
 
@@ -580,16 +583,16 @@ export class PlayScene extends Scene {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
         this.hpGraphics.fillStyle(0xff0000, 1);
-        this.hpGraphics.fillRect(barX + 1, hpY + 1, barWidth, barHeight - 2);
+        this.hpGraphics.fillRect(barX + 1, hpY + 1, hpBar, barHeight - 2);
       }
 
       //  Draw Guard bar when defending
 
-      if (soldier.isDefending || true) {
+      if (soldier.isDefending) {
         this.hpGraphics.fillStyle(0x000000, .5);
-        this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
+        this.hpGraphics.fillRect(barX, guardY, barMax, barHeight);
         this.hpGraphics.fillStyle(0x0000ff, 1);
-        this.hpGraphics.fillRect(barX + 1, hpY + 1, barWidth, barHeight - 2);
+        this.hpGraphics.fillRect(barX + 1, guardY + 1, guardBar, barHeight - 2);
       }
     }
   }
@@ -609,7 +612,6 @@ export class PlayScene extends Scene {
         dom.setPosition(pos.x, pY);
       }
     }
-
   }
 
   showSoldierIcon() {

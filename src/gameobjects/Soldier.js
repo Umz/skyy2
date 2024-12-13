@@ -17,6 +17,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.maxHP = 3;
     this.hp = this.maxHP;
 
+    this.maxGuard = 5;
+    this.guard = 5;
+
     this.brain;
 
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
