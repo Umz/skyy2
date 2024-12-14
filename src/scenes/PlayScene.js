@@ -396,13 +396,13 @@ export class PlayScene extends Scene {
   spawnAlly() {
   }
 
-  spawnEnemy() {
+  spawnEnemy(posX) {
       
     const camera = this.cameras.main;
     const worldView = camera.worldView;
     const spawnPoint = Math.random() > .5 ? worldView.right + 20 : worldView.left - 20;
 
-    const deployX = spawnPoint + Phaser.Math.Between(-30, 30);
+    const deployX = (posX ?? spawnPoint) + Phaser.Math.Between(-30, 30);
     const deployLane = Phaser.Math.Between(1, 3);
 
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
@@ -456,10 +456,10 @@ export class PlayScene extends Scene {
     this.groupRocks.clear(true, true);
   }
 
-  spawnEnemies(amt) {
+  spawnEnemies(amt, posX) {
     const count = this.group_enemies.countActive();
     for (let i=0; i<amt; i++) {
-      this.spawnEnemy();
+      this.spawnEnemy(posX);
     }
   }
 
