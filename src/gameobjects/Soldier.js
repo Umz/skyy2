@@ -1,4 +1,5 @@
 import EnemyBrain from "../ai/EnemyBrain";
+import WildmanBrain from "../ai/WildmanBrain";
 import Enum from "../util/Enum";
 import Vars from "../util/Vars";
 
@@ -104,6 +105,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0xff5555);
         break;
     }
+  }
+
+  setAllyBrain() {
+
+  }
+
+  setWildmanBrain() {
+    this.brain = new WildmanBrain(this);
+    return this;
   }
 
   setEnemyBrain() {

@@ -148,6 +148,8 @@ export class PlayScene extends Scene {
     this.player.setX(playerX);
     this.player.setLane(playerLane);
 
+    let wildman = this.spawnWildman();
+
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
     //  Build scene for area
@@ -214,7 +216,7 @@ export class PlayScene extends Scene {
 
     //  Tutorial  -------------------
 
-    this.tutorial.update();
+    //this.tutorial.update();
 
     //  Updating sprite lane  -----------------------------------------
 
@@ -391,6 +393,18 @@ export class PlayScene extends Scene {
     player.displayName = this.addDomName("Moon Chief", Enum.TEAM_PLAYER);
 
     return player;
+  }
+
+  spawnWildman() {
+
+    const wildman = this.spawnSoldier(this.player.x + 48, 1, Vars.SHEET_WILDMAN);
+    wildman.hp = 10;
+    wildman.displayName = this.addDomName("Wildman", Enum.TEAM_ALLY);
+    wildman.setWildmanBrain();
+
+    this.group_allies.add(wildman);
+
+    return wildman;
   }
 
   spawnAlly() {
