@@ -192,6 +192,7 @@ export class PlayScene extends Scene {
     if (newAreaID >= 0) {
 
       SaveData.SAVE_GAME_DATA(this.gameData);
+      SaveData.Data.location = newAreaID;
 
       this.showAreaName(newAreaID);
 
@@ -216,7 +217,7 @@ export class PlayScene extends Scene {
 
     //  Tutorial  -------------------
 
-    //this.tutorial.update();
+    this.tutorial.update();
 
     //  Updating sprite lane  -----------------------------------------
 
