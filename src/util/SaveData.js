@@ -1,11 +1,15 @@
 import localforage from "localforage";
+import Enum from "./Enum";
 
 const GAME_DATA = "GAME_DATA";
 
 const data = {
+  
   playtime: 0,
   playerX: 240,
-  playerLane: 1
+  playerLane: 1,
+
+  location: Enum.LOC_MAM,
 }
 
 const settings = {
@@ -23,10 +27,6 @@ export default class SaveData {
     return savedData || data;
   }
 
-  static GET_GAME_DATA() {
-    return data;
-  }
-
   static GET_SETTINGS() {
     return settings;
   }
@@ -39,4 +39,7 @@ export default class SaveData {
     })
   }
 
+  static get Data() {
+    return data;
+  }
 }
