@@ -16,24 +16,8 @@ import Enum from "../util/Enum";
 import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
-
-//  Move this MapInfo to Vars or to it's own JSON
-const mapInfo = [
-  {locID: Enum.LOC_BLUE_FOREST, name:"Blue Forest", type: Enum.AREA_FOREST},
-  {locID: Enum.LOC_MAM, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
-  {locID: Enum.LOC_ROSE_FOREST, name:"Rose Forest", type: Enum.AREA_FOREST},
-  {locID: Enum.LOC_STORM, name:"Storm Village", type: Enum.AREA_VILLAGE},
-  {locID: Enum.LOC_MINES, name:"The Mines", type: Enum.AREA_MISC},
-  {locID: Enum.LOC_PLAINS, name:"Mario Plains", type: Enum.AREA_MISC},
-  {locID: Enum.LOC_GREEN_FOREST, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
-  {locID: Enum.LOC_GREEN, name:"Green Village", type: Enum.AREA_VILLAGE}
-];
-
-const labelClassCSS = new Map([
-  [Enum.TEAM_PLAYER, "player-name"],
-  [Enum.TEAM_ALLY, "ally-name"],
-  [Enum.TEAM_ENEMY, "enemy-name"]
-]);
+import MapInfo from "../const/MapInfo";
+import CSSClasses from "../const/CSSClasses";
 
 export class PlayScene extends Scene {
 
@@ -88,9 +72,7 @@ export class PlayScene extends Scene {
 
     this.mapTracker = new MapTracker();   // Player location on map
     this.scenery = new Scenery(this);     // Background scenery
-
-    this.tmBuilder = new TilemapBuilder(this, this.tilemapLayer);    // Tilemap builder (ground tiles)
-    
+    this.tilemapBuilder = new TilemapBuilder(this, this.tilemapLayer);    // Tilemap builder (ground tiles)
     this.mapBuilder = new MapBuilder(this);   // Map builder (trees, locations)
     this.mapBuilder.setLayers({bgLayer:this.bgLayer, fgLayer:this.fgLayer, buildingsLayer:this.buildingsLayer});
 
@@ -148,13 +130,13 @@ export class PlayScene extends Scene {
     //  Build scene for area
 
     this.scenery.addFullScene(this.sceneryLayer, this.allGroup);
-    this.tmBuilder.buildTilemapForArea(playerX);
+    this.tilemapBuilder.buildTilemapForArea(playerX);
     this.mapBuilder.buildMapForArea(playerX);
 
     //  Initialise map area
 
     let aID = Math.max(1, areaID);
-    const areaInfo = mapInfo.find(info => info.locID === aID);
+    const areaInfo = MapInfo.find(info => info.locID === aID);
     const isForest = areaInfo.type === Enum.AREA_FOREST;
     this.birdSpawner.isForestArea = isForest;
     this.wildlifeSpawner.isForestArea = isForest;
@@ -189,7 +171,7 @@ export class PlayScene extends Scene {
 
       this.showAreaName(newAreaID);
 
-      const areaInfo = mapInfo.find(info => info.locID === newAreaID);
+      const areaInfo = MapInfo.find(info => info.locID === newAreaID);
 
       if (areaInfo.locID == Enum.LOC_MINES) {
         this.spawnRocks(20);
@@ -252,7 +234,7 @@ export class PlayScene extends Scene {
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
 
-    const data = mapInfo.find(info => info.locID === areaID);
+    const data = MapInfo.find(info => info.locID === areaID);
 
     const json = this.cache.json.get('hud_html');
     const template = json.area_enter_label;
@@ -269,14 +251,6 @@ export class PlayScene extends Scene {
         domLabel.destroy(true);
       }
     });
-  }
-
-  addDomName(name, type) {
-    
-    const css = labelClassCSS.get(type);
-    const html = `<p class="display-name ${css}">${name}</p>`;
-    const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
-    return domLabel;
   }
 
   /** Update the camrea bounds as the Player moves to grow world */
@@ -318,7 +292,7 @@ export class PlayScene extends Scene {
       camera.setBounds(newLeft, 0, areaWidth, camera.height);
 
       if (this.mapTracker.isFirstTimeInAreaThisSession(mapCheckPos)) {
-        this.tmBuilder.buildTilemapForArea(mapCheckPos);
+        this.tilemapBuilder.buildTilemapForArea(mapCheckPos);
         this.mapBuilder.buildMapForArea(mapCheckPos);
         this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
       }
@@ -379,12 +353,12 @@ export class PlayScene extends Scene {
   spawnPlayer() {
 
     const camera = this.cameras.main;
-    const player = this.spawnSoldier(SaveData.Data.playerX, 1, Vars.SHEET_PLAYER);
+    const player = this.spawnSoldier(0, 1, Vars.SHEET_PLAYER);
     this.groupAllies.add(player);
 
     camera.startFollow(player, true, .8);
     player.hp = 1000;
-    player.displayName = this.addDomName("Moon Chief", Enum.TEAM_PLAYER);
+    player.addDisplayName("Moon Chief", Enum.TEAM_PLAYER);
 
     return player;
   }
@@ -393,8 +367,8 @@ export class PlayScene extends Scene {
 
     const spawnX = Vars.AREA_WIDTH * .5;
     const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
-    wildman.hp = 10;
-    wildman.displayName = this.addDomName("Wildman", Enum.TEAM_ALLY);
+    wildman.setHP(10, 10);
+    wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
     wildman.setWildmanBrain();
 
     this.groupAllies.add(wildman);
@@ -420,9 +394,7 @@ export class PlayScene extends Scene {
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
     enemy.setEnemyBrain();
     this.groupEnemies.add(enemy);
-
-    enemy.displayName = this.addDomName("Enemy", Enum.TEAM_ENEMY);
-
+    
     return enemy;
   }
 
@@ -586,7 +558,7 @@ export class PlayScene extends Scene {
       const percentHP = soldier.hp / soldier.maxHP;
       const hpBar = (barMax - 2) * percentHP;
 
-      const percentGuard = soldier.guard / soldier.maxGuard;
+      const percentGuard = soldier.gp / soldier.maxGP;
       const guardBar = (barMax - 2) * percentGuard;
 
       // Black bar with hp inside it

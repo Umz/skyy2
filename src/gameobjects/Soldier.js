@@ -1,5 +1,6 @@
 import EnemyBrain from "../ai/EnemyBrain";
 import WildmanBrain from "../ai/WildmanBrain";
+import CSSClasses from "../const/CSSClasses";
 import Enum from "../util/Enum";
 import Vars from "../util/Vars";
 
@@ -7,22 +8,23 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
-    
     this.prefix = texture;  // Prefix for animations
-    this.speed = 96;  // Use 72-
 
-    this.movementSpeed = 0;
+    //  Stats / settings
+
     this.state = Enum.SS_READY;
+    this.speed = 96;  // Use 72-
+    this.movementSpeed = 0;
     this.lane = 1;
 
-    this.maxHP = 3;
-    this.hp = this.maxHP;
+    //  Play stats
 
-    this.maxGuard = 5;
-    this.guard = 5;
+    this.maxHP = 3;   // Health Points
+    this.maxGP = 5;   // Guard Points
+    this.hp = this.maxHP;
+    this.gp = this.maxGP;
 
     this.brain;
-
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
     
     this.setOrigin(.5, 1);
@@ -106,6 +108,34 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
         break;
     }
   }
+
+  //  Stat adjustment --------------------------------------------------------
+
+  setHP(activeHP, max = 0) {
+    this.hp = activeHP;
+    this.maxHP = max > 0 ? max : this.maxHP;
+  }
+
+  setGP(activeGP, max = 0) {
+    this.gp = activeGP;
+    this.maxGP = max > 0 ? max : this.maxGP;
+  }
+
+  //  ---------------------------------------------------------------------
+  
+  addDisplayName(name, team) {
+
+    const json = this.scene.cache.json.get('hud_html');
+    const css = CSSClasses.get(team);
+    const template = json.display_name;
+
+    let html = template.replace("_class_", css);
+    html = html.replace("_name_", name);
+    
+    this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
+  }
+
+  //  ---------------------------------------------------------------------
 
   setAllyBrain() {
   }
@@ -202,10 +232,6 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     const laneY = Vars.GROUND_TOP + 1 + lane;
     this.lane = lane;
     this.setY(laneY);
-  }
-
-  setDisplayName(n) {
-    this.displayName = n;
   }
 
   //  Controller functions
