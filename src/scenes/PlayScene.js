@@ -279,7 +279,7 @@ export class PlayScene extends Scene {
   addDomName(name, type) {
     
     const css = labelClassCSS.get(type);
-    const html = `<p class="name ${css}">${name}</p>`;
+    const html = `<p class="display-name ${css}">${name}</p>`;
     const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
     return domLabel;
   }
