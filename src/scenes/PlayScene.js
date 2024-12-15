@@ -35,10 +35,6 @@ const labelClassCSS = new Map([
   [Enum.TEAM_ENEMY, "enemy-name"]
 ]);
 
-//  Tutorial - 
-//  Go through the tutorial (1)
-//  Refactory this scene
-
 export class PlayScene extends Scene {
 
   constructor() {
@@ -49,33 +45,32 @@ export class PlayScene extends Scene {
 
     //  Graphics objects
 
-    const graphics = this.add.graphics();
+    this.graphics = this.add.graphics();
     this.hpGraphics = this.add.graphics().setDepth(35);
 
     //  Groups
 
-    const birdGroup = this.add.group({runChildUpdate:true});
+    this.birdGroup = this.add.group({runChildUpdate:true});
 
     this.allGroup = this.add.group({runChildUpdate: true});
     this.groupRocks = this.add.group();
     this.groupCollectibles = this.add.group();
     
-    this.group_soldiers = this.add.group({runChildUpdate:true});
-    this.group_allies = this.add.group();
-    this.group_enemies = this.add.group();
+    this.groupSoldiers = this.add.group({runChildUpdate:true});
+    this.groupAllies = this.add.group();
+    this.groupEnemies = this.add.group();
 
     //  Display layers
 
     this.sceneryLayer = this.add.layer();
-    const birdLayer = this.add.layer();
-    const tilemapLayer = this.add.layer();
+    this.birdLayer = this.add.layer();
+    this.tilemapLayer = this.add.layer();
 
-    const shadowLayer = this.add.layer();
+    this.shadowLayer = this.add.layer();
     this.bgLayer = this.add.layer();
     this.buildingsLayer = this.add.layer();
     this.fgLayer = this.add.layer();
-
-    const animalLayer = this.add.layer();
+    this.animalLayer = this.add.layer();
 
     this.lane_1 = this.add.layer().setDepth(10);
     this.lane_2 = this.add.layer().setDepth(20);
@@ -85,7 +80,7 @@ export class PlayScene extends Scene {
 
     const camera = this.cameras.main;
 
-    //  Create Player Here
+    //  Create Player
 
     this.player = this.spawnPlayer();
 
@@ -94,23 +89,23 @@ export class PlayScene extends Scene {
     this.mapTracker = new MapTracker();   // Player location on map
     this.scenery = new Scenery(this);     // Background scenery
 
-    this.tmBuilder = new TilemapBuilder(this, tilemapLayer);    // Tilemap builder (ground tiles)
+    this.tmBuilder = new TilemapBuilder(this, this.tilemapLayer);    // Tilemap builder (ground tiles)
     
     this.mapBuilder = new MapBuilder(this);   // Map builder (trees, locations)
     this.mapBuilder.setLayers({bgLayer:this.bgLayer, fgLayer:this.fgLayer, buildingsLayer:this.buildingsLayer});
 
-    this.birdSpawner = new BirdHandler(this, birdLayer, birdGroup); // Background birds spawner
-    this.wildlifeSpawner = new AnimalHandler(this, animalLayer, birdGroup); // Background animals spawner
+    this.birdSpawner = new BirdHandler(this, this.birdLayer, this.birdGroup);  // Background birds spawner
+    this.wildlifeSpawner = new AnimalHandler(this, this.animalLayer, this.birdGroup);  // Background animals spawner
 
-    this.shadows = new Shadow(camera, graphics);
+    this.shadows = new Shadow(camera, this.graphics);
     this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
-    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, animalLayer);
+    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, this.animalLayer);
     this.shadows.setActiveLane(this.player);
-    shadowLayer.add(graphics);
+    this.shadowLayer.add(this.graphics);
 
     //  Collisions
 
-    this.physics.add.overlap(this.group_allies, this.group_enemies, this.allyEnemyCollision, null, this);   // Battle collisions
+    this.physics.add.overlap(this.groupAllies, this.groupEnemies, this.allyEnemyCollision, null, this);   // Battle collisions
     this.physics.add.overlap(this.player, this.groupCollectibles, this.playerItemCollision, null, this); 
     this.physics.add.overlap(this.player, this.groupRocks, this.playerRockCollision, null, this);
 
@@ -219,7 +214,7 @@ export class PlayScene extends Scene {
 
     //  Updating sprite lane  -----------------------------------------
 
-    const allSprites = this.group_soldiers.getChildren();
+    const allSprites = this.groupSoldiers.getChildren();
     for (let sprite of allSprites) {
       
       const lane = sprite.lane;
@@ -376,7 +371,7 @@ export class PlayScene extends Scene {
     sprite.playIdle();
 
     this.physics.add.existing(sprite);
-    this.group_soldiers.add(sprite);
+    this.groupSoldiers.add(sprite);
 
     return sprite;
   }
@@ -384,11 +379,11 @@ export class PlayScene extends Scene {
   spawnPlayer() {
 
     const camera = this.cameras.main;
-    const player = this.spawnSoldier(0, 1, Vars.SHEET_PLAYER);
-    this.group_allies.add(player);
+    const player = this.spawnSoldier(SaveData.Data.playerX, 1, Vars.SHEET_PLAYER);
+    this.groupAllies.add(player);
 
     camera.startFollow(player, true, .8);
-    player.hp = 10000000000;
+    player.hp = 1000;
     player.displayName = this.addDomName("Moon Chief", Enum.TEAM_PLAYER);
 
     return player;
@@ -402,7 +397,7 @@ export class PlayScene extends Scene {
     wildman.displayName = this.addDomName("Wildman", Enum.TEAM_ALLY);
     wildman.setWildmanBrain();
 
-    this.group_allies.add(wildman);
+    this.groupAllies.add(wildman);
 
     return wildman;
   }
@@ -424,7 +419,7 @@ export class PlayScene extends Scene {
 
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
     enemy.setEnemyBrain();
-    this.group_enemies.add(enemy);
+    this.groupEnemies.add(enemy);
 
     enemy.displayName = this.addDomName("Enemy", Enum.TEAM_ENEMY);
 
@@ -474,7 +469,7 @@ export class PlayScene extends Scene {
   }
 
   spawnEnemies(amt, posX) {
-    const count = this.group_enemies.countActive();
+    const count = this.groupEnemies.countActive();
     for (let i=0; i<amt; i++) {
       this.spawnEnemy(posX);
     }
@@ -483,7 +478,7 @@ export class PlayScene extends Scene {
   //  -
 
   countEnemies() {
-    const count = this.group_enemies.countActive();
+    const count = this.groupEnemies.countActive();
     return count;
   }
 
@@ -575,7 +570,7 @@ export class PlayScene extends Scene {
 
     this.hpGraphics.clear();
     
-    let soldiers = this.group_enemies.getChildren();
+    let soldiers = this.groupEnemies.getChildren();
 
     for (let soldier of soldiers) {
 
@@ -617,7 +612,7 @@ export class PlayScene extends Scene {
   showSoldierNames() {
 
     //const allies = this.group_allies.getChildren();
-    const allies = this.group_soldiers.getChildren();
+    const allies = this.groupSoldiers.getChildren();
     for (let ally of allies) {
 
       if (ally.displayName) {
