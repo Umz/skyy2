@@ -44,7 +44,7 @@ export default class WildmanBrain {
   // This will check that the sprites have the same target
   getClosestAlly() {
 
-    const all = this.scene.group_enemies.getChildren();
+    const all = this.scene.groupEnemies.getChildren();
     let closest = null;
     let closestDistance = Infinity;
 
@@ -64,7 +64,7 @@ export default class WildmanBrain {
   // This must check that the closest ally has the same target
   getClosestAllyToTarget() {
     
-    const all = this.scene.group_enemies.getChildren();
+    const all = this.scene.groupEnemies.getChildren();
     let closest = null;
     let closestDistance = Infinity;
 

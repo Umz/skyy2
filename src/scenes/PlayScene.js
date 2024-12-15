@@ -17,7 +17,6 @@ import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
-import CSSClasses from "../const/CSSClasses";
 
 export class PlayScene extends Scene {
 
@@ -101,7 +100,7 @@ export class PlayScene extends Scene {
     this.controller = new SpriteController(this.player, controllerKeys);
 
     this.initLoad = false;
-    this.gameData = await SaveData.LOAD_GAME_DATA();
+    this.loadedGameData = await SaveData.LOAD_GAME_DATA();
 
     //  DEV  --------------------------------------------------------------------------
 
@@ -119,8 +118,8 @@ export class PlayScene extends Scene {
   /** Initial scene setup (first load) */
   setupScene() {
 
-    const playerX = this.gameData.playerX;
-    const playerLane = this.gameData.playerLane;
+    const playerX = SaveData.Data.playerX;
+    const playerLane = SaveData.Data.playerLane;
 
     this.player.setX(playerX);
     this.player.setLane(playerLane);
@@ -151,23 +150,25 @@ export class PlayScene extends Scene {
 
   update(time, delta) {
 
+    //  Wait until the data is loaded
+
     if (!this.initLoad) {
-      if (this.gameData) {
+      if (this.loadedGameData) {
         this.setupScene();
         this.initLoad = true;
       }
       return;
     }
 
-    this.gameData.playerX = this.player.x;
+    SaveData.Data.playerX = this.player.x;
     
     this.updateCameraBounds();    //  Update bounds according to Player location
 
     const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
     if (newAreaID >= 0) {
 
-      SaveData.SAVE_GAME_DATA(this.gameData);
       SaveData.Data.location = newAreaID;
+      SaveData.SAVE_GAME_DATA();
 
       this.showAreaName(newAreaID);
 
@@ -357,7 +358,7 @@ export class PlayScene extends Scene {
     this.groupAllies.add(player);
 
     camera.startFollow(player, true, .8);
-    player.hp = 1000;
+    player.setHP(1000, 1000);
     player.addDisplayName("Moon Chief", Enum.TEAM_PLAYER);
 
     return player;
@@ -394,7 +395,7 @@ export class PlayScene extends Scene {
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
     enemy.setEnemyBrain();
     this.groupEnemies.add(enemy);
-    
+
     return enemy;
   }
 
