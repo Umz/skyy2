@@ -108,7 +108,6 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   setAllyBrain() {
-
   }
 
   setWildmanBrain() {

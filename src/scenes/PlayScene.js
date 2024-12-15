@@ -148,8 +148,6 @@ export class PlayScene extends Scene {
     this.player.setX(playerX);
     this.player.setLane(playerLane);
 
-    let wildman = this.spawnWildman();
-
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
     //  Build scene for area
@@ -398,7 +396,8 @@ export class PlayScene extends Scene {
 
   spawnWildman() {
 
-    const wildman = this.spawnSoldier(this.player.x + 48, 1, Vars.SHEET_WILDMAN);
+    const spawnX = Vars.AREA_WIDTH * .5;
+    const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
     wildman.hp = 10;
     wildman.displayName = this.addDomName("Wildman", Enum.TEAM_ALLY);
     wildman.setWildmanBrain();
@@ -406,6 +405,9 @@ export class PlayScene extends Scene {
     this.group_allies.add(wildman);
 
     return wildman;
+  }
+
+  spawnBlueMoon() {
   }
 
   spawnAlly() {

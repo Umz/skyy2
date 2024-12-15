@@ -14,7 +14,9 @@ export default class P4 extends TutorialPart {
       
       case 0:
         if (SaveData.Data.location === Enum.LOC_BLUE_FOREST) {
-          this.nextStep();    // When in Blue Forest
+          if (this.doOnce()) {
+            this.parent.showInstructions(Enum.STORY_2A_CLAIM_BLUE);
+          }
         }
         break;
 
@@ -26,19 +28,40 @@ export default class P4 extends TutorialPart {
         break;
 
       case 2:
-        // Next point
+        if (player.x < Vars.AREA_WIDTH * .8) {
+          this.spawnEnemies(4);
+          this.nextStep();
+        }
         break;
 
-        
       case 3:
-        // Spawn Wildman
-        // Spawn enemies + 1 with boss title
-        // Run a dialogue script
+        if (player.x < Vars.AREA_WIDTH * .65) {
+          this.spawnEnemies(3);
+          this.nextStep();
+        }
+        
+      case 4:
+        if (this.doOnce()) {
+          scene.spawnWildman();
+        }
+        this.nextStep();
         break;
 
-      // Wait for all enemies to die
-      // Wildman joins team as Blue Moon
+      case 5:
+        if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(8)) {
+          this.nextStep();
+        }
+        break;
 
+      case 6:
+        if (this.doOnce()) {
+          // Convert Wildman to Blue Moon
+          this.parent.showInstructions(Enum.STORY_2B_GO_EAST);
+        }
+        break;
+
+      case 7:
+        return true;
     }
 
     return false;
@@ -56,16 +79,14 @@ export default class P4 extends TutorialPart {
   spawnAndWait(amt) {
 
     const { scene } = this;
-    const camera = scene.cameras.main;
-    const view = camera.worldView;
 
     if (this.doOnce()) {
-      scene.spawnEnemies(amt, view.left);
+      scene.spawnEnemies(amt);
       return false;
     }
     
     const enemyCount = scene.countEnemies();
-    return enemyCount === 0;z
+    return enemyCount === 0;
 
   }
 
