@@ -26,6 +26,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     this.brain;
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
+
+    this.movePressed = false;
     
     this.setOrigin(.5, 1);
 
@@ -79,10 +81,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
           // Don't always flip tween
     
-          if (!this.flipX && velX < 0 && !this.isTweening()) {
+          if (!this.flipX && velX < 0 && !this.isTweening() && this.movePressed) {
             this.flipXTween();
           }
-          else if (this.flipX && velX > 0 && !this.isTweening()) {
+          else if (this.flipX && velX > 0 && !this.isTweening() && this.movePressed) {
             this.flipXTween();
           }
           else if (isStaticStart) {
@@ -107,6 +109,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0xff5555);
         break;
     }
+
+    this.movePressed = false;
   }
 
   //  Stat adjustment --------------------------------------------------------
@@ -237,26 +241,27 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   //  Controller functions
   //  Add in a backstep with animation
 
-  moveLeft() {
-    const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
+  moveDirection(direction) {
+
+    const moveSpeed = this.isTweening() ? this.getSpeed() * 0.75 : this.getSpeed();
+    const adjustedSpeed = direction * moveSpeed;
+  
     if (this.isState(Enum.SS_READY)) {
-      this.movementSpeed = -moveSpeed;
-    }
-    else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && !this.flipX) {
-      this.body.velocity.x = -moveSpeed * 1.3;
+      this.movementSpeed = adjustedSpeed;
+    } else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && ((direction === -1 && !this.flipX) || (direction === 1 && this.flipX))) {
+      this.body.velocity.x = adjustedSpeed * 1.3;
       this.showMovementDust();
     }
+  
+    this.movePressed = true;
+  }
+
+  moveLeft() {
+    this.moveDirection(-1);
   }
 
   moveRight() {
-    const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    if (this.isState(Enum.SS_READY)) {
-      this.movementSpeed = moveSpeed;
-    }
-    else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && this.flipX) {
-      this.body.velocity.x = moveSpeed * 1.3;
-      this.showMovementDust();
-    }
+    this.moveDirection(1);
   }
 
   moveTowards(x) {
@@ -383,6 +388,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
+  //  Animations    ---------------------------------------------------------------------
+
   playIdle() {
     this.anims.play(this.prefix + Vars.ANIM_IDLE, true);
   }
@@ -398,6 +405,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   playDefend() {
     this.anims.play(this.prefix + Vars.ANIM_DEFEND, true);
   }
+
+  //  Setters and Getters   -----------------------------------------------------------------
 
   get velocityX() {
     return this.body.velocity.x;

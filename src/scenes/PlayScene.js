@@ -146,6 +146,8 @@ export class PlayScene extends Scene {
     if (areaID === Enum.LOC_MINES) {
       this.spawnRocks(20);
     }
+
+    this.initLoad = true;
   }
 
   update(time, delta) {
@@ -155,10 +157,15 @@ export class PlayScene extends Scene {
     if (!this.initLoad) {
       if (this.loadedGameData) {
         this.setupScene();
-        this.initLoad = true;
       }
-      return;
+      return true;
     }
+
+    //  This is all messy-
+    //  Updating SaveData should all be done at once, if possible-
+    //  Use counters and timers,
+    //  Separate with comments
+    //  Group code logically and 
 
     SaveData.Data.playerX = this.player.x;
     
