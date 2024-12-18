@@ -99,7 +99,7 @@ export class PlayScene extends Scene {
     keyMapper.registerKeyboard(controllerKeys);
     this.controller = new SpriteController(this.player, controllerKeys);
 
-    this.initLoad = false;
+    this.initialLoad = false;
     this.loadedGameData = await SaveData.LOAD_GAME_DATA();
 
     //  DEV  --------------------------------------------------------------------------
@@ -142,45 +142,100 @@ export class PlayScene extends Scene {
 
     //  Map Tracker
 
-    this.mapTracker.updateAreaID(playerX);
-    if (areaID === Enum.LOC_MINES) {
-      this.spawnRocks(20);
-    }
+    this.mapTracker.updateCurrentArea(playerX);
 
-    this.initLoad = true;
+    this.initialLoad = true;
   }
 
   update(time, delta) {
 
     //  Wait until the data is loaded
 
-    if (!this.initLoad) {
+    if (!this.initialLoad) {
       if (this.loadedGameData) {
         this.setupScene();
       }
       return true;
     }
 
-    //  This is all messy-
-    //  Updating SaveData should all be done at once, if possible-
-    //  Use counters and timers,
-    //  Separate with comments
-    //  Group code logically and 
-
-    SaveData.Data.playerX = this.player.x;
+    //  - Normal updating -
     
-    this.updateCameraBounds();    //  Update bounds according to Player location
+    this.tutorial.update();
 
-    const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
-    if (newAreaID >= 0) {
+    this.mapTracker.updateCurrentArea(this.player.x);
+    this.mapTracker.updateAreaDisplayCount(delta);
+    
+    this.updateMapArea();
+    this.updateCameraBounds();
 
-      SaveData.Data.location = newAreaID;
+    this.updateSpriteLayers();
+    this.updateShadows();
+    this.updateSaveData();
+
+    this.birdSpawner.update(time, delta);
+    this.wildlifeSpawner.update(time, delta);
+    this.controller.update();   // Player Controller
+
+    this.drawSoldierHP();       // HP and GP bars
+    this.showSoldierNames();    // Soldier names
+    
+    this.test();
+  }
+
+  //  UPDATE helper functions     -------------------------------------------------------------------------
+
+  /** Update the layers of the Sprites according to their lane */
+  updateSpriteLayers() {
+
+    const allSprites = this.groupSoldiers.getChildren();
+
+    for (let sprite of allSprites) {
+      
+      const lane = sprite.lane;
+      const currentLayer = sprite.displayList;
+
+      if (lane === 1 && currentLayer !== this.lane_1) {
+        this.lane_1.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 2 && currentLayer !== this.lane_2) {
+        this.lane_2.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 3 && currentLayer !== this.lane_3) {
+        this.lane_3.add(sprite);
+        sprite.laneSwitchTween();
+      }
+
+      sprite.updateLaneY();
+    }
+  }
+
+  /** Draw shadows for the entire map and characters */
+  updateShadows() {
+    this.shadows.updateDynamicShadows();
+    this.shadows.drawShadows();
+  }
+
+  /** Update the current map area as the Player moves */
+  updateMapArea() {
+
+    const currentAreaID = this.mapTracker.currentAreaID;
+
+    if (this.mapTracker.updateLastAreaVisited()) {
+
+      this.showAreaName(currentAreaID);
+  
+      SaveData.Data.location = currentAreaID;
       SaveData.SAVE_GAME_DATA();
+    }
 
-      this.showAreaName(newAreaID);
+    //  Instant check for new area
 
-      const areaInfo = MapInfo.find(info => info.locID === newAreaID);
+    if (this.mapTracker.checkNewArea()) {
 
+      //  Set-up rocks for mines  
+      const areaInfo = MapInfo.find(info => info.locID === currentAreaID);
       if (areaInfo.locID == Enum.LOC_MINES) {
         this.spawnRocks(20);
       }
@@ -189,76 +244,11 @@ export class PlayScene extends Scene {
       }
 
       this.birdSpawner.resetCounts();
-      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
-
       this.wildlifeSpawner.resetCounts();
+      
+      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
       this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
     }
-
-    this.birdSpawner.update(time, delta);
-    this.wildlifeSpawner.update(time, delta);
-
-    //  Tutorial  -------------------
-
-    this.tutorial.update();
-
-    //  Updating sprite lane  -----------------------------------------
-
-    const allSprites = this.groupSoldiers.getChildren();
-    for (let sprite of allSprites) {
-      
-      const lane = sprite.lane;
-      const layer = sprite.displayList;
-
-      if (lane === 1 && layer !== this.lane_1) {
-        this.lane_1.add(sprite);
-        sprite.laneSwitchTween();
-      }
-      else if (lane === 2 && layer !== this.lane_2) {
-        this.lane_2.add(sprite);
-        sprite.laneSwitchTween();
-      }
-      else if (lane === 3 && layer !== this.lane_3) {
-        this.lane_3.add(sprite);
-        sprite.laneSwitchTween();
-      }
-
-      const bottomLaneY = Vars.GROUND_TOP + 1;
-      const laneY = bottomLaneY + sprite.lane;
-      sprite.setY(laneY);
-    }
-
-    //  Shadow updating   --------------------------------------------
-
-    this.shadows.updateDynamicShadows();
-    this.shadows.drawShadows();
-    this.drawSoldierHP();
-    this.showSoldierNames();
-    this.test();
-
-    this.controller.update();   // Player Controller
-  }
-
-  /** Show the name of the entered area shortly on screen */
-  showAreaName(areaID) {
-
-    const data = MapInfo.find(info => info.locID === areaID);
-
-    const json = this.cache.json.get('hud_html');
-    const template = json.area_enter_label;
-    const html = template.replace('_label_', data.name);
-
-    const camera = this.cameras.main;
-    const domLabel = this.add.dom(camera.width * .5, camera.height * .6).createFromHTML(html).setOrigin(.5).setScrollFactor(0);
-    this.tweens.add({
-      targets: domLabel,
-      duration: 500,
-      delay: 2000,
-      alpha: {from:1, to:0},
-      onComplete: ()=>{
-        domLabel.destroy(true);
-      }
-    });
   }
 
   /** Update the camrea bounds as the Player moves to grow world */
@@ -305,6 +295,40 @@ export class PlayScene extends Scene {
         this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
       }
     }
+  }
+
+  updateSaveData() {
+
+    SaveData.Data.playerX = this.player.x;
+    SaveData.Data.playerLane = this.player.lane;
+
+    //  Play time
+    //  
+
+  }
+
+  //  -----------------------------------------------------------------------------------------------------
+
+  /** Show the name of the entered area shortly on screen */
+  showAreaName(areaID) {
+
+    const data = MapInfo.find(info => info.locID === areaID);
+
+    const json = this.cache.json.get('hud_html');
+    const template = json.area_enter_label;
+    const html = template.replace('_label_', data.name);
+
+    const camera = this.cameras.main;
+    const domLabel = this.add.dom(camera.width * .5, camera.height * .6).createFromHTML(html).setOrigin(.5).setScrollFactor(0);
+    this.tweens.add({
+      targets: domLabel,
+      duration: 500,
+      delay: 2000,
+      alpha: {from:1, to:0},
+      onComplete: ()=>{
+        domLabel.destroy(true);
+      }
+    });
   }
 
   //  -----------------------------------------------------------------------------------------

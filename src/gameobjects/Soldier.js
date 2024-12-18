@@ -238,6 +238,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.setY(laneY);
   }
 
+  updateLaneY() {
+    const laneY = Vars.GROUND_TOP + 1 + this.lane;
+    this.setY(laneY);
+  }
+
   //  Controller functions
   //  Add in a backstep with animation
 
