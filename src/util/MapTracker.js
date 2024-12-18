@@ -23,6 +23,7 @@ export default class MapTracker {
 
   updateLastAreaVisited() {
     if (this.currentAreaID !== this.lastAreaID && !this.isSetInNewArea) {
+      this.lastAreaID = this.currentAreaID;
       this.isSetInNewArea = true;
       return true;
     }

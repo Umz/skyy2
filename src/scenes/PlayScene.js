@@ -59,9 +59,12 @@ export class PlayScene extends Scene {
     this.lane_2 = this.add.layer().setDepth(20);
     this.lane_3 = this.add.layer().setDepth(30);
 
-    //  Objects
+    //  Camera setup
 
     const camera = this.cameras.main;
+    const areaWidth = Vars.AREA_WIDTH;
+    const fullWorld = areaWidth * 8;
+    camera.setBounds(0, 0, fullWorld, camera.height);
 
     //  Create Player
 
@@ -147,6 +150,8 @@ export class PlayScene extends Scene {
     this.initialLoad = true;
   }
 
+  //  ---------------------------------------------------------------
+
   update(time, delta) {
 
     //  Wait until the data is loaded
@@ -166,7 +171,7 @@ export class PlayScene extends Scene {
     this.mapTracker.updateAreaDisplayCount(delta);
     
     this.updateMapArea();
-    this.updateCameraBounds();
+    this.updateMapBuilder();
 
     this.updateSpriteLayers();
     this.updateShadows();
@@ -252,48 +257,27 @@ export class PlayScene extends Scene {
   }
 
   /** Update the camrea bounds as the Player moves to grow world */
-  updateCameraBounds() {
+  updateMapBuilder() {
     
     const camera = this.cameras.main;
-    const bounds = camera.getBounds();
+    const view = camera.worldView;
+    const worldWidth = Vars.AREA_WIDTH * 8;
 
-    const left = bounds.left;
-    const right = bounds.right;
+    const leftCheckPosX = Math.max(1, view.left - 32);
+    const rightCheckPosX = Math.min(worldWidth - 1, view.right + 32);
 
-    const areaWidth = Vars.AREA_WIDTH;
-    const fullWorld = areaWidth * 8;
-
-    const pad = areaWidth * .25;
-    const bump = areaWidth * .5;
-
-    let mapCheckPos;
-    let newLeft = -1;
-    let isMoveMap;
-
-    //  Check either side of the camera for loading more of the map
-
-    if (left > 0 && this.player.x < left + pad) {
-      newLeft = left - bump;
-      mapCheckPos = newLeft;
-      isMoveMap = true;
-    }
-    else if (right < fullWorld && this.player.x > right - pad) {
-      newLeft = left + bump;
-      mapCheckPos = right + bump;
-      isMoveMap = true;
+    const buildMap = (posX) => {
+      this.tilemapBuilder.buildTilemapForArea(posX);
+      this.mapBuilder.buildMapForArea(posX);
+      this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
     }
 
-    //  Update world if there are changes
+    if (this.mapTracker.isFirstTimeInAreaThisSession(leftCheckPosX)) {
+      buildMap(leftCheckPosX);
+    }
 
-    if (isMoveMap) {
-      
-      camera.setBounds(newLeft, 0, areaWidth, camera.height);
-
-      if (this.mapTracker.isFirstTimeInAreaThisSession(mapCheckPos)) {
-        this.tilemapBuilder.buildTilemapForArea(mapCheckPos);
-        this.mapBuilder.buildMapForArea(mapCheckPos);
-        this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
-      }
+    if (this.mapTracker.isFirstTimeInAreaThisSession(rightCheckPosX)) {
+      buildMap(rightCheckPosX);
     }
   }
 
@@ -303,7 +287,6 @@ export class PlayScene extends Scene {
     SaveData.Data.playerLane = this.player.lane;
 
     //  Play time
-    //  
 
   }
 
