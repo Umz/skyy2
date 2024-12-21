@@ -1,13 +1,14 @@
 import localforage from "localforage";
 import Enum from "./Enum";
+import Vars from "./Vars";
 
 const GAME_DATA = "GAME_DATA";
 
 const data = {
   
   playtime: 0,
-  playerX: 240,
-  playerLane: 1,
+  playerX: Vars.AREA_WIDTH * 1.5,
+  playerLane: 2,
 
   location: Enum.LOC_MAM,
 }
@@ -18,16 +19,23 @@ const settings = {
 
 export default class SaveData {
 
-  static SAVE_GAME_DATA(obj) {
-    localforage.setItem(GAME_DATA, obj);
+  static SAVE_GAME_DATA() {
+    localforage.setItem(GAME_DATA, data);
   }
 
   static async LOAD_GAME_DATA() {
     const savedData = await localforage.getItem(GAME_DATA);
-    return savedData || data;
+    if (savedData) {
+      Object.assign(data, savedData);
+    }
+    return data;
   }
 
-  static GET_SETTINGS() {
+  static get Data() {
+    return data;
+  }
+
+  static get Settings() {
     return settings;
   }
 
@@ -37,9 +45,5 @@ export default class SaveData {
       description: "Data store for Skyy2",
       storeName: "skydata"
     })
-  }
-
-  static get Data() {
-    return data;
   }
 }

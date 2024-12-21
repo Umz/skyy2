@@ -1,40 +1,56 @@
+import Counter from "./Counter";
 import Vars from "./Vars";
 
-/**
- * Utility Class checks the areas that have been visited each session for dynamic resources loading
- */
+/** Utility Class checks the areas that have been visited each session for dynamic resources loading */
 export default class MapTracker {
 
   constructor() {
+
     this.visitedAreas = [];
+    
     this.currentAreaID = -1;
-    this.areaEnterCooldown = 0;
+    this.lastAreaID = -1;
+    this.lastAreaCheck = -1;
+    this.isSetInNewArea = false;
+
+    this.cooldownCountdown = new Counter(3000);
   }
 
-  /** Check if the player has entered a new area (only accepts after cooldown) */
-  checkForNewArea(delta, posX) {
-    
-    const posAreaID = this.getCurrentAreaID(posX);
+  /** Update the current area by the player position */
+  updateCurrentArea(playerX) {
+    this.currentAreaID = this.getCurrentAreaID(playerX);
+  }
 
-    //  Initially just set the value
-    if (this.currentAreaID === -1) {
-      this.currentAreaID = posAreaID;
+  updateLastAreaVisited() {
+    if (this.currentAreaID !== this.lastAreaID && !this.isSetInNewArea) {
+      this.lastAreaID = this.currentAreaID;
+      this.isSetInNewArea = true;
+      return true;
     }
-    else if (this.currentAreaID !== posAreaID) {
-      this.areaEnterCooldown += delta;
-      if (this.areaEnterCooldown >= 3000) {
+    return false;
+  }
 
-        this.currentAreaID = posAreaID;
-        this.areaEnterCooldown = 0;
+  /** Check if this is a new area and the name needs to be displayed */
+  updateAreaDisplayCount(delta) {
 
-        return posAreaID;
+    if (this.currentAreaID !== this.lastAreaID) {
+      if (this.cooldownCountdown.update(delta)) {
+        this.isSetInNewArea = false;
       }
     }
     else {
-      this.areaEnterCooldown = 0;
+      this.isSetInNewArea = true;
     }
+    
+  }
 
-    return -1;
+  /** Check if this is a new area, returning true when it is */
+  checkNewArea() {
+    if (this.currentAreaID !== this.lastAreaCheck) {
+      this.lastAreaCheck = this.currentAreaID;
+      return true;
+    }
+    return false;
   }
 
   /** Get the left X of the area */
@@ -45,12 +61,6 @@ export default class MapTracker {
   /** Get the right X of the area */
   getAreaRightC() {
     return this.currentAreaID * Vars.AREA_WIDTH;
-  }
-
-  /** Update the area ID from position X */
-  updateAreaID(posX) {
-    const areaID = Math.ceil(posX / Vars.AREA_WIDTH);
-    this.currentAreaID = areaID;
   }
 
   /** The ID for the current area based on position and uniform area size */

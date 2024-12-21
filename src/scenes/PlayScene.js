@@ -16,28 +16,7 @@ import Enum from "../util/Enum";
 import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
-
-//  Move this MapInfo to Vars or to it's own JSON
-const mapInfo = [
-  {locID: Enum.LOC_BLUE_FOREST, name:"Blue Forest", type: Enum.AREA_FOREST},
-  {locID: Enum.LOC_MAM, name:"Moon at Midnight", type: Enum.AREA_VILLAGE},
-  {locID: Enum.LOC_ROSE_FOREST, name:"Rose Forest", type: Enum.AREA_FOREST},
-  {locID: Enum.LOC_STORM, name:"Storm Village", type: Enum.AREA_VILLAGE},
-  {locID: Enum.LOC_MINES, name:"The Mines", type: Enum.AREA_MISC},
-  {locID: Enum.LOC_PLAINS, name:"Mario Plains", type: Enum.AREA_MISC},
-  {locID: Enum.LOC_GREEN_FOREST, name:"Greenleaf Forest", type: Enum.AREA_FOREST},
-  {locID: Enum.LOC_GREEN, name:"Green Village", type: Enum.AREA_VILLAGE}
-];
-
-const labelClassCSS = new Map([
-  [Enum.TEAM_PLAYER, "player-name"],
-  [Enum.TEAM_ALLY, "ally-name"],
-  [Enum.TEAM_ENEMY, "enemy-name"]
-]);
-
-//  Tutorial - 
-//  Go through the tutorial (1)
-//  Refactory this scene
+import MapInfo from "../const/MapInfo";
 
 export class PlayScene extends Scene {
 
@@ -49,43 +28,46 @@ export class PlayScene extends Scene {
 
     //  Graphics objects
 
-    const graphics = this.add.graphics();
+    this.graphics = this.add.graphics();
     this.hpGraphics = this.add.graphics().setDepth(35);
+    this.pointerGraphics = this.add.graphics().setDepth(36);
 
     //  Groups
 
-    const birdGroup = this.add.group({runChildUpdate:true});
+    this.birdGroup = this.add.group({runChildUpdate:true});
 
     this.allGroup = this.add.group({runChildUpdate: true});
     this.groupRocks = this.add.group();
     this.groupCollectibles = this.add.group();
     
-    this.group_soldiers = this.add.group({runChildUpdate:true});
-    this.group_allies = this.add.group();
-    this.group_enemies = this.add.group();
+    this.groupSoldiers = this.add.group({runChildUpdate:true});
+    this.groupAllies = this.add.group();
+    this.groupEnemies = this.add.group();
 
     //  Display layers
 
     this.sceneryLayer = this.add.layer();
-    const birdLayer = this.add.layer();
-    const tilemapLayer = this.add.layer();
+    this.birdLayer = this.add.layer();
+    this.tilemapLayer = this.add.layer();
 
-    const shadowLayer = this.add.layer();
+    this.shadowLayer = this.add.layer();
     this.bgLayer = this.add.layer();
     this.buildingsLayer = this.add.layer();
     this.fgLayer = this.add.layer();
-
-    const animalLayer = this.add.layer();
+    this.animalLayer = this.add.layer();
 
     this.lane_1 = this.add.layer().setDepth(10);
     this.lane_2 = this.add.layer().setDepth(20);
     this.lane_3 = this.add.layer().setDepth(30);
 
-    //  Objects
+    //  Camera setup
 
     const camera = this.cameras.main;
+    const areaWidth = Vars.AREA_WIDTH;
+    const fullWorld = areaWidth * 8;
+    camera.setBounds(0, 0, fullWorld, camera.height);
 
-    //  Create Player Here
+    //  Create Player
 
     this.player = this.spawnPlayer();
 
@@ -93,24 +75,22 @@ export class PlayScene extends Scene {
 
     this.mapTracker = new MapTracker();   // Player location on map
     this.scenery = new Scenery(this);     // Background scenery
-
-    this.tmBuilder = new TilemapBuilder(this, tilemapLayer);    // Tilemap builder (ground tiles)
-    
+    this.tilemapBuilder = new TilemapBuilder(this, this.tilemapLayer);    // Tilemap builder (ground tiles)
     this.mapBuilder = new MapBuilder(this);   // Map builder (trees, locations)
     this.mapBuilder.setLayers({bgLayer:this.bgLayer, fgLayer:this.fgLayer, buildingsLayer:this.buildingsLayer});
 
-    this.birdSpawner = new BirdHandler(this, birdLayer, birdGroup); // Background birds spawner
-    this.wildlifeSpawner = new AnimalHandler(this, animalLayer, birdGroup); // Background animals spawner
+    this.birdSpawner = new BirdHandler(this, this.birdLayer, this.birdGroup);  // Background birds spawner
+    this.wildlifeSpawner = new AnimalHandler(this, this.animalLayer, this.birdGroup);  // Background animals spawner
 
-    this.shadows = new Shadow(camera, graphics);
+    this.shadows = new Shadow(camera, this.graphics);
     this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
-    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, animalLayer);
+    this.shadows.addDynamicLayers(this.lane_1, this.lane_2, this.lane_3, this.animalLayer);
     this.shadows.setActiveLane(this.player);
-    shadowLayer.add(graphics);
+    this.shadowLayer.add(this.graphics);
 
     //  Collisions
 
-    this.physics.add.overlap(this.group_allies, this.group_enemies, this.allyEnemyCollision, null, this);   // Battle collisions
+    this.physics.add.overlap(this.groupAllies, this.groupEnemies, this.allyEnemyCollision, null, this);   // Battle collisions
     this.physics.add.overlap(this.player, this.groupCollectibles, this.playerItemCollision, null, this); 
     this.physics.add.overlap(this.player, this.groupRocks, this.playerRockCollision, null, this);
 
@@ -123,8 +103,8 @@ export class PlayScene extends Scene {
     keyMapper.registerKeyboard(controllerKeys);
     this.controller = new SpriteController(this.player, controllerKeys);
 
-    this.initLoad = false;
-    this.gameData = await SaveData.LOAD_GAME_DATA();
+    this.initialLoad = false;
+    this.loadedGameData = await SaveData.LOAD_GAME_DATA();
 
     //  DEV  --------------------------------------------------------------------------
 
@@ -142,8 +122,8 @@ export class PlayScene extends Scene {
   /** Initial scene setup (first load) */
   setupScene() {
 
-    const playerX = this.gameData.playerX;
-    const playerLane = this.gameData.playerLane;
+    const playerX = SaveData.Data.playerX;
+    const playerLane = SaveData.Data.playerLane;
 
     this.player.setX(playerX);
     this.player.setLane(playerLane);
@@ -153,49 +133,116 @@ export class PlayScene extends Scene {
     //  Build scene for area
 
     this.scenery.addFullScene(this.sceneryLayer, this.allGroup);
-    this.tmBuilder.buildTilemapForArea(playerX);
+    this.tilemapBuilder.buildTilemapForArea(playerX);
     this.mapBuilder.buildMapForArea(playerX);
 
     //  Initialise map area
 
-    let aID = Math.max(1, areaID);
-    const areaInfo = mapInfo.find(info => info.locID === aID);
+    const aID = Math.max(1, areaID);
+    const areaInfo = MapInfo.find(info => info.locID === aID);
     const isForest = areaInfo.type === Enum.AREA_FOREST;
     this.birdSpawner.isForestArea = isForest;
     this.wildlifeSpawner.isForestArea = isForest;
 
     //  Map Tracker
 
-    this.mapTracker.updateAreaID(playerX);
-    if (areaID === Enum.LOC_MINES) {
-      this.spawnRocks(20);
-    }
+    this.mapTracker.updateCurrentArea(playerX);
+
+    this.initialLoad = true;
   }
+
+  //  ---------------------------------------------------------------
 
   update(time, delta) {
 
-    if (!this.initLoad) {
-      if (this.gameData) {
+    //  Wait until the data is loaded
+
+    if (!this.initialLoad) {
+      if (this.loadedGameData) {
         this.setupScene();
-        this.initLoad = true;
       }
-      return;
+      return true;
     }
 
-    this.gameData.playerX = this.player.x;
+    //  - Normal updating -
     
-    this.updateCameraBounds();    //  Update bounds according to Player location
+    this.tutorial.update();
 
-    const newAreaID = this.mapTracker.checkForNewArea(delta, this.player.x);
-    if (newAreaID >= 0) {
+    this.mapTracker.updateCurrentArea(this.player.x);
+    this.mapTracker.updateAreaDisplayCount(delta);
+    
+    this.updateMapArea();
+    this.updateMapBuilder();
 
-      SaveData.SAVE_GAME_DATA(this.gameData);
-      SaveData.Data.location = newAreaID;
+    this.updateSpriteLayers();
+    this.updateShadows();
+    this.updateSaveData();
 
-      this.showAreaName(newAreaID);
+    this.birdSpawner.update(time, delta);
+    this.wildlifeSpawner.update(time, delta);
+    this.controller.update();   // Player Controller
 
-      const areaInfo = mapInfo.find(info => info.locID === newAreaID);
+    this.drawSoldierHP();       // HP and GP bars
+    this.showSoldierNames();    // Soldier names
+    this.showSoldierIcon();     // Icons for soldiers
+    
+    this.test();
+  }
 
+  //  UPDATE helper functions     -------------------------------------------------------------------------
+
+  /** Update the layers of the Sprites according to their lane */
+  updateSpriteLayers() {
+
+    const allSprites = this.groupSoldiers.getChildren();
+
+    for (let sprite of allSprites) {
+      
+      const lane = sprite.lane;
+      const currentLayer = sprite.displayList;
+
+      if (lane === 1 && currentLayer !== this.lane_1) {
+        this.lane_1.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 2 && currentLayer !== this.lane_2) {
+        this.lane_2.add(sprite);
+        sprite.laneSwitchTween();
+      }
+      else if (lane === 3 && currentLayer !== this.lane_3) {
+        this.lane_3.add(sprite);
+        sprite.laneSwitchTween();
+      }
+
+      sprite.updateLaneY();
+    }
+  }
+
+  /** Draw shadows for the entire map and characters */
+  updateShadows() {
+    this.shadows.updateDynamicShadows();
+    this.shadows.drawShadows();
+  }
+
+  /** Update the current map area as the Player moves */
+  updateMapArea() {
+
+    const currentAreaID = this.mapTracker.currentAreaID;
+
+    if (this.mapTracker.updateLastAreaVisited()) {
+
+      this.showAreaName(currentAreaID);
+  
+      SaveData.Data.location = currentAreaID;
+      SaveData.SAVE_GAME_DATA();
+    }
+
+    //  Instant check for new area
+
+    if (this.mapTracker.checkNewArea()) {
+
+      //  Set-up rocks for mines  
+      const areaInfo = MapInfo.find(info => info.locID === currentAreaID);
       if (areaInfo.locID == Enum.LOC_MINES) {
         this.spawnRocks(20);
       }
@@ -204,60 +251,53 @@ export class PlayScene extends Scene {
       }
 
       this.birdSpawner.resetCounts();
-      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
-
       this.wildlifeSpawner.resetCounts();
+      
+      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
       this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
     }
+  }
 
-    this.birdSpawner.update(time, delta);
-    this.wildlifeSpawner.update(time, delta);
+  /** Update the camrea bounds as the Player moves to grow world */
+  updateMapBuilder() {
+    
+    const camera = this.cameras.main;
+    const view = camera.worldView;
+    const worldWidth = Vars.AREA_WIDTH * 8;
 
-    //  Tutorial  -------------------
+    const leftCheckPosX = Math.max(1, view.left - 32);
+    const rightCheckPosX = Math.min(worldWidth - 1, view.right + 32);
 
-    this.tutorial.update();
-
-    //  Updating sprite lane  -----------------------------------------
-
-    const allSprites = this.group_soldiers.getChildren();
-    for (let sprite of allSprites) {
-      
-      const lane = sprite.lane;
-      const layer = sprite.displayList;
-
-      if (lane === 1 && layer !== this.lane_1) {
-        this.lane_1.add(sprite);
-        sprite.laneSwitchTween();
-      }
-      else if (lane === 2 && layer !== this.lane_2) {
-        this.lane_2.add(sprite);
-        sprite.laneSwitchTween();
-      }
-      else if (lane === 3 && layer !== this.lane_3) {
-        this.lane_3.add(sprite);
-        sprite.laneSwitchTween();
-      }
-
-      const bottomLaneY = Vars.GROUND_TOP + 1;
-      const laneY = bottomLaneY + sprite.lane;
-      sprite.setY(laneY);
+    const buildMap = (posX) => {
+      this.tilemapBuilder.buildTilemapForArea(posX);
+      this.mapBuilder.buildMapForArea(posX);
+      this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
     }
 
-    //  Shadow updating   --------------------------------------------
+    if (this.mapTracker.isFirstTimeInAreaThisSession(leftCheckPosX)) {
+      buildMap(leftCheckPosX);
+    }
 
-    this.shadows.updateDynamicShadows();
-    this.shadows.drawShadows();
-    this.drawSoldierHP();
-    this.showSoldierNames();
-    this.test();
-
-    this.controller.update();   // Player Controller
+    if (this.mapTracker.isFirstTimeInAreaThisSession(rightCheckPosX)) {
+      buildMap(rightCheckPosX);
+    }
   }
+
+  updateSaveData() {
+
+    SaveData.Data.playerX = this.player.x;
+    SaveData.Data.playerLane = this.player.lane;
+
+    //  Play time
+
+  }
+
+  //  -----------------------------------------------------------------------------------------------------
 
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
 
-    const data = mapInfo.find(info => info.locID === areaID);
+    const data = MapInfo.find(info => info.locID === areaID);
 
     const json = this.cache.json.get('hud_html');
     const template = json.area_enter_label;
@@ -274,60 +314,6 @@ export class PlayScene extends Scene {
         domLabel.destroy(true);
       }
     });
-  }
-
-  addDomName(name, type) {
-    
-    const css = labelClassCSS.get(type);
-    const html = `<p class="name ${css}">${name}</p>`;
-    const domLabel = this.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
-    return domLabel;
-  }
-
-  /** Update the camrea bounds as the Player moves to grow world */
-  updateCameraBounds() {
-    
-    const camera = this.cameras.main;
-    const bounds = camera.getBounds();
-
-    const left = bounds.left;
-    const right = bounds.right;
-
-    const areaWidth = Vars.AREA_WIDTH;
-    const fullWorld = areaWidth * 8;
-
-    const pad = areaWidth * .25;
-    const bump = areaWidth * .5;
-
-    let mapCheckPos;
-    let newLeft = -1;
-    let isMoveMap;
-
-    //  Check either side of the camera for loading more of the map
-
-    if (left > 0 && this.player.x < left + pad) {
-      newLeft = left - bump;
-      mapCheckPos = newLeft;
-      isMoveMap = true;
-    }
-    else if (right < fullWorld && this.player.x > right - pad) {
-      newLeft = left + bump;
-      mapCheckPos = right + bump;
-      isMoveMap = true;
-    }
-
-    //  Update world if there are changes
-
-    if (isMoveMap) {
-      
-      camera.setBounds(newLeft, 0, areaWidth, camera.height);
-
-      if (this.mapTracker.isFirstTimeInAreaThisSession(mapCheckPos)) {
-        this.tmBuilder.buildTilemapForArea(mapCheckPos);
-        this.mapBuilder.buildMapForArea(mapCheckPos);
-        this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
-      }
-    }
   }
 
   //  -----------------------------------------------------------------------------------------
@@ -376,7 +362,7 @@ export class PlayScene extends Scene {
     sprite.playIdle();
 
     this.physics.add.existing(sprite);
-    this.group_soldiers.add(sprite);
+    this.groupSoldiers.add(sprite);
 
     return sprite;
   }
@@ -385,11 +371,12 @@ export class PlayScene extends Scene {
 
     const camera = this.cameras.main;
     const player = this.spawnSoldier(0, 1, Vars.SHEET_PLAYER);
-    this.group_allies.add(player);
+    this.groupAllies.add(player);
 
     camera.startFollow(player, true, .8);
-    player.hp = 10000000000;
-    player.displayName = this.addDomName("Moon Chief", Enum.TEAM_PLAYER);
+    player.setHP(1000, 1000);
+    player.addDisplayName("Moon Chief", Enum.TEAM_PLAYER);
+    player.setTeam(Enum.TEAM_ALLY);
 
     return player;
   }
@@ -398,11 +385,12 @@ export class PlayScene extends Scene {
 
     const spawnX = Vars.AREA_WIDTH * .5;
     const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
-    wildman.hp = 10;
-    wildman.displayName = this.addDomName("Wildman", Enum.TEAM_ALLY);
+    wildman.setHP(10, 10);
+    wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
     wildman.setWildmanBrain();
+    wildman.setTeam(Enum.TEAM_ALLY);
 
-    this.group_allies.add(wildman);
+    this.groupAllies.add(wildman);
 
     return wildman;
   }
@@ -424,9 +412,8 @@ export class PlayScene extends Scene {
 
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
     enemy.setEnemyBrain();
-    this.group_enemies.add(enemy);
-
-    enemy.displayName = this.addDomName("Enemy", Enum.TEAM_ENEMY);
+    enemy.setTeam(Enum.TEAM_ENEMY);
+    this.groupEnemies.add(enemy);
 
     return enemy;
   }
@@ -474,7 +461,7 @@ export class PlayScene extends Scene {
   }
 
   spawnEnemies(amt, posX) {
-    const count = this.group_enemies.countActive();
+    const count = this.groupEnemies.countActive();
     for (let i=0; i<amt; i++) {
       this.spawnEnemy(posX);
     }
@@ -483,7 +470,7 @@ export class PlayScene extends Scene {
   //  -
 
   countEnemies() {
-    const count = this.group_enemies.countActive();
+    const count = this.groupEnemies.countActive();
     return count;
   }
 
@@ -575,7 +562,7 @@ export class PlayScene extends Scene {
 
     this.hpGraphics.clear();
     
-    let soldiers = this.group_enemies.getChildren();
+    let soldiers = this.groupSoldiers.getChildren();
 
     for (let soldier of soldiers) {
 
@@ -583,7 +570,7 @@ export class PlayScene extends Scene {
       const barX = lt.x;
 
       const guardY = lt.y - 2;
-      const hpY = soldier.isDefending ? guardY - 4 : lt.y - 1;
+      const hpY = soldier.isState(Enum.SS_DEFEND) ? guardY - 4 : lt.y - 1;
 
       const barMax = soldier.width;
       const barHeight = 3;
@@ -591,24 +578,26 @@ export class PlayScene extends Scene {
       const percentHP = soldier.hp / soldier.maxHP;
       const hpBar = (barMax - 2) * percentHP;
 
-      const percentGuard = soldier.guard / soldier.maxGuard;
+      const percentGuard = soldier.gp / soldier.maxGP;
       const guardBar = (barMax - 2) * percentGuard;
+
+      const barCol = soldier.isAlly() ? 0x00ff00 : 0xff0000;
 
       // Black bar with hp inside it
 
       if (soldier.hp < soldier.maxHP) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
-        this.hpGraphics.fillStyle(0xff0000, 1);
+        this.hpGraphics.fillStyle(barCol, 1);
         this.hpGraphics.fillRect(barX + 1, hpY + 1, hpBar, barHeight - 2);
       }
 
       //  Draw Guard bar when defending
 
-      if (soldier.isDefending) {
+      if (soldier.isState(Enum.SS_DEFEND)) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, guardY, barMax, barHeight);
-        this.hpGraphics.fillStyle(0x0000ff, 1);
+        this.hpGraphics.fillStyle(0x0055ff, 1);
         this.hpGraphics.fillRect(barX + 1, guardY + 1, guardBar, barHeight - 2);
       }
     }
@@ -616,8 +605,7 @@ export class PlayScene extends Scene {
 
   showSoldierNames() {
 
-    //const allies = this.group_allies.getChildren();
-    const allies = this.group_soldiers.getChildren();
+    const allies = this.groupAllies.getChildren();
     for (let ally of allies) {
 
       if (ally.displayName) {
@@ -625,13 +613,33 @@ export class PlayScene extends Scene {
         const pos = ally.getTopCenter();
         
         const velX = Math.abs(ally.velocityX);
-        const pY = (velX > 24) ? -24 : pos.y;
+        const pY = (velX > 24) || ally.isState(Enum.SS_DEFEND) ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
       }
     }
   }
 
   showSoldierIcon() {
-    console.log("Showing Icon for soldiers on lane?");
+
+    const graphics = this.pointerGraphics;
+    graphics.clear();
+
+    const allSoldiers = this.groupSoldiers.getChildren();
+    for (let soldier of allSoldiers) {
+
+      const tc = soldier.getBottomCenter();
+      const tX = soldier.flipX ? tc.x + 3 : tc.x - 6; 
+      const tY = tc.y + 4;
+
+      const col = soldier.isAlly() ? 0xcccccc : 0xff0000;
+
+      graphics.fillStyle(0x000000, .5);
+      graphics.fillTriangle(tX, tY + 5, tX + 4, tY + 5, tX + 2, tY + 1);
+
+      graphics.fillStyle(col, 1);
+      graphics.fillTriangle(tX, tY + 4, tX + 4, tY + 4, tX + 2, tY);
+
+    }
+
   }
 }

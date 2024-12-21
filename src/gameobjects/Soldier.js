@@ -1,5 +1,6 @@
 import EnemyBrain from "../ai/EnemyBrain";
 import WildmanBrain from "../ai/WildmanBrain";
+import CSSClasses from "../const/CSSClasses";
 import Enum from "../util/Enum";
 import Vars from "../util/Vars";
 
@@ -7,23 +8,27 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
-    
     this.prefix = texture;  // Prefix for animations
-    this.speed = 96;  // Use 72-
 
-    this.movementSpeed = 0;
+    //  Stats / settings
+
     this.state = Enum.SS_READY;
+    this.team = Enum.TEAM_ENEMY;
+    this.speed = 96;  // Use 72-
+    this.movementSpeed = 0;
     this.lane = 1;
 
-    this.maxHP = 3;
-    this.hp = this.maxHP;
+    //  Play stats
 
-    this.maxGuard = 5;
-    this.guard = 5;
+    this.maxHP = 3;   // Health Points
+    this.maxGP = 5;   // Guard Points
+    this.hp = this.maxHP;
+    this.gp = this.maxGP;
 
     this.brain;
-
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
+
+    this.movePressed = false;
     
     this.setOrigin(.5, 1);
 
@@ -77,10 +82,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
           // Don't always flip tween
     
-          if (!this.flipX && velX < 0 && !this.isTweening()) {
+          if (!this.flipX && velX < 0 && !this.isTweening() && this.movePressed) {
             this.flipXTween();
           }
-          else if (this.flipX && velX > 0 && !this.isTweening()) {
+          else if (this.flipX && velX > 0 && !this.isTweening() && this.movePressed) {
             this.flipXTween();
           }
           else if (isStaticStart) {
@@ -105,10 +110,51 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0xff5555);
         break;
     }
+
+    this.movePressed = false;
   }
 
-  setAllyBrain() {
+  //  Stat adjustment --------------------------------------------------------
+
+  setHP(activeHP, max = 0) {
+    this.hp = activeHP;
+    this.maxHP = max > 0 ? max : this.maxHP;
   }
+
+  setGP(activeGP, max = 0) {
+    this.gp = activeGP;
+    this.maxGP = max > 0 ? max : this.maxGP;
+  }
+
+  //  ---------------------------------------------------------------------
+  
+  addDisplayName(name, team) {
+
+    const json = this.scene.cache.json.get('hud_html');
+    const css = CSSClasses.get(team);
+    const template = json.display_name;
+
+    let html = template.replace("_class_", css);
+    html = html.replace("_name_", name);
+    
+    this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
+  }
+
+  //  ---------------------------------------------------------------------
+
+  setTeam(en) {
+    this.team = en;
+  }
+
+  isAlly() {
+    return this.team === Enum.TEAM_ALLY;
+  }
+
+  isEnemy() {
+    return this.team === Enum.TEAM_ENEMY;
+  }
+
+  setAllyBrain() {}
 
   setWildmanBrain() {
     this.brain = new WildmanBrain(this);
@@ -204,33 +250,35 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.setY(laneY);
   }
 
-  setDisplayName(n) {
-    this.displayName = n;
+  updateLaneY() {
+    const laneY = Vars.GROUND_TOP + 1 + this.lane;
+    this.setY(laneY);
   }
 
   //  Controller functions
   //  Add in a backstep with animation
 
-  moveLeft() {
-    const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
+  moveDirection(direction) {
+
+    const moveSpeed = this.isTweening() ? this.getSpeed() * 0.75 : this.getSpeed();
+    const adjustedSpeed = direction * moveSpeed;
+  
     if (this.isState(Enum.SS_READY)) {
-      this.movementSpeed = -moveSpeed;
-    }
-    else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && !this.flipX) {
-      this.body.velocity.x = -moveSpeed * 1.3;
+      this.movementSpeed = adjustedSpeed;
+    } else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && ((direction === -1 && !this.flipX) || (direction === 1 && this.flipX))) {
+      this.body.velocity.x = adjustedSpeed * 1.3;
       this.showMovementDust();
     }
+  
+    this.movePressed = true;
+  }
+
+  moveLeft() {
+    this.moveDirection(-1);
   }
 
   moveRight() {
-    const moveSpeed = this.isTweening() ? this.getSpeed() * .75 : this.getSpeed();
-    if (this.isState(Enum.SS_READY)) {
-      this.movementSpeed = moveSpeed;
-    }
-    else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && this.flipX) {
-      this.body.velocity.x = moveSpeed * 1.3;
-      this.showMovementDust();
-    }
+    this.moveDirection(1);
   }
 
   moveTowards(x) {
@@ -357,6 +405,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
+  //  Animations    ---------------------------------------------------------------------
+
   playIdle() {
     this.anims.play(this.prefix + Vars.ANIM_IDLE, true);
   }
@@ -372,6 +422,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   playDefend() {
     this.anims.play(this.prefix + Vars.ANIM_DEFEND, true);
   }
+
+  //  Setters and Getters   -----------------------------------------------------------------
 
   get velocityX() {
     return this.body.velocity.x;
