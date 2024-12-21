@@ -13,6 +13,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     //  Stats / settings
 
     this.state = Enum.SS_READY;
+    this.team = Enum.TEAM_ENEMY;
     this.speed = 96;  // Use 72-
     this.movementSpeed = 0;
     this.lane = 1;
@@ -141,8 +142,19 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  ---------------------------------------------------------------------
 
-  setAllyBrain() {
+  setTeam(en) {
+    this.team = en;
   }
+
+  isAlly() {
+    return this.team === Enum.TEAM_ALLY;
+  }
+
+  isEnemy() {
+    return this.team === Enum.TEAM_ENEMY;
+  }
+
+  setAllyBrain() {}
 
   setWildmanBrain() {
     this.brain = new WildmanBrain(this);

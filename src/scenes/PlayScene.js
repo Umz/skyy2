@@ -30,6 +30,7 @@ export class PlayScene extends Scene {
 
     this.graphics = this.add.graphics();
     this.hpGraphics = this.add.graphics().setDepth(35);
+    this.pointerGraphics = this.add.graphics().setDepth(36);
 
     //  Groups
 
@@ -137,7 +138,7 @@ export class PlayScene extends Scene {
 
     //  Initialise map area
 
-    let aID = Math.max(1, areaID);
+    const aID = Math.max(1, areaID);
     const areaInfo = MapInfo.find(info => info.locID === aID);
     const isForest = areaInfo.type === Enum.AREA_FOREST;
     this.birdSpawner.isForestArea = isForest;
@@ -183,6 +184,7 @@ export class PlayScene extends Scene {
 
     this.drawSoldierHP();       // HP and GP bars
     this.showSoldierNames();    // Soldier names
+    this.showSoldierIcon();     // Icons for soldiers
     
     this.test();
   }
@@ -374,6 +376,7 @@ export class PlayScene extends Scene {
     camera.startFollow(player, true, .8);
     player.setHP(1000, 1000);
     player.addDisplayName("Moon Chief", Enum.TEAM_PLAYER);
+    player.setTeam(Enum.TEAM_ALLY);
 
     return player;
   }
@@ -385,6 +388,7 @@ export class PlayScene extends Scene {
     wildman.setHP(10, 10);
     wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
     wildman.setWildmanBrain();
+    wildman.setTeam(Enum.TEAM_ALLY);
 
     this.groupAllies.add(wildman);
 
@@ -408,6 +412,7 @@ export class PlayScene extends Scene {
 
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
     enemy.setEnemyBrain();
+    enemy.setTeam(Enum.TEAM_ENEMY);
     this.groupEnemies.add(enemy);
 
     return enemy;
@@ -557,7 +562,7 @@ export class PlayScene extends Scene {
 
     this.hpGraphics.clear();
     
-    let soldiers = this.groupEnemies.getChildren();
+    let soldiers = this.groupSoldiers.getChildren();
 
     for (let soldier of soldiers) {
 
@@ -565,7 +570,7 @@ export class PlayScene extends Scene {
       const barX = lt.x;
 
       const guardY = lt.y - 2;
-      const hpY = soldier.isDefending ? guardY - 4 : lt.y - 1;
+      const hpY = soldier.isState(Enum.SS_DEFEND) ? guardY - 4 : lt.y - 1;
 
       const barMax = soldier.width;
       const barHeight = 3;
@@ -576,21 +581,23 @@ export class PlayScene extends Scene {
       const percentGuard = soldier.gp / soldier.maxGP;
       const guardBar = (barMax - 2) * percentGuard;
 
+      const barCol = soldier.isAlly() ? 0x00ff00 : 0xff0000;
+
       // Black bar with hp inside it
 
       if (soldier.hp < soldier.maxHP) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
-        this.hpGraphics.fillStyle(0xff0000, 1);
+        this.hpGraphics.fillStyle(barCol, 1);
         this.hpGraphics.fillRect(barX + 1, hpY + 1, hpBar, barHeight - 2);
       }
 
       //  Draw Guard bar when defending
 
-      if (soldier.isDefending) {
+      if (soldier.isState(Enum.SS_DEFEND)) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, guardY, barMax, barHeight);
-        this.hpGraphics.fillStyle(0x0000ff, 1);
+        this.hpGraphics.fillStyle(0x0055ff, 1);
         this.hpGraphics.fillRect(barX + 1, guardY + 1, guardBar, barHeight - 2);
       }
     }
@@ -598,8 +605,7 @@ export class PlayScene extends Scene {
 
   showSoldierNames() {
 
-    //const allies = this.group_allies.getChildren();
-    const allies = this.groupSoldiers.getChildren();
+    const allies = this.groupAllies.getChildren();
     for (let ally of allies) {
 
       if (ally.displayName) {
@@ -607,13 +613,33 @@ export class PlayScene extends Scene {
         const pos = ally.getTopCenter();
         
         const velX = Math.abs(ally.velocityX);
-        const pY = (velX > 24) ? -24 : pos.y;
+        const pY = (velX > 24) || ally.isState(Enum.SS_DEFEND) ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
       }
     }
   }
 
   showSoldierIcon() {
-    console.log("Showing Icon for soldiers on lane?");
+
+    const graphics = this.pointerGraphics;
+    graphics.clear();
+
+    const allSoldiers = this.groupSoldiers.getChildren();
+    for (let soldier of allSoldiers) {
+
+      const tc = soldier.getBottomCenter();
+      const tX = soldier.flipX ? tc.x + 3 : tc.x - 6; 
+      const tY = tc.y + 4;
+
+      const col = soldier.isAlly() ? 0xcccccc : 0xff0000;
+
+      graphics.fillStyle(0x000000, .5);
+      graphics.fillTriangle(tX, tY + 5, tX + 4, tY + 5, tX + 2, tY + 1);
+
+      graphics.fillStyle(col, 1);
+      graphics.fillTriangle(tX, tY + 4, tX + 4, tY + 4, tX + 2, tY);
+
+    }
+
   }
 }
