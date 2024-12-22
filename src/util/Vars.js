@@ -40,6 +40,9 @@ const Vars = {
   ANIM_FLAG_ELITE: 'flag-gr-golden-elite',
   ANIM_FLAG_KING: 'flag-gr-kings',
 
+  ACT_MOVE: "action_move",
+  VIEW_ANIMATION: "view_soldier_animations",
+
   WORLD_LENGTHS: 3,
   GRAVITY: 60,
 

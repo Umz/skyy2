@@ -42,7 +42,7 @@ const Enum = {
 
   SM_IDLE: 1,
   SM_ATTACK: 2,
-  SM_CLOSE: 3,
+  SM_GET_CLOSE: 3,
 
   TT_PLAYER: 1,
   TT_INFANTRY: 2,

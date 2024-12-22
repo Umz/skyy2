@@ -1,4 +1,5 @@
 import EnemyBrain from "../ai/EnemyBrain";
+import SoldierView from "../ai/SoldierView";
 import WildmanBrain from "../ai/WildmanBrain";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../util/Enum";
@@ -9,6 +10,13 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
     this.prefix = texture;  // Prefix for animations
+
+    this.movePressed = false;
+    this.staticMoveStart = false;
+    
+    this.brain;
+    this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
+    this.viewController = new SoldierView(this);
 
     //  Stats / settings
 
@@ -24,11 +32,6 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.maxGP = 5;   // Guard Points
     this.hp = this.maxHP;
     this.gp = this.maxGP;
-
-    this.brain;
-    this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
-
-    this.movePressed = false;
     
     this.setOrigin(.5, 1);
 
@@ -48,7 +51,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.brain.update(delta);
     }
 
-    const isStaticStart = this.body.velocity.x === 0;
+    this.staticMoveStart = this.body.velocity.x === 0;
     
     //  Speed updating
 
@@ -72,45 +75,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     }
     
     //  View updating
+
+    this.viewController.update(time, delta);
     
-    const viewVelX = this.body.velocity.x;
-
-    switch (this.state) {
-      case Enum.SS_READY:
-        if (velX !== 0) {
-          this.playRun();
-
-          // Don't always flip tween
-    
-          if (!this.flipX && velX < 0 && !this.isTweening() && this.movePressed) {
-            this.flipXTween();
-          }
-          else if (this.flipX && velX > 0 && !this.isTweening() && this.movePressed) {
-            this.flipXTween();
-          }
-          else if (isStaticStart) {
-            this.showMovementDust();
-          }
-        }
-        else {
-          this.playIdle();
-        }
-        this.clearTint();
-        break;
-      case Enum.SS_DEFEND:
-        this.playDefend();
-        if (!isStaticStart && viewVelX === 0) {
-          this.showMovementDust();
-        }
-        break;
-      case Enum.SS_ATTACK:
-        this.playAttack();
-        break;
-      case Enum.SS_HURT:
-        this.setTint(0xff5555);
-        break;
-    }
-
     this.movePressed = false;
   }
 
@@ -138,6 +105,13 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     html = html.replace("_name_", name);
     
     this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
+  }
+
+  getTarget() {
+    if (this.brain) {
+      return this.brain.target;
+    }
+    return null;
   }
 
   //  ---------------------------------------------------------------------
