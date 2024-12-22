@@ -41,8 +41,12 @@ const Vars = {
   ANIM_FLAG_KING: 'flag-gr-kings',
 
   ACT_MOVE_TO_TARGET_DISTANCE: "action_soldier_move_to_target_within_distance",
+  ACT_SEARCH_FOR_TARGET: "action_search_for_target",
+  ACT_WAIT_TIME: "action_wait_for_timer",
+  ACT_ATTACK: "action_soldier_attack",
 
   LISTEN_PLAYER_DISTANCE: "listener_player_distance",
+  LISTEN_AVOID_OVERLAP: "listener_avoid_overlap",
 
   VIEW_ANIMATION: "view_soldier_animations",
   VIEW_HURT: "view_soldier_hurt",

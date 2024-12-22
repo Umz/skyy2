@@ -399,7 +399,7 @@ export class PlayScene extends Scene {
 
   spawnBlueMoon() {
 
-    const blue = this.spawnSoldier(this.player.x, 1, Vars.SHEET_WILDMAN);
+    const blue = this.spawnSoldier(this.player.x + 24, 1, Vars.SHEET_WILDMAN);
     blue.setHP(10, 10);
     blue.addDisplayName("Blue Moon", Enum.TEAM_ALLY);
     blue.setTeam(Enum.TEAM_ALLY);
@@ -423,7 +423,7 @@ export class PlayScene extends Scene {
     const deployLane = Phaser.Math.Between(1, 3);
 
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
-    enemy.setEnemyBrain();
+    enemy.setBandit();
     enemy.setTeam(Enum.TEAM_ENEMY);
     this.groupEnemies.add(enemy);
 

@@ -1,8 +1,7 @@
+import Bandit1 from "../ai/Bandit1";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
-import EnemyBrain from "../ai/EnemyBrain";
 import SoldierView from "../ai/SoldierView";
-import WildmanBrain from "../ai/WildmanBrain";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../util/Enum";
 import Vars from "../util/Vars";
@@ -16,10 +15,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.movePressed = false;
     this.staticMoveStart = false;
     
-    this.brain;
     this.controller = new Blank(this);
     this.viewController = new SoldierView(this);
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
+
+    this.lastTarget = null;
 
     //  Stats / settings
 
@@ -107,17 +107,14 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
   }
 
-  getTarget() {
-    if (this.brain) {
-      return this.brain.target;
-    }
-    return null;
-  }
-
   //  ---------------------------------------------------------------------
 
   setBlueMoon() {
     this.controller = new BlueMoon(this);
+  }
+
+  setBandit() {
+    this.controller = new Bandit1(this);
   }
 
   setController(ctrl) {
@@ -134,18 +131,6 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   isEnemy() {
     return this.team === Enum.TEAM_ENEMY;
-  }
-
-  setAllyBrain() {}
-
-  setWildmanBrain() {
-    this.brain = new WildmanBrain(this);
-    return this;
-  }
-
-  setEnemyBrain() {
-    this.brain = new EnemyBrain(this);
-    return this;
   }
 
   isState(state) {
@@ -404,6 +389,17 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   playDefend() {
     this.anims.play(this.prefix + Vars.ANIM_DEFEND, true);
+  }
+
+  //  Action Manager Setters and Getters
+
+  set target(tar) {
+    this.lastTarget = tar;
+  }
+
+  get target() {
+    const action = this.controller.getCurrentAction();
+    return this.lastTarget || action?.target;
   }
 
   //  Setters and Getters   -----------------------------------------------------------------
