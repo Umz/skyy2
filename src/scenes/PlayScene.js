@@ -148,6 +148,8 @@ export class PlayScene extends Scene {
 
     this.mapTracker.updateCurrentArea(playerX);
 
+    this.spawnBlueMoon();
+
     this.initialLoad = true;
   }
 
@@ -396,6 +398,16 @@ export class PlayScene extends Scene {
   }
 
   spawnBlueMoon() {
+
+    const blue = this.spawnSoldier(this.player.x, 1, Vars.SHEET_WILDMAN);
+    blue.setHP(10, 10);
+    blue.addDisplayName("Blue Moon", Enum.TEAM_ALLY);
+    blue.setTeam(Enum.TEAM_ALLY);
+    blue.setBlueMoon();
+
+    this.groupAllies.add(blue);
+
+    return blue;
   }
 
   spawnAlly() {

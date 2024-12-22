@@ -4,6 +4,7 @@ export default class ActionManager {
   constructor(sprite) {
 
     this.sprite = sprite;
+    this.scene = sprite.scene;
     
     this.actionsArray = [];
     this.backgroundActionMap = new Map();
@@ -63,6 +64,7 @@ export default class ActionManager {
 
   addBackgroundAction(action) {
     this.backgroundActionMap.set(action.name, action);
+    return action;
   }
 
   removeBackgroundAction(actionName) {

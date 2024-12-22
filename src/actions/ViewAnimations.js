@@ -48,10 +48,6 @@ export default class ViewAnimation extends Action {
       case Enum.SS_ATTACK:
         this.sprite.playAttack();
         break;
-
-      case Enum.SS_HURT:
-        this.sprite.setTint(0xff5555);
-        break;
     }
   }
 }

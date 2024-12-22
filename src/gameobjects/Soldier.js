@@ -1,3 +1,5 @@
+import Blank from "../ai/Blank";
+import BlueMoon from "../ai/BlueMoon";
 import EnemyBrain from "../ai/EnemyBrain";
 import SoldierView from "../ai/SoldierView";
 import WildmanBrain from "../ai/WildmanBrain";
@@ -15,8 +17,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.staticMoveStart = false;
     
     this.brain;
-    this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
+    this.controller = new Blank(this);
     this.viewController = new SoldierView(this);
+    this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
 
     //  Stats / settings
 
@@ -47,10 +50,6 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   update(time, delta) {
 
-    if (this.brain) {
-      this.brain.update(delta);
-    }
-
     this.staticMoveStart = this.body.velocity.x === 0;
     
     //  Speed updating
@@ -76,6 +75,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     
     //  View updating
 
+    this.controller.update(time, delta);
     this.viewController.update(time, delta);
     
     this.movePressed = false;
@@ -115,6 +115,14 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   //  ---------------------------------------------------------------------
+
+  setBlueMoon() {
+    this.controller = new BlueMoon(this);
+  }
+
+  setController(ctrl) {
+    this.controller = ctrl;
+  }
 
   setTeam(en) {
     this.team = en;
@@ -236,10 +244,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     const moveSpeed = this.isTweening() ? this.getSpeed() * 0.75 : this.getSpeed();
     const adjustedSpeed = direction * moveSpeed;
+    const velX = this.velocityX;
   
     if (this.isState(Enum.SS_READY)) {
       this.movementSpeed = adjustedSpeed;
-    } else if (this.isState(Enum.SS_DEFEND) && this.movementSpeed === 0 && ((direction === -1 && !this.flipX) || (direction === 1 && this.flipX))) {
+    } else if (this.isState(Enum.SS_DEFEND) && velX === 0 && ((direction === -1 && !this.flipX) || (direction === 1 && this.flipX))) {
       this.body.velocity.x = adjustedSpeed * 1.3;
       this.showMovementDust();
     }
