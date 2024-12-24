@@ -40,6 +40,20 @@ const Vars = {
   ANIM_FLAG_ELITE: 'flag-gr-golden-elite',
   ANIM_FLAG_KING: 'flag-gr-kings',
 
+  ACT_MOVE_TO_TARGET_DISTANCE: "action_soldier_move_to_target_within_distance",
+  ACT_SEARCH_FOR_TARGET: "action_search_for_target",
+  ACT_WAIT_TIME: "action_wait_for_timer",
+  ACT_ATTACK: "action_soldier_attack",
+  ACT_DEFEND: "action_soldier_defend",
+
+  LISTEN_PLAYER_DISTANCE: "listener_player_distance",
+  LISTEN_AVOID_OVERLAP: "listener_avoid_overlap",
+  LISTEN_MATCH_LANE: "listener_match_lane",
+  LISTEN_STATE: "listener_soldier_state",
+  
+  VIEW_SOLDIER_FLASH: "listener_player_flash",
+  VIEW_ANIMATION: "view_soldier_animations",
+
   WORLD_LENGTHS: 3,
   GRAVITY: 60,
 

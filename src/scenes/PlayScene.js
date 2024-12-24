@@ -148,6 +148,8 @@ export class PlayScene extends Scene {
 
     this.mapTracker.updateCurrentArea(playerX);
 
+    //this.spawnBlueMoon();
+
     this.initialLoad = true;
   }
 
@@ -387,8 +389,9 @@ export class PlayScene extends Scene {
     const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
     wildman.setHP(10, 10);
     wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
-    wildman.setWildmanBrain();
     wildman.setTeam(Enum.TEAM_ALLY);
+    //wildman.setBlueMoon();
+    wildman.setBandit();
 
     this.groupAllies.add(wildman);
 
@@ -396,6 +399,16 @@ export class PlayScene extends Scene {
   }
 
   spawnBlueMoon() {
+
+    const blue = this.spawnSoldier(this.player.x + 24, 1, Vars.SHEET_WILDMAN);
+    blue.setHP(10, 10);
+    blue.addDisplayName("Blue Moon", Enum.TEAM_ALLY);
+    blue.setTeam(Enum.TEAM_ALLY);
+    blue.setBlueMoon();
+
+    this.groupAllies.add(blue);
+
+    return blue;
   }
 
   spawnAlly() {
@@ -411,7 +424,7 @@ export class PlayScene extends Scene {
     const deployLane = Phaser.Math.Between(1, 3);
 
     const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
-    enemy.setEnemyBrain();
+    enemy.setBandit();
     enemy.setTeam(Enum.TEAM_ENEMY);
     this.groupEnemies.add(enemy);
 
@@ -485,12 +498,11 @@ export class PlayScene extends Scene {
         // M<ust be facing enemy to defend
         if (defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x)) {
           attacker.recoil(16);
-          attacker.setTint(0xffa500);
           defender.kickback(2, attacker.x);
           // And delay
         }
         else {
-          attacker.recoil(4);
+          attacker.rebound(4);
           defender.hit(attacker);
         }
       }
@@ -505,8 +517,6 @@ export class PlayScene extends Scene {
       if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
         ally.recoil(16);
         en.recoil(16);
-        ally.setTintFill(0xFFFFFF);
-        en.setTintFill(0xFFFFFF);
       }
       if (ally.isState(Enum.SS_ATTACK)) {
         checkAttack(ally, en);

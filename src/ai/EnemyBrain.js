@@ -1,17 +1,14 @@
+import Brain from "../classes/Brain";
 import Counter from "../util/Counter";
 import Enum from "../util/Enum";
 
-export default class EnemyBrain {
+export default class EnemyBrain extends Brain {
   
   constructor(sprite) {
-    
-    this.sprite = sprite;
-    this.scene = sprite.scene;
+    super(sprite);
+    this.team = Enum.TEAM_ENEMY;
 
     this.maxDistance = 100;
-    this.mode = Enum.SM_IDLE;
-
-    this.target = null;
     
     this.laneMoveCounter = new Counter(250);
     this.attackDelayCounter = new Counter(750);
@@ -29,24 +26,17 @@ export default class EnemyBrain {
   // Flee battle if losing
 
   update(delta) {
+    super.update(delta);
+  }
 
-    switch (this.mode) {
-      
-      case Enum.SM_IDLE:
-        this.findTarget();
-        break;
+  attackLogic(delta) {
 
-      case Enum.SM_ATTACK:
-        this.attackModeUpdate(delta);
-        break;
-
-      case Enum.SM_CLOSE:
-        if (!this.avoidAllyOverlap()) {
-          this.moveToBattleRange();
-        }
-        break;
+    //  IF closest - attack -
+    this.sprite.faceX(this.target.x);
+    this.sprite.stopMove();
+    if (this.attackDelayCounter.update(delta)) {
+      this.sprite.attack();
     }
-
   }
 
   // This will check that the sprites have the same target
@@ -95,20 +85,12 @@ export default class EnemyBrain {
 
   // Vanish if too far from player
 
-  // Find target will find the closest target
-  findTarget() {
-    if (!this.target) {
-      this.target = this.scene.player;
-      this.mode = Enum.SM_CLOSE;
-    }
-  }
-
   attackModeUpdate(delta) {
 
     // Check here if target exists and return if it does not!
 
     switch (this.sprite.state) {
-      case Enum.SS_READY:
+      case Enum.SS_READY: 
 
         const inAttackRange = this.moveToAttackRange();
         const isSameLane = this.sprite.isLane(this.target.lane);
@@ -127,7 +109,7 @@ export default class EnemyBrain {
         }
 
         if (!this.isClosestToTarget()) {
-          this.mode = Enum.SM_CLOSE;
+          this.mode = Enum.SM_GET_CLOSE;
         }
 
         // Go close enough to attack and then attack (if you are the closest)
@@ -136,7 +118,7 @@ export default class EnemyBrain {
         break;
 
       case Enum.SS_HURT:
-        this.mode = Enum.SM_CLOSE;
+        this.mode = Enum.SM_GET_CLOSE;
         break;
     }
   }
