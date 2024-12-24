@@ -148,7 +148,7 @@ export class PlayScene extends Scene {
 
     this.mapTracker.updateCurrentArea(playerX);
 
-    this.spawnBlueMoon();
+    //this.spawnBlueMoon();
 
     this.initialLoad = true;
   }

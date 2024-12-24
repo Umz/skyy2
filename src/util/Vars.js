@@ -44,9 +44,11 @@ const Vars = {
   ACT_SEARCH_FOR_TARGET: "action_search_for_target",
   ACT_WAIT_TIME: "action_wait_for_timer",
   ACT_ATTACK: "action_soldier_attack",
+  ACT_DEFEND: "action_soldier_defend",
 
   LISTEN_PLAYER_DISTANCE: "listener_player_distance",
   LISTEN_AVOID_OVERLAP: "listener_avoid_overlap",
+  LISTEN_MATCH_LANE: "listener_match_lane",
 
   VIEW_ANIMATION: "view_soldier_animations",
   VIEW_HURT: "view_soldier_hurt",

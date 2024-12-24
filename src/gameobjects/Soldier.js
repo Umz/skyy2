@@ -290,6 +290,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  idle() {
+    this.state = Enum.SS_READY;
+  }
+
   //  Viewer functions
 
   showMovementDust() {
