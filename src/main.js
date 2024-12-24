@@ -1,10 +1,5 @@
 import { Game } from "phaser";
 import { Preloader } from "./preloader";
-import { GameOverScene } from "./scenes/GameOverScene";
-import { HudScene } from "./scenes/HudScene";
-import { MainScene } from "./scenes/MainScene";
-import { MenuScene } from "./scenes/MenuScene";
-import { SplashScene } from "./scenes/SplashScene";
 import { PlayScene } from "./scenes/PlayScene";
 
 // More information about config: https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
@@ -48,12 +43,7 @@ const config = {
 
     scene: [
         Preloader,
-        SplashScene,
-        MainScene,
-        MenuScene,
-        PlayScene,
-        HudScene,
-        GameOverScene
+        PlayScene
     ]
 };
 
