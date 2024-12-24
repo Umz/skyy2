@@ -495,11 +495,14 @@ export class PlayScene extends Scene {
       const point = attacker.getAttackPoint();
       if (defender.hitboxContainsX(point.x)) {
 
+        const activeDefense = defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x) && defender.hasGP();
+
         // M<ust be facing enemy to defend
-        if (defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x)) {
+        if (activeDefense) {
           attacker.recoil(16);
+          defender.guard();
           defender.kickback(2, attacker.x);
-          // And delay
+          
         }
         else {
           attacker.rebound(4);
@@ -513,6 +516,7 @@ export class PlayScene extends Scene {
 
       // if both attacking - check clash (some types, beat others)
       // some blocks are parries
+      // MUST be facing each other
 
       if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
         ally.recoil(16);

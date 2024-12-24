@@ -50,6 +50,7 @@ const Vars = {
   LISTEN_AVOID_OVERLAP: "listener_avoid_overlap",
   LISTEN_MATCH_LANE: "listener_match_lane",
   LISTEN_STATE: "listener_soldier_state",
+  LISTEN_STATS_RECOVER: "listener_soldier_stats_recover",
   
   VIEW_SOLDIER_FLASH: "listener_player_flash",
   VIEW_ANIMATION: "view_soldier_animations",

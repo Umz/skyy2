@@ -32,7 +32,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     //  Play stats
 
     this.maxHP = 3;   // Health Points
-    this.maxGP = 5;   // Guard Points
+    this.maxGP = 2;   // Guard Points
     this.hp = this.maxHP;
     this.gp = this.maxGP;
     
@@ -91,6 +91,22 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   setGP(activeGP, max = 0) {
     this.gp = activeGP;
     this.maxGP = max > 0 ? max : this.maxGP;
+  }
+
+  //  Battle functions   ------------------------------------------------------------
+
+  // attack, defend, block, rebound, recoil
+
+  guard() {
+    this.gp = Math.max(0, this.gp - 1);
+  }
+
+  hasGP() {
+    return this.gp > 0;
+  }
+
+  recoverGP(amt) {
+    this.gp = Math.min(this.maxGP, this.gp + amt);
   }
 
   //  ---------------------------------------------------------------------
