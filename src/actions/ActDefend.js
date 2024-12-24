@@ -1,4 +1,5 @@
 import Action from "../classes/Action";
+import Enum from "../util/Enum";
 import Vars from "../util/Vars";
 
 export default class ActDefend extends Action {
@@ -15,7 +16,9 @@ export default class ActDefend extends Action {
     this.time -= delta;
     if (this.time <= 0) {
       this.sprite.idle();
-      this.setComplete();
+      if (this.sprite.isState(Enum.SS_READY)) {
+        this.setComplete();
+      }
     }
   }
 }

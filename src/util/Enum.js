@@ -37,6 +37,7 @@ const Enum = {
   SS_REBOUND: 6,
   SS_COOLDOWN: 7,
   SS_DEAD: 8,
+  SS_REPELLED: 9,
 
   // Sprite AI modes
 

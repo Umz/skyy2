@@ -389,8 +389,9 @@ export class PlayScene extends Scene {
     const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
     wildman.setHP(10, 10);
     wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
-    wildman.setWildmanBrain();
     wildman.setTeam(Enum.TEAM_ALLY);
+    //wildman.setBlueMoon();
+    wildman.setBandit();
 
     this.groupAllies.add(wildman);
 
@@ -497,12 +498,11 @@ export class PlayScene extends Scene {
         // M<ust be facing enemy to defend
         if (defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x)) {
           attacker.recoil(16);
-          attacker.setTint(0xffa500);
           defender.kickback(2, attacker.x);
           // And delay
         }
         else {
-          attacker.recoil(4);
+          attacker.rebound(4);
           defender.hit(attacker);
         }
       }
@@ -517,8 +517,6 @@ export class PlayScene extends Scene {
       if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
         ally.recoil(16);
         en.recoil(16);
-        ally.setTintFill(0xFFFFFF);
-        en.setTintFill(0xFFFFFF);
       }
       if (ally.isState(Enum.SS_ATTACK)) {
         checkAttack(ally, en);

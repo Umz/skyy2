@@ -5,7 +5,9 @@ import ActSearchForTarget from "../actions/ActSearchForTarget";
 import ActWait from "../actions/ActWait";
 import ListenAvoidOverlap from "../actions/ListenAvoidOverlap";
 import ListenMatchLane from "../actions/ListenMatchLane";
+import ListenState from "../actions/ListenState";
 import ActionManager from "../classes/ActionManager"
+import Enum from "../util/Enum";
 
 export default class Bandit1 extends ActionManager {
 
@@ -34,10 +36,9 @@ export default class Bandit1 extends ActionManager {
 
     this.actionChoice(percentHP);
 
-    // When hit- cancel all (Background action)
-
-    // Figure out when NOT to cancel while avoiding- if neeeded?
-    // What to do if overlapping - move away and switch lanes
+    this.addBackgroundAction(new ListenState(this.sprite, Enum.SS_HURT)).addCallback(()=>{
+      this.clearAllActions();
+    });
 
     this.addBackgroundAction(new ListenAvoidOverlap(this.sprite)).addCallback(()=>{
       this.clearAllActions();
@@ -85,7 +86,7 @@ export default class Bandit1 extends ActionManager {
 
   defendTarget(target) {
 
-    const defendTime = Phaser.Math.Between(2000, 3000);
+    const defendTime = Phaser.Math.Between(1000, 3000);
     const cooldown = Phaser.Math.Between(750, 1000);
 
     this.addActions(

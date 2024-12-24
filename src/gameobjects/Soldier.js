@@ -66,7 +66,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     //  State updating
     
-    if (this.isState(Enum.SS_REBOUND) || this.isState(Enum.SS_HURT)) {
+    if (this.isState(Enum.SS_REBOUND) || this.isState(Enum.SS_REPELLED) || this.isState(Enum.SS_HURT)) {
       this.movementSpeed = 0;
       if (velX === 0) {
         this.state = Enum.SS_READY;
@@ -168,11 +168,20 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   recoil(intensity = 1) {
+    this.rebound_calc(intensity);
+    this.state = Enum.SS_REPELLED;
+  }
+
+  rebound(intensity = 1) {
+    this.rebound_calc(intensity);
+    this.state = Enum.SS_REBOUND;
+  }
+
+  /** Move and rename- just the math for recoil */
+  rebound_calc(intensity = 1) {
     const vX = this.body.velocity.x;
     const recoilSpeed = vX > 0 ? -this.getSpeed() : this.getSpeed();
-
     this.movementSpeed = recoilSpeed * (intensity * .1);
-    this.state = Enum.SS_REBOUND;
   }
 
   kickback(intensity, pX) {

@@ -1,5 +1,5 @@
 import ViewAnimation from "../actions/ViewAnimations";
-import ViewHurt from "../actions/ViewHurt";
+import ViewSoldierFlash from "../actions/ViewSoldierFlash";
 import ActionManager from "../classes/ActionManager";
 
 export default class SoldierView extends ActionManager {
@@ -8,6 +8,6 @@ export default class SoldierView extends ActionManager {
     super(sprite);
 
     this.addBackgroundAction(new ViewAnimation(sprite));
-    this.addBackgroundAction(new ViewHurt(sprite));
+    this.addBackgroundAction(new ViewSoldierFlash(sprite));
   }
 }

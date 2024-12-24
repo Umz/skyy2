@@ -42,6 +42,7 @@ export default class P4 extends TutorialPart {
         
       case 4:
         if (this.doOnce()) {
+          console.log("spawning Wildman (2) - fix this bug, should only be called once");
           scene.spawnWildman();
         }
         this.nextStep();
