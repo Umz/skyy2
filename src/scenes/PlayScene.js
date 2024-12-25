@@ -348,6 +348,13 @@ export class PlayScene extends Scene {
       emitting: false
     });
 
+    this.sparkleEmitter = this.add.particles(0, 0, Vars.TX_SPARKLE, {
+      speedX: { min: -30, max: 30 },
+      speedY: { min: -30, max: 30 },
+      lifespan: 500,
+      emitting: false
+    });
+
   }
 
   emitDust(x, y, lane) {
@@ -358,6 +365,41 @@ export class PlayScene extends Scene {
   emitRock(x, y, lane) {
     this.rockEmitter.setDepth(lane * 10 + 1);
     this.rockEmitter.emitParticleAt(x, y, 12);
+  }
+
+  emitClash(x, y, lane) {
+    this.sparkleEmitter.setDepth(lane * 10 + 1);
+    this.sparkleEmitter.emitParticleAt(x, y, 8);
+  }
+
+  //  -
+
+  tinyCameraShake() {
+    const camera = this.cameras.main;
+    camera.shake(100, .01, true);
+  }
+
+  showDeath(soldier) {
+
+    const atlas = soldier.prefix;
+    const frame = soldier.frame;
+
+    const image = this.add.image(soldier.x, soldier.y, atlas, frame).setOrigin(.5, 1).setFlipX(soldier.flipX);
+    const cover = this.add.image(soldier.x, soldier.y, atlas, frame).setOrigin(.5, 1).setFlipX(soldier.flipX).setAlpha(.6).setDepth(soldier.depth + 1);
+    cover.setTintFill(0xffffff);
+    const toY = soldier.getTopCenter().y - 16;
+
+    this.tweens.add({
+      targets: [image, cover],
+      duration: 750,
+      scaleX: .2,
+      scaleY: 2,
+      y: toY,
+      alpha: 0,
+      onComplete: () => {
+        image.destroy(true);
+      }
+    })
   }
 
   //  -----------------------------------------------------------------------------------------
@@ -380,9 +422,11 @@ export class PlayScene extends Scene {
     this.groupAllies.add(player);
 
     camera.startFollow(player, true, .8);
-    player.setHP(1000, 1000);
+    player.setHP(50, 50);
+    player.setGP(7, 7);
     player.addDisplayName("Moon Chief", Enum.TEAM_PLAYER);
     player.setTeam(Enum.TEAM_ALLY);
+    player.isPlayer = true;
 
     return player;
   }
@@ -391,7 +435,8 @@ export class PlayScene extends Scene {
 
     const spawnX = Vars.AREA_WIDTH * .5;
     const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
-    wildman.setHP(10, 10);
+    wildman.setHP(25, 25);
+    wildman.setGP(15, 15);
     wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
     wildman.setTeam(Enum.TEAM_ALLY);
     //wildman.setBlueMoon();
@@ -495,7 +540,7 @@ export class PlayScene extends Scene {
 
   allyEnemyCollision(ally, en) {
 
-    const checkAttack = function(attacker, defender) {
+    const checkAttack = (attacker, defender) => {
       const point = attacker.getAttackPoint();
       if (defender.hitboxContainsX(point.x)) {
 
@@ -506,11 +551,20 @@ export class PlayScene extends Scene {
           attacker.recoil(16);
           defender.guard();
           defender.kickback(2, attacker.x);
-          
+          this.emitClash(point.x, point.y, attacker.lane);
+
+          if (attacker.isPlayer) {
+            this.tinyCameraShake();
+          }
         }
         else {
           attacker.rebound(4);
-          defender.hit(attacker);
+          const fatal = defender.hit(attacker);
+
+          if (fatal) {
+            this.showDeath(defender);
+          }
+
         }
       }
     }
@@ -522,14 +576,22 @@ export class PlayScene extends Scene {
       // some blocks are parries
       // MUST be facing each other
 
-      if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
+      const facing = ally.isFacing(en.x) && en.isFacing(ally.x);
+
+      if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK) && facing) {
         ally.recoil(16);
         en.recoil(16);
+
+        const p1 = ally.getAttackPoint();
+        const p2 = en.getAttackPoint();
+
+        this.emitClash(p1.x, p1.y, ally.lane);
+        this.emitClash(p2.x, p2.y, en.lane);
       }
-      if (ally.isState(Enum.SS_ATTACK)) {
+      if (ally.isState(Enum.SS_ATTACK) && ally.isFacing(en.x)) {
         checkAttack(ally, en);
       }
-      else if (en.isState(Enum.SS_ATTACK)) {
+      else if (en.isState(Enum.SS_ATTACK) && en.isFacing(ally.x)) {
         checkAttack(en, ally);
       }
     }

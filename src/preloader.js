@@ -30,6 +30,8 @@ export class Preloader extends Phaser.Scene {
         this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight: 30});
 
         this.load.spritesheet(Vars.SHEET_BANDIT_BLUE, 'spritesheets/Infantry_Bandit_Blue.png', { frameWidth: 38, frameHeight:34});
+        this.load.spritesheet(Vars.SHEET_BANDIT_LANCE_BLUE, 'spritesheets/Lancer_Blue_Bandit.png', { frameWidth: 43, frameHeight:30});
+
         this.load.spritesheet(Vars.SHEET_WILDMAN, 'spritesheets/Infantry_Wildman.png', { frameWidth: 38, frameHeight:34});
 
         this.load.spritesheet(Vars.SHEET_BIRDS1, 'spritesheets/bg_birds.png', { frameWidth: 32, frameHeight: 43});
@@ -71,27 +73,15 @@ export class Preloader extends Phaser.Scene {
         //  All below came with the builder - delete
         //  ------------------------------------------------------------------------------------
 
-        this.load.image("player", "player/player.png");
-        this.load.atlas("propulsion-fire", "player/propulsion/propulsion-fire.png", "player/propulsion/propulsion-fire_atlas.json");
-        this.load.animation("propulsion-fire-anim", "player/propulsion/propulsion-fire_anim.json");
-
-        // Enemies
-        this.load.atlas("enemy-blue", "enemies/enemy-blue/enemy-blue.png", "enemies/enemy-blue/enemy-blue_atlas.json");
-        this.load.animation("enemy-blue-anim", "enemies/enemy-blue/enemy-blue_anim.json");
-
-        // Fonts
-        this.load.bitmapFont("pixelfont", "fonts/pixelfont.png", "fonts/pixelfont.xml");
-        this.load.image("knighthawks", "fonts/knight3.png");
-
-        // Event to update the loading bar
         this.load.on("progress", (progress) => {
-            //console.log("Loading: " + Math.round(progress * 100) + "%");
         });
     }
 
     create() {
 
         SaveData.SETUP_LOCALFORAGE_CONFIG();
+
+        this.createGraphics();
 
         //  MaM Banner Flapping
         this.anims.create({
@@ -146,6 +136,7 @@ export class Preloader extends Phaser.Scene {
 
         this.createSpritesheetAnimation(Vars.SHEET_PLAYER, data.lancer);
         this.createSpritesheetAnimation(Vars.SHEET_BANDIT_BLUE, data.infantry);
+        this.createSpritesheetAnimation(Vars.SHEET_BANDIT_LANCE_BLUE, data.lancer);
         this.createSpritesheetAnimation(Vars.SHEET_WILDMAN, data.infantry);
 
         this.scene.start("PlayScene");      // Next Scene when all assets are loaded
@@ -162,5 +153,38 @@ export class Preloader extends Phaser.Scene {
                 repeat: config.repeat
             });
         }
+    }
+
+    //  -
+
+    /** Create each graphic within scope to reuse variable names */
+    createGraphics() {
+
+        const graphics = this.add.graphics();
+        
+        {   // CREATE sparkle 
+            const x = 0;
+            const y = 0;
+            const size = 4;
+            const radius = size * .5;
+
+            graphics.beginPath();
+            
+            graphics.arc(x, y, radius, 0, .5 * Math.PI);
+            graphics.arc(x, size, radius, 1.5 * Math.PI, 0);
+            graphics.arc(size, size, radius, 1 * Math.PI, 1.5 * Math.PI);
+            graphics.arc(size, y, radius, .5 * Math.PI, 1 * Math.PI);
+
+            graphics.closePath();
+
+            graphics.fillStyle(0xffffff, 1);
+            graphics.fillPath();
+
+            graphics.generateTexture(Vars.TX_SPARKLE, size, size);
+            graphics.clear();
+        }
+
+        graphics.destroy();
+
     }
 }

@@ -60,6 +60,10 @@ export default class Conversation {
     return this.dialogue.length > 0;
   }
 
+  isConversing() {
+    return this.hasNextLine() || this.isShowingDialogue;
+  }
+
   showConversation(en) {
     this.loadDialogue(en);
     this.showNextLine();

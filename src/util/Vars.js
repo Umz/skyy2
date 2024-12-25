@@ -22,6 +22,9 @@ const Vars = {
   SHEET_GR_FLAGGER: 'gr_advisor_sheet',
 
   SHEET_BANDIT_BLUE: 'blue_bandit_sheet',
+  SHEET_BANDIT_LANCE_BLUE: 'blue_lancer_bandit_sheet',
+
+  TX_SPARKLE: "graphic_sparkle",
 
   ANIM_IDLE: '-idle',
   ANIM_WALK: '-walk',

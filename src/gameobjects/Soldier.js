@@ -210,15 +210,19 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     if (!this.isState(Enum.SS_HURT)) {
       this.hp = Math.max(0, this.hp - 1);
       if (this.hp === 0) {
+        this.stopTweening();
         this.destroy(true);
         if (this.displayName) {
           this.displayName.destroy(true);
         }
+        return true;
       }
     }
     // only do damage if not already HURT state- no double hits
     this.state = Enum.SS_HURT;
     this.movementSpeed = (attacker.x > this.x) ? -this.getSpeed() : this.getSpeed();
+
+    return false;
   }
 
   towardsLane(lane) {

@@ -22,22 +22,25 @@ export default class P4 extends TutorialPart {
 
       case 1:
         if (player.x < Vars.AREA_WIDTH) {
-          this.spawnEnemies(6);
-          scene.convo.showConversation(Enum.BF_TEST);
+          //this.spawnEnemies(6);
+          this.spawnEnemies(1);
+          this.showConversation(Enum.BF_TEST);
           this.nextStep();
         }
         break;
 
       case 2:
         if (player.x < Vars.AREA_WIDTH * .8) {
-          this.spawnEnemies(4);
+          //this.spawnEnemies(4);
+          this.spawnEnemies(1);
           this.nextStep();
         }
         break;
 
       case 3:
         if (player.x < Vars.AREA_WIDTH * .65) {
-          this.spawnEnemies(3);
+          //this.spawnEnemies(3);
+          this.spawnEnemies(1);
           this.nextStep();
         }
         break;
@@ -51,19 +54,27 @@ export default class P4 extends TutorialPart {
         break;
 
       case 5:
-        if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(8)) {
+        //if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(8)) {
+          if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(1)) {
+          this.showConversation(Enum.BF_WIN);
           this.nextStep();
         }
         break;
 
       case 6:
+        if (this.parent.isConversationComplete()) {
+          this.nextStep();
+        }
+        break;
+
+      case 7:
         if (this.doOnce()) {
           // Convert Wildman to Blue Moon
           this.parent.showInstructions(Enum.STORY_2B_GO_EAST);
         }
         break;
 
-      case 7:
+      case 8:
         return true;
     }
 
