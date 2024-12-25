@@ -61,7 +61,7 @@ export default class Conversation {
   }
 
   isConversing() {
-    return this.hasNextLine();
+    return this.hasNextLine() || this.isShowingDialogue;
   }
 
   showConversation(en) {

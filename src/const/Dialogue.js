@@ -18,14 +18,14 @@ Wildman: For the Blue Forest, we shall prevail!
 `;
 
 const bf_victory = `
-Moon Chief: We are victorious.
-Wildman: That we are! Never been so thankful for outsiders, but you saved me there.
-Moon Chief: Then join me, Wildman, as Blue Moon of the Moon at Midnight tribe.
-Wildman: Ha!…
-Moon Chief: Perhaps I misjudged you.
-Wildman: No, I am the defender of this forest.
-Moon Chief: The forest is safe, the tribe shall defend it.
-Wildman: Hahaha! You are an interesting one indeed!
+Moon Chief: We are victorious.-#
+Wildman: That we are! Never been so thankful for outsiders, but you saved me there.-#
+Moon Chief: Then join me, Wildman, as Blue Moon of the Moon at Midnight tribe.-#
+Wildman: Ha!…-#
+Moon Chief: Perhaps I misjudged you.-#
+Wildman: No, I am the defender of this forest.-#
+Moon Chief: The forest is safe, the tribe shall defend it.-#
+Wildman: Hahaha! You are an interesting one indeed!-#
 Wildman: Fine, I will join you!
 `;
 

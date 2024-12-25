@@ -22,7 +22,8 @@ export default class P4 extends TutorialPart {
 
       case 1:
         if (player.x < Vars.AREA_WIDTH) {
-          this.spawnEnemies(6);
+          //this.spawnEnemies(6);
+          this.spawnEnemies(1);
           this.showConversation(Enum.BF_TEST);
           this.nextStep();
         }
@@ -30,14 +31,16 @@ export default class P4 extends TutorialPart {
 
       case 2:
         if (player.x < Vars.AREA_WIDTH * .8) {
-          this.spawnEnemies(4);
+          //this.spawnEnemies(4);
+          this.spawnEnemies(1);
           this.nextStep();
         }
         break;
 
       case 3:
         if (player.x < Vars.AREA_WIDTH * .65) {
-          this.spawnEnemies(3);
+          //this.spawnEnemies(3);
+          this.spawnEnemies(1);
           this.nextStep();
         }
         break;
@@ -51,7 +54,8 @@ export default class P4 extends TutorialPart {
         break;
 
       case 5:
-        if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(8)) {
+        //if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(8)) {
+          if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(1)) {
           this.showConversation(Enum.BF_WIN);
           this.nextStep();
         }

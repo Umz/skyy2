@@ -11,7 +11,7 @@ export default class ActSearchForTarget extends Action {
   }
 
   update(time, delta) {
-    const target = GetClosestEnemyWithinRange(this.sprite, 120);
+    const target = GetClosestEnemyWithinRange(this.sprite, this.maxDistance);
     if (target) {
       this.target = target;
       this.setComplete();
