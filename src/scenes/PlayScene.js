@@ -17,6 +17,7 @@ import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
+import Conversation from "../util/Conversation";
 
 export class PlayScene extends Scene {
 
@@ -110,6 +111,8 @@ export class PlayScene extends Scene {
 
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
 
+    this.convo = new Conversation(this);
+
     this.test = function() {
 
       let target = this.player;
@@ -168,6 +171,7 @@ export class PlayScene extends Scene {
 
     //  - Normal updating -
     
+    this.convo.update(time, delta);
     this.tutorial.update();
 
     this.mapTracker.updateCurrentArea(this.player.x);
@@ -495,11 +499,14 @@ export class PlayScene extends Scene {
       const point = attacker.getAttackPoint();
       if (defender.hitboxContainsX(point.x)) {
 
+        const activeDefense = defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x) && defender.hasGP();
+
         // M<ust be facing enemy to defend
-        if (defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x)) {
+        if (activeDefense) {
           attacker.recoil(16);
+          defender.guard();
           defender.kickback(2, attacker.x);
-          // And delay
+          
         }
         else {
           attacker.rebound(4);
@@ -513,6 +520,7 @@ export class PlayScene extends Scene {
 
       // if both attacking - check clash (some types, beat others)
       // some blocks are parries
+      // MUST be facing each other
 
       if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK)) {
         ally.recoil(16);

@@ -6,6 +6,7 @@ import ActWait from "../actions/ActWait";
 import ListenAvoidOverlap from "../actions/ListenAvoidOverlap";
 import ListenMatchLane from "../actions/ListenMatchLane";
 import ListenState from "../actions/ListenState";
+import ListenStatsRecover from "../actions/ListenStatsRecover";
 import ActionManager from "../classes/ActionManager"
 import Enum from "../util/Enum";
 
@@ -17,6 +18,13 @@ export default class Bandit1 extends ActionManager {
 
   setDefaultActions() {
     this.searchForNewTarget();
+    this.addStatRecovery();
+  }
+
+  //  ---
+
+  addStatRecovery() {
+    this.addBackgroundAction(new ListenStatsRecover(this.sprite));
   }
 
   //  ---

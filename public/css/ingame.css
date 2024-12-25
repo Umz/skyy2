@@ -55,7 +55,7 @@
 /* Names displayed above characters */
 
 .display-name {
-  font: .4rem Arial, Helvetica, sans-serif;
+  font: .4rem "Righteous", Arial, Helvetica, sans-serif;
   text-shadow: 0 1px 0px rgba(0, 0, 0, .3);
   font-variant: small-caps;
 }
