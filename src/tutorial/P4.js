@@ -23,7 +23,7 @@ export default class P4 extends TutorialPart {
       case 1:
         if (player.x < Vars.AREA_WIDTH) {
           this.spawnEnemies(6);
-          scene.convo.showConversation(Enum.BF_TEST);
+          this.showConversation(Enum.BF_TEST);
           this.nextStep();
         }
         break;
@@ -52,18 +52,25 @@ export default class P4 extends TutorialPart {
 
       case 5:
         if (player.x < Vars.AREA_WIDTH * .5 && this.spawnAndWait(8)) {
+          this.showConversation(Enum.BF_WIN);
           this.nextStep();
         }
         break;
 
       case 6:
+        if (this.parent.isConversationComplete()) {
+          this.nextStep();
+        }
+        break;
+
+      case 7:
         if (this.doOnce()) {
           // Convert Wildman to Blue Moon
           this.parent.showInstructions(Enum.STORY_2B_GO_EAST);
         }
         break;
 
-      case 7:
+      case 8:
         return true;
     }
 

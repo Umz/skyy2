@@ -14,6 +14,10 @@ export default class TutorialPart {
     return false;
   }
 
+  showConversation(en) {
+    this.parent.showConversation(en);
+  }
+
   checkCount(max) {
     const start = this.date.getTime();
     const comp = new Date();

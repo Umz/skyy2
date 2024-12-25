@@ -48,6 +48,14 @@ export default class Tutorial {
     Story.ShowStory(storyID);
   }
 
+  showConversation(enu) {
+    this.scene.convo.showConversation(enu);
+  }
+
+  isConversationComplete() {
+    return !this.scene.convo.isConversing();
+  }
+
   hideInstructions() {
 
     this.spriteController.setActive();
