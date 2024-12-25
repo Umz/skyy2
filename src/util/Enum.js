@@ -74,6 +74,9 @@ const Enum = {
   STORY_3_DESTROY_ROSE: 6,
   STORY_4_CLAIM_STORM: 7,
 
-  ACT_GOTO_PLAYER: 101
+  //  Dialogue
+
+  BF_BATTLE: 1,   // Blue Forest Battle
+  BF_WIN: 2,      // Blue Forest Victory  
 }
 export default Enum;

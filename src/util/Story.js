@@ -54,6 +54,4 @@ const StoryParts = [
   {id:Enum.STORY_2B_GO_EAST, p:["Now take our forces east to conquer."]},
   {id:Enum.STORY_3_DESTROY_ROSE, p:["There are still some who would oppose us here? Take out any who dare."]},
   {id:Enum.STORY_4_CLAIM_STORM, p:["This village must fly with our tribe now. They submit or they die."]},
-
-  {id:Enum.ACT_GOTO_PLAYER, p:[""]}   // Just to copy
 ];
