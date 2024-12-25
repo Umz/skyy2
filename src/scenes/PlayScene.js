@@ -17,6 +17,7 @@ import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
+import Conversation from "../util/Conversation";
 
 export class PlayScene extends Scene {
 
@@ -110,6 +111,8 @@ export class PlayScene extends Scene {
 
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
 
+    this.convo = new Conversation(this);
+
     this.test = function() {
 
       let target = this.player;
@@ -168,6 +171,7 @@ export class PlayScene extends Scene {
 
     //  - Normal updating -
     
+    this.convo.update(time, delta);
     this.tutorial.update();
 
     this.mapTracker.updateCurrentArea(this.player.x);

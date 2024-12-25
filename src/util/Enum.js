@@ -76,6 +76,8 @@ const Enum = {
 
   //  Dialogue
 
+  BF_TEST: 11,
+
   BF_BATTLE: 1,   // Blue Forest Battle
   BF_WIN: 2,      // Blue Forest Victory  
 }

@@ -4,7 +4,7 @@ import { GetClosestEnemyWithinRange } from "../util/ActionHelper";
 
 export default class ActSearchForTarget extends Action {
 
-  constructor(sprite, distance = 120) {
+  constructor(sprite, distance = 400) {
     super(Vars.ACT_SEARCH_FOR_TARGET, sprite);
     this.maxDistance = distance;
     this.target = null;

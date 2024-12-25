@@ -23,6 +23,7 @@ export default class P4 extends TutorialPart {
       case 1:
         if (player.x < Vars.AREA_WIDTH) {
           this.spawnEnemies(6);
+          scene.convo.showConversation(Enum.BF_TEST);
           this.nextStep();
         }
         break;
@@ -39,11 +40,12 @@ export default class P4 extends TutorialPart {
           this.spawnEnemies(3);
           this.nextStep();
         }
+        break;
         
       case 4:
         if (this.doOnce()) {
-          console.log("spawning Wildman (2) - fix this bug, should only be called once");
           scene.spawnWildman();
+          scene.convo.showConversation(Enum.BF_BATTLE);
         }
         this.nextStep();
         break;

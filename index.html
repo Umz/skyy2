@@ -29,14 +29,14 @@
         #speech-holder span {
             font: 900 1rem "Righteous", Helvetica, sans-serif;
             font-variant: small-caps;
-            text-shadow: 1px 2px 3px #000;
+            text-shadow: 1px 1px 2px #000;
         }
         #speech-holder p {
             flex-grow: 1;
             margin: .5rem 0;
             padding: 1rem 0;
             letter-spacing: 2px;
-            font: 1.2rem "Righteous", Helvetica, sans-serif;
+            font: 1.8rem "Righteous", Helvetica, sans-serif;
         }
         .speech-side {
             width: 64px;
@@ -50,6 +50,14 @@
         .fade-left {
             border-image: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)) 1;
             background: linear-gradient(to left, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+        }
+
+        .anim-fade {
+            opacity: 0;
+            transition: opacity 500ms ease-in-out;
+        }
+        .anim-fadeIn {
+            opacity: 1;
         }
     </style>
 
@@ -81,14 +89,14 @@
         </div>
     </div>
 
-    <div id="tests-" class="page-container flex-center index-3">
-        <div id="speech-box" class="">
+    <div id="tests-" class="page-container flex-center index-4">
+        <div id="speech-box" class="anim-fade">
             
             <div class="speech-side fade-left"></div>
 
             <div id="speech-holder" class="">
-                <span id="speech-speaker">Wildman</span>
-                <p id="speech-text">And your style is unmatched! You strike like a bird diving into water!</p>
+                <span id="speech-speaker">Narrator</span>
+                <p id="speech-text">Welcome to Skyy Tribes II</p>
             </div>
 
             <div class="speech-side fade-right"></div>

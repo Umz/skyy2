@@ -1,12 +1,11 @@
 import Enum from "../util/Enum";
 
-const Dialogue = new Map([
-
-  [Enum.BF_BATTLE, bf_battle],
-])
-export default Dialogue;
-
 //  Line break -#
+
+const bf_entrance = 
+  `
+  Moon Chief: Hah. So you seek death.
+  `;
 
 const bf_battle = 
   `
@@ -19,3 +18,11 @@ const bf_battle =
   Moon Chief: I am Moon Chief of the Moon at Midnight tribe.-#
   Wildman: For the Blue Forest, we shall prevail!
   `;
+
+//  -
+
+const Dialogue = new Map([
+  [Enum.BF_TEST, bf_entrance],
+  [Enum.BF_BATTLE, bf_battle],
+])
+export default Dialogue;
