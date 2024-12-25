@@ -23,6 +23,8 @@ const Vars = {
 
   SHEET_BANDIT_BLUE: 'blue_bandit_sheet',
 
+  TX_SPARKLE: "graphic_sparkle",
+
   ANIM_IDLE: '-idle',
   ANIM_WALK: '-walk',
   ANIM_ATTACK: '-attack',

@@ -93,6 +93,8 @@ export class Preloader extends Phaser.Scene {
 
         SaveData.SETUP_LOCALFORAGE_CONFIG();
 
+        this.createGraphics();
+
         //  MaM Banner Flapping
         this.anims.create({
             key: 'banner_mam',
@@ -162,5 +164,38 @@ export class Preloader extends Phaser.Scene {
                 repeat: config.repeat
             });
         }
+    }
+
+    //  -
+
+    /** Create each graphic within scope to reuse variable names */
+    createGraphics() {
+
+        const graphics = this.add.graphics();
+        
+        {   // CREATE sparkle 
+            const x = 0;
+            const y = 0;
+            const size = 4;
+            const radius = size * .5;
+
+            graphics.beginPath();
+            
+            graphics.arc(x, y, radius, 0, .5 * Math.PI);
+            graphics.arc(x, size, radius, 1.5 * Math.PI, 0);
+            graphics.arc(size, size, radius, 1 * Math.PI, 1.5 * Math.PI);
+            graphics.arc(size, y, radius, .5 * Math.PI, 1 * Math.PI);
+
+            graphics.closePath();
+
+            graphics.fillStyle(0xffffff, 1);
+            graphics.fillPath();
+
+            graphics.generateTexture(Vars.TX_SPARKLE, size, size);
+            graphics.clear();
+        }
+
+        graphics.destroy();
+
     }
 }
