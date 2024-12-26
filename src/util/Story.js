@@ -51,7 +51,7 @@ const StoryParts = [
   {id:Enum.STORY_1B_APPRENTICE, p:["There are still enemies here. Find them. Destroy them. Be ruthless."]},
   {id:Enum.STORY_1C_BLUEFOREST, p:["They came from Blue Forest to the West. Go there."]},
   {id:Enum.STORY_2A_CLAIM_BLUE, p:["Leave no enemies alive. They submit or they die.", "This forest will fly the flag of our tribe now."]},
-  {id:Enum.STORY_2B_GO_EAST, p:["Now take our forces east to conquer."]},
+  {id:Enum.STORY_2B_PLACE_FLAG, p:["Now place our banner by the Teal tree! This forest is our territory now."]},
   {id:Enum.STORY_3_DESTROY_ROSE, p:["There are still some who would oppose us here? Take out any who dare."]},
   {id:Enum.STORY_4_CLAIM_STORM, p:["This village must fly with our tribe now. They submit or they die."]},
 ];

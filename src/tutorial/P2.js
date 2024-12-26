@@ -1,7 +1,7 @@
-import TutorialPart from "../classes/TutorialPart";
+import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../util/Enum";
 
-export default class P2 extends TutorialPart {
+export default class P2 extends TutorialSequence {
 
   update() {
 
@@ -17,7 +17,7 @@ export default class P2 extends TutorialPart {
 
       case 1:
         if (this.doOnce()) {
-          this.parent.showInstructions(Enum.STORY_1A_APPRENTICE);
+          this.tutorial.showInstructions(Enum.STORY_1A_APPRENTICE);
         }
         break;
 

@@ -14,7 +14,7 @@ export default class Tutorial {
     this.controllerActive = false;
 
     this.tutorialNumber = 4;
-    this.part = null;
+    this.sequence = null;
   }
 
   update() {
@@ -27,16 +27,16 @@ export default class Tutorial {
       });
     }
 
-    if (!this.part) {
-      this.part = this.getNextPart();
-      if (this.part) {
+    if (!this.sequence) {
+      this.sequence = this.getNextPart();
+      if (this.sequence) {
         this.tutorialNumber ++;
       }
     }
     else {
-      const isComplete = this.part.update();
+      const isComplete = this.sequence.update();
       if (isComplete) {
-        this.part = null;
+        this.sequence = null;
       }
     }
   }
@@ -61,7 +61,7 @@ export default class Tutorial {
     this.spriteController.setActive();
     this.controllerActive = false;
     Story.HideStory();
-    this.part.nextStep();
+    this.sequence.nextStep();
   }
 
   getNextPart() {
