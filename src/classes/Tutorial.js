@@ -13,7 +13,7 @@ export default class Tutorial {
     this.spriteController = spriteController;
     this.controllerActive = false;
 
-    this.tutorialNumber = 1;
+    this.tutorialNumber = 3;
     this.sequence = null;
   }
 

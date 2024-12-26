@@ -35,5 +35,9 @@ const Dialogue = new Map([
   [Enum.BF_TEST, bf_entrance],
   [Enum.BF_BATTLE, bf_battle],
   [Enum.BF_WIN, bf_victory],
+
+
+  [Enum.MC_TAUNT, "Moon Chief: Come! I shall grant you a swift death."],
+  [Enum.MC_PEOMS, "Moon Chief: More peons. How futile"]
 ])
 export default Dialogue;

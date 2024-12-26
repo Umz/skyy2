@@ -22,6 +22,7 @@ export default class P3 extends TutorialSequence {
     .add(()=>{
       return this.checkCount(1000);
     })
+    .addConversation(Enum.MC_PEOMS)
     .add(()=>{
       return this.spawnAndWait(4);
     })
@@ -29,6 +30,7 @@ export default class P3 extends TutorialSequence {
     .add(()=>{
       return this.checkCount(1000);
     })
+    .addConversation(Enum.MC_TAUNT)
     .add(()=>{
       return this.spawnAndWait(5);
     })

@@ -38,6 +38,14 @@ export default class TutorialSequence {
     return this;
   }
 
+  addConversation(en) {
+    this.add(()=>{
+      this.showConversation(en);
+      return true;
+    })
+    return this;
+  }
+
   showConversation(en) {
     this.tutorial.showConversation(en);
   }

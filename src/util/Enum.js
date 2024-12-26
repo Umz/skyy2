@@ -78,7 +78,10 @@ const Enum = {
 
   BF_TEST: 1,     
   BF_BATTLE: 2,   // Blue Forest Battle
-  BF_WIN: 3,      // Blue Forest Victory  
+  BF_WIN: 3,      // Blue Forest Victory
+
+  MC_TAUNT: 101,
+  MC_PEOMS: 102,
 
 }
 export default Enum;
