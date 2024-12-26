@@ -2,6 +2,7 @@ import Bandit1 from "../ai/Bandit1";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
 import SoldierView from "../ai/SoldierView";
+import Wildman from "../ai/Wildman";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../util/Enum";
 import Vars from "../util/Vars";
@@ -111,7 +112,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     return this.hp <= 0;
   }
 
-  // attack, defend, block, rebound, recoil
+  // attack, defend, block, rebound, recoil#
+
+  recoverHP(amt) {
+    this.hp = Math.min(this.maxHP, this.hp + amt);
+  }
 
   guard() {
     this.gp = Math.max(0, this.gp - 1);
@@ -140,6 +145,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   //  ---------------------------------------------------------------------
+
+  setWildman() {
+    this.controller = new Wildman(this);
+  }
 
   setBlueMoon() {
     this.controller = new BlueMoon(this);
