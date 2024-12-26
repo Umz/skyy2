@@ -23,7 +23,7 @@ export default class P4 extends TutorialPart {
       case 1:
         if (player.x < Vars.AREA_WIDTH) {
           //this.spawnEnemies(6);
-          this.spawnEnemies(1);
+          this.spawnEnemies(3);
           this.showConversation(Enum.BF_TEST);
           this.nextStep();
         }

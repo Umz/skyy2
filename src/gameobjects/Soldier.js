@@ -93,7 +93,23 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.maxGP = max > 0 ? max : this.maxGP;
   }
 
+  getHPPercent() {
+    return this.hp / this.maxHP;
+  }
+
+  getGPPercent() {
+    return this.gp / this.maxGP;
+  }
+
   //  Battle functions   ------------------------------------------------------------
+
+  isAlive() {
+    return this.hp > 0;
+  }
+
+  isDead() {
+    return this.hp <= 0;
+  }
 
   // attack, defend, block, rebound, recoil
 
@@ -351,7 +367,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   isFacing(x) {
     const isRight = x > this.x;
-    return (isRight && !this.flipX) || (!isRight && this.flipX);
+    return !this.isTweening() && ((isRight && !this.flipX) || (!isRight && this.flipX));
   }
 
   flipXTween(flipDirection = 0) {
