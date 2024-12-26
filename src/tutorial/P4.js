@@ -12,9 +12,9 @@ export default class P4 extends TutorialSequence {
 
     this.add(()=>{
       if (SaveData.Data.location === Enum.LOC_BLUE_FOREST) {
-        if (this.doOnce()) {
+        this.doOnce(()=>{
           this.tutorial.showInstructions(Enum.STORY_2A_CLAIM_BLUE);
-        }
+        });
       }
     })
     .add(()=>{
@@ -60,9 +60,9 @@ export default class P4 extends TutorialSequence {
       return this.tutorial.isConversationComplete();
     })
     .add(()=>{
-      if (this.doOnce()) {
+      this.doOnce(()=>{
         this.tutorial.showInstructions(Enum.STORY_2B_PLACE_FLAG);
-      }
+      });
     });
 
   } // init()
@@ -86,10 +86,9 @@ export default class P4 extends TutorialSequence {
 
     const { scene } = this;
 
-    if (this.doOnce()) {
+    this.doOnce(()=>{
       scene.spawnEnemies(amt);
-      return false;
-    }
+    });
     
     const enemyCount = scene.countEnemies();
     return enemyCount === 0;

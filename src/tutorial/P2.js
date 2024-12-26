@@ -3,36 +3,25 @@ import Enum from "../util/Enum";
 
 export default class P2 extends TutorialSequence {
 
-  update() {
-
+  init() {
     const { scene } = this;
 
-    switch (this.step) {
-      
-      case 0:        
-        if (this.checkCount(2000)) {
-          this.nextStep();
-        }
-        break;
-
-      case 1:
-        if (this.doOnce()) {
-          this.tutorial.showInstructions(Enum.STORY_1A_APPRENTICE);
-        }
-        break;
-
-      // Kill enemies
-      case 2:
+    this
+    .add(()=>{
+      return this.checkCount(2000);
+    })
+    .add(()=>{
+      this.doOnce(()=>{
+        this.tutorial.showInstructions(Enum.STORY_1A_APPRENTICE);
+      });
+    })
+    .add(()=>{
+      this.doOnce(()=>{
         scene.spawnEnemies(2);
-        this.nextStep();
-        break;
+      });
+      return scene.countEnemies() === 0;
+    })
 
-      case 3:
-        const enemyCount = scene.countEnemies();
-        return enemyCount === 0;
-    }
-
-    return false;
   }
 
 }

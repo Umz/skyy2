@@ -60,12 +60,12 @@ export default class TutorialSequence {
     this.date = new Date();
   }
 
-  doOnce() {
+  /** Perform the given function once per step (first come, first serve) */
+  doOnce(fn) {
     if (this.once !== this.step) {
+      fn();
       this.once = this.step;
-      return true;
     }
-    return false;
   }
 
 }

@@ -3,82 +3,63 @@ import Enum from "../util/Enum";
 
 export default class P3 extends TutorialSequence {
 
-  update() {
+  init() {
+    const { scene } = this;
 
-    switch (this.step) {
-      
-      case 0:        
-        if (this.checkCount(2000)) {
-          this.nextStep();
-        }
-        break;
+    this
+    .add(()=>{
+      return this.checkCount(2000);
+    })
+    .add(()=>{
+      this.doOnce(()=>{
+        this.tutorial.showInstructions(Enum.STORY_1B_APPRENTICE);
+      });
+    })
+    .add(()=>{
+      return this.spawnAndWait(2);
+    })
 
-      case 1:
-        if (this.doOnce()) {
-          this.tutorial.showInstructions(Enum.STORY_1B_APPRENTICE);
-        }
-        break;
+    .add(()=>{
+      return this.checkCount(1000);
+    })
+    .add(()=>{
+      return this.spawnAndWait(4);
+    })
 
-      case 2:
-        if (this.spawnAndWait(2)) {
-          this.nextStep();
-        }
-        break;
+    .add(()=>{
+      return this.checkCount(1000);
+    })
+    .add(()=>{
+      return this.spawnAndWait(5);
+    })
 
-      case 3:
-        if (this.checkCount(1000)) {
-          this.nextStep();
-        }
-        break;
+    .add(()=>{
+      return this.checkCount(1000);
+    })
+    .add(()=>{
+      this.doOnce(()=>{
+        this.tutorial.showInstructions(Enum.STORY_1C_BLUEFOREST);
+      });
+    })
 
-      case 4:
-        if (this.spawnAndWait(3)) {
-          this.nextStep();
-        }
-        break;
+    .add(()=>{
+      return scene.countEnemies() === 0;
+    })
 
-      case 5:
-        if (this.checkCount(3000)) {
-          this.nextStep();
-        }
-        break;
-
-      case 6:
-        if (this.spawnAndWait(5)) {
-          this.nextStep();
-        }
-        break;
-
-      case 7:
-        if (this.checkCount(2000)) {
-          this.nextStep();
-        }
-        break;
-
-      case 8:
-        if (this.doOnce()) {
-          this.tutorial.showInstructions(Enum.STORY_1C_BLUEFOREST);
-        }
-        break;
-
-      case 9:
-        return true;
-    }
-
-    return false;
   }
+
+  //  -
 
   spawnAndWait(amt) {
 
     const { scene } = this;
 
-    if (this.doOnce()) {
+    this.doOnce(()=>{
       scene.spawnEnemies(amt);
-      return false;
-    }
+    });
     
     const enemyCount = scene.countEnemies();
-    return enemyCount === 0;z
+    return enemyCount === 0;
 
   }
 
