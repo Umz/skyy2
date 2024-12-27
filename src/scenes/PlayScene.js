@@ -151,7 +151,11 @@ export class PlayScene extends Scene {
 
     this.mapTracker.updateCurrentArea(playerX);
 
-    //this.spawnBlueMoon();
+    this.tutorial.load();
+
+    if (SaveData.Data.hasBlueMoon) {
+      this.spawnBlueMoon();
+    }
 
     this.initialLoad = true;
   }
@@ -168,6 +172,8 @@ export class PlayScene extends Scene {
       }
       return true;
     }
+
+    SaveData.Data.playtime += delta;
 
     //  - Normal updating -
     

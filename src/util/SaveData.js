@@ -7,10 +7,18 @@ const GAME_DATA = "GAME_DATA";
 const data = {
   
   playtime: 0,
+  playSecs: 0,
+  playMins: 0,
+  playHours: 0,
+
   playerX: Vars.AREA_WIDTH * 1.5,
   playerLane: 2,
+  hasBlueMoon: false,
 
   location: Enum.LOC_MAM,
+
+  tutorialNumber: 1,
+  tutorialSequenceStep: 0
 }
 
 const settings = {
@@ -20,7 +28,17 @@ const settings = {
 export default class SaveData {
 
   static SAVE_GAME_DATA() {
-    localforage.setItem(GAME_DATA, data);
+
+    const empty = {};
+    const saveData = Object.assign(empty, data);
+
+    convertPlaytime(saveData);
+    saveData.playerX = Math.floor(saveData.playerX);
+
+    console.log("Saving data:")
+    console.log(saveData)
+
+    localforage.setItem(GAME_DATA, saveData);
   }
 
   static async LOAD_GAME_DATA() {
@@ -28,6 +46,9 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
+
+    console.log("Loaded data:")
+    console.log(data);
     return data;
   }
 
@@ -46,4 +67,17 @@ export default class SaveData {
       storeName: "skydata"
     })
   }
+}
+
+function convertPlaytime(saveData) {
+
+  const millis = Math.round(saveData.playtime);
+  const seconds = Math.floor(millis / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+
+  saveData.playtime = millis;
+  saveData.playSecs = seconds;
+  saveData.playMins = minutes;
+  saveData.playHours = hours;
 }

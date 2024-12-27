@@ -1,3 +1,5 @@
+import SaveData from "../util/SaveData";
+
 export default class TutorialSequence {
   
   constructor(tut) {
@@ -6,6 +8,7 @@ export default class TutorialSequence {
     this.scene = tut.scene;
 
     this.sequence = [];
+    this.shouldSaveStepID = true;
 
     this.step = 0;
     this.once = -1;
@@ -15,7 +18,11 @@ export default class TutorialSequence {
   }
 
   init() {
-    console.log("Override the init() function in TutorialSequence");
+    console.log("Override the init() function in TutorialSequence subClass");
+  }
+
+  startFrom(skipAmt) {
+    this.sequence.splice(0, skipAmt);
   }
 
   update() {
@@ -66,6 +73,10 @@ export default class TutorialSequence {
   incStep() {
     this.step ++;
     this.date = new Date();
+
+    if (this.shouldSaveStepID) {
+      SaveData.Data.tutorialSequenceStep = this.step;
+    }
   }
 
   /** Perform the given function once per step (first come, first serve) */
@@ -74,6 +85,16 @@ export default class TutorialSequence {
       fn();
       this.once = this.step;
     }
+  }
+
+  /** Do not save the next step when complete - skips saveing if setup is required */
+  turnSaveOff() {
+    this.shouldSaveStepID = false;
+  }
+
+  /** Resume saving steps when complete */
+  turnOnSave() {
+    this.shouldSaveStepID = true;
   }
 
 }

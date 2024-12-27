@@ -42,12 +42,7 @@ export default class P3 extends TutorialSequence {
       this.doOnce(()=>{
         this.tutorial.showInstructions(Enum.STORY_1C_BLUEFOREST);
       });
-    })
-
-    .add(()=>{
-      return scene.countEnemies() === 0;
-    })
-
+    });
   }
 
   //  -

@@ -2,6 +2,7 @@ import P1 from "../tutorial/P1";
 import P2 from "../tutorial/P2";
 import P3 from "../tutorial/P3";
 import P4 from "../tutorial/P4";
+import SaveData from "../util/SaveData";
 import Story from "../util/Story";
 
 export default class Tutorial {
@@ -13,8 +14,23 @@ export default class Tutorial {
     this.spriteController = spriteController;
     this.controllerActive = false;
 
-    this.tutorialNumber = 4;
+    this.tutorialNumber = 1;
     this.sequence = null;
+  }
+
+  load() {
+    this.tutorialNumber = SaveData.Data.tutorialNumber;
+    const sequence = this.getNextPart();
+    if (sequence) {
+      this.sequence = sequence;
+      this.sequence.startFrom(SaveData.Data.tutorialSequenceStep);
+    }
+  }
+
+  saveNewTut() {
+    SaveData.Data.tutorialSequenceStep = 0;
+    SaveData.Data.tutorialNumber = this.tutorialNumber;
+    SaveData.SAVE_GAME_DATA();
   }
 
   update() {
@@ -27,17 +43,17 @@ export default class Tutorial {
       });
     }
 
-    if (!this.sequence) {
-      this.sequence = this.getNextPart();
-      if (this.sequence) {
+    const activeSequence = this.sequence;
+    if (activeSequence) {
+      const isComplete = activeSequence.update();
+      if (isComplete) {
+        this.sequence = null;
         this.tutorialNumber ++;
+        this.saveNewTut();
       }
     }
     else {
-      const isComplete = this.sequence.update();
-      if (isComplete) {
-        this.sequence = null;
-      }
+      this.sequence = this.getNextPart();
     }
   }
 

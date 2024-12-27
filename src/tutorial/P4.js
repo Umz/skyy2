@@ -34,6 +34,7 @@ export default class P4 extends TutorialSequence {
         this.spawnEnemies(2);
         scene.spawnWildman();
         scene.convo.showConversation(Enum.BF_BATTLE);
+        this.turnSaveOff();
         return true;
       }
     })
@@ -59,6 +60,8 @@ export default class P4 extends TutorialSequence {
     })
     .add(()=>{
       this.convertWildman();
+      SaveData.Data.hasBlueMoon = true;
+      this.turnOnSave();
       return true;
     })
     .add(()=>{
