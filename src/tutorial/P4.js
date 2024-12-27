@@ -61,6 +61,7 @@ export default class P4 extends TutorialSequence {
     .add(()=>{
       this.convertWildman();
       SaveData.Data.hasBlueMoon = true;
+      SaveData.SAVE_GAME_DATA();
       this.turnOnSave();
       return true;
     })
