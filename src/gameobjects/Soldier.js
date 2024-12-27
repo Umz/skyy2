@@ -132,7 +132,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  ---------------------------------------------------------------------
   
-  addDisplayName(name, team) {
+  setDisplayName(name, team) {
+
+    this.displayName?.destroy(true);
 
     const json = this.scene.cache.json.get('hud_html');
     const css = CSSClasses.get(team);

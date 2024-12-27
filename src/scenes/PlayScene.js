@@ -424,7 +424,7 @@ export class PlayScene extends Scene {
     camera.startFollow(player, true, .8);
     player.setHP(50, 50);
     player.setGP(7, 7);
-    player.addDisplayName("Moon Chief", Enum.TEAM_PLAYER);
+    player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER);
     player.setTeam(Enum.TEAM_ALLY);
     player.isPlayer = true;
 
@@ -436,27 +436,29 @@ export class PlayScene extends Scene {
     const spawnX = Vars.AREA_WIDTH * .5;
     const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
     wildman.setHP(25, 25);
-    wildman.setGP(15, 15);
-    wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
+    wildman.setGP(10, 10);
+    wildman.setDisplayName("Wildman", Enum.TEAM_ALLY);
     wildman.setTeam(Enum.TEAM_ALLY);
-    //wildman.setBlueMoon();
     wildman.setBandit();
 
     this.groupAllies.add(wildman);
-
+    
+    this.bluemoon = wildman;
     return wildman;
   }
 
   spawnBlueMoon() {
 
     const blue = this.spawnSoldier(this.player.x + 24, 1, Vars.SHEET_WILDMAN);
-    blue.setHP(10, 10);
-    blue.addDisplayName("Blue Moon", Enum.TEAM_ALLY);
+    blue.setHP(35, 35);
+    blue.setGP(10, 10);
+    blue.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
     blue.setTeam(Enum.TEAM_ALLY);
     blue.setBlueMoon();
-
+    
     this.groupAllies.add(blue);
-
+    
+    this.bluemoon = blue;
     return blue;
   }
 

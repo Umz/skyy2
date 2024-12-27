@@ -40,6 +40,7 @@ export default class P4 extends TutorialSequence {
     .add(()=>{
       return this.countEnemies() === 0;
     })
+
     // Keep spawning until conversation is complete
     .add(()=>{
       this.spawnConstant(3, 2);
@@ -53,11 +54,12 @@ export default class P4 extends TutorialSequence {
       this.showConversation(Enum.BF_WIN);
       return true;
     })
-
-    // Claim the land-  place a flag - while conversation is happening
-
     .add(()=>{
       return this.tutorial.isConversationComplete();
+    })
+    .add(()=>{
+      this.convertWildman();
+      return true;
     })
     .add(()=>{
       this.doOnce(()=>{
@@ -65,7 +67,9 @@ export default class P4 extends TutorialSequence {
       });
     });
 
-  } // init()
+    // Claim the land-  place a flag - takes 10 seconds (screen shake?)
+
+  }
 
   //  - Helper functions for P4
 
@@ -100,6 +104,17 @@ export default class P4 extends TutorialSequence {
     const enemyCount = scene.countEnemies();
     if (enemyCount < minEns) {
       scene.spawnEnemies(amt);
+    }
+  }
+
+  convertWildman() {
+    const { scene } = this;
+    const bm = scene.bluemoon;
+    if (bm) {
+      bm.setHP(35, 35);
+      bm.setGP(10, 10);
+      bm.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
+      bm.setBlueMoon();
     }
   }
 
