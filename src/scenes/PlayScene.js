@@ -27,6 +27,10 @@ export class PlayScene extends Scene {
 
   async create() {
 
+    this.landClaimCounter = 0;
+    this.landCooldown = 0;
+    this.isLandClaiming = false;
+
     //  Graphics objects
 
     this.graphics = this.add.graphics();
@@ -40,6 +44,7 @@ export class PlayScene extends Scene {
     this.allGroup = this.add.group({runChildUpdate: true});
     this.groupRocks = this.add.group();
     this.groupCollectibles = this.add.group();
+    this.groupClaimFlags = this.add.group();
     
     this.groupSoldiers = this.add.group({runChildUpdate:true});
     this.groupAllies = this.add.group();
@@ -94,6 +99,7 @@ export class PlayScene extends Scene {
     this.physics.add.overlap(this.groupAllies, this.groupEnemies, this.allyEnemyCollision, null, this);   // Battle collisions
     this.physics.add.overlap(this.player, this.groupCollectibles, this.playerItemCollision, null, this); 
     this.physics.add.overlap(this.player, this.groupRocks, this.playerRockCollision, null, this);
+    this.physics.add.overlap(this.player, this.groupClaimFlags, this.playerClaimFlagCollision, null, this);   // Claim area
 
     this.createEmitters();
 
@@ -142,7 +148,7 @@ export class PlayScene extends Scene {
     //  Initialise map area
 
     const aID = Math.max(1, areaID);
-    const areaInfo = MapInfo.find(info => info.locID === aID);
+    const areaInfo = MapInfo.get(aID);
     const isForest = areaInfo.type === Enum.AREA_FOREST;
     this.birdSpawner.isForestArea = isForest;
     this.wildlifeSpawner.isForestArea = isForest;
@@ -150,8 +156,15 @@ export class PlayScene extends Scene {
     //  Map Tracker
 
     this.mapTracker.updateCurrentArea(playerX);
-
     this.tutorial.load();
+
+    let flag = this.physics.add.sprite(Vars.AREA_WIDTH * .48, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
+    flag.setAlpha(.3);
+    //flag.play('banner_mam');
+    //flag.postFX.addShine();
+    this.fgLayer.add(flag);
+    this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
+    this.groupClaimFlags.add(flag);
 
     if (SaveData.Data.hasBlueMoon) {
       this.spawnBlueMoon();
@@ -182,6 +195,7 @@ export class PlayScene extends Scene {
 
     this.mapTracker.updateCurrentArea(this.player.x);
     this.mapTracker.updateAreaDisplayCount(delta);
+    this.updateLandAnnex(delta);
     
     this.updateMapArea();
     this.updateMapBuilder();
@@ -254,7 +268,7 @@ export class PlayScene extends Scene {
     if (this.mapTracker.checkNewArea()) {
 
       //  Set-up rocks for mines  
-      const areaInfo = MapInfo.find(info => info.locID === currentAreaID);
+      const areaInfo = MapInfo.get(currentAreaID);
       if (areaInfo.locID == Enum.LOC_MINES) {
         this.spawnRocks(20);
       }
@@ -304,12 +318,37 @@ export class PlayScene extends Scene {
 
   }
 
+  updateLandAnnex(delta) {
+
+    if (this.landCooldown > 0) {
+
+      this.landClaimCounter = Math.min(10 * 1000, this.landClaimCounter + delta);
+      
+      if (this.landClaimCounter >= 10 * 1000) {
+        this.showClaimMessage();
+        this.hideLandClaim();
+      }
+      else {
+        this.showLandClaim();
+      }
+    }
+    else {
+      this.landClaimCounter = Math.max(0, this.landClaimCounter - delta);
+      this.showLandClaim();
+      if (this.landClaimCounter === 0) {
+        this.hideLandClaim();
+      }
+    }
+
+    this.landCooldown = Math.max(0, this.landCooldown - delta);
+  }
+
   //  -----------------------------------------------------------------------------------------------------
 
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
 
-    const data = MapInfo.find(info => info.locID === areaID);
+    const data = MapInfo.get(areaID);
 
     const json = this.cache.json.get('hud_html');
     const template = json.area_enter_label;
@@ -642,6 +681,34 @@ export class PlayScene extends Scene {
         }
       });
     }
+  }
+
+  /** Claim current territory when hovering flag for X seconds */
+  playerClaimFlagCollision(player, flag) {
+    if (player.isLane(1)) {
+      this.landCooldown = 100;
+      flag.setTint(0xff0000);
+    }
+  }
+
+  showLandClaim() {
+    const element = document.getElementById("annex-bar-holder");
+    element.style.display = "block";
+    
+    const percent = Phaser.Math.Percent(this.landClaimCounter, 0, 10 * 1000) * 100;
+    const fill = document.getElementById("annex-bar-fill");
+    fill.style.width = `${percent}%`;
+  }
+
+  hideLandClaim() {
+    const element = document.getElementById("annex-bar-holder");
+    element.style.display = "none";
+  }
+
+  showClaimMessage() {
+    
+    const element = document.getElementById("annex-notice");
+    element.innerText = "Blue Forest Annexed";
   }
 
   //  -----------------------------------------------------------------------------------------
