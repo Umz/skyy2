@@ -74,3 +74,55 @@
   font-size: .3rem;
   text-transform: uppercase;
 }
+
+/* Dialogue shown on screen */
+
+#speech-box {
+  display: flex;
+  color: #fff;
+  max-width: 80%;
+}
+#speech-holder {
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 4px 3rem;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background-color: rgba(0, 0, 0, .4);
+  text-shadow: 1px 1px 1px #000;
+}
+#speech-holder span {
+  font: 900 1rem "Righteous", Helvetica, sans-serif;
+  font-variant: small-caps;
+  text-shadow: 1px 1px 2px #000;
+}
+#speech-holder p {
+  flex-grow: 1;
+  margin: .5rem 0;
+  padding: 1rem 0;
+  letter-spacing: 2px;
+  font: 1.8rem "Righteous", Helvetica, sans-serif;
+}
+.speech-side {
+  width: 64px;
+  border-top: 2px solid; /* Adjust the border width as needed */
+  border-bottom: 2px solid; /* Adjust the border width as needed */
+}
+.fade-right {
+  border-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)) 1;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+}
+.fade-left {
+  border-image: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)) 1;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+}
+
+.anim-fade {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+.anim-fadeIn {
+  opacity: 1;
+}
