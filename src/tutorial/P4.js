@@ -69,9 +69,19 @@ export default class P4 extends TutorialSequence {
       this.doOnce(()=>{
         this.tutorial.showInstructions(Enum.STORY_2B_PLACE_FLAG);
       });
+    })
+    .add(()=>{
+      this.doOnce(()=>{
+        const posX = Vars.AREA_WIDTH * .48;
+        scene.spawnClaimerFlag(posX);
+      });
+      return SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
+    })
+    .add(()=>{
+      this.doOnce(()=>{
+        this.tutorial.showInstructions(Enum.STORY_2C_LEAVE_FOREST);
+      });
     });
-
-    // Claim the land-  place a flag - takes 10 seconds (screen shake?)
 
   }
 

@@ -138,8 +138,6 @@ export class PlayScene extends Scene {
     this.player.setX(playerX);
     this.player.setLane(playerLane);
 
-    this.player.setX(Vars.AREA_WIDTH * .55);
-
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
     //  Build scene for area
@@ -161,7 +159,7 @@ export class PlayScene extends Scene {
     this.mapTracker.updateCurrentArea(playerX);
     this.tutorial.load();
 
-    this.spawnClaimerFlag(1);
+    //this.spawnClaimerFlag(1);
     this.spawnMaMFlags();
 
     if (SaveData.Data.hasBlueMoon) {
@@ -632,9 +630,8 @@ export class PlayScene extends Scene {
   }
 
   /** Spawn a flag that will begin the land claim process */
-  spawnClaimerFlag(bX) {
+  spawnClaimerFlag(baseX) {
 
-    const baseX = Vars.AREA_WIDTH * .48;
     let flag = this.physics.add.sprite(baseX, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
     flag.setAlpha(.3);
 

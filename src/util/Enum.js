@@ -71,14 +71,17 @@ const Enum = {
   STORY_1C_BLUEFOREST: 3,
   STORY_2A_CLAIM_BLUE: 4,
   STORY_2B_PLACE_FLAG: 5,
-  STORY_3_DESTROY_ROSE: 6,
-  STORY_4_CLAIM_STORM: 7,
+  STORY_2C_LEAVE_FOREST: 6,
+  STORY_3_DESTROY_ROSE: 7,
+  STORY_4_CLAIM_STORM: 8,
 
   //  Dialogue
 
   BF_TEST: 1,     
   BF_BATTLE: 2,   // Blue Forest Battle
   BF_WIN: 3,      // Blue Forest Victory
+
+  MAM_BM_FIRST: 10,   // Blue Moon first time in MaM
 
   MC_TAUNT: 101,
   MC_PEOMS: 102,
