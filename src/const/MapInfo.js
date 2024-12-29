@@ -12,5 +12,4 @@ const MapInfo = new Map([
   [Enum.LOC_GREEN, {name:"Green Village", type: Enum.AREA_VILLAGE}]
 ]);
 
-
 export default MapInfo;

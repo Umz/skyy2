@@ -132,7 +132,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  ---------------------------------------------------------------------
   
-  setDisplayName(name, team) {
+  setDisplayName(name, team, depth = 1) {
 
     this.displayName?.destroy(true);
 
@@ -143,7 +143,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     let html = template.replace("_class_", css);
     html = html.replace("_name_", name);
     
-    this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
+    this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8).setDepth(depth);
   }
 
   //  ---------------------------------------------------------------------

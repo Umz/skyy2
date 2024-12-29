@@ -29,7 +29,8 @@ export class PlayScene extends Scene {
 
     this.landClaimCounter = 0;
     this.landCooldown = 0;
-    this.isLandClaiming = false;
+    this.landClaimTime = 17 * 1000;
+    this.landClaimNoticeTime = 4000;
 
     //  Graphics objects
 
@@ -137,6 +138,8 @@ export class PlayScene extends Scene {
     this.player.setX(playerX);
     this.player.setLane(playerLane);
 
+    this.player.setX(Vars.AREA_WIDTH * .55);
+
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
     //  Build scene for area
@@ -158,13 +161,8 @@ export class PlayScene extends Scene {
     this.mapTracker.updateCurrentArea(playerX);
     this.tutorial.load();
 
-    let flag = this.physics.add.sprite(Vars.AREA_WIDTH * .48, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
-    flag.setAlpha(.3);
-    //flag.play('banner_mam');
-    //flag.postFX.addShine();
-    this.fgLayer.add(flag);
-    this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
-    this.groupClaimFlags.add(flag);
+    this.spawnClaimerFlag(1);
+    this.spawnMaMFlags();
 
     if (SaveData.Data.hasBlueMoon) {
       this.spawnBlueMoon();
@@ -322,18 +320,27 @@ export class PlayScene extends Scene {
 
     if (this.landCooldown > 0) {
 
-      this.landClaimCounter = Math.min(10 * 1000, this.landClaimCounter + delta);
+      this.landClaimCounter = Math.min(this.landClaimTime, this.landClaimCounter + delta);
+      this.showClaimFX();
       
-      if (this.landClaimCounter >= 10 * 1000) {
+      if (this.landClaimCounter >= this.landClaimTime) {
+        this.addLandToClaimed();
         this.showClaimMessage();
         this.hideLandClaim();
+        this.resetClaimCounts();
       }
       else {
         this.showLandClaim();
       }
     }
     else {
-      this.landClaimCounter = Math.max(0, this.landClaimCounter - delta);
+      this.landClaimCounter = Math.max(0, this.landClaimCounter - delta * 2);
+      if (this.fx) {
+        this.fx.setVisible(false);
+        if (this.claimEmitter.emitting) {
+          this.claimEmitter.stop();
+        }
+      }
       this.showLandClaim();
       if (this.landClaimCounter === 0) {
         this.hideLandClaim();
@@ -341,6 +348,49 @@ export class PlayScene extends Scene {
     }
 
     this.landCooldown = Math.max(0, this.landCooldown - delta);
+
+    if (this.landClaimNoticeTime > 0) {
+      this.landClaimNoticeTime = Math.max(0, this.landClaimNoticeTime - delta);
+      if (this.landClaimNoticeTime === 0) {
+        this.hideClaimMessage();
+      }
+    }
+  }
+
+  addLandToClaimed() {
+    const locID = this.mapTracker.currentAreaID;
+    const allClaimed = SaveData.Data.claimed;
+    if (!allClaimed.includes(locID)) {
+      SaveData.Data.claimed.push(locID);
+    }
+  }
+
+  resetClaimCounts() {
+    this.landClaimCounter = 0;
+    this.landCooldown = 0;
+  }
+
+  showClaimFX() {
+
+    if (!this.fx) {
+      this.fx = this.add.sprite(0, 0, 'consume0').setOrigin(.5, 1);
+      this.fx.play("consume0");
+    }
+    
+    const camera = this.cameras.main;
+    const view = camera.worldView;
+    this.claimEmitter.setPosition(view.left, view.top);
+    
+    if (!this.claimEmitter.emitting) {
+      this.claimEmitter.start();
+    }
+    
+    const lane = this.player.lane;
+    const tc = this.player.getBottomCenter();
+    const tX = this.player.flipX ? tc.x + 6 : tc.x - 6;
+    this.fx.setPosition(tX, tc.y);
+    this.fx.setDepth(lane * 10 + 1);
+    this.fx.setVisible(true);
   }
 
   //  -----------------------------------------------------------------------------------------------------
@@ -400,6 +450,15 @@ export class PlayScene extends Scene {
       emitting: false
     });
 
+
+    this.claimEmitter = this.add.particles(0, 0, Vars.TX_SPARKLE, {
+      speedX: { min: -3, max: 3 },
+      speedY: { min: -60, max: -20 },
+      lifespan: 1000,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 480, 320), quantity: 42 },
+      frequency: 50,
+      emitting: false
+    });
   }
 
   emitDust(x, y, lane) {
@@ -469,7 +528,7 @@ export class PlayScene extends Scene {
     camera.startFollow(player, true, .8);
     player.setHP(50, 50);
     player.setGP(7, 7);
-    player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER);
+    player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER, 2);
     player.setTeam(Enum.TEAM_ALLY);
     player.isPlayer = true;
 
@@ -564,11 +623,7 @@ export class PlayScene extends Scene {
     }
     
   }
-
-  clearRocks() {
-    this.groupRocks.clear(true, true);
-  }
-
+  
   spawnEnemies(amt, posX) {
     const count = this.groupEnemies.countActive();
     for (let i=0; i<amt; i++) {
@@ -576,7 +631,81 @@ export class PlayScene extends Scene {
     }
   }
 
+  /** Spawn a flag that will begin the land claim process */
+  spawnClaimerFlag(bX) {
+
+    const baseX = Vars.AREA_WIDTH * .48;
+    let flag = this.physics.add.sprite(baseX, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
+    flag.setAlpha(.3);
+
+    this.fgLayer.add(flag);
+    this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
+
+    this.groupClaimFlags.add(flag);
+    this.allGroup.add(flag);
+
+    const addTween = () => {
+      if (!this.tweens.isTweening(flag)) {
+        this.tweens.add({
+          targets: flag,
+          duration: 750,
+          scale: {from: 1, to: .5},
+          yoyo: true,
+          repeat: -1,
+          ease: Phaser.Math.Easing.Quadratic.In
+        });
+        flag.setOrigin(.5);
+      }
+    }
+
+    flag.update = ()=> {
+      
+      const camera = this.cameras.main;
+      const view = camera.worldView;
+      const gap = 24, dist = 16;
+
+      if (view.left > baseX + dist) {
+        flag.setPosition(view.left + gap, view.centerY + gap * 2);
+        addTween();
+      }
+      else if (view.right < baseX - dist) {
+        flag.setPosition(view.right - gap, view.centerY + gap * 2);
+        addTween();
+      }
+      else {
+        if (this.tweens.isTweening(flag)) {
+          this.tweens.killTweensOf(flag);
+          flag.setScale(1);
+          flag.setOrigin(.5, 1);
+        }
+        flag.setPosition(baseX, Vars.GROUND_TOP);
+      }
+    }
+
+  }
+  
+  /** Spawn a flag image that represents an area that has been claimed */
+  spawnMaMFlags() {
+
+    const allClaimed = SaveData.Data.claimed;
+    for (let locID of allClaimed) {
+      const map = MapInfo.get(locID);
+      const flags = map.flags || []
+      for (let flagX of flags) {
+        const flag = this.physics.add.sprite(flagX, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
+        flag.play('banner_mam');
+        flag.postFX.addShine();
+        this.fgLayer.add(flag);
+      }
+    }
+    this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
+  }
+  
   //  -
+  
+  clearRocks() {
+    this.groupRocks.clear(true, true);
+  }
 
   countEnemies() {
     const count = this.groupEnemies.countActive();
@@ -685,9 +814,17 @@ export class PlayScene extends Scene {
 
   /** Claim current territory when hovering flag for X seconds */
   playerClaimFlagCollision(player, flag) {
+    
     if (player.isLane(1)) {
+      
+      const locID = this.mapTracker.currentAreaID;
+      const allClaimed = SaveData.Data.claimed;
+      if (allClaimed.includes(locID)) {
+        this.spawnMaMFlags(locID);
+        flag.destroy(true);
+      }
+
       this.landCooldown = 100;
-      flag.setTint(0xff0000);
     }
   }
 
@@ -695,7 +832,7 @@ export class PlayScene extends Scene {
     const element = document.getElementById("annex-bar-holder");
     element.style.display = "block";
     
-    const percent = Phaser.Math.Percent(this.landClaimCounter, 0, 10 * 1000) * 100;
+    const percent = Phaser.Math.Percent(this.landClaimCounter, 0, this.landClaimTime) * 100;
     const fill = document.getElementById("annex-bar-fill");
     fill.style.width = `${percent}%`;
   }
@@ -706,9 +843,15 @@ export class PlayScene extends Scene {
   }
 
   showClaimMessage() {
-    
+    const map = MapInfo.get(this.mapTracker.currentAreaID);
     const element = document.getElementById("annex-notice");
-    element.innerText = "Blue Forest Annexed";
+    element.innerText = `${map.name} Annexed`;
+    this.landClaimNoticeTime = 4000;
+  }
+
+  hideClaimMessage() {
+    const element = document.getElementById("annex-notice");
+    element.innerText = "";
   }
 
   //  -----------------------------------------------------------------------------------------

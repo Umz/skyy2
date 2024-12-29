@@ -38,6 +38,8 @@ export class Preloader extends Phaser.Scene {
 
         this.load.spritesheet("doe_test", 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
 
+        this.load.spritesheet('consume0', 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
+
         //  Load JSON files
 
         this.load.json('sprite_configs', 'json/sprite_configs.json');
@@ -127,6 +129,15 @@ export class Preloader extends Phaser.Scene {
             key: 'doe3',
             frames: this.anims.generateFrameNumbers("doe_test", { start: 78, end: 81 }),
             frameRate: 12,
+            repeat: -1
+        });
+
+        // VFX
+
+        this.anims.create({
+            key: 'consume0',
+            frames: this.anims.generateFrameNumbers("consume0", { start: 0, end: 13 }),
+            frameRate: 18,
             repeat: -1
         });
 

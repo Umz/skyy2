@@ -16,6 +16,7 @@ const data = {
   hasBlueMoon: false,
 
   location: Enum.LOC_MAM,
+  claimed: [Enum.LOC_MAM],
 
   tutorialNumber: 1,
   tutorialSequenceStep: 0
