@@ -162,6 +162,11 @@ export class PlayScene extends Scene {
     //this.spawnClaimerFlag(1);
     this.spawnMaMFlags();
 
+    //  King (Harvest Moon) - Display name?
+    const king = this.add.sprite(Vars.AREA_WIDTH * 1.48, Vars.GROUND_TOP, 'king').setOrigin(.5, 1);
+    king.play('king_idle');
+    this.fgLayer.add(king);
+
     if (SaveData.Data.hasBlueMoon) {
       this.spawnBlueMoon();
     }

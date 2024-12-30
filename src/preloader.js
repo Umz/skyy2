@@ -24,20 +24,28 @@ export class Preloader extends Phaser.Scene {
 
         this.load.image('tilemap', 'bg_layers/tilemap.png');
 
-        //  Spritesheets
+        //  SOLDIER Spritesheets
 
-        this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
         this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight: 30});
-
+        
         this.load.spritesheet(Vars.SHEET_BANDIT_BLUE, 'spritesheets/Infantry_Bandit_Blue.png', { frameWidth: 38, frameHeight:34});
         this.load.spritesheet(Vars.SHEET_BANDIT_LANCE_BLUE, 'spritesheets/Lancer_Blue_Bandit.png', { frameWidth: 43, frameHeight:30});
-
+        
         this.load.spritesheet(Vars.SHEET_WILDMAN, 'spritesheets/Infantry_Wildman.png', { frameWidth: 38, frameHeight:34});
-
+        
+        // - BG Characters
+        
+        this.load.spritesheet("king", 'spritesheets/Beard_King.png', { frameWidth: 34, frameHeight: 36});
+        
+        // - BG animals
+        
         this.load.spritesheet(Vars.SHEET_BIRDS1, 'spritesheets/bg_birds.png', { frameWidth: 32, frameHeight: 43});
-
         this.load.spritesheet("doe_test", 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
 
+        // - BG Items
+        this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
+        
+        // - FX
         this.load.spritesheet('consume0', 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
 
         //  Load JSON files
@@ -84,6 +92,15 @@ export class Preloader extends Phaser.Scene {
         SaveData.SETUP_LOCALFORAGE_CONFIG();
 
         this.createGraphics();
+
+        //  Citizens - King Idle (walk, mine, cheer)
+        //  MaM Banner Flapping
+        this.anims.create({
+            key: 'king_idle',
+            frames: this.anims.generateFrameNumbers('king', { start: 0, end: 5 }),
+            frameRate: 6,
+            repeat: -1
+        });
 
         //  MaM Banner Flapping
         this.anims.create({
