@@ -6,11 +6,11 @@ import ActionManager from "../classes/ActionManager"
 import ListenMatchLane from "../actions/ListenMatchLane";
 import ListenPlayerDistance from "../actions/ListenPlayerDistance";
 import ListenState from "../actions/ListenState";
-import Enum from "../util/Enum";
+import Enum from "../const/Enum";
 import ActComplete from "../actions/ActComplete";
 import ListenCondition from "../actions/ListenCondition";
 import ActMoveToTargetOffset from "../actions/ActMoveToTargetOffset";
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 
 export default class BlueMoon extends ActionManager {
 

@@ -1,5 +1,5 @@
-import Enum from "../util/Enum";
-import Vars from "../util/Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 export default class Collectible extends Phaser.Physics.Arcade.Image {
 

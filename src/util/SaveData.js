@@ -1,6 +1,6 @@
 import localforage from "localforage";
-import Enum from "./Enum";
-import Vars from "./Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 const GAME_DATA = "GAME_DATA";
 

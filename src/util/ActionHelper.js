@@ -1,4 +1,4 @@
-import Enum from "./Enum";
+import Enum from "../const/Enum";
 
 /** Get the closest sprite from the opposing group within the given distance */
 export function GetClosestEnemyWithinRange(sprite, maxDistance) {

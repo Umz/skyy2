@@ -1,5 +1,5 @@
 import TutorialSequence from "../classes/TutorialSequence";
-import Enum from "../util/Enum";
+import Enum from "../const/Enum";
 
 export default class P2 extends TutorialSequence {
 

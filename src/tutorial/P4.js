@@ -1,7 +1,7 @@
 import TutorialSequence from "../classes/TutorialSequence";
-import Enum from "../util/Enum";
+import Enum from "../const/Enum";
 import SaveData from "../util/SaveData";
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 
 export default class P4 extends TutorialSequence {
 

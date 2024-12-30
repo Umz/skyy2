@@ -1,6 +1,6 @@
 import Action from "../classes/Action";
-import Enum from "../util/Enum";
-import Vars from "../util/Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 export default class ActDefend extends Action {
 

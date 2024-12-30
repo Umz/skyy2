@@ -1,5 +1,5 @@
 import Counter from "./Counter";
-import Vars from "./Vars";
+import Vars from "../const/Vars";
 
 /** Utility Class checks the areas that have been visited each session for dynamic resources loading */
 export default class MapTracker {

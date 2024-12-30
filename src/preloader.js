@@ -1,5 +1,5 @@
 import SaveData from "./util/SaveData";
-import Vars from "./util/Vars";
+import Vars from "./const/Vars";
 
 export class Preloader extends Phaser.Scene {
 

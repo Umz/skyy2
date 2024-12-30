@@ -1,4 +1,4 @@
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 
 export default class Rock extends Phaser.Physics.Arcade.Sprite {
 

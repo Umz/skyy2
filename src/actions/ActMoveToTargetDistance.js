@@ -1,5 +1,5 @@
 import Action from "../classes/Action";
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 
 export default class ActMoveToTargetDistance extends Action {
 

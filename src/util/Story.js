@@ -1,4 +1,4 @@
-import Enum from "./Enum";
+import Enum from "../const/Enum";
 
 export default class Story {
   

@@ -1,5 +1,5 @@
-import Enum from "../util/Enum";
-import Vars from "../util/Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 const MapInfo = new Map([
   [Enum.LOC_BLUE_FOREST, {name:"Blue Forest", type: Enum.AREA_FOREST, flags: [Vars.AREA_WIDTH * .48]}],

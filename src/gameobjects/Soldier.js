@@ -4,8 +4,8 @@ import BlueMoon from "../ai/BlueMoon";
 import SoldierView from "../ai/SoldierView";
 import Wildman from "../ai/Wildman";
 import CSSClasses from "../const/CSSClasses";
-import Enum from "../util/Enum";
-import Vars from "../util/Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 

@@ -1,4 +1,4 @@
-import Enum from "../util/Enum";
+import Enum from "../const/Enum";
 
 const CSSClasses = new Map([
   [Enum.TEAM_PLAYER, "player-name"],

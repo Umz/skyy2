@@ -1,6 +1,6 @@
 import Action from "../classes/Action";
 import { GetClosestAllyWithinRange } from "../util/ActionHelper";
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 
 export default class ListenAvoidOverlap extends Action {
 
