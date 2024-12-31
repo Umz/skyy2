@@ -29,11 +29,6 @@ export class PlayScene extends Scene {
 
   async create() {
 
-    this.landClaimCounter = 0;
-    this.landCooldown = 0;
-    this.landClaimTime = 17 * 1000;
-    this.landClaimNoticeTime = 4000;
-
     //  Graphics objects
 
     this.graphics = this.add.graphics();
@@ -81,7 +76,6 @@ export class PlayScene extends Scene {
     //  Create Player
 
     this.spawner = new Spawner(this);
-
     this.player = this.spawnPlayer();
 
     //  Utilities and Game objects
@@ -164,8 +158,7 @@ export class PlayScene extends Scene {
     this.mapTracker.updateCurrentArea(playerX);
     this.tutorial.load();
 
-    //this.spawnClaimerFlag(1);
-    this.spawnMaMFlags();
+    this.spawnAllMaMFlags();
 
     //  King (Harvest Moon) - Display name?
     const king = this.add.sprite(Vars.AREA_WIDTH * 1.48, Vars.GROUND_TOP, 'king').setOrigin(.5, 1);
@@ -202,7 +195,6 @@ export class PlayScene extends Scene {
     this.mapTracker.updateCurrentArea(this.player.x);
     this.mapTracker.updateAreaDisplayCount(delta);
     this.landClaimer.update(delta);
-    this.updateLandAnnex(delta);
     
     this.updateMapArea();
     this.updateMapBuilder();
@@ -320,86 +312,6 @@ export class PlayScene extends Scene {
 
     SaveData.Data.playerX = this.player.x;
     SaveData.Data.playerLane = this.player.lane;
-
-    //  Play time
-
-  }
-
-  updateLandAnnex(delta) {
-
-    if (this.landCooldown > 0) {
-
-      this.landClaimCounter = Math.min(this.landClaimTime, this.landClaimCounter + delta);
-      this.showClaimFX();
-      
-      if (this.landClaimCounter >= this.landClaimTime) {
-        this.addLandToClaimed();
-        this.showClaimMessage();
-        this.hideLandClaim();
-        this.resetClaimCounts();
-      }
-      else {
-        this.showLandClaim();
-      }
-    }
-    else {
-      this.landClaimCounter = Math.max(0, this.landClaimCounter - delta * 2);
-      if (this.fx) {
-        this.fx.setVisible(false);
-        if (this.claimEmitter.emitting) {
-          this.claimEmitter.stop();
-        }
-      }
-      this.showLandClaim();
-      if (this.landClaimCounter === 0) {
-        this.hideLandClaim();
-      }
-    }
-
-    this.landCooldown = Math.max(0, this.landCooldown - delta);
-
-    if (this.landClaimNoticeTime > 0) {
-      this.landClaimNoticeTime = Math.max(0, this.landClaimNoticeTime - delta);
-      if (this.landClaimNoticeTime === 0) {
-        this.hideClaimMessage();
-      }
-    }
-  }
-
-  addLandToClaimed() {
-    const locID = this.mapTracker.currentAreaID;
-    const allClaimed = SaveData.Data.claimed;
-    if (!allClaimed.includes(locID)) {
-      SaveData.Data.claimed.push(locID);
-    }
-  }
-
-  resetClaimCounts() {
-    this.landClaimCounter = 0;
-    this.landCooldown = 0;
-  }
-
-  showClaimFX() {
-
-    if (!this.fx) {
-      this.fx = this.add.sprite(0, 0, 'consume0').setOrigin(.5, 1);
-      this.fx.play("consume0");
-    }
-    
-    const camera = this.cameras.main;
-    const view = camera.worldView;
-    this.claimEmitter.setPosition(view.left, view.top);
-    
-    if (!this.claimEmitter.emitting) {
-      this.claimEmitter.start();
-    }
-    
-    const lane = this.player.lane;
-    const tc = this.player.getBottomCenter();
-    const tX = this.player.flipX ? tc.x + 6 : tc.x - 6;
-    this.fx.setPosition(tX, tc.y);
-    this.fx.setDepth(lane * 10 + 1);
-    this.fx.setVisible(true);
   }
 
   //  -----------------------------------------------------------------------------------------------------
@@ -585,72 +497,26 @@ export class PlayScene extends Scene {
   }
   
   /** Spawn a flag that will begin the land claim process */
-  spawnClaimerFlag(baseX) {
-
-    let flag = this.physics.add.sprite(baseX, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
-    flag.setAlpha(.3);
-
-    this.fgLayer.add(flag);
-    this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
-
-    this.groupClaimFlags.add(flag);
-    this.allGroup.add(flag);
-
-    const addTween = () => {
-      if (!this.tweens.isTweening(flag)) {
-        this.tweens.add({
-          targets: flag,
-          duration: 750,
-          scale: {from: 1, to: .5},
-          yoyo: true,
-          repeat: -1,
-          ease: Phaser.Math.Easing.Quadratic.In
-        });
-        flag.setOrigin(.5);
-      }
-    }
-
-    flag.update = ()=> {
-      
-      const camera = this.cameras.main;
-      const view = camera.worldView;
-      const gap = 24, dist = 16;
-
-      if (view.left > baseX + dist) {
-        flag.setPosition(view.left + gap, view.centerY + gap * 2);
-        addTween();
-      }
-      else if (view.right < baseX - dist) {
-        flag.setPosition(view.right - gap, view.centerY + gap * 2);
-        addTween();
-      }
-      else {
-        if (this.tweens.isTweening(flag)) {
-          this.tweens.killTweensOf(flag);
-          flag.setScale(1);
-          flag.setOrigin(.5, 1);
-        }
-        flag.setPosition(baseX, Vars.GROUND_TOP);
-      }
-    }
-
+  spawnClaimerFlag(x) {
+    this.spawner.spawnClaimerFlag(x);
   }
   
   /** Spawn a flag image that represents an area that has been claimed */
-  spawnMaMFlags() {
+  spawnMaMFlags(locID) {
 
-    const allClaimed = SaveData.Data.claimed;
-    for (let locID of allClaimed) {
-      const map = MapInfo.get(locID);
-      const flags = map.flags || []
-      for (let flagX of flags) {
-        const flag = this.physics.add.sprite(flagX, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
-        flag.play('banner_mam');
-        flag.postFX.addShine();
-        this.fgLayer.add(flag);
-      }
+    const map = MapInfo.get(locID);
+    const flags = map.flags || []
+    for (let flagX of flags) {
+      this.spawner.spawnMaMFlag(flagX);
     }
     this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
+  }
+
+  spawnAllMaMFlags() {
+    const allClaimed = SaveData.Data.claimed;
+    for (let locID of allClaimed) {
+      this.spawnMaMFlags(locID);
+    }
   }
   
   //  -
@@ -766,44 +632,15 @@ export class PlayScene extends Scene {
 
   /** Claim current territory when hovering flag for X seconds */
   playerClaimFlagCollision(player, flag) {
-    
     if (player.isLane(1)) {
-      
+      this.landClaimer.setClaiming();
       const locID = this.mapTracker.currentAreaID;
       const allClaimed = SaveData.Data.claimed;
       if (allClaimed.includes(locID)) {
         this.spawnMaMFlags(locID);
         flag.destroy(true);
       }
-
-      this.landCooldown = 100;
     }
-  }
-
-  showLandClaim() {
-    const element = document.getElementById("annex-bar-holder");
-    element.style.display = "block";
-    
-    const percent = Phaser.Math.Percent(this.landClaimCounter, 0, this.landClaimTime) * 100;
-    const fill = document.getElementById("annex-bar-fill");
-    fill.style.width = `${percent}%`;
-  }
-
-  hideLandClaim() {
-    const element = document.getElementById("annex-bar-holder");
-    element.style.display = "none";
-  }
-
-  showClaimMessage() {
-    const map = MapInfo.get(this.mapTracker.currentAreaID);
-    const element = document.getElementById("annex-notice");
-    element.innerText = `${map.name} Annexed`;
-    this.landClaimNoticeTime = 4000;
-  }
-
-  hideClaimMessage() {
-    const element = document.getElementById("annex-notice");
-    element.innerText = "";
   }
 
   //  -----------------------------------------------------------------------------------------

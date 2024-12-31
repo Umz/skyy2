@@ -1,6 +1,6 @@
-import Enum from "../const/Enum";
-import Vars from "../const/Vars";
+import MapInfo from "../const/MapInfo";
 import Counter from "./Counter";
+import SaveData from "./SaveData";
 
 /** Handle all claiming of new territory in this class */
 export default class LandClaimer {
@@ -8,12 +8,9 @@ export default class LandClaimer {
   constructor(scene) {
     this.scene = scene;
 
-    this.landClaimCounter = 0;
-    this.landCooldown = 0;
-    this.landClaimTime = 17 * 1000;
-    this.landClaimNoticeTime = 4000;
-
-    this.lcCounter = new Counter(17 * 1000).setLooping(false);
+    this.claimCounter = new Counter(17 * 1000).setLooping(false);
+    this.cooldownCounter = new Counter(100).setLooping(false);    // Cooldown > 100ms NOT overlapping the claim flag
+    this.noticeCounter = new Counter(4000).setLooping(false).pause();
 
     //  Sparkle FX around player while land is being claimed
 
@@ -23,38 +20,76 @@ export default class LandClaimer {
 
   update(delta) {
 
-  }
+    // Counts to 100ms when NOT overlapping the claim flag, then starts removing claim
 
-  updateLandAnnex(delta) {
-
-    if (this.landCooldown > 0) {
-
-      const isComplete = this.lcCounter.update(delta);
+    if (!this.cooldownCounter.update(delta)) {
+      this.showClaimFX();
+      const isComplete = this.claimCounter.update(delta);
       if (isComplete) {
-        this.addLandToClaimed();
-        this.showClaimMessage();
-        this.hideLandClaim();
-        this.resetClaimCounts();
-      }
-      else {
-        this.showClaimFX();
+        this.claimTerritory();
       }
     }
     else {
-      this.lcCounter.reverse(delta, 2);
+      this.claimCounter.reverse(delta, 2);
       this.hideclaimFX();
     }
 
+    this.cooldownCounter.update(delta);
     this.updateDOM();
 
-    this.landCooldown = Math.max(0, this.landCooldown - delta);
+    //  - Show claim notice message
 
-    if (this.landClaimNoticeTime > 0) {
-      this.landClaimNoticeTime = Math.max(0, this.landClaimNoticeTime - delta);
-      if (this.landClaimNoticeTime === 0) {
-        this.hideClaimMessage();
+    if (this.noticeCounter.isCounting) {
+      this.showClaimNotice();
+      if (this.noticeCounter.update(delta)) {
+        this.hideClaimNotice();
       }
     }
+  }
+
+  setClaiming() {
+    this.claimCounter.resetCount();
+  }
+
+  resetClaimCounts() {
+    this.claimCounter.resetCount(100);
+    this.cooldownCounter.resetCount();
+  }
+
+  //  - Claim new territory
+
+  claimTerritory() {
+
+    //  Add land to claimed
+
+    const locID = SaveData.Data.location;
+    const allClaimed = SaveData.Data.claimed;
+    if (!allClaimed.includes(locID)) {
+      SaveData.Data.claimed.push(locID);
+    }
+
+    //  Display message to Player
+
+    this.showClaimNotice();
+    this.resetClaimCounts();
+  }
+
+  showClaimNotice() {
+
+    const map = MapInfo.get(SaveData.Data.location);
+    const element = document.getElementById("annex-notice");
+    element.innerText = `${map.name} Annexed`;
+    
+    this.noticeCounter.resume();
+  }
+
+  hideClaimNotice() {
+
+    const element = document.getElementById("annex-notice");
+    element.innerText = "";
+
+    this.noticeCounter.resetCount();
+    this.noticeCounter.pause();
   }
 
   //  - DOM effects
@@ -63,7 +98,7 @@ export default class LandClaimer {
 
     // When to hide DOM completely - when complete
 
-    const percent = this.lcCounter.getPercent();
+    const percent = this.claimCounter.getPercent();
     const display = percent > 0 ? "block" : "none";
 
     const element = document.getElementById("annex-bar-holder");
@@ -73,7 +108,6 @@ export default class LandClaimer {
     fill.style.width = `${percent}%`;
   }
 
-
   //  - VFX while claiming land
 
   /** Show all the effects for claiming land - sparkles */
@@ -81,14 +115,14 @@ export default class LandClaimer {
     
     this.showEmitter();
 
-    const lane = this.player.lane;
-    const tc = this.player.getBottomCenter();
-    const tX = this.player.flipX ? tc.x + 6 : tc.x - 6;
+    const player = this.scene.player;
+    const lane = player.lane;
+    const tc = player.getBottomCenter();
+    const tX = player.flipX ? tc.x + 6 : tc.x - 6;
 
     this.fx.setPosition(tX, tc.y);
     this.fx.setDepth(lane * 10 + 1);
     this.fx.setVisible(true);
-
   }
 
   hideclaimFX() {
@@ -100,16 +134,18 @@ export default class LandClaimer {
     
     const camera = this.scene.cameras.main;
     const view = camera.worldView;
-    this.claimEmitter.setPosition(view.left, view.top);
+    const emitter = this.scene.claimEmitter;
+    emitter.setPosition(view.left, view.top);
 
-    if (!this.claimEmitter.emitting) {
-      this.claimEmitter.start();
+    if (!emitter.emitting) {
+      emitter.start();
     }
   }
 
   stopEmitter() {
-    if (this.claimEmitter.emitting) {
-      this.claimEmitter.stop();
+    const emitter = this.scene.claimEmitter;
+    if (emitter.emitting) {
+      emitter.stop();
     }
   }
 

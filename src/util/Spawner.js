@@ -4,6 +4,7 @@ import BlueMoon from "../ai/BlueMoon";
 import Wildman from "../ai/Wildman";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
+import ClaimFlag from "../gameobjects/ClaimFlag";
 import Soldier from "../gameobjects/Soldier";
 
 /** Handle all spawning in this class */
@@ -103,6 +104,20 @@ export default class Spawner {
     const enemy = this.spawnSoldierType(deployX, type, Enum.TEAM_ENEMY);
     this.groupEnemies.add(enemy);
     return enemy;
+  }
+
+  //  -
+
+  spawnClaimerFlag(pX) {
+    return new ClaimFlag(this.scene, pX);
+  }
+
+  spawnMaMFlag(pX) {
+    const scene = this.scene;
+    const flag = scene.physics.add.sprite(pX, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0).setOrigin(.5, 1);
+    flag.play("banner_mam");
+    flag.postFX.addShine();
+    scene.fgLayer.add(flag);
   }
 
 }

@@ -41,10 +41,12 @@ export default class Counter {
 
   pause() {
     this.isCounting = false;
+    return this;
   }
 
   resume() {
     this.isCounting = true;
+    return this;
   }
 
   getPercent() {
