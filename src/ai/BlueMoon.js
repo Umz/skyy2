@@ -14,10 +14,6 @@ import Vars from "../const/Vars";
 
 export default class BlueMoon extends ActionManager {
 
-  constructor(sprite) {
-    super(sprite);
-  }
-
   setDefaultActions() {
     this.listenForPlayerAndEnemies();
   }

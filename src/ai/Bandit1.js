@@ -12,10 +12,6 @@ import Enum from "../const/Enum";
 
 export default class Bandit1 extends ActionManager {
 
-  constructor(sprite) {
-    super(sprite);
-  }
-
   setDefaultActions() {
     this.searchForNewTarget();
     this.addStatRecovery();

@@ -1,11 +1,8 @@
 /** Handles all active actions for a Sprite */
 export default class ActionManager {
 
-  constructor(sprite) {
+  constructor() {
 
-    this.sprite = sprite;
-    this.scene = sprite.scene;
-    
     this.actionsArray = [];
     this.backgroundActionMap = new Map();
 
@@ -33,6 +30,11 @@ export default class ActionManager {
     if (this.backgroundActive) {
       mapUpdate(this.backgroundActionMap, time, delta);
     }
+  }
+
+  setSprite(sprite) {
+    this.sprite = sprite;
+    this.scene = sprite.scene;
   }
 
   setDefaultActions() {}

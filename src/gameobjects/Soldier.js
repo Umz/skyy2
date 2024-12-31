@@ -11,6 +11,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
+    scene.physics.add.existing(this);
+
     this.prefix = texture;  // Prefix for animations
 
     this.movePressed = false;
@@ -148,20 +150,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  ---------------------------------------------------------------------
 
-  setWildman() {
-    this.controller = new Wildman(this);
-  }
-
-  setBlueMoon() {
-    this.controller = new BlueMoon(this);
-  }
-
-  setBandit() {
-    this.controller = new Bandit1(this);
-  }
-
   setController(ctrl) {
     this.controller = ctrl;
+    this.controller.setSprite(this);
   }
 
   setTeam(en) {

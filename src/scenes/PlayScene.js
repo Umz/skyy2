@@ -18,6 +18,7 @@ import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
 import Conversation from "../util/Conversation";
+import Spawner from "../util/Spawner";
 
 export class PlayScene extends Scene {
 
@@ -75,6 +76,8 @@ export class PlayScene extends Scene {
     camera.setBounds(0, 0, fullWorld, camera.height);
 
     //  Create Player
+
+    this.spawner = new Spawner(this);
 
     this.player = this.spawnPlayer();
 
@@ -509,85 +512,36 @@ export class PlayScene extends Scene {
     })
   }
 
-  //  -----------------------------------------------------------------------------------------
-
-  spawnSoldier(posX, lane, sheet) {
-
-    const sprite = new Soldier(this, posX, Vars.GROUND_TOP + 1 + lane, sheet);
-    sprite.playIdle();
-
-    this.physics.add.existing(sprite);
-    this.groupSoldiers.add(sprite);
-
-    return sprite;
-  }
+  //  - Character spawning    -----------------------------------------------------------------------------------------
 
   spawnPlayer() {
-
-    const camera = this.cameras.main;
-    const player = this.spawnSoldier(0, 1, Vars.SHEET_PLAYER);
-    this.groupAllies.add(player);
-
-    camera.startFollow(player, true, .8);
-    player.setHP(50, 50);
-    player.setGP(7, 7);
-    player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER, 2);
-    player.setTeam(Enum.TEAM_ALLY);
-    player.isPlayer = true;
-
-    return player;
+    return this.spawner.spawnPlayer();
   }
 
   spawnWildman() {
-
-    const spawnX = Vars.AREA_WIDTH * .5;
-    const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
-    wildman.setHP(25, 25);
-    wildman.setGP(10, 10);
-    wildman.setDisplayName("Wildman", Enum.TEAM_ALLY);
-    wildman.setTeam(Enum.TEAM_ALLY);
-    wildman.setBandit();
-
-    this.groupAllies.add(wildman);
-    
-    this.bluemoon = wildman;
-    return wildman;
+    return this.spawner.spawnWildman();
   }
 
   spawnBlueMoon() {
-
-    const blue = this.spawnSoldier(this.player.x + 24, 1, Vars.SHEET_WILDMAN);
-    blue.setHP(35, 35);
-    blue.setGP(10, 10);
-    blue.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
-    blue.setTeam(Enum.TEAM_ALLY);
-    blue.setBlueMoon();
-    
-    this.groupAllies.add(blue);
-    
-    this.bluemoon = blue;
-    return blue;
+    const pX = this.player.x + 24;
+    this.bluemoon = this.spawner.spawnBlueMoon(pX);
   }
 
-  spawnAlly() {
+  spawnAlly(posX, type = Enum.SOLDIER_BANDIT1) {
+    return this.spawner.spawnEnemy(posX, type);
   }
 
-  spawnEnemy(posX) {
-      
-    const camera = this.cameras.main;
-    const worldView = camera.worldView;
-    const spawnPoint = Math.random() > .5 ? worldView.right + 20 : worldView.left - 20;
-
-    const deployX = (posX ?? spawnPoint) + Phaser.Math.Between(-30, 30);
-    const deployLane = Phaser.Math.Between(1, 3);
-
-    const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
-    enemy.setBandit();
-    enemy.setTeam(Enum.TEAM_ENEMY);
-    this.groupEnemies.add(enemy);
-
-    return enemy;
+  spawnEnemy(posX, type = Enum.SOLDIER_BANDIT1) {
+    return this.spawner.spawnEnemy(posX, type);
   }
+
+  spawnEnemies(amt, posX, type) {
+    for (let i=0; i<amt; i++) {
+      this.spawnEnemy(posX, type);
+    }
+  }
+
+  //  -
 
   spawnCollectible(posX, lane, type) {
     
@@ -627,13 +581,6 @@ export class PlayScene extends Scene {
     
   }
   
-  spawnEnemies(amt, posX) {
-    const count = this.groupEnemies.countActive();
-    for (let i=0; i<amt; i++) {
-      this.spawnEnemy(posX);
-    }
-  }
-
   /** Spawn a flag that will begin the land claim process */
   spawnClaimerFlag(baseX) {
 
