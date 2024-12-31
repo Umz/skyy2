@@ -19,6 +19,7 @@ import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
 import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
+import LandClaimer from "../util/LandClaimer";
 
 export class PlayScene extends Scene {
 
@@ -75,6 +76,8 @@ export class PlayScene extends Scene {
     const fullWorld = areaWidth * 8;
     camera.setBounds(0, 0, fullWorld, camera.height);
 
+    this.createEmitters();
+
     //  Create Player
 
     this.spawner = new Spawner(this);
@@ -84,6 +87,7 @@ export class PlayScene extends Scene {
     //  Utilities and Game objects
 
     this.mapTracker = new MapTracker();   // Player location on map
+    this.landClaimer = new LandClaimer(this);
     this.scenery = new Scenery(this);     // Background scenery
     this.tilemapBuilder = new TilemapBuilder(this, this.tilemapLayer);    // Tilemap builder (ground tiles)
     this.mapBuilder = new MapBuilder(this);   // Map builder (trees, locations)
@@ -104,8 +108,6 @@ export class PlayScene extends Scene {
     this.physics.add.overlap(this.player, this.groupCollectibles, this.playerItemCollision, null, this); 
     this.physics.add.overlap(this.player, this.groupRocks, this.playerRockCollision, null, this);
     this.physics.add.overlap(this.player, this.groupClaimFlags, this.playerClaimFlagCollision, null, this);   // Claim area
-
-    this.createEmitters();
 
     //  Controller
 
@@ -199,6 +201,7 @@ export class PlayScene extends Scene {
 
     this.mapTracker.updateCurrentArea(this.player.x);
     this.mapTracker.updateAreaDisplayCount(delta);
+    this.landClaimer.update(delta);
     this.updateLandAnnex(delta);
     
     this.updateMapArea();

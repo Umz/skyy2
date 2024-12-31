@@ -14,6 +14,7 @@ export default class Spawner {
     this.groupSoldiers = scene.groupSoldiers;
     this.groupAllies = scene.groupAllies;
     this.groupEnemies = scene.groupEnemies;
+    // BG elements, Rocks
   }
 
   /** Spawn a Soldier Sprite with the given pos and spritesheet */
