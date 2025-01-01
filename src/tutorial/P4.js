@@ -2,6 +2,7 @@ import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import SaveData from "../util/SaveData";
 import Vars from "../const/Vars";
+import BlueMoon from "../ai/BlueMoon";
 
 export default class P4 extends TutorialSequence {
 
@@ -78,6 +79,9 @@ export default class P4 extends TutorialSequence {
       return SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
     })
     .add(()=>{
+      return this.checkCount(3000);
+    })
+    .add(()=>{
       this.doOnce(()=>{
         this.tutorial.showInstructions(Enum.STORY_2C_LEAVE_FOREST);
       });
@@ -125,10 +129,10 @@ export default class P4 extends TutorialSequence {
     const { scene } = this;
     const bm = scene.bluemoon;
     if (bm) {
-      bm.setHP(35, 35);
+      bm.setHP(45, 45);
       bm.setGP(10, 10);
       bm.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
-      bm.setBlueMoon();
+      bm.setController(new BlueMoon());
     }
   }
 

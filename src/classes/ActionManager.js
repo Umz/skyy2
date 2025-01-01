@@ -35,6 +35,7 @@ export default class ActionManager {
   setSprite(sprite) {
     this.sprite = sprite;
     this.scene = sprite.scene;
+    return this;
   }
 
   setDefaultActions() {}

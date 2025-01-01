@@ -1,8 +1,5 @@
-import Bandit1 from "../ai/Bandit1";
 import Blank from "../ai/Blank";
-import BlueMoon from "../ai/BlueMoon";
 import SoldierView from "../ai/SoldierView";
-import Wildman from "../ai/Wildman";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
@@ -18,8 +15,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.movePressed = false;
     this.staticMoveStart = false;
     
-    this.controller = new Blank(this);
-    this.viewController = new SoldierView(this);
+    this.controller = new Blank().setSprite(this);
+    this.viewController = new SoldierView().setSprite(this);
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
 
     this.lastTarget = null;

@@ -27,11 +27,10 @@ export class Preloader extends Phaser.Scene {
         //  SOLDIER Spritesheets
 
         this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight: 30});
+        this.load.spritesheet(Vars.SHEET_WILDMAN, 'spritesheets/Infantry_Wildman.png', { frameWidth: 38, frameHeight:34});
         
         this.load.spritesheet(Vars.SHEET_BANDIT_BLUE, 'spritesheets/Infantry_Bandit_Blue.png', { frameWidth: 38, frameHeight:34});
         this.load.spritesheet(Vars.SHEET_BANDIT_LANCE_BLUE, 'spritesheets/Lancer_Blue_Bandit.png', { frameWidth: 43, frameHeight:30});
-        
-        this.load.spritesheet(Vars.SHEET_WILDMAN, 'spritesheets/Infantry_Wildman.png', { frameWidth: 38, frameHeight:34});
         
         // - BG Characters
         
@@ -163,9 +162,9 @@ export class Preloader extends Phaser.Scene {
         const data = this.cache.json.get('sprite_configs');
 
         this.createSpritesheetAnimation(Vars.SHEET_PLAYER, data.lancer);
+        this.createSpritesheetAnimation(Vars.SHEET_WILDMAN, data.infantry);
         this.createSpritesheetAnimation(Vars.SHEET_BANDIT_BLUE, data.infantry);
         this.createSpritesheetAnimation(Vars.SHEET_BANDIT_LANCE_BLUE, data.lancer);
-        this.createSpritesheetAnimation(Vars.SHEET_WILDMAN, data.infantry);
 
         this.scene.start("PlayScene");      // Next Scene when all assets are loaded
     }

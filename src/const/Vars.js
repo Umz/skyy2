@@ -23,6 +23,7 @@ const Vars = {
 
   SHEET_BANDIT_BLUE: 'blue_bandit_sheet',
   SHEET_BANDIT_LANCE_BLUE: 'blue_lancer_bandit_sheet',
+  SHEET_BANDIT_BOSS: "blue_bandit_sheet",
 
   TX_SPARKLE: "graphic_sparkle",
 
@@ -59,7 +60,8 @@ const Vars = {
   LISTEN_STATE: "listener_soldier_state",
   LISTEN_STATS_RECOVER: "listener_soldier_stats_recover",
   
-  VIEW_SOLDIER_FLASH: "listener_player_flash",
+  VIEW_SOLDIER_FLASH: "view_soldier_flash",
+  VIEW_SOLDIER_LANE: "view_soldier_lane_tint",
   VIEW_ANIMATION: "view_soldier_animations",
 
   WORLD_LENGTHS: 3,

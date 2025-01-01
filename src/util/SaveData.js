@@ -48,6 +48,10 @@ export default class SaveData {
       Object.assign(data, savedData);
     }
 
+    data.claimed = [1, 2];
+    data.tutorialNumber = 5;
+    data.tutorialSequenceStep = 0;
+
     console.log("Loaded data:")
     console.log(data);
     return data;

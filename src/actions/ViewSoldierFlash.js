@@ -19,6 +19,10 @@ export default class ViewSoldierFlash extends Action {
       case Enum.SS_READY:
         this.timer.resetCount();
         break;
+        
+      case Enum.SS_DEFEND:
+        this.countOut(delta);
+        break;
 
       case Enum.SS_HURT:
         this.flash(delta, 0xbb0000);
@@ -39,6 +43,12 @@ export default class ViewSoldierFlash extends Action {
     }
     else {
       this.sprite.setTint(col);
+    }
+  }
+
+  countOut(delta) {
+    if (this.timer.update(delta)) {
+      this.sprite.clearTint();
     }
   }
 

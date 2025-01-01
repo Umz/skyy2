@@ -24,11 +24,11 @@ export default class ClaimFlag extends Phaser.Physics.Arcade.Sprite {
 
     if (view.left > baseX + dist) {
       this.setPosition(view.left + gap, view.centerY + gap * 2);
-      setTweening();
+      this.setTweening();
     }
     else if (view.right < baseX - dist) {
       this.setPosition(view.right - gap, view.centerY + gap * 2);
-      setTweening();
+      this.setTweening();
     }
     else {
       this.stopTweening();

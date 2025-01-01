@@ -1,4 +1,5 @@
 import Bandit1 from "../ai/Bandit1";
+import Bandit2 from "../ai/Bandit2";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
 import Wildman from "../ai/Wildman";
@@ -76,7 +77,7 @@ export default class Spawner {
     const wildman = this.spawnSoldierType(pX, Enum.SOLDIER_WILDMAN, Enum.TEAM_ALLY);
     wildman.setHP(25, 25);
     wildman.setGP(10, 10);
-    wildman.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
+    wildman.setDisplayName("Wildman", Enum.TEAM_ALLY);
     this.groupAllies.add(wildman);
     return wildman;
   }
@@ -96,7 +97,7 @@ export default class Spawner {
   /** Spawn a given type of enemy */
   spawnEnemy(pX, type) {
 
-    const camera = this.cameras.main;
+    const camera = this.scene.cameras.main;
     const worldView = camera.worldView;
     const spawnPoint = Math.random() > .5 ? worldView.right + 20 : worldView.left - 20;
     const deployX = (pX ?? spawnPoint) + Phaser.Math.Between(-30, 30);
@@ -122,10 +123,16 @@ export default class Spawner {
 
 }
 
+// Stats will be HP ATT - avoid for this game
+
 const SoldierMap = new Map([
+
   [Enum.SOLDIER_PLAYER, {ctrl: Blank, sheet:Vars.SHEET_PLAYER}],
   [Enum.SOLDIER_WILDMAN, {ctrl: Wildman, sheet:Vars.SHEET_WILDMAN}],
   [Enum.SOLDIER_BLUEMOON, {ctrl: BlueMoon, sheet:Vars.SHEET_WILDMAN}],
 
-  [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BANDIT_BLUE}] // Stats will be HP ATT - avoid for this game
+  [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BANDIT_BLUE}],
+  [Enum.SOLDIER_BANDIT2, {ctrl: Bandit2, sheet:Vars.SHEET_BANDIT_LANCE_BLUE}],
+  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: Bandit1, sheet:Vars.SHEET_BANDIT_BLUE}]
+  
 ]);

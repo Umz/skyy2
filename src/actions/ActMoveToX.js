@@ -3,7 +3,7 @@ import Vars from "../const/Vars";
 
 export default class ActMoveToX extends Action {
 
-  constructor(sprite, toX, distance) {
+  constructor(sprite, toX, distance = 16) {
     super(Vars.ACT_MOVE_TO_X, sprite);
     this.toX = toX;
     this.minDistance = distance;

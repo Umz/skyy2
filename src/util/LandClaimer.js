@@ -48,7 +48,7 @@ export default class LandClaimer {
   }
 
   setClaiming() {
-    this.claimCounter.resetCount();
+    this.cooldownCounter.resetCount();
   }
 
   resetClaimCounts() {

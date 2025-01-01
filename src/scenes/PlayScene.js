@@ -434,7 +434,7 @@ export class PlayScene extends Scene {
   }
 
   spawnWildman() {
-    return this.spawner.spawnWildman();
+    this.bluemoon = this.spawner.spawnWildman();
   }
 
   spawnBlueMoon() {
@@ -633,6 +633,7 @@ export class PlayScene extends Scene {
   /** Claim current territory when hovering flag for X seconds */
   playerClaimFlagCollision(player, flag) {
     if (player.isLane(1)) {
+      console.log(1);
       this.landClaimer.setClaiming();
       const locID = this.mapTracker.currentAreaID;
       const allClaimed = SaveData.Data.claimed;
@@ -670,12 +671,14 @@ export class PlayScene extends Scene {
 
       const barCol = soldier.isAlly() ? 0x00ff00 : 0xff0000;
 
+      const alpha = (soldier.isPlayer || soldier.isLane(this.player.lane)) ? 1 : .4;
+
       // Black bar with hp inside it
 
       if (soldier.hp < soldier.maxHP) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
-        this.hpGraphics.fillStyle(barCol, 1);
+        this.hpGraphics.fillStyle(barCol, alpha);
         this.hpGraphics.fillRect(barX + 1, hpY + 1, hpBar, barHeight - 2);
       }
 
@@ -684,7 +687,7 @@ export class PlayScene extends Scene {
       if (soldier.isState(Enum.SS_DEFEND)) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, guardY, barMax, barHeight);
-        this.hpGraphics.fillStyle(0x0055ff, 1);
+        this.hpGraphics.fillStyle(0x0055ff, alpha);
         this.hpGraphics.fillRect(barX + 1, guardY + 1, guardBar, barHeight - 2);
       }
     }
@@ -720,12 +723,13 @@ export class PlayScene extends Scene {
 
       const col = soldier.isAlly() ? 0xcccccc : 0xff0000;
 
-      graphics.fillStyle(0x000000, .5);
-      graphics.fillTriangle(tX, tY + 5, tX + 4, tY + 5, tX + 2, tY + 1);
-
-      graphics.fillStyle(col, 1);
-      graphics.fillTriangle(tX, tY + 4, tX + 4, tY + 4, tX + 2, tY);
-
+      if (soldier.isPlayer || soldier.isLane(this.player.lane)) {
+        graphics.fillStyle(0x000000, .5);
+        graphics.fillTriangle(tX, tY + 5, tX + 4, tY + 5, tX + 2, tY + 1);
+  
+        graphics.fillStyle(col, 1);
+        graphics.fillTriangle(tX, tY + 4, tX + 4, tY + 4, tX + 2, tY);
+      }
     }
 
   }

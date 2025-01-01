@@ -1,20 +1,17 @@
 import ActAttack from "../actions/ActAttack";
 import ActComplete from "../actions/ActComplete";
 import ActMoveToTargetDistance from "../actions/ActMoveToTargetDistance";
+import ActMoveToX from "../actions/ActMoveToX";
 import ActSearchForTarget from "../actions/ActSearchForTarget";
 import ActWait from "../actions/ActWait";
-import ListenAvoidOverlap from "../actions/ListenAvoidOverlap";
 import ListenMatchLane from "../actions/ListenMatchLane";
 import ListenState from "../actions/ListenState";
 import ListenStatsRecover from "../actions/ListenStatsRecover";
 import ActionManager from "../classes/ActionManager"
 import Enum from "../const/Enum";
+import { GetCloseX } from "../util/ActionHelper";
 
-export default class Wildman extends ActionManager {
-
-  constructor(sprite) {
-    super(sprite);
-  }
+export default class Bandit2 extends ActionManager {
 
   setDefaultActions() {
     this.searchForNewTarget();
@@ -42,38 +39,46 @@ export default class Wildman extends ActionManager {
 
     this.addBackgroundAction(new ListenState(this.sprite, Enum.SS_HURT)).addCallback(()=>{
       this.clearAllActions();
-    });
-
-    this.addBackgroundAction(new ListenAvoidOverlap(this.sprite)).addCallback(()=>{
-      this.clearAllActions();
-      this.sprite.stopMove();
-      this.sprite.faceX(target.x);
-
-      this.addAction(new ActWait(150));
+      this.evade();
     });
 
     this.addBackgroundAction(new ListenMatchLane(this.sprite, target));   // Match lane of target
-
-    this.attackTarget(target);  // Always attack
+    this.attackTarget(target);
   }
 
   //  - ATTACK functions -
 
   attackTarget(target) {
 
-    const attackDelay = Phaser.Math.Between(750, 1000);
-    const attackCooldown = Phaser.Math.Between(1000, 1500);
+    const attackDelay = Phaser.Math.Between(1000, 1600);
+    const attackCooldown = Phaser.Math.Between(500, 1000);
 
     this.addActions(
       new ActMoveToTargetDistance(this.sprite, target, 42),
       new ActWait(attackDelay),
       new ActAttack(this.sprite),
+      new ActWait(500),
+      new ActAttack(this.sprite),
       new ActWait(attackCooldown),
-      new ActComplete(()=> {
-        if (!target || target?.isDead()) {
-          this.sprite.recoverHP(3);
-        }
+      new ActComplete(()=>{
+        this.evade();
       })
+    );
+  }
+
+  evade() {
+
+    const target = this.sprite.target;
+
+    const toX = GetCloseX(this.sprite.x, 80, 120, true);
+    const toLane = Phaser.Math.Between(1, 3);
+
+    this.addActions(
+      new ListenState(this.sprite, Enum.SS_READY),
+      new ActComplete(()=>{ this.sprite.towardsLane(toLane) }),
+      new ActMoveToX(this.sprite, toX),
+      new ActComplete(()=> { this.sprite.faceX(target.x) }),
+      new ActWait(1000)
     );
   }
 }

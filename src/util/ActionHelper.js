@@ -11,6 +11,19 @@ export function GetClosestAllyWithinRange(sprite, maxDistance) {
   return getClosestToSpriteInGroup(sprite, group, maxDistance);
 }
 
+/** Get X position close to point with minimum gap distance */
+export function GetCloseX(fromX, minDist, maxDist, isAnySide = false) {
+  
+  let distance = Phaser.Math.Between(minDist, maxDist);
+  if (isAnySide) {
+    const mul = Math.random() > .5 ? 1 : -1;
+    distance *= mul;
+  }
+
+  const closeX = fromX + distance;
+  return closeX;
+}
+
 //  - INTERNAL FUNCTIONS  -
 
 function getAllyGroupForSprite(sprite) {
@@ -55,3 +68,5 @@ function getClosestToSpriteInGroup(sprite, group, maxDistance = Infinity) {
 
   return closest;
 }
+
+//  -

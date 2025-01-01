@@ -7,6 +7,7 @@ export default class Blank extends ActionManager {
   setSprite(sprite) {
     super.setSprite(sprite);
     this.addBackgroundAction(new ListenStatsRecover(this.sprite));
+    return this;
   }
 
   setDefaultActions() {
