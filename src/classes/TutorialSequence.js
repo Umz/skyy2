@@ -88,12 +88,12 @@ export default class TutorialSequence {
   }
 
   /** Do not save the next step when complete - skips saveing if setup is required */
-  turnSaveOff() {
+  turnSavingOff() {
     this.shouldSaveStepID = false;
   }
 
   /** Resume saving steps when complete */
-  turnOnSave() {
+  turnSavingOn() {
     this.shouldSaveStepID = true;
   }
 

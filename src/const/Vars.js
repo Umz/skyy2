@@ -21,9 +21,9 @@ const Vars = {
   SHEET_GR_HEAVY: 'gr_heavy_infantry_sheet',
   SHEET_GR_FLAGGER: 'gr_advisor_sheet',
 
-  SHEET_BANDIT_BLUE: 'blue_bandit_sheet',
-  SHEET_BANDIT_LANCE_BLUE: 'blue_lancer_bandit_sheet',
-  SHEET_BANDIT_BOSS: "blue_bandit_sheet",
+  SHEET_BLUE_BANDIT: 'blue_bandit_sheet',
+  SHEET_BLUE_BANDIT_LANCE: 'blue_lancer_bandit_sheet',
+  SHEET_BLUE_BANDIT_BOSS: "blue_bandit_boss_sheet",
 
   TX_SPARKLE: "graphic_sparkle",
 

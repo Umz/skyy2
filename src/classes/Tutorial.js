@@ -3,6 +3,7 @@ import P2 from "../tutorial/P2";
 import P3 from "../tutorial/P3";
 import P4 from "../tutorial/P4";
 import P5 from "../tutorial/P5";
+import PartHelper from "../tutorial/PartHelper";
 import SaveData from "../util/SaveData";
 import Story from "../util/Story";
 
@@ -17,6 +18,8 @@ export default class Tutorial {
 
     this.tutorialNumber = 1;
     this.sequence = null;
+
+    PartHelper.SetScene(scene);
   }
 
   load() {

@@ -29,6 +29,22 @@ Wildman: Hahaha! You are an interesting one indeed!-#
 Wildman: Fine, I will join you!
 `;
 
+const bf_boss1 = `
+Rabid Bandit: Ruthless animals! Curse you!-#
+Rabid Bandit: Murderous dogs! You slaughtered them all!
+`;
+
+const bf_boss2 = `
+Rabid Bandit: Where were you when the Rays of Gold massacred us!-#
+Rabid Bandit: Where were you when we were slain!
+`;
+
+const bf_boss3 = `
+Rabid Bandit: What choice did we have! We had to eat!-#
+Rabid Bandit: Curse you! Heartless dogs! Curse you both!-#
+Rabid Bandit: Come on my brethren! Kill them!
+`;
+
 //  -
 
 const Dialogue = new Map([
@@ -36,6 +52,9 @@ const Dialogue = new Map([
   [Enum.BF_BATTLE, bf_battle],
   [Enum.BF_WIN, bf_victory],
 
+  [Enum.BF_BOSS1, bf_boss1],
+  [Enum.BF_BOSS2, bf_boss2],
+  [Enum.BF_BOSS3, bf_boss3],
 
   [Enum.MC_TAUNT, "Moon Chief: Come! I shall grant you a swift death."],
   [Enum.MC_PEOMS, "Moon Chief: More peons. How futile"]

@@ -669,8 +669,7 @@ export class PlayScene extends Scene {
       const percentGuard = soldier.gp / soldier.maxGP;
       const guardBar = (barMax - 2) * percentGuard;
 
-      const barCol = soldier.isAlly() ? 0x00ff00 : 0xff0000;
-
+      const barCol = soldier.isAlly() ? 0x00ff00 : 0xee0000;
       const alpha = (soldier.isPlayer || soldier.isLane(this.player.lane)) ? 1 : .4;
 
       // Black bar with hp inside it
@@ -695,16 +694,18 @@ export class PlayScene extends Scene {
 
   showSoldierNames() {
 
-    const allies = this.groupAllies.getChildren();
-    for (let ally of allies) {
+    const soldiers = this.groupSoldiers.getChildren();
+    for (let sol of soldiers) {
+      if (sol.displayName) {
 
-      if (ally.displayName) {
-        const dom = ally.displayName;
-        const pos = ally.getTopCenter();
+        const alpha = (sol.isPlayer || sol.isLane(this.player.lane)) ? 1 : .6;
+        const dom = sol.displayName;
+        const pos = sol.getTopCenter();
         
-        const velX = Math.abs(ally.velocityX);
-        const pY = (velX > 24) || ally.isState(Enum.SS_DEFEND) ? -24 : pos.y;
+        const velX = Math.abs(sol.velocityX);
+        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
+        dom.setAlpha(alpha);
       }
     }
   }

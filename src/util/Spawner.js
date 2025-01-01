@@ -1,5 +1,6 @@
 import Bandit1 from "../ai/Bandit1";
 import Bandit2 from "../ai/Bandit2";
+import BanditBoss from "../ai/BanditBoss";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
 import Wildman from "../ai/Wildman";
@@ -131,8 +132,8 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_WILDMAN, {ctrl: Wildman, sheet:Vars.SHEET_WILDMAN}],
   [Enum.SOLDIER_BLUEMOON, {ctrl: BlueMoon, sheet:Vars.SHEET_WILDMAN}],
 
-  [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BANDIT_BLUE}],
-  [Enum.SOLDIER_BANDIT2, {ctrl: Bandit2, sheet:Vars.SHEET_BANDIT_LANCE_BLUE}],
-  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: Bandit1, sheet:Vars.SHEET_BANDIT_BLUE}]
+  [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BLUE_BANDIT}],
+  [Enum.SOLDIER_BANDIT2, {ctrl: Bandit2, sheet:Vars.SHEET_BLUE_BANDIT_LANCE}],
+  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: BanditBoss, sheet:Vars.SHEET_BLUE_BANDIT_BOSS}]
   
 ]);

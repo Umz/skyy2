@@ -67,9 +67,13 @@ const Enum = {
 
   //  Dialogue
 
-  BF_TEST: 1,     
+  BF_TEST: 1,
   BF_BATTLE: 2,   // Blue Forest Battle
   BF_WIN: 3,      // Blue Forest Victory
+
+  BF_BOSS1: 4,
+  BF_BOSS2: 5,
+  BF_BOSS3: 6,
 
   MAM_BM_FIRST: 10,   // Blue Moon first time in MaM
 

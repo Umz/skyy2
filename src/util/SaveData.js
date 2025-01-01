@@ -48,9 +48,11 @@ export default class SaveData {
       Object.assign(data, savedData);
     }
 
-    data.claimed = [1, 2];
-    data.tutorialNumber = 5;
+    data.claimed = [2];
+    data.tutorialNumber = 1;
     data.tutorialSequenceStep = 0;
+    data.hasBlueMoon = false;
+    data.playerX = Vars.AREA_WIDTH * 1.5;
 
     console.log("Loaded data:")
     console.log(data);
