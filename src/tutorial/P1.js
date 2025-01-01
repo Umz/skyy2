@@ -4,10 +4,6 @@ import Enum from "../const/Enum";
 export default class P1 extends TutorialSequence {
 
   init() {
-    this.add(()=>{
-      this.doOnce(()=>{
-        this.tutorial.showInstructions(Enum.STORY_0_INTRO);
-      });
-    })
+    this.addInstruction(Enum.STORY_0_INTRO);
   }
 }

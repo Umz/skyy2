@@ -45,10 +45,26 @@ export default class TutorialSequence {
     return this;
   }
 
+  addInstruction(instructionID) {
+    this.add(()=>{
+      this.doOnce(()=>{
+        this.tutorial.showInstructions(instructionID);
+      });
+    });
+    return this;
+  }
+
   addConversation(en) {
     this.add(()=>{
       this.showConversation(en);
       return true;
+    })
+    return this;
+  }
+
+  addConversationWait() {
+    this.add(()=>{
+      return this.tutorial.isConversationComplete();
     })
     return this;
   }

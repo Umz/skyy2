@@ -19,7 +19,7 @@ export default class Tutorial {
     this.tutorialNumber = 1;
     this.sequence = null;
 
-    PartHelper.SetScene(scene);
+    PartHelper.SetScene(this);
   }
 
   load() {

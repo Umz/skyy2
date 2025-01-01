@@ -3,6 +3,7 @@ import Enum from "../const/Enum";
 import SaveData from "../util/SaveData";
 import Vars from "../const/Vars";
 import BlueMoon from "../ai/BlueMoon";
+import PartHelper from "./PartHelper";
 
 export default class P4 extends TutorialSequence {
 
@@ -11,20 +12,16 @@ export default class P4 extends TutorialSequence {
     const { scene } = this;
     const player = scene.player;
 
-    this.add(()=>{
-      if (SaveData.Data.location === Enum.LOC_BLUE_FOREST) {
-        this.doOnce(()=>{
-          this.tutorial.showInstructions(Enum.STORY_2A_CLAIM_BLUE);
-        });
-      }
-    })
+    this
+    .add(()=>{ return PartHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
+    .addInstruction(Enum.STORY_2A_CLAIM_BLUE)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH) {
-        this.spawnEnemies(3);
-        this.showConversation(Enum.BF_TEST);
+        PartHelper.SpawnEnemies(3, [Enum.SOLDIER_BANDIT1]);
         return true;
       }
     })
+    .addConversation(Enum.BF_TEST)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .75) {
         return this.spawnAndWait(3);
@@ -32,33 +29,29 @@ export default class P4 extends TutorialSequence {
     })
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .65) {
-        this.spawnEnemies(2);
-        scene.spawnWildman();
-        scene.convo.showConversation(Enum.BF_BATTLE);
+        PartHelper.SpawnEnemiesAt(Vars.AREA_WIDTH* .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+        this.SpawnWildman();
         this.turnSavingOff();
         return true;
       }
     })
+    .addConversation(Enum.BF_BATTLE)
     .add(()=>{
-      return this.countEnemies() === 0;
+      return PartHelper.CheckEnemiesLessOrEqual(0);
     })
 
     // Keep spawning until conversation is complete
     .add(()=>{
-      this.spawnConstant(3, 2);
-      return this.tutorial.isConversationComplete();
+      PartHelper.SpawnConstant(3, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+      return PartHelper.CheckConversationComplete();
     })
     .add(()=>{
-      return this.countEnemies() === 0;
+      return PartHelper.CheckEnemiesLessOrEqual(0);
     })
     
-    .add(()=>{
-      this.showConversation(Enum.BF_WIN);
-      return true;
-    })
-    .add(()=>{
-      return this.tutorial.isConversationComplete();
-    })
+    .addConversation(Enum.BF_WIN)
+    .addConversationWait()
+    
     .add(()=>{
       this.convertWildman();
       SaveData.Data.hasBlueMoon = true;
@@ -76,47 +69,36 @@ export default class P4 extends TutorialSequence {
       this.doOnce(()=>{
         this.turnSavingOff();
         this.spawnBoss();
-        this.spawnEnemies(4);
-        scene.convo.showConversation(Enum.BF_BOSS1);
+        PartHelper.SpawnEnemies(4, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       });
       return true;
     })
+    .addConversation(Enum.BF_BOSS1)
     .add(()=>{
       return this.checkCount(1000);
     })
 
     // Second speech when 1/3 life gone
     .add(()=>{
-      this.spawnConstant(2, 2);
+      PartHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return this.checkBossHP(this.check1);
     })
-    .add(()=>{
-      this.doOnce(()=>{
-        scene.convo.showConversation(Enum.BF_BOSS2);
-      });
-      return true;
-    })
+    .addConversation(Enum.BF_BOSS2)
 
     // Third speech when 2/3 life gone
     .add(()=>{
-      this.spawnConstant(2, 2);
+      PartHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return this.checkBossHP(this.check2);
     })
+    .addConversation(Enum.BF_BOSS3)
+    .addConversationWait()
+    
     .add(()=>{
-      this.doOnce(()=>{
-        scene.convo.showConversation(Enum.BF_BOSS3);
-      });
+      PartHelper.SpawnEnemies(7, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return true;
     })
     .add(()=>{
-      return this.tutorial.isConversationComplete();
-    })
-    .add(()=>{
-      this.spawnEnemies(7);
-      return true;
-    })
-    .add(()=>{
-      return this.countEnemies() === 0;
+      return PartHelper.CheckEnemiesLessOrEqual(0);
     })
     .add(()=>{
       return this.checkCount(3000);
@@ -125,15 +107,13 @@ export default class P4 extends TutorialSequence {
     //  Claim land
 
     .add(()=>{
-      this.doOnce(()=>{
-        this.turnSavingOn();
-        this.tutorial.showInstructions(Enum.STORY_2B_PLACE_FLAG);
-      });
+      this.turnSavingOn();
+      return true;
     })
+    .addInstruction(Enum.STORY_2B_PLACE_FLAG)
     .add(()=>{
       this.doOnce(()=>{
-        const posX = Vars.AREA_WIDTH * .48;
-        scene.spawnClaimerFlag(posX);
+        PartHelper.SpawnClaimerFlag(Vars.AREA_WIDTH * .48);
       });
       return SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
     })
@@ -143,15 +123,16 @@ export default class P4 extends TutorialSequence {
       })
       return this.checkCount(3000);
     })
-    .add(()=>{
-      this.doOnce(()=>{
-        this.tutorial.showInstructions(Enum.STORY_2C_LEAVE_FOREST);
-      });
-    });
-
+    .addInstruction(Enum.STORY_2C_LEAVE_FOREST);
+    
   }
 
   //  - Helper functions for P4
+
+  spawnWildman() {
+    const { scene } = this;
+    scene.spawnWildman();
+  }
 
   convertWildman() {
     const { scene } = this;
@@ -187,31 +168,10 @@ export default class P4 extends TutorialSequence {
   }
 
   spawnAndWait(amt) {
-    const { scene } = this;
     this.doOnce(()=>{
-      this.spawnEnemies(amt);
+      PartHelper.SpawnEnemies(amt, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
     });
-    const enemyCount = scene.countEnemies();
-    return enemyCount === 0;
-  }
-
-  spawnConstant(minEns, amt = 2) {
-    const { scene } = this;
-    const enemyCount = scene.countEnemies();
-    if (enemyCount < minEns) {
-      for (let i=0; i<amt; i++) {
-        const type = Phaser.Utils.Array.GetRandom([Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
-        scene.spawnEnemy(null, type);
-      }
-    }
-  }
-
-  spawnEnemies(amt) {
-    const { scene } = this;
-    for (let i=0; i<amt; i++) {
-      const type = Phaser.Utils.Array.GetRandom([Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
-      scene.spawnEnemy(null, type);
-    }
+    return PartHelper.CheckEnemiesLessOrEqual(0);
   }
 
 }

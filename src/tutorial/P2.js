@@ -1,27 +1,20 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
+import PartHelper from "./PartHelper";
 
 export default class P2 extends TutorialSequence {
 
   init() {
-    const { scene } = this;
-
     this
     .add(()=>{
       return this.checkCount(2000);
     })
+    .addInstruction(Enum.STORY_1A_APPRENTICE)
     .add(()=>{
       this.doOnce(()=>{
-        this.tutorial.showInstructions(Enum.STORY_1A_APPRENTICE);
+        PartHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
       });
-    })
-    .add(()=>{
-      this.doOnce(()=>{
-        scene.spawnEnemies(2);
-      });
-      return scene.countEnemies() === 0;
-    })
-
+      return PartHelper.CheckEnemiesLessOrEqual(0);
+    });
   }
-
 }

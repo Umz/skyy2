@@ -1,20 +1,15 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
+import PartHelper from "./PartHelper";
 
 export default class P3 extends TutorialSequence {
 
   init() {
-    const { scene } = this;
-
     this
     .add(()=>{
       return this.checkCount(2000);
     })
-    .add(()=>{
-      this.doOnce(()=>{
-        this.tutorial.showInstructions(Enum.STORY_1B_APPRENTICE);
-      });
-    })
+    .addInstruction(Enum.STORY_1B_APPRENTICE)
     .add(()=>{
       return this.spawnAndWait(2);
     })
@@ -38,26 +33,16 @@ export default class P3 extends TutorialSequence {
     .add(()=>{
       return this.checkCount(1000);
     })
-    .add(()=>{
-      this.doOnce(()=>{
-        this.tutorial.showInstructions(Enum.STORY_1C_BLUEFOREST);
-      });
-    });
+    .addInstruction(Enum.STORY_1C_BLUEFOREST);
   }
 
   //  -
 
   spawnAndWait(amt) {
-
-    const { scene } = this;
-
     this.doOnce(()=>{
-      scene.spawnEnemies(amt);
+      PartHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
     });
-    
-    const enemyCount = scene.countEnemies();
-    return enemyCount === 0;
-
+    return PartHelper.CheckEnemiesLessOrEqual(0);
   }
 
 }
