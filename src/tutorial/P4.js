@@ -30,7 +30,7 @@ export default class P4 extends TutorialSequence {
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .65) {
         PartHelper.SpawnEnemiesAt(Vars.AREA_WIDTH* .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
-        this.SpawnWildman();
+        this.spawnWildman();
         this.turnSavingOff();
         return true;
       }

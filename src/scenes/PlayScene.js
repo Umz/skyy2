@@ -116,7 +116,6 @@ export class PlayScene extends Scene {
     //  DEV  --------------------------------------------------------------------------
 
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
-
     this.convo = new Conversation(this);
 
     this.test = function() {
@@ -309,7 +308,6 @@ export class PlayScene extends Scene {
   }
 
   updateSaveData() {
-
     SaveData.Data.playerX = this.player.x;
     SaveData.Data.playerLane = this.player.lane;
   }
@@ -371,6 +369,41 @@ export class PlayScene extends Scene {
       emitting: false
     });
 
+    const emitMin = 30, emitMax = 70, ySpray = 20;
+
+    this.hitEmiiter = this.add.particles(0, 0, Vars.TX_HIT, {
+      speedX: { min: -emitMin, max: -emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      scale: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
+    this.ccc = this.add.particles(0, 0, 'bbb', {
+      speedX: { min: -emitMin, max: -emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      alpha: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
+
+    this.hitRightEmitter = this.add.particles(0, 0, Vars.TX_HIT, {
+      speedX: { min: emitMin, max: emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      scale: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
+    this.bbb = this.add.particles(0, 0, 'bbb', {
+      speedX: { min: emitMin, max: emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      alpha: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
 
     this.claimEmitter = this.add.particles(0, 0, Vars.TX_SPARKLE, {
       speedX: { min: -3, max: 3 },
@@ -395,6 +428,19 @@ export class PlayScene extends Scene {
   emitClash(x, y, lane) {
     this.sparkleEmitter.setDepth(lane * 10 + 1);
     this.sparkleEmitter.emitParticleAt(x, y, 8);
+  }
+
+  emitLeftHit(x, y, lane) {
+    this.hitEmiiter.setDepth(lane * 10 + 1);
+    this.hitEmiiter.emitParticleAt(x, y, 10);
+    this.ccc.setDepth(lane * 10 + 2);
+    this.ccc.emitParticleAt(x, y, 4);
+  }
+  emitRightHit(x, y, lane) {
+    this.hitRightEmitter.setDepth(lane * 10 + 1);
+    this.hitRightEmitter.emitParticleAt(x, y, 10);
+    this.bbb.setDepth(lane * 10 + 2);
+    this.bbb.emitParticleAt(x, y, 4);
   }
 
   //  -
@@ -532,6 +578,18 @@ export class PlayScene extends Scene {
 
   //  -----------------------------------------------------------------------------------------
 
+  addHitFx(att, target) {
+    
+    const pp = target.getCenter();
+    const y = pp.y + 3;
+    if (att.x < target.x) {
+      this.emitRightHit(pp.x, y, target.lane);
+    }
+    else {
+      this.emitLeftHit(pp.x, y, target.lane);
+    }
+  }
+
   allyEnemyCollision(ally, en) {
 
     const checkAttack = (attacker, defender) => {
@@ -553,8 +611,9 @@ export class PlayScene extends Scene {
         }
         else {
           attacker.rebound(4);
-          const fatal = defender.hit(attacker);
+          this.addHitFx(attacker, defender);
 
+          const fatal = defender.hit(attacker);
           if (fatal) {
             this.showDeath(defender);
           }

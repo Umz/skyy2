@@ -232,6 +232,26 @@ export class Preloader extends Phaser.Scene {
             graphics.clear();
         }
 
+        {   // CREATE Blood
+            const size = 4;
+
+            graphics.fillStyle(0xCC0000, 1);
+            graphics.fillRect(0, 0, 3, 1);
+
+            graphics.generateTexture(Vars.TX_HIT, 3, 1);
+            graphics.clear();
+        }
+
+        {   // CREATE Blood Add
+            const size = 4;
+
+            graphics.fillStyle(0x000000, 1);
+            graphics.fillRect(0, 0, 3, 1);
+
+            graphics.generateTexture('bbb', 3, 1);
+            graphics.clear();
+        }
+
         graphics.destroy();
 
     }

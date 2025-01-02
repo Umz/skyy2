@@ -30,6 +30,7 @@ const Vars = {
   //  -
 
   TX_SPARKLE: "graphic_sparkle",
+  TX_HIT: "graphic_hit_fx",
 
   VFX_CLAIM: "vfx_claimEffect",
 

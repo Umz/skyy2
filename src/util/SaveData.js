@@ -4,6 +4,7 @@ import Vars from "../const/Vars";
 
 const GAME_DATA = "GAME_DATA";
 
+// Kills, Collects
 const data = {
   
   playtime: 0,
@@ -49,10 +50,11 @@ export default class SaveData {
     }
 
     data.claimed = [2];
-    data.tutorialNumber = 4;
-    data.tutorialSequenceStep = 27;
+    data.tutorialNumber = 1;
+    data.tutorialSequenceStep = 4;
+    //data.tutorialSequenceStep = 27;
     data.hasBlueMoon = true;
-    data.playerX = Vars.AREA_WIDTH * .45;
+    data.playerX = Vars.AREA_WIDTH * 1.45;
     data.location = Enum.LOC_BLUE_FOREST;
 
     console.log("Loaded data:")
