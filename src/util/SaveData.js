@@ -48,11 +48,11 @@ export default class SaveData {
       Object.assign(data, savedData);
     }
 
-    data.claimed = [1, 2];
-    data.tutorialNumber = 5;
-    data.tutorialSequenceStep = 0;
+    data.claimed = [2];
+    data.tutorialNumber = 4;
+    data.tutorialSequenceStep = 27;
     data.hasBlueMoon = true;
-    data.playerX = Vars.AREA_WIDTH * .97;
+    data.playerX = Vars.AREA_WIDTH * .45;
     data.location = Enum.LOC_BLUE_FOREST;
 
     console.log("Loaded data:")

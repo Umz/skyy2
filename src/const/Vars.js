@@ -4,6 +4,8 @@ const Vars = {
   EVENT_GAME_STARTED: 'event-game-started',
   EVENT_GAME_EXIT: 'event-game-exit',
 
+  //  -
+
   SHEET_BIRDS1: 'bg_birds',
   SHEET_BIRDS2: 'bg_bird',
   SHEET_ALL_BANNERS: 'all_banners',
@@ -25,7 +27,19 @@ const Vars = {
   SHEET_BLUE_BANDIT_LANCE: 'blue_lancer_bandit_sheet',
   SHEET_BLUE_BANDIT_BOSS: "blue_bandit_boss_sheet",
 
+  //  -
+
   TX_SPARKLE: "graphic_sparkle",
+
+  VFX_CLAIM: "vfx_claimEffect",
+
+  VFX_BLOOD3: "vfx_bloodsplatter3",
+  VFX_CONSUME: "vfx_consume0",
+  VFX_SPARKLE0: "vfx_sparkle0",
+  VFX_SPARKLE1: "vfx_sparkle1",
+  VFX_SQUAREFORE0: "vfx_squarefore0",
+
+  //  -
 
   ANIM_IDLE: '-idle',
   ANIM_WALK: '-walk',

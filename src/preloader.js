@@ -45,8 +45,17 @@ export class Preloader extends Phaser.Scene {
         // - BG Items
         this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
         
-        // - FX
-        this.load.spritesheet('consume0', 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
+        // - VFX
+
+        this.load.spritesheet(Vars.VFX_CLAIM, 'vfx/Spark0.png', { frameWidth: 16, frameHeight: 80});
+        
+        this.load.spritesheet(Vars.VFX_SPARKLE0, 'vfx/Spark0.png', { frameWidth: 16, frameHeight: 80});
+        this.load.spritesheet(Vars.VFX_SPARKLE1, 'vfx/Spark1.png', { frameWidth: 16, frameHeight: 80});
+        this.load.spritesheet(Vars.VFX_SQUAREFORE0, 'vfx/Square0Fore.png', { frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet(Vars.VFX_CONSUME, 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
+        this.load.spritesheet(Vars.VFX_BLOOD3, 'vfx/BloodSplatter3.png', { frameWidth: 32, frameHeight: 32});
+
+        //  - Audio
 
         //  Load JSON files
 
@@ -151,12 +160,13 @@ export class Preloader extends Phaser.Scene {
 
         // VFX
 
-        this.anims.create({
-            key: 'consume0',
-            frames: this.anims.generateFrameNumbers("consume0", { start: 0, end: 13 }),
-            frameRate: 18,
-            repeat: -1
-        });
+        this.createVFXAnimation(Vars.VFX_CLAIM, 10, 16, -1);
+
+        this.createVFXAnimation(Vars.VFX_SPARKLE0, 10, 16, -1);
+        this.createVFXAnimation(Vars.VFX_SPARKLE1, 10, 16, -1);
+        this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 19, 16, 0);
+        this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, -1);
+        this.createVFXAnimation(Vars.VFX_BLOOD3, 7, 16, 0);
 
         //  Sprite animation
 
@@ -182,6 +192,15 @@ export class Preloader extends Phaser.Scene {
                 repeat: config.repeat
             });
         }
+    }
+
+    createVFXAnimation(key, frames, frameRate = 10, repeat = 0) {
+        this.anims.create({
+            key: key,
+            frames: this.anims.generateFrameNumbers(key, { start: 0, end: frames }),
+            frameRate: frameRate,
+            repeat: repeat
+        });
     }
 
     //  -

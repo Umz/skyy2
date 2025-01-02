@@ -14,17 +14,12 @@ export default class P5 extends TutorialSequence {
     .add(()=>{
       return PartHelper.CheckLocation(Enum.LOC_MAM);
     })
+    
+    .add(()=>{
+      return (player.x > Vars.AREA_WIDTH * 1.6 && SaveData.Data.hasBlueMoon);
+    })
+    .addConversation(Enum.MAM_BM_FIRST)
 
-    //  - The rumours are true, they are as beautiful as they say..
-    .add(()=>{
-      if (player.x > Vars.AREA_WIDTH * 1.6 && SaveData.Data.hasBlueMoon) {
-        return PartHelper.ShowConversation(Enum.MC_TAUNT);
-      }
-      return true;
-    })
-    .add(()=>{
-      return PartHelper.ShowConversation(Enum.MC_TAUNT);
-    })
     .add(()=>{
       return false;
     })

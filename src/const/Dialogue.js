@@ -45,16 +45,23 @@ Rabid Bandit: Curse you! Heartless dogs! Curse you both!-#
 Rabid Bandit: Come on my brethren! Kill them!
 `;
 
+const mam_bm_first = `
+Blue Moon: So the rumours were true..-#
+Blue Moon: They are indeed as beautiful as they say.
+`;
+
 //  -
 
 const Dialogue = new Map([
+
   [Enum.BF_TEST, bf_entrance],
   [Enum.BF_BATTLE, bf_battle],
   [Enum.BF_WIN, bf_victory],
-
   [Enum.BF_BOSS1, bf_boss1],
   [Enum.BF_BOSS2, bf_boss2],
   [Enum.BF_BOSS3, bf_boss3],
+
+  [Enum.MAM_BM_FIRST, mam_bm_first],
 
   [Enum.MC_TAUNT, "Moon Chief: Come! I shall grant you a swift death."],
   [Enum.MC_PEOMS, "Moon Chief: More peons. How futile"]

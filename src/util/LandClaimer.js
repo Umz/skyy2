@@ -1,4 +1,5 @@
 import MapInfo from "../const/MapInfo";
+import Vars from "../const/Vars";
 import Counter from "./Counter";
 import SaveData from "./SaveData";
 
@@ -14,8 +15,8 @@ export default class LandClaimer {
 
     //  Sparkle FX around player while land is being claimed
 
-    this.fx = this.scene.add.sprite(-20, 0, 'consume0').setOrigin(.5, 1).setVisible(false);
-    this.fx.play("consume0");
+    this.fx = this.scene.add.sprite(-20, 0, Vars.VFX_CLAIM).setOrigin(.5, 1).setVisible(false);
+    this.fx.play(Vars.VFX_CLAIM);
   }
 
   update(delta) {
