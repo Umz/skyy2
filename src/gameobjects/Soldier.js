@@ -1,22 +1,22 @@
-import Bandit1 from "../ai/Bandit1";
 import Blank from "../ai/Blank";
-import BlueMoon from "../ai/BlueMoon";
 import SoldierView from "../ai/SoldierView";
 import CSSClasses from "../const/CSSClasses";
-import Enum from "../util/Enum";
-import Vars from "../util/Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
+    scene.physics.add.existing(this);
+
     this.prefix = texture;  // Prefix for animations
 
     this.movePressed = false;
     this.staticMoveStart = false;
     
-    this.controller = new Blank(this);
-    this.viewController = new SoldierView(this);
+    this.controller = new Blank().setSprite(this);
+    this.viewController = new SoldierView().setSprite(this);
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
 
     this.lastTarget = null;
@@ -93,9 +93,29 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.maxGP = max > 0 ? max : this.maxGP;
   }
 
+  getHPPercent() {
+    return this.hp / this.maxHP;
+  }
+
+  getGPPercent() {
+    return this.gp / this.maxGP;
+  }
+
   //  Battle functions   ------------------------------------------------------------
 
-  // attack, defend, block, rebound, recoil
+  isAlive() {
+    return this.hp > 0;
+  }
+
+  isDead() {
+    return this.hp <= 0;
+  }
+
+  // attack, defend, block, rebound, recoil#
+
+  recoverHP(amt) {
+    this.hp = Math.min(this.maxHP, this.hp + amt);
+  }
 
   guard() {
     this.gp = Math.max(0, this.gp - 1);
@@ -111,7 +131,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  ---------------------------------------------------------------------
   
-  addDisplayName(name, team) {
+  setDisplayName(name, team, depth = 1) {
+
+    this.displayName?.destroy(true);
 
     const json = this.scene.cache.json.get('hud_html');
     const css = CSSClasses.get(team);
@@ -120,21 +142,14 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     let html = template.replace("_class_", css);
     html = html.replace("_name_", name);
     
-    this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8);
+    this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8).setDepth(depth);
   }
 
   //  ---------------------------------------------------------------------
 
-  setBlueMoon() {
-    this.controller = new BlueMoon(this);
-  }
-
-  setBandit() {
-    this.controller = new Bandit1(this);
-  }
-
   setController(ctrl) {
     this.controller = ctrl;
+    this.controller.setSprite(this);
   }
 
   setTeam(en) {
@@ -351,7 +366,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   isFacing(x) {
     const isRight = x > this.x;
-    return (isRight && !this.flipX) || (!isRight && this.flipX);
+    return !this.isTweening() && ((isRight && !this.flipX) || (!isRight && this.flipX));
   }
 
   flipXTween(flipDirection = 0) {

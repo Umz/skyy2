@@ -39,29 +39,19 @@ const Enum = {
   SS_DEAD: 8,
   SS_REPELLED: 9,
 
-  // Sprite AI modes
-
-  SM_IDLE: 1,
-  SM_ATTACK: 2,
-  SM_GET_CLOSE: 3,
-
-  TT_PLAYER: 1,
-  TT_INFANTRY: 2,
-  TT_HEAVY_INFANTRY: 3,
-  TT_LANCER: 4,
-  TT_ADVISOR: 5,
+  // Soldier
 
   TEAM_ALLY: 1,
   TEAM_ENEMY: 2,
   TEAM_PLAYER: 3,
 
-  ACT_IDLE: 1,
-  ACT_GOTO_TARGET: 2,
-  ACT_BATTLE_CHECK: 3,
-  ACT_BATTLE_DECISION: 4,
-  ACT_BATTLE_ACTION: 5,
-  ACT_HURT: 6,
-  ACT_REBOUND: 7,
+  SOLDIER_BANDIT1: 1,
+  SOLDIER_BANDIT2: 2,
+  SOLDIER_BANDIT_BOSS: 10,
+
+  SOLDIER_WILDMAN: 10001,
+  SOLDIER_BLUEMOON: 10002,
+  SOLDIER_PLAYER: 1000001,
 
   //  Story References
 
@@ -70,15 +60,25 @@ const Enum = {
   STORY_1B_APPRENTICE: 2,
   STORY_1C_BLUEFOREST: 3,
   STORY_2A_CLAIM_BLUE: 4,
-  STORY_2B_GO_EAST: 5,
-  STORY_3_DESTROY_ROSE: 6,
-  STORY_4_CLAIM_STORM: 7,
+  STORY_2B_PLACE_FLAG: 5,
+  STORY_2C_LEAVE_FOREST: 6,
+  STORY_3_DESTROY_ROSE: 7,
+  STORY_4_CLAIM_STORM: 8,
 
   //  Dialogue
 
-  BF_TEST: 1,     
+  BF_TEST: 1,
   BF_BATTLE: 2,   // Blue Forest Battle
-  BF_WIN: 3,      // Blue Forest Victory  
+  BF_WIN: 3,      // Blue Forest Victory
+
+  BF_BOSS1: 4,
+  BF_BOSS2: 5,
+  BF_BOSS3: 6,
+
+  MAM_BM_FIRST: 10,   // Blue Moon first time in MaM
+
+  MC_TAUNT: 101,
+  MC_PEOMS: 102,
 
 }
 export default Enum;

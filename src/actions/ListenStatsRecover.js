@@ -1,7 +1,7 @@
 import Action from "../classes/Action";
 import Counter from "../util/Counter";
-import Enum from "../util/Enum";
-import Vars from "../util/Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 export default class ListenStatsRecover extends Action {
 

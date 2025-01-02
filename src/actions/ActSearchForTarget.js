@@ -1,5 +1,5 @@
 import Action from "../classes/Action";
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 import { GetClosestEnemyWithinRange } from "../util/ActionHelper";
 
 export default class ActSearchForTarget extends Action {

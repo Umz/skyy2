@@ -1,5 +1,5 @@
 import BaseBuilder from "../classes/BaseBuilder";
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 
 const FOREST = "forest";
 const VILLAGE = "village";

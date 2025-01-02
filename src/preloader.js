@@ -1,5 +1,5 @@
 import SaveData from "./util/SaveData";
-import Vars from "./util/Vars";
+import Vars from "./const/Vars";
 
 export class Preloader extends Phaser.Scene {
 
@@ -24,19 +24,38 @@ export class Preloader extends Phaser.Scene {
 
         this.load.image('tilemap', 'bg_layers/tilemap.png');
 
-        //  Spritesheets
+        //  SOLDIER Spritesheets
 
-        this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
         this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight: 30});
-
-        this.load.spritesheet(Vars.SHEET_BANDIT_BLUE, 'spritesheets/Infantry_Bandit_Blue.png', { frameWidth: 38, frameHeight:34});
-        this.load.spritesheet(Vars.SHEET_BANDIT_LANCE_BLUE, 'spritesheets/Lancer_Blue_Bandit.png', { frameWidth: 43, frameHeight:30});
-
         this.load.spritesheet(Vars.SHEET_WILDMAN, 'spritesheets/Infantry_Wildman.png', { frameWidth: 38, frameHeight:34});
-
+        
+        this.load.spritesheet(Vars.SHEET_BLUE_BANDIT, 'spritesheets/Infantry_Blue_Bandit.png', { frameWidth: 38, frameHeight:34});
+        this.load.spritesheet(Vars.SHEET_BLUE_BANDIT_LANCE, 'spritesheets/Lancer_Blue_Bandit.png', { frameWidth: 43, frameHeight:30});
+        this.load.spritesheet(Vars.SHEET_BLUE_BANDIT_BOSS, 'spritesheets/Lancer_Blue_Bandit_Boss.png', { frameWidth: 43, frameHeight:30});
+        
+        // - BG Characters
+        
+        this.load.spritesheet("king", 'spritesheets/Beard_King.png', { frameWidth: 34, frameHeight: 36});
+        
+        // - BG animals
+        
         this.load.spritesheet(Vars.SHEET_BIRDS1, 'spritesheets/bg_birds.png', { frameWidth: 32, frameHeight: 43});
-
         this.load.spritesheet("doe_test", 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
+
+        // - BG Items
+        this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
+        
+        // - VFX
+
+        this.load.spritesheet(Vars.VFX_CLAIM, 'vfx/Spark0.png', { frameWidth: 16, frameHeight: 80});
+        
+        this.load.spritesheet(Vars.VFX_SPARKLE0, 'vfx/Spark0.png', { frameWidth: 16, frameHeight: 80});
+        this.load.spritesheet(Vars.VFX_SPARKLE1, 'vfx/Spark1.png', { frameWidth: 16, frameHeight: 80});
+        this.load.spritesheet(Vars.VFX_SQUAREFORE0, 'vfx/Square0Fore.png', { frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet(Vars.VFX_CONSUME, 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
+        this.load.spritesheet(Vars.VFX_BLOOD3, 'vfx/BloodSplatter3.png', { frameWidth: 32, frameHeight: 32});
+
+        //  - Audio
 
         //  Load JSON files
 
@@ -82,6 +101,15 @@ export class Preloader extends Phaser.Scene {
         SaveData.SETUP_LOCALFORAGE_CONFIG();
 
         this.createGraphics();
+
+        //  Citizens - King Idle (walk, mine, cheer)
+        //  MaM Banner Flapping
+        this.anims.create({
+            key: 'king_idle',
+            frames: this.anims.generateFrameNumbers('king', { start: 0, end: 5 }),
+            frameRate: 6,
+            repeat: -1
+        });
 
         //  MaM Banner Flapping
         this.anims.create({
@@ -130,14 +158,25 @@ export class Preloader extends Phaser.Scene {
             repeat: -1
         });
 
+        // VFX
+
+        this.createVFXAnimation(Vars.VFX_CLAIM, 10, 16, -1);
+
+        this.createVFXAnimation(Vars.VFX_SPARKLE0, 10, 16, -1);
+        this.createVFXAnimation(Vars.VFX_SPARKLE1, 10, 16, -1);
+        this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 19, 16, 0);
+        this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, -1);
+        this.createVFXAnimation(Vars.VFX_BLOOD3, 7, 16, 0);
+
         //  Sprite animation
 
         const data = this.cache.json.get('sprite_configs');
 
         this.createSpritesheetAnimation(Vars.SHEET_PLAYER, data.lancer);
-        this.createSpritesheetAnimation(Vars.SHEET_BANDIT_BLUE, data.infantry);
-        this.createSpritesheetAnimation(Vars.SHEET_BANDIT_LANCE_BLUE, data.lancer);
         this.createSpritesheetAnimation(Vars.SHEET_WILDMAN, data.infantry);
+        this.createSpritesheetAnimation(Vars.SHEET_BLUE_BANDIT, data.infantry);
+        this.createSpritesheetAnimation(Vars.SHEET_BLUE_BANDIT_LANCE, data.lancer);
+        this.createSpritesheetAnimation(Vars.SHEET_BLUE_BANDIT_BOSS, data.lancer);
 
         this.scene.start("PlayScene");      // Next Scene when all assets are loaded
     }
@@ -153,6 +192,15 @@ export class Preloader extends Phaser.Scene {
                 repeat: config.repeat
             });
         }
+    }
+
+    createVFXAnimation(key, frames, frameRate = 10, repeat = 0) {
+        this.anims.create({
+            key: key,
+            frames: this.anims.generateFrameNumbers(key, { start: 0, end: frames }),
+            frameRate: frameRate,
+            repeat: repeat
+        });
     }
 
     //  -
@@ -181,6 +229,26 @@ export class Preloader extends Phaser.Scene {
             graphics.fillPath();
 
             graphics.generateTexture(Vars.TX_SPARKLE, size, size);
+            graphics.clear();
+        }
+
+        {   // CREATE Blood
+            const size = 4;
+
+            graphics.fillStyle(0xCC0000, 1);
+            graphics.fillRect(0, 0, 3, 1);
+
+            graphics.generateTexture(Vars.TX_HIT, 3, 1);
+            graphics.clear();
+        }
+
+        {   // CREATE Blood Add
+            const size = 4;
+
+            graphics.fillStyle(0x000000, 1);
+            graphics.fillRect(0, 0, 3, 1);
+
+            graphics.generateTexture('bbb', 3, 1);
             graphics.clear();
         }
 

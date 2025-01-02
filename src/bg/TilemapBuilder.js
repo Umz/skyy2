@@ -1,6 +1,6 @@
-//import Vars from "../util/Vars";
+//import Vars from "../const/Vars";
 
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 
 export default class TilemapBuilder {
 

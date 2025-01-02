@@ -1,21 +1,9 @@
-import TutorialPart from "../classes/TutorialPart";
-import Enum from "../util/Enum";
+import TutorialSequence from "../classes/TutorialSequence";
+import Enum from "../const/Enum";
 
-export default class P1 extends TutorialPart {
+export default class P1 extends TutorialSequence {
 
-  update() {
-
-    switch (this.step) {
-      case 0:
-        this.parent.showInstructions(Enum.STORY_0_INTRO);
-        this.step ++;
-        break;
-      case 1: break;  // Waiting
-      case 2:
-        return true;
-    }
-
-    return false;
+  init() {
+    this.addInstruction(Enum.STORY_0_INTRO);
   }
-
 }

@@ -1,7 +1,7 @@
 import Action from "../classes/Action";
 import Counter from "../util/Counter";
-import Enum from "../util/Enum";
-import Vars from "../util/Vars";
+import Enum from "../const/Enum";
+import Vars from "../const/Vars";
 
 export default class ViewSoldierFlash extends Action {
 
@@ -18,6 +18,10 @@ export default class ViewSoldierFlash extends Action {
 
       case Enum.SS_READY:
         this.timer.resetCount();
+        break;
+        
+      case Enum.SS_DEFEND:
+        this.countOut(delta);
         break;
 
       case Enum.SS_HURT:
@@ -39,6 +43,12 @@ export default class ViewSoldierFlash extends Action {
     }
     else {
       this.sprite.setTint(col);
+    }
+  }
+
+  countOut(delta) {
+    if (this.timer.update(delta)) {
+      this.sprite.clearTint();
     }
   }
 

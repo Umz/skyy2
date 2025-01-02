@@ -4,7 +4,7 @@ import Scenery from "../bg/Scenery";
 import MapBuilder from "../bg/MapBuilder";
 import Shadow from "../bg/Shadow";
 import Soldier from "../gameobjects/Soldier";
-import Vars from "../util/Vars";
+import Vars from "../const/Vars";
 import KeyboardMapper from "../util/KeyboardMapper";
 import ControlKeys from "../util/ControlKeys";
 import SpriteController from "../util/SpriteController";
@@ -12,12 +12,14 @@ import MapTracker from "../util/MapTracker";
 import Collectible from "../gameobjects/Collectible";
 import BirdHandler from "../bg/BirdHandler";
 import AnimalHandler from "../bg/AnimalHandler";
-import Enum from "../util/Enum";
+import Enum from "../const/Enum";
 import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
 import Conversation from "../util/Conversation";
+import Spawner from "../util/Spawner";
+import LandClaimer from "../util/LandClaimer";
 
 export class PlayScene extends Scene {
 
@@ -40,6 +42,7 @@ export class PlayScene extends Scene {
     this.allGroup = this.add.group({runChildUpdate: true});
     this.groupRocks = this.add.group();
     this.groupCollectibles = this.add.group();
+    this.groupClaimFlags = this.add.group();
     
     this.groupSoldiers = this.add.group({runChildUpdate:true});
     this.groupAllies = this.add.group();
@@ -68,13 +71,17 @@ export class PlayScene extends Scene {
     const fullWorld = areaWidth * 8;
     camera.setBounds(0, 0, fullWorld, camera.height);
 
+    this.createEmitters();
+
     //  Create Player
 
+    this.spawner = new Spawner(this);
     this.player = this.spawnPlayer();
 
     //  Utilities and Game objects
 
     this.mapTracker = new MapTracker();   // Player location on map
+    this.landClaimer = new LandClaimer(this);
     this.scenery = new Scenery(this);     // Background scenery
     this.tilemapBuilder = new TilemapBuilder(this, this.tilemapLayer);    // Tilemap builder (ground tiles)
     this.mapBuilder = new MapBuilder(this);   // Map builder (trees, locations)
@@ -94,8 +101,7 @@ export class PlayScene extends Scene {
     this.physics.add.overlap(this.groupAllies, this.groupEnemies, this.allyEnemyCollision, null, this);   // Battle collisions
     this.physics.add.overlap(this.player, this.groupCollectibles, this.playerItemCollision, null, this); 
     this.physics.add.overlap(this.player, this.groupRocks, this.playerRockCollision, null, this);
-
-    this.createEmitters();
+    this.physics.add.overlap(this.player, this.groupClaimFlags, this.playerClaimFlagCollision, null, this);   // Claim area
 
     //  Controller
 
@@ -110,7 +116,6 @@ export class PlayScene extends Scene {
     //  DEV  --------------------------------------------------------------------------
 
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
-
     this.convo = new Conversation(this);
 
     this.test = function() {
@@ -142,7 +147,7 @@ export class PlayScene extends Scene {
     //  Initialise map area
 
     const aID = Math.max(1, areaID);
-    const areaInfo = MapInfo.find(info => info.locID === aID);
+    const areaInfo = MapInfo.get(aID);
     const isForest = areaInfo.type === Enum.AREA_FOREST;
     this.birdSpawner.isForestArea = isForest;
     this.wildlifeSpawner.isForestArea = isForest;
@@ -150,8 +155,18 @@ export class PlayScene extends Scene {
     //  Map Tracker
 
     this.mapTracker.updateCurrentArea(playerX);
+    this.tutorial.load();
 
-    //this.spawnBlueMoon();
+    this.spawnAllMaMFlags();
+
+    //  King (Harvest Moon) - Display name?
+    const king = this.add.sprite(Vars.AREA_WIDTH * 1.48, Vars.GROUND_TOP, 'king').setOrigin(.5, 1);
+    king.play('king_idle');
+    this.fgLayer.add(king);
+
+    if (SaveData.Data.hasBlueMoon) {
+      this.spawnBlueMoon();
+    }
 
     this.initialLoad = true;
   }
@@ -169,6 +184,8 @@ export class PlayScene extends Scene {
       return true;
     }
 
+    SaveData.Data.playtime += delta;
+
     //  - Normal updating -
     
     this.convo.update(time, delta);
@@ -176,6 +193,7 @@ export class PlayScene extends Scene {
 
     this.mapTracker.updateCurrentArea(this.player.x);
     this.mapTracker.updateAreaDisplayCount(delta);
+    this.landClaimer.update(delta);
     
     this.updateMapArea();
     this.updateMapBuilder();
@@ -248,7 +266,7 @@ export class PlayScene extends Scene {
     if (this.mapTracker.checkNewArea()) {
 
       //  Set-up rocks for mines  
-      const areaInfo = MapInfo.find(info => info.locID === currentAreaID);
+      const areaInfo = MapInfo.get(currentAreaID);
       if (areaInfo.locID == Enum.LOC_MINES) {
         this.spawnRocks(20);
       }
@@ -290,12 +308,8 @@ export class PlayScene extends Scene {
   }
 
   updateSaveData() {
-
     SaveData.Data.playerX = this.player.x;
     SaveData.Data.playerLane = this.player.lane;
-
-    //  Play time
-
   }
 
   //  -----------------------------------------------------------------------------------------------------
@@ -303,7 +317,7 @@ export class PlayScene extends Scene {
   /** Show the name of the entered area shortly on screen */
   showAreaName(areaID) {
 
-    const data = MapInfo.find(info => info.locID === areaID);
+    const data = MapInfo.get(areaID);
 
     const json = this.cache.json.get('hud_html');
     const template = json.area_enter_label;
@@ -355,6 +369,50 @@ export class PlayScene extends Scene {
       emitting: false
     });
 
+    const emitMin = 30, emitMax = 70, ySpray = 20;
+
+    this.hitEmiiter = this.add.particles(0, 0, Vars.TX_HIT, {
+      speedX: { min: -emitMin, max: -emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      scale: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
+    this.ccc = this.add.particles(0, 0, 'bbb', {
+      speedX: { min: -emitMin, max: -emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      alpha: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
+
+    this.hitRightEmitter = this.add.particles(0, 0, Vars.TX_HIT, {
+      speedX: { min: emitMin, max: emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      scale: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
+    this.bbb = this.add.particles(0, 0, 'bbb', {
+      speedX: { min: emitMin, max: emitMax },
+      speedY: { min: -ySpray, max: ySpray },
+      alpha: { start: 1, end: 0},
+      lifespan: 500,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
+      emitting: false
+    });
+
+    this.claimEmitter = this.add.particles(0, 0, Vars.TX_SPARKLE, {
+      speedX: { min: -3, max: 3 },
+      speedY: { min: -60, max: -20 },
+      lifespan: 1000,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 480, 320), quantity: 42 },
+      frequency: 50,
+      emitting: false
+    });
   }
 
   emitDust(x, y, lane) {
@@ -370,6 +428,19 @@ export class PlayScene extends Scene {
   emitClash(x, y, lane) {
     this.sparkleEmitter.setDepth(lane * 10 + 1);
     this.sparkleEmitter.emitParticleAt(x, y, 8);
+  }
+
+  emitLeftHit(x, y, lane) {
+    this.hitEmiiter.setDepth(lane * 10 + 1);
+    this.hitEmiiter.emitParticleAt(x, y, 10);
+    this.ccc.setDepth(lane * 10 + 2);
+    this.ccc.emitParticleAt(x, y, 4);
+  }
+  emitRightHit(x, y, lane) {
+    this.hitRightEmitter.setDepth(lane * 10 + 1);
+    this.hitRightEmitter.emitParticleAt(x, y, 10);
+    this.bbb.setDepth(lane * 10 + 2);
+    this.bbb.emitParticleAt(x, y, 4);
   }
 
   //  -
@@ -402,83 +473,36 @@ export class PlayScene extends Scene {
     })
   }
 
-  //  -----------------------------------------------------------------------------------------
-
-  spawnSoldier(posX, lane, sheet) {
-
-    const sprite = new Soldier(this, posX, Vars.GROUND_TOP + 1 + lane, sheet);
-    sprite.playIdle();
-
-    this.physics.add.existing(sprite);
-    this.groupSoldiers.add(sprite);
-
-    return sprite;
-  }
+  //  - Character spawning    -----------------------------------------------------------------------------------------
 
   spawnPlayer() {
-
-    const camera = this.cameras.main;
-    const player = this.spawnSoldier(0, 1, Vars.SHEET_PLAYER);
-    this.groupAllies.add(player);
-
-    camera.startFollow(player, true, .8);
-    player.setHP(50, 50);
-    player.setGP(7, 7);
-    player.addDisplayName("Moon Chief", Enum.TEAM_PLAYER);
-    player.setTeam(Enum.TEAM_ALLY);
-    player.isPlayer = true;
-
-    return player;
+    return this.spawner.spawnPlayer();
   }
 
   spawnWildman() {
-
-    const spawnX = Vars.AREA_WIDTH * .5;
-    const wildman = this.spawnSoldier(spawnX, 3, Vars.SHEET_WILDMAN);
-    wildman.setHP(25, 25);
-    wildman.setGP(15, 15);
-    wildman.addDisplayName("Wildman", Enum.TEAM_ALLY);
-    wildman.setTeam(Enum.TEAM_ALLY);
-    //wildman.setBlueMoon();
-    wildman.setBandit();
-
-    this.groupAllies.add(wildman);
-
-    return wildman;
+    this.bluemoon = this.spawner.spawnWildman();
   }
 
   spawnBlueMoon() {
-
-    const blue = this.spawnSoldier(this.player.x + 24, 1, Vars.SHEET_WILDMAN);
-    blue.setHP(10, 10);
-    blue.addDisplayName("Blue Moon", Enum.TEAM_ALLY);
-    blue.setTeam(Enum.TEAM_ALLY);
-    blue.setBlueMoon();
-
-    this.groupAllies.add(blue);
-
-    return blue;
+    const pX = this.player.x + 24;
+    this.bluemoon = this.spawner.spawnBlueMoon(pX);
   }
 
-  spawnAlly() {
+  spawnAlly(posX, type = Enum.SOLDIER_BANDIT1) {
+    return this.spawner.spawnEnemy(posX, type);
   }
 
-  spawnEnemy(posX) {
-      
-    const camera = this.cameras.main;
-    const worldView = camera.worldView;
-    const spawnPoint = Math.random() > .5 ? worldView.right + 20 : worldView.left - 20;
-
-    const deployX = (posX ?? spawnPoint) + Phaser.Math.Between(-30, 30);
-    const deployLane = Phaser.Math.Between(1, 3);
-
-    const enemy = this.spawnSoldier(deployX, deployLane, Vars.SHEET_BANDIT_BLUE);
-    enemy.setBandit();
-    enemy.setTeam(Enum.TEAM_ENEMY);
-    this.groupEnemies.add(enemy);
-
-    return enemy;
+  spawnEnemy(posX, type = Enum.SOLDIER_BANDIT1) {
+    return this.spawner.spawnEnemy(posX, type);
   }
+
+  spawnEnemies(amt, posX, type) {
+    for (let i=0; i<amt; i++) {
+      this.spawnEnemy(posX, type);
+    }
+  }
+
+  //  -
 
   spawnCollectible(posX, lane, type) {
     
@@ -517,19 +541,35 @@ export class PlayScene extends Scene {
     }
     
   }
+  
+  /** Spawn a flag that will begin the land claim process */
+  spawnClaimerFlag(x) {
+    this.spawner.spawnClaimerFlag(x);
+  }
+  
+  /** Spawn a flag image that represents an area that has been claimed */
+  spawnMaMFlags(locID) {
 
+    const map = MapInfo.get(locID);
+    const flags = map.flags || []
+    for (let flagX of flags) {
+      this.spawner.spawnMaMFlag(flagX);
+    }
+    this.shadows.createStaticShadowLines(this.buildingsLayer, this.bgLayer, this.fgLayer);
+  }
+
+  spawnAllMaMFlags() {
+    const allClaimed = SaveData.Data.claimed;
+    for (let locID of allClaimed) {
+      this.spawnMaMFlags(locID);
+    }
+  }
+  
+  //  -
+  
   clearRocks() {
     this.groupRocks.clear(true, true);
   }
-
-  spawnEnemies(amt, posX) {
-    const count = this.groupEnemies.countActive();
-    for (let i=0; i<amt; i++) {
-      this.spawnEnemy(posX);
-    }
-  }
-
-  //  -
 
   countEnemies() {
     const count = this.groupEnemies.countActive();
@@ -537,6 +577,18 @@ export class PlayScene extends Scene {
   }
 
   //  -----------------------------------------------------------------------------------------
+
+  addHitFx(att, target) {
+    
+    const pp = target.getCenter();
+    const y = pp.y + 3;
+    if (att.x < target.x) {
+      this.emitRightHit(pp.x, y, target.lane);
+    }
+    else {
+      this.emitLeftHit(pp.x, y, target.lane);
+    }
+  }
 
   allyEnemyCollision(ally, en) {
 
@@ -559,8 +611,9 @@ export class PlayScene extends Scene {
         }
         else {
           attacker.rebound(4);
-          const fatal = defender.hit(attacker);
+          this.addHitFx(attacker, defender);
 
+          const fatal = defender.hit(attacker);
           if (fatal) {
             this.showDeath(defender);
           }
@@ -636,6 +689,20 @@ export class PlayScene extends Scene {
     }
   }
 
+  /** Claim current territory when hovering flag for X seconds */
+  playerClaimFlagCollision(player, flag) {
+    if (player.isLane(1)) {
+      console.log(1);
+      this.landClaimer.setClaiming();
+      const locID = this.mapTracker.currentAreaID;
+      const allClaimed = SaveData.Data.claimed;
+      if (allClaimed.includes(locID)) {
+        this.spawnMaMFlags(locID);
+        flag.destroy(true);
+      }
+    }
+  }
+
   //  -----------------------------------------------------------------------------------------
 
   drawSoldierHP() {
@@ -661,14 +728,15 @@ export class PlayScene extends Scene {
       const percentGuard = soldier.gp / soldier.maxGP;
       const guardBar = (barMax - 2) * percentGuard;
 
-      const barCol = soldier.isAlly() ? 0x00ff00 : 0xff0000;
+      const barCol = soldier.isAlly() ? 0x00ff00 : 0xee0000;
+      const alpha = (soldier.isPlayer || soldier.isLane(this.player.lane)) ? 1 : .4;
 
       // Black bar with hp inside it
 
       if (soldier.hp < soldier.maxHP) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, hpY, barMax, barHeight);
-        this.hpGraphics.fillStyle(barCol, 1);
+        this.hpGraphics.fillStyle(barCol, alpha);
         this.hpGraphics.fillRect(barX + 1, hpY + 1, hpBar, barHeight - 2);
       }
 
@@ -677,7 +745,7 @@ export class PlayScene extends Scene {
       if (soldier.isState(Enum.SS_DEFEND)) {
         this.hpGraphics.fillStyle(0x000000, .5);
         this.hpGraphics.fillRect(barX, guardY, barMax, barHeight);
-        this.hpGraphics.fillStyle(0x0055ff, 1);
+        this.hpGraphics.fillStyle(0x0055ff, alpha);
         this.hpGraphics.fillRect(barX + 1, guardY + 1, guardBar, barHeight - 2);
       }
     }
@@ -685,16 +753,18 @@ export class PlayScene extends Scene {
 
   showSoldierNames() {
 
-    const allies = this.groupAllies.getChildren();
-    for (let ally of allies) {
+    const soldiers = this.groupSoldiers.getChildren();
+    for (let sol of soldiers) {
+      if (sol.displayName) {
 
-      if (ally.displayName) {
-        const dom = ally.displayName;
-        const pos = ally.getTopCenter();
+        const alpha = (sol.isPlayer || sol.isLane(this.player.lane)) ? 1 : .6;
+        const dom = sol.displayName;
+        const pos = sol.getTopCenter();
         
-        const velX = Math.abs(ally.velocityX);
-        const pY = (velX > 24) || ally.isState(Enum.SS_DEFEND) ? -24 : pos.y;
+        const velX = Math.abs(sol.velocityX);
+        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
+        dom.setAlpha(alpha);
       }
     }
   }
@@ -713,12 +783,13 @@ export class PlayScene extends Scene {
 
       const col = soldier.isAlly() ? 0xcccccc : 0xff0000;
 
-      graphics.fillStyle(0x000000, .5);
-      graphics.fillTriangle(tX, tY + 5, tX + 4, tY + 5, tX + 2, tY + 1);
-
-      graphics.fillStyle(col, 1);
-      graphics.fillTriangle(tX, tY + 4, tX + 4, tY + 4, tX + 2, tY);
-
+      if (soldier.isPlayer || soldier.isLane(this.player.lane)) {
+        graphics.fillStyle(0x000000, .5);
+        graphics.fillTriangle(tX, tY + 5, tX + 4, tY + 5, tX + 2, tY + 1);
+  
+        graphics.fillStyle(col, 1);
+        graphics.fillTriangle(tX, tY + 4, tX + 4, tY + 4, tX + 2, tY);
+      }
     }
 
   }

@@ -2,6 +2,9 @@ import P1 from "../tutorial/P1";
 import P2 from "../tutorial/P2";
 import P3 from "../tutorial/P3";
 import P4 from "../tutorial/P4";
+import P5 from "../tutorial/P5";
+import PartHelper from "../tutorial/PartHelper";
+import SaveData from "../util/SaveData";
 import Story from "../util/Story";
 
 export default class Tutorial {
@@ -13,8 +16,25 @@ export default class Tutorial {
     this.spriteController = spriteController;
     this.controllerActive = false;
 
-    this.tutorialNumber = 4;
-    this.part = null;
+    this.tutorialNumber = 1;
+    this.sequence = null;
+
+    PartHelper.SetScene(this);
+  }
+
+  load() {
+    this.tutorialNumber = SaveData.Data.tutorialNumber;
+    const sequence = this.getNextPart();
+    if (sequence) {
+      this.sequence = sequence;
+      this.sequence.startFrom(SaveData.Data.tutorialSequenceStep);
+    }
+  }
+
+  saveNewTut() {
+    SaveData.Data.tutorialSequenceStep = 0;
+    SaveData.Data.tutorialNumber = this.tutorialNumber;
+    SaveData.SAVE_GAME_DATA();
   }
 
   update() {
@@ -27,17 +47,17 @@ export default class Tutorial {
       });
     }
 
-    if (!this.part) {
-      this.part = this.getNextPart();
-      if (this.part) {
+    const activeSequence = this.sequence;
+    if (activeSequence) {
+      const isComplete = activeSequence.update();
+      if (isComplete) {
+        this.sequence = null;
         this.tutorialNumber ++;
+        this.saveNewTut();
       }
     }
     else {
-      const isComplete = this.part.update();
-      if (isComplete) {
-        this.part = null;
-      }
+      this.sequence = this.getNextPart();
     }
   }
 
@@ -61,7 +81,7 @@ export default class Tutorial {
     this.spriteController.setActive();
     this.controllerActive = false;
     Story.HideStory();
-    this.part.nextStep();
+    this.sequence.nextStep();
   }
 
   getNextPart() {
@@ -70,6 +90,7 @@ export default class Tutorial {
       case 2: return new P2(this);
       case 3: return new P3(this);
       case 4: return new P4(this);
+      case 5: return new P5(this);
     }
     return null;
   }

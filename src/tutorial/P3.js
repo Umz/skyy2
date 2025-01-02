@@ -1,85 +1,48 @@
-import TutorialPart from "../classes/TutorialPart";
-import Enum from "../util/Enum";
+import TutorialSequence from "../classes/TutorialSequence";
+import Enum from "../const/Enum";
+import PartHelper from "./PartHelper";
 
-export default class P3 extends TutorialPart {
+export default class P3 extends TutorialSequence {
 
-  update() {
+  init() {
+    this
+    .add(()=>{
+      return this.checkCount(2000);
+    })
+    .addInstruction(Enum.STORY_1B_APPRENTICE)
+    .add(()=>{
+      return this.spawnAndWait(2);
+    })
 
-    switch (this.step) {
-      
-      case 0:        
-        if (this.checkCount(2000)) {
-          this.nextStep();
-        }
-        break;
+    .add(()=>{
+      return this.checkCount(1000);
+    })
+    .addConversation(Enum.MC_PEOMS)
+    .add(()=>{
+      return this.spawnAndWait(4);
+    })
 
-      case 1:
-        if (this.doOnce()) {
-          this.parent.showInstructions(Enum.STORY_1B_APPRENTICE);
-        }
-        break;
+    .add(()=>{
+      return this.checkCount(1000);
+    })
+    .addConversation(Enum.MC_TAUNT)
+    .add(()=>{
+      return this.spawnAndWait(5);
+    })
 
-      case 2:
-        if (this.spawnAndWait(2)) {
-          this.nextStep();
-        }
-        break;
-
-      case 3:
-        if (this.checkCount(1000)) {
-          this.nextStep();
-        }
-        break;
-
-      case 4:
-        if (this.spawnAndWait(3)) {
-          this.nextStep();
-        }
-        break;
-
-      case 5:
-        if (this.checkCount(3000)) {
-          this.nextStep();
-        }
-        break;
-
-      case 6:
-        if (this.spawnAndWait(5)) {
-          this.nextStep();
-        }
-        break;
-
-      case 7:
-        if (this.checkCount(2000)) {
-          this.nextStep();
-        }
-        break;
-
-      case 8:
-        if (this.doOnce()) {
-          this.parent.showInstructions(Enum.STORY_1C_BLUEFOREST);
-        }
-        break;
-
-      case 9:
-        return true;
-    }
-
-    return false;
+    .add(()=>{
+      return this.checkCount(1000);
+    })
+    .addInstruction(Enum.STORY_1C_BLUEFOREST);
   }
 
+  //  -
+
   spawnAndWait(amt) {
-
-    const { scene } = this;
-
-    if (this.doOnce()) {
-      scene.spawnEnemies(amt);
-      return false;
-    }
-    
-    const enemyCount = scene.countEnemies();
-    return enemyCount === 0;z
-
+    this.doOnce(()=>{
+      PartHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
+    });
+    return PartHelper.CheckEnemiesLessOrEqual(0);
   }
 
 }

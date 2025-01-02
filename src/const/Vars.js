@@ -4,6 +4,8 @@ const Vars = {
   EVENT_GAME_STARTED: 'event-game-started',
   EVENT_GAME_EXIT: 'event-game-exit',
 
+  //  -
+
   SHEET_BIRDS1: 'bg_birds',
   SHEET_BIRDS2: 'bg_bird',
   SHEET_ALL_BANNERS: 'all_banners',
@@ -21,10 +23,24 @@ const Vars = {
   SHEET_GR_HEAVY: 'gr_heavy_infantry_sheet',
   SHEET_GR_FLAGGER: 'gr_advisor_sheet',
 
-  SHEET_BANDIT_BLUE: 'blue_bandit_sheet',
-  SHEET_BANDIT_LANCE_BLUE: 'blue_lancer_bandit_sheet',
+  SHEET_BLUE_BANDIT: 'blue_bandit_sheet',
+  SHEET_BLUE_BANDIT_LANCE: 'blue_lancer_bandit_sheet',
+  SHEET_BLUE_BANDIT_BOSS: "blue_bandit_boss_sheet",
+
+  //  -
 
   TX_SPARKLE: "graphic_sparkle",
+  TX_HIT: "graphic_hit_fx",
+
+  VFX_CLAIM: "vfx_claimEffect",
+
+  VFX_BLOOD3: "vfx_bloodsplatter3",
+  VFX_CONSUME: "vfx_consume0",
+  VFX_SPARKLE0: "vfx_sparkle0",
+  VFX_SPARKLE1: "vfx_sparkle1",
+  VFX_SQUAREFORE0: "vfx_squarefore0",
+
+  //  -
 
   ANIM_IDLE: '-idle',
   ANIM_WALK: '-walk',
@@ -44,10 +60,14 @@ const Vars = {
   ANIM_FLAG_KING: 'flag-gr-kings',
 
   ACT_MOVE_TO_TARGET_DISTANCE: "action_soldier_move_to_target_within_distance",
+  ACT_MOVE_TO_TARGET_OFFSET: "action_soldier_move_to_target_with_offset",
+  ACT_MOVE_TO_X: "action_soldier_move_to_x_position",
   ACT_SEARCH_FOR_TARGET: "action_search_for_target",
   ACT_WAIT_TIME: "action_wait_for_timer",
+  LISTEN_CONDITION: "action_wait_for_condition",
   ACT_ATTACK: "action_soldier_attack",
   ACT_DEFEND: "action_soldier_defend",
+  ACT_COMPLETE: "action_complete_instant",
 
   LISTEN_PLAYER_DISTANCE: "listener_player_distance",
   LISTEN_AVOID_OVERLAP: "listener_avoid_overlap",
@@ -55,7 +75,8 @@ const Vars = {
   LISTEN_STATE: "listener_soldier_state",
   LISTEN_STATS_RECOVER: "listener_soldier_stats_recover",
   
-  VIEW_SOLDIER_FLASH: "listener_player_flash",
+  VIEW_SOLDIER_FLASH: "view_soldier_flash",
+  VIEW_SOLDIER_LANE: "view_soldier_lane_tint",
   VIEW_ANIMATION: "view_soldier_animations",
 
   WORLD_LENGTHS: 3,

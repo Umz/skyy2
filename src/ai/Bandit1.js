@@ -8,13 +8,9 @@ import ListenMatchLane from "../actions/ListenMatchLane";
 import ListenState from "../actions/ListenState";
 import ListenStatsRecover from "../actions/ListenStatsRecover";
 import ActionManager from "../classes/ActionManager"
-import Enum from "../util/Enum";
+import Enum from "../const/Enum";
 
 export default class Bandit1 extends ActionManager {
-
-  constructor(sprite) {
-    super(sprite);
-  }
 
   setDefaultActions() {
     this.searchForNewTarget();

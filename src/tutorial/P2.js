@@ -1,38 +1,20 @@
-import TutorialPart from "../classes/TutorialPart";
-import Enum from "../util/Enum";
+import TutorialSequence from "../classes/TutorialSequence";
+import Enum from "../const/Enum";
+import PartHelper from "./PartHelper";
 
-export default class P2 extends TutorialPart {
+export default class P2 extends TutorialSequence {
 
-  update() {
-
-    const { scene } = this;
-
-    switch (this.step) {
-      
-      case 0:        
-        if (this.checkCount(2000)) {
-          this.nextStep();
-        }
-        break;
-
-      case 1:
-        if (this.doOnce()) {
-          this.parent.showInstructions(Enum.STORY_1A_APPRENTICE);
-        }
-        break;
-
-      // Kill enemies
-      case 2:
-        scene.spawnEnemies(2);
-        this.nextStep();
-        break;
-
-      case 3:
-        const enemyCount = scene.countEnemies();
-        return enemyCount === 0;
-    }
-
-    return false;
+  init() {
+    this
+    .add(()=>{
+      return this.checkCount(2000);
+    })
+    .addInstruction(Enum.STORY_1A_APPRENTICE)
+    .add(()=>{
+      this.doOnce(()=>{
+        PartHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
+      });
+      return PartHelper.CheckEnemiesLessOrEqual(0);
+    });
   }
-
 }
