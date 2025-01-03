@@ -16,7 +16,7 @@ export default class P5 extends TutorialSequence {
     })
     
     .add(()=>{
-      return (player.x > Vars.AREA_WIDTH * 1.6 && SaveData.Data.hasBlueMoon);
+      return (player.x > Vars.AREA_WIDTH * 1.45 && SaveData.Data.hasBlueMoon);
     })
     .addConversation(Enum.MAM_BM_FIRST)
 
