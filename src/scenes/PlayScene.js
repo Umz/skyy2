@@ -261,7 +261,7 @@ export class PlayScene extends Scene {
       SaveData.Data.location = currentAreaID;
       SaveData.SAVE_GAME_DATA();
 
-      this.showSpeech(this.player, 'particle_rock', 4000);
+      this.showSpeech(this.player, Vars.IC_SPEECH, 7000);
     }
 
     //  Instant check for new area

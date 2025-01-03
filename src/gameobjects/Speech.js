@@ -1,8 +1,9 @@
+import Vars from "../const/Vars";
 
 export default class Speech extends Phaser.GameObjects.Image {
   
   constructor(scene, x, y, frame) {
-    super(scene, x, y, 'atlas', frame);
+    super(scene, x, y, Vars.VFX_SPEECH_SHEET, frame);
     scene.add.existing(this);
 
     this.setOrigin(.5, 1);
