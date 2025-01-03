@@ -50,8 +50,8 @@ export default class SaveData {
     }
 
     data.claimed = [2];
-    data.tutorialNumber = 1;
-    data.tutorialSequenceStep = 4;
+    data.tutorialNumber = 6;
+    data.tutorialSequenceStep = 0;
     //data.tutorialSequenceStep = 27;
     data.hasBlueMoon = true;
     data.playerX = Vars.AREA_WIDTH * 1.45;

@@ -32,6 +32,8 @@ const Vars = {
   TX_SPARKLE: "graphic_sparkle",
   TX_HIT: "graphic_hit_fx",
 
+  VFX_SPEECH_SHEET: "vfx_speech_icons",
+
   VFX_CLAIM: "vfx_claimEffect",
 
   VFX_BLOOD3: "vfx_bloodsplatter3",
@@ -39,6 +41,10 @@ const Vars = {
   VFX_SPARKLE0: "vfx_sparkle0",
   VFX_SPARKLE1: "vfx_sparkle1",
   VFX_SQUAREFORE0: "vfx_squarefore0",
+
+  //  -
+
+  IC_SPEECH: 26,
 
   //  -
 

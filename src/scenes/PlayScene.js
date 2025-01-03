@@ -20,6 +20,9 @@ import MapInfo from "../const/MapInfo";
 import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
 import LandClaimer from "../util/LandClaimer";
+import Speech from "../gameobjects/Speech";
+import Juke from "../util/Juke";
+import Sfx from "../const/Sfx";
 
 export class PlayScene extends Scene {
 
@@ -118,12 +121,10 @@ export class PlayScene extends Scene {
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
     this.convo = new Conversation(this);
 
-    this.test = function() {
+    Juke.SetScene(this);
+    Juke.PlayMusic(Sfx.MUS_GAME)
 
-      let target = this.player;
-      let pp = target.getAttackPoint();
-      //graphics.fillStyle(0xffffff, 1);
-      //graphics.fillCircle(pp.x, pp.y, 1);
+    this.test = function() {
     }
   }
 
@@ -259,6 +260,8 @@ export class PlayScene extends Scene {
   
       SaveData.Data.location = currentAreaID;
       SaveData.SAVE_GAME_DATA();
+
+      this.showSpeech(this.player, Vars.IC_SPEECH, 7000);
     }
 
     //  Instant check for new area
@@ -471,6 +474,14 @@ export class PlayScene extends Scene {
         image.destroy(true);
       }
     })
+  }
+
+  //  -
+
+  showSpeech(sprite, frame, ttl) {
+    const speech = new Speech(this, sprite.x, sprite.y, frame);
+    speech.show(sprite, ttl);
+    this.allGroup.add(speech);
   }
 
   //  - Character spawning    -----------------------------------------------------------------------------------------
@@ -762,7 +773,7 @@ export class PlayScene extends Scene {
         const pos = sol.getTopCenter();
         
         const velX = Math.abs(sol.velocityX);
-        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) ? -24 : pos.y;
+        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) || sol.isSpeech ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
         dom.setAlpha(alpha);
       }
