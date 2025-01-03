@@ -21,6 +21,8 @@ import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
 import LandClaimer from "../util/LandClaimer";
 import Speech from "../gameobjects/Speech";
+import Juke from "../util/Juke";
+import Sfx from "../const/Sfx";
 
 export class PlayScene extends Scene {
 
@@ -119,12 +121,10 @@ export class PlayScene extends Scene {
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
     this.convo = new Conversation(this);
 
-    this.test = function() {
+    Juke.SetScene(this);
+    Juke.PlayMusic(Sfx.MUS_GAME)
 
-      let target = this.player;
-      let pp = target.getAttackPoint();
-      //graphics.fillStyle(0xffffff, 1);
-      //graphics.fillCircle(pp.x, pp.y, 1);
+    this.test = function() {
     }
   }
 

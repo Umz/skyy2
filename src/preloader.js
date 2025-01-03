@@ -1,5 +1,6 @@
 import SaveData from "./util/SaveData";
 import Vars from "./const/Vars";
+import Sfx from "./const/Sfx";
 
 export class Preloader extends Phaser.Scene {
 
@@ -90,6 +91,10 @@ export class Preloader extends Phaser.Scene {
         this.load.json("json_big_forest_bg", "json/bg_trees.json", "bg.big_forest");
         this.load.json("json_mines_bg", "json/bg_trees.json", "bg.mines");
         this.load.json("json_plains_bg", "json/bg_trees.json", "bg.plains");
+
+        //  - Audio
+        for (let [_, data] of Object.entries(Sfx))
+            this.load.audio(data.key, `./audio/${data.key}`);
 
         //  All below came with the builder - delete
         //  ------------------------------------------------------------------------------------
