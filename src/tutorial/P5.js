@@ -14,7 +14,12 @@ export default class P5 extends TutorialSequence {
     .add(()=>{
       return PartHelper.CheckLocation(Enum.LOC_MAM);
     })
-    
+
+    .add(()=>{
+      //player.speak()
+      return true;
+    })
+
     .add(()=>{
       return (player.x > Vars.AREA_WIDTH * 1.45 && SaveData.Data.hasBlueMoon);
     })
@@ -28,7 +33,7 @@ export default class P5 extends TutorialSequence {
       const spawnDist = .15;
       PartHelper.SpawnAlly(Vars.AREA_WIDTH * (1.5 - spawnDist), Enum.SOLDIER_ALLY_HEAVY1);
       const ally1 = PartHelper.SpawnAlly(Vars.AREA_WIDTH * (1.5 + spawnDist), Enum.SOLDIER_ALLY_HEAVY1);
-      scene.showSpeech(ally1, Vars.IC_ALARM, 2000);
+      //scene.showSpeech(ally1, Vars.IC_ALARM, 2000);
 
       return true;
     })

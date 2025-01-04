@@ -43,8 +43,7 @@ const Vars = {
 
   //  -
 
-  IC_SPEECH: 26,
-  IC_ALARM: 47,
+  JSON_SCRIPT: "script.json",
 
   //  -
 

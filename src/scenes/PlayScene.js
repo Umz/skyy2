@@ -3,7 +3,6 @@ import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
 import MapBuilder from "../bg/MapBuilder";
 import Shadow from "../bg/Shadow";
-import Soldier from "../gameobjects/Soldier";
 import Vars from "../const/Vars";
 import KeyboardMapper from "../util/KeyboardMapper";
 import ControlKeys from "../util/ControlKeys";
@@ -20,9 +19,11 @@ import MapInfo from "../const/MapInfo";
 import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
 import LandClaimer from "../util/LandClaimer";
-import Speech from "../gameobjects/Speech";
+import SpriteIcon from "../gameobjects/SpriteIcon";
 import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
+import Vfx from "../util/Vfx";
+import Subtitles from "../util/Subtitles";
 
 export class PlayScene extends Scene {
 
@@ -122,7 +123,14 @@ export class PlayScene extends Scene {
     this.convo = new Conversation(this);
 
     Juke.SetScene(this);
-    Juke.PlayMusic(Sfx.MUS_GAME)
+    Juke.PlayMusic(Sfx.MUS_GAME);
+
+    Vfx.SetScene(this);
+
+    const enScript = this.cache.json.get(Vars.JSON_SCRIPT);
+
+    Subtitles.SetScene(this);
+    Subtitles.SetScript(enScript);
 
     this.test = function() {
     }
@@ -260,8 +268,6 @@ export class PlayScene extends Scene {
   
       SaveData.Data.location = currentAreaID;
       SaveData.SAVE_GAME_DATA();
-
-      this.showSpeech(this.player, Vars.IC_SPEECH, 7000);
     }
 
     //  Instant check for new area
@@ -474,14 +480,6 @@ export class PlayScene extends Scene {
         image.destroy(true);
       }
     })
-  }
-
-  //  -
-
-  showSpeech(sprite, frame, ttl) {
-    const speech = new Speech(this, sprite.x, sprite.y, frame);
-    speech.show(sprite, ttl);
-    this.allGroup.add(speech);
   }
 
   //  - Character spawning    -----------------------------------------------------------------------------------------

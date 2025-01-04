@@ -73,6 +73,10 @@ export class Preloader extends Phaser.Scene {
 
         //  Load JSON files
 
+        let jsons = [Vars.JSON_SCRIPT];
+        for (let file of jsons) {
+            this.load.json(Vars.JSON_SCRIPT, `json/${file}`);
+        }
         this.load.json('sprite_configs', 'json/sprite_configs.json');
         this.load.json("hud_html", "json/hud_html.json");
 
