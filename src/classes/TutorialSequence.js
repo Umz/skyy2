@@ -45,6 +45,13 @@ export default class TutorialSequence {
     return this;
   }
 
+  addWait(time) {
+    this.add(()=>{
+      return this.checkCount(time);
+    });
+    return this;
+  }
+
   addInstruction(instructionID) {
     this.add(()=>{
       this.doOnce(()=>{

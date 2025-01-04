@@ -9,7 +9,7 @@ import { PlayScene } from "./scenes/PlayScene";
 const viewBox = document.getElementById('app');
 const rect = viewBox.getBoundingClientRect();
 const ratio = rect.width / rect.height;
-const HEIGHT = 480;
+const HEIGHT = 240;
 const WIDTH = Math.round(HEIGHT * ratio);
 
 const config = {

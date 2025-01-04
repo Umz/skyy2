@@ -44,6 +44,7 @@ const Vars = {
   //  -
 
   IC_SPEECH: 26,
+  IC_ALARM: 47,
 
   //  -
 
@@ -67,6 +68,7 @@ const Vars = {
   ACT_MOVE_TO_TARGET_DISTANCE: "action_soldier_move_to_target_within_distance",
   ACT_MOVE_TO_TARGET_OFFSET: "action_soldier_move_to_target_with_offset",
   ACT_MOVE_TO_X: "action_soldier_move_to_x_position",
+  ACT_MATCH_LANE: "action_soldier_move_to_same_lane",
   ACT_SEARCH_FOR_TARGET: "action_search_for_target",
   ACT_WAIT_TIME: "action_wait_for_timer",
   LISTEN_CONDITION: "action_wait_for_condition",
@@ -88,8 +90,8 @@ const Vars = {
   GRAVITY: 60,
 
   TILEMAP_FLOOR: 160,
-  //GROUND_TOP: 207,
-  GROUND_TOP: 447,
+  GROUND_TOP: 207,
+  //GROUND_TOP: 447,
 
   AREA_WIDTH: 1920,
 

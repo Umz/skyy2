@@ -24,6 +24,7 @@ export default class Spawner {
   /** Spawn a Soldier Sprite with the given pos and spritesheet */
   spawnSoldierBase(posX, lane, sheet) {
     const sprite = new Soldier(this.scene, posX, Vars.GROUND_TOP + 1 + lane, sheet);
+    sprite.setLane(lane);
     sprite.playIdle();
     this.groupSoldiers.add(sprite);
     return sprite;
@@ -91,7 +92,7 @@ export default class Spawner {
 
     const sprite = this.spawnSoldierType(pX, type, Enum.TEAM_ALLY);
     sprite.setHP(5, 5);
-    
+    sprite.setGP(5, 5);
     this.groupAllies.add(sprite);
     return sprite;
   }
@@ -139,5 +140,9 @@ const SoldierMap = new Map([
 
   [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BLUE_BANDIT}],
   [Enum.SOLDIER_BANDIT2, {ctrl: Bandit2, sheet:Vars.SHEET_BLUE_BANDIT_LANCE}],
-  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: BanditBoss, sheet:Vars.SHEET_BLUE_BANDIT_BOSS}]
+  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: BanditBoss, sheet:Vars.SHEET_BLUE_BANDIT_BOSS}],
+
+  [Enum.SOLDIER_RED1, {ctrl: Bandit1, sheet:Vars.SHEET_RED_BANDIT}],
+  [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
+  [Enum.SOLDIER_REDFACE, {ctrl: Bandit1, sheet:Vars.SHEET_RED_FACE}],
 ]);

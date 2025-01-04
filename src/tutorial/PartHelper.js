@@ -25,7 +25,7 @@ export default class PartHelper {
   //  -
 
   static SpawnAlly(pX, type) {
-    scene.spawnAlly(pX, type);
+    return scene.spawnAlly(pX, type);
   }
 
   // -

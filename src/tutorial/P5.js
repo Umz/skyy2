@@ -25,14 +25,29 @@ export default class P5 extends TutorialSequence {
     })
     .add(()=>{
       
-      PartHelper.SpawnAlly(Vars.AREA_WIDTH * 1.65, Enum.SOLDIER_ALLY_HEAVY1);
+      const spawnDist = .15;
+      PartHelper.SpawnAlly(Vars.AREA_WIDTH * (1.5 - spawnDist), Enum.SOLDIER_ALLY_HEAVY1);
+      const ally1 = PartHelper.SpawnAlly(Vars.AREA_WIDTH * (1.5 + spawnDist), Enum.SOLDIER_ALLY_HEAVY1);
+      scene.showSpeech(ally1, Vars.IC_ALARM, 2000);
 
+      return true;
+    })
+    .addConversation(Enum.MAM_SOLDIER_ALERT)
+    .addWait(3000)
+
+    .addConversation(Enum.MAM_MC_WHO_DARES)
+    .add(()=>{
+      PartHelper.SpawnEnemiesAt(player.x + 300, 7, [Enum.SOLDIER_RED1]);
+      PartHelper.SpawnEnemiesAt(player.x + 340, 2, [Enum.SOLDIER_RED1]);
+      PartHelper.SpawnEnemiesAt(player.x + 390, 2, [Enum.SOLDIER_RED1]);
       return true;
     })
 
     .add(()=>{
       return false;
     })
+
+    
   }
 
 }

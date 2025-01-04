@@ -14,7 +14,7 @@ export default class TilemapBuilder {
     const FLOOR_Y = 195;
 
     const tmX = startX;
-    const tmY = FLOOR_Y;
+    const tmY = Vars.GROUND_TOP - 12;
     const tilemapWidth = Math.floor(areaWidth / 16);
 
     const tilemap = this.scene.make.tilemap({tileWidth: 16, tileHeight: 16, width: tilemapWidth, height: 6});
@@ -36,7 +36,7 @@ export default class TilemapBuilder {
     this.buildFullWidthFloor(startX, Vars.AREA_WIDTH);
   }
 
-  buildTilemap(viewLayer) {
+  OLDMethod(viewLayer) {
     
     const camera = this.scene.cameras.main;
     const bounds = camera.getBounds();

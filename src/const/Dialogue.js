@@ -50,6 +50,12 @@ Blue Moon: So the rumours were true..-#
 Blue Moon: They are indeed as beautiful as they say.
 `;
 
+const mam_alert = `
+Soldier: Raiders are attacking!`
+
+const mam_mc_who = `
+Moon Chief: Who dares to attack our tribe!?`;
+
 //  -
 
 const Dialogue = new Map([
@@ -62,6 +68,8 @@ const Dialogue = new Map([
   [Enum.BF_BOSS3, bf_boss3],
 
   [Enum.MAM_BM_FIRST, mam_bm_first],
+  [Enum.MAM_SOLDIER_ALERT, mam_alert],
+  [Enum.MAM_MC_WHO_DARES, mam_mc_who],
 
   [Enum.MC_TAUNT, "Moon Chief: Come! I shall grant you a swift death."],
   [Enum.MC_PEOMS, "Moon Chief: More peons. How futile"]
