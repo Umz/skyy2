@@ -22,6 +22,12 @@ export default class PartHelper {
     scene.spawnClaimerFlag(posX);
   }
 
+  //  -
+
+  static SpawnAlly(pX, type) {
+    scene.spawnAlly(pX, type);
+  }
+
   // -
 
   static SpawnEnemies(amt, types) {

@@ -21,6 +21,16 @@ export default class P5 extends TutorialSequence {
     .addConversation(Enum.MAM_BM_FIRST)
 
     .add(()=>{
+      return (player.x > Vars.AREA_WIDTH * 1.5);
+    })
+    .add(()=>{
+      
+      PartHelper.SpawnAlly(Vars.AREA_WIDTH * 1.65, Enum.SOLDIER_ALLY_HEAVY1);
+
+      return true;
+    })
+
+    .add(()=>{
       return false;
     })
   }

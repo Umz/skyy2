@@ -500,7 +500,7 @@ export class PlayScene extends Scene {
   }
 
   spawnAlly(posX, type = Enum.SOLDIER_BANDIT1) {
-    return this.spawner.spawnEnemy(posX, type);
+    return this.spawner.spawnAlly(posX, type);
   }
 
   spawnEnemy(posX, type = Enum.SOLDIER_BANDIT1) {

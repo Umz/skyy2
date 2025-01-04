@@ -11,21 +11,20 @@ const Vars = {
   SHEET_ALL_BANNERS: 'all_banners',
   SHEET_ALL_FLAGS: 'all_flags',
 
-  SHEET_PLAYER: 'player_sheet',
+  SHEET_PLAYER: 'Lancer_Player.png',
+  SHEET_WILDMAN: "Infantry_Wildman.png",
+
   SHEET_MAM_LANCER: 'mam_lancer_sheet',
   SHEET_MAM_INFANTRY: 'mam_infantry_sheet',
-  SHEET_MAM_HEAVY: 'mam_heavy_infantry_sheet',
+  SHEET_MAM_HEAVY: "Heavy_Infantry_MaM.png",
 
-  SHEET_WILDMAN: "mam_wildman",
+  SHEET_BLUE_BANDIT: 'Infantry_Blue_Bandit.png',
+  SHEET_BLUE_BANDIT_LANCE: 'Lancer_Blue_Bandit.png',
+  SHEET_BLUE_BANDIT_BOSS: "Lancer_Blue_Bandit_Boss.png",
 
-  SHEET_GR_LANCER: 'gr_lancer_sheet',
-  SHEET_GR_INFANTRY: 'gr_infantry_sheet',
-  SHEET_GR_HEAVY: 'gr_heavy_infantry_sheet',
-  SHEET_GR_FLAGGER: 'gr_advisor_sheet',
-
-  SHEET_BLUE_BANDIT: 'blue_bandit_sheet',
-  SHEET_BLUE_BANDIT_LANCE: 'blue_lancer_bandit_sheet',
-  SHEET_BLUE_BANDIT_BOSS: "blue_bandit_boss_sheet",
+  SHEET_RED_FACE: "HeavyI_RedFace.png",
+  SHEET_RED_HEAVY_BANDIT: "Heavy_Infantry_RF.png",
+  SHEET_RED_BANDIT: "Infantry_RF.png",
 
   //  -
 
@@ -89,7 +88,8 @@ const Vars = {
   GRAVITY: 60,
 
   TILEMAP_FLOOR: 160,
-  GROUND_TOP: 207,
+  //GROUND_TOP: 207,
+  GROUND_TOP: 447,
 
   AREA_WIDTH: 1920,
 
