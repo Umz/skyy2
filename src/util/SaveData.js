@@ -58,7 +58,7 @@ export default class SaveData {
 
   static DevData(loadDev) {
 
-    let dataset = 2;
+    let dataset = 0;
     if (loadDev && dataset == 2) {
       data.tutorialNumber = 2;
       data.tutorialSequenceStep = 86;

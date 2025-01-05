@@ -147,6 +147,7 @@ export default class P2 extends TutorialSequence {
       this.doOnce(()=> {
         SaveData.SAVE_GAME_DATA();
       });
+      return true;
     })
     .addWait(3000)
     .addInstruction(Enum.STORY_2C_LEAVE_FOREST);

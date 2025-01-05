@@ -38,7 +38,6 @@ export default class TutorialSequence {
       }
       return false;
     }
-    
     return true;
   }
 

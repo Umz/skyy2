@@ -82,12 +82,10 @@ export default class P3 extends TutorialSequence {
       return true;
     })
     .add(()=>{ return !Subtitles.IsShowing(); })
+    
     //  -
 
     .addInstruction(Enum.STORY_3_CHASE_REDFACE)
-    .add(()=>{
-      return false;
-    })
   }
 
   //  -
