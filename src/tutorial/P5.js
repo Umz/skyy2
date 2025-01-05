@@ -19,15 +19,6 @@ export default class P5 extends TutorialSequence {
     })
 
     .add(()=>{
-      player.speak(Icon.SPEECH, Subtitles.GetScript().MoonChief.test, 6000);
-      return true;
-    })
-
-    .add(()=>{
-      return !Subtitles.IsShowing();
-    })
-
-    .add(()=>{
       return (player.x > Vars.AREA_WIDTH * 1.45 && SaveData.Data.hasBlueMoon);
     })
 
@@ -59,7 +50,7 @@ export default class P5 extends TutorialSequence {
 
     .addConversation(Enum.MAM_MC_WHO_DARES)
     .add(()=>{
-      SequenceHelper.SpawnEnemiesAt(player.x + 300, 7, [Enum.SOLDIER_RED1]);
+      SequenceHelper.SpawnEnemiesAt(player.x + 300, 17, [Enum.SOLDIER_RED1]);
       SequenceHelper.SpawnEnemiesAt(player.x + 340, 2, [Enum.SOLDIER_RED1]);
       SequenceHelper.SpawnEnemiesAt(player.x + 390, 2, [Enum.SOLDIER_RED1]);
       return true;

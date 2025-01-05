@@ -131,6 +131,8 @@ export class PlayScene extends Scene {
     Subtitles.SetScene(this);
     Subtitles.SetScript(allScripts.EN);
 
+    this.isPlayerCrowded = false;
+
     this.test = function() {
     }
   }
@@ -206,6 +208,7 @@ export class PlayScene extends Scene {
     this.updateMapArea();
     this.updateMapBuilder();
 
+    this.updateCrowding();
     this.updateSpriteLayers();
     this.updateShadows();
     this.updateSaveData();
@@ -318,6 +321,14 @@ export class PlayScene extends Scene {
   updateSaveData() {
     SaveData.Data.playerX = this.player.x;
     SaveData.Data.playerLane = this.player.lane;
+  }
+
+  updateCrowding() {
+    let overlapCount = 0;
+    this.physics.overlap(this.player, this.groupSoldiers, (player, soldier) => {
+      overlapCount++;
+    });
+    this.isPlayerCrowded = overlapCount >= 6;
   }
 
   //  -----------------------------------------------------------------------------------------------------

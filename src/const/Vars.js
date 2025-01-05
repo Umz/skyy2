@@ -84,6 +84,7 @@ const Vars = {
   VIEW_SOLDIER_FLASH: "view_soldier_flash",
   VIEW_SOLDIER_LANE: "view_soldier_lane_tint",
   VIEW_ANIMATION: "view_soldier_animations",
+  VIEW_CROWD_CONTROL: "view_crowding_hide_soldiers",
 
   WORLD_LENGTHS: 3,
   GRAVITY: 60,
