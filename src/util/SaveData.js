@@ -46,20 +46,26 @@ export default class SaveData {
   static async LOAD_GAME_DATA() {
     const savedData = await localforage.getItem(GAME_DATA);
     if (savedData) {
-      Object.assign(data, savedData);
+      //Object.assign(data, savedData);
     }
 
-    data.claimed = [2];
-    data.tutorialNumber = 5;
-    data.tutorialSequenceStep = 0;
-    //data.tutorialSequenceStep = 27;
-    data.hasBlueMoon = true;
-    data.playerX = Vars.AREA_WIDTH * 1.45;
-    data.location = Enum.LOC_BLUE_FOREST;
+    this.DevData(false);
 
-    console.log("Loaded data:")
-    console.log(data);
+    console.log("Loaded data", data)
+
     return data;
+  }
+
+  static DevData(loadDev) {
+    if (loadDev) {
+      data.claimed = [2];
+      data.tutorialNumber = 5;
+      data.tutorialSequenceStep = 0;
+      //data.tutorialSequenceStep = 27;
+      data.hasBlueMoon = true;
+      data.playerX = Vars.AREA_WIDTH * 1.45;
+      data.location = Enum.LOC_BLUE_FOREST;
+    }
   }
 
   static get Data() {

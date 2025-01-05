@@ -1,4 +1,5 @@
 import SaveData from "../util/SaveData";
+import Subtitles from "../util/Subtitles";
 
 export default class TutorialSequence {
   
@@ -61,6 +62,22 @@ export default class TutorialSequence {
     return this;
   }
 
+  addDialogue(name, text, ttl) {
+    this.add(()=>{
+      Subtitles.ShowDialogue(name, text, ttl)
+      return true;
+    })
+    return this;
+
+  }
+
+  addDialogueAndWait(name, text, ttl) {
+    this
+    .addDialogue(name, text, ttl)
+    .add(()=>{ return !Subtitles.IsShowing() })
+    return this;
+  }
+
   addConversation(en) {
     this.add(()=>{
       this.showConversation(en);
@@ -68,13 +85,37 @@ export default class TutorialSequence {
     })
     return this;
   }
-
   addConversationWait() {
     this.add(()=>{
       return this.tutorial.isConversationComplete();
     })
     return this;
   }
+
+  addIcon(sprite, icon, ttl) {
+    this.add(()=>{
+      sprite.showIcon(icon, ttl);
+      return true;
+    })
+    return this;
+  }
+
+  addSpeaker(sprite, icon, text, ttl) {
+    this.add(()=>{
+      sprite.speak(icon, text, ttl);
+      return true;
+    })
+    return this;
+  }
+
+  addSpeakerAndWait(sprite, icon, text, ttl) {
+    this
+    .addSpeaker(sprite, icon, text, ttl)
+    .add(()=>{ return !Subtitles.IsShowing() })
+    return this;
+  }
+
+  //  -
 
   showConversation(en) {
     this.tutorial.showConversation(en);

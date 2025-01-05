@@ -62,7 +62,7 @@ export default class SequenceHelper {
   }
 
   static CheckEnemiesLessOrEqual(amt) {
-    return scene.countEnemies() <= 0;
+    return scene.countEnemies() <= amt;
   }
 
   //  -

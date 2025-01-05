@@ -15,7 +15,8 @@
       "bf7": "Perhaps I misjudged you.",
       "bf8": "The forest is safe, the tribe shall defend it.",
 
-      "mam1": "Who dares to attack our tribe!?"
+      "mam1": "Who dares to attack our tribe!?",
+      "mam2": "Red Face!"
     },
     "Wildman": {
       "bf_battle_2": "A warrior? You're a welcome sight!",
@@ -30,8 +31,7 @@
       "bf_victory_9": "Fine, I will join you!"
     },
     "BlueMoon": {
-      "mam1": "So the rumours were true..",
-      "mam2": "They are indeed as beautiful as they say." 
+      "mam1": "Amazing. They are as beautiful as the rumours say."
     },
 
     "RabidBandit": {
@@ -43,7 +43,11 @@
       "bf_boss3_curse1": "Curse you! Heartless dogs! Curse you both!",
       "bf_boss3_brethren": "Come on my brethren! Kill them!"
     },
-    
+    "RedFace": {
+      "mam1": "Ah.. Chief. I thought you would be gone for longer!",
+      "retreat": "Hah. I guess I better retreat"
+    },
+
     "Soldier": {
       "mam_alert": "Raiders are attacking!"
     }
