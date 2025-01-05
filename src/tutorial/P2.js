@@ -89,36 +89,39 @@ export default class P2 extends TutorialSequence {
 
     //  - Boss battle   -------------------------------
 
-    .add(()=>{ return false })
+    .add(()=>{ return true })
 
     .addWait(3000)
+    .addStopSaving()
     .add(()=>{
       this.doOnce(()=>{
-        this.turnSavingOff();
         this.spawnBoss();
         SequenceHelper.SpawnEnemies(4, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       });
       return true;
     })
-    .addConversation(Enum.BF_BOSS1)
-    .add(()=>{
-      return this.checkCount(1000);
-    })
+    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss1, 4000)
+    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss2, 4000)
+    .addWait(1000)
 
     // Second speech when 1/3 life gone
     .add(()=>{
       SequenceHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return this.checkBossHP(this.check1);
     })
-    .addConversation(Enum.BF_BOSS2)
+
+    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss3, 4000)
+    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss4, 4000)
 
     // Third speech when 2/3 life gone
     .add(()=>{
       SequenceHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return this.checkBossHP(this.check2);
     })
-    .addConversation(Enum.BF_BOSS3)
-    .addConversationWait()
+    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss5, 4000)
+    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss6, 4000)
+    .addSpeakBoss(Icon.FIST_FIRE, script.RabidBandit.boss7, 5000)
+    .addWaitForDialogue()
     
     .add(()=>{
       SequenceHelper.SpawnEnemies(7, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
@@ -127,16 +130,12 @@ export default class P2 extends TutorialSequence {
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
-    .add(()=>{
-      return this.checkCount(3000);
-    })
+    .addWait(3000)
 
     //  Claim land
 
-    .add(()=>{
-      this.turnSavingOn();
-      return true;
-    })
+    .addStartSaving()
+    .addIcon(player, Icon.STANDARD, 15 * 1000)
     .addInstruction(Enum.STORY_2B_PLACE_FLAG)
     .add(()=>{
       this.doOnce(()=>{
@@ -147,9 +146,9 @@ export default class P2 extends TutorialSequence {
     .add(()=>{
       this.doOnce(()=> {
         SaveData.SAVE_GAME_DATA();
-      })
-      return this.checkCount(3000);
+      });
     })
+    .addWait(3000)
     .addInstruction(Enum.STORY_2C_LEAVE_FOREST);
     
   }
@@ -172,6 +171,15 @@ export default class P2 extends TutorialSequence {
       const { scene } = this;
       const bm = scene.bluemoon;
       bm.speak(ic, text, ttl);
+      return true;
+    })
+    .addWait(ttl + 750)
+    return this;
+  }
+
+  addSpeakBoss(ic, text, ttl) {
+    this.add(()=>{
+      this.boss.speak(ic, text, ttl);
       return true;
     })
     .addWait(ttl + 750)

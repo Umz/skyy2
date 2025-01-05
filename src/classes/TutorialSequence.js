@@ -79,17 +79,8 @@ export default class TutorialSequence {
     return this;
   }
 
-  addConversation(en) {
-    this.add(()=>{
-      this.showConversation(en);
-      return true;
-    })
-    return this;
-  }
-  addConversationWait() {
-    this.add(()=>{
-      return this.tutorial.isConversationComplete();
-    })
+  addWaitForDialogue() {
+    this.add(()=>{ return !Subtitles.IsShowing() });
     return this;
   }
 

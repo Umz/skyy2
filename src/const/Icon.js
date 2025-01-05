@@ -11,7 +11,10 @@ const Icon = {
   ANGER: 219,
   ALLY: 245, // Row 16
   SPEAR: 473, // Row 30
-  BANNER: 845
+
   // 51 - Red mask
+  STANDARD: 844,
+  BANNER: 845
+  
 }
 export default Icon;

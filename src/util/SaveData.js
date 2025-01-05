@@ -61,7 +61,7 @@ export default class SaveData {
     let dataset = 2;
     if (loadDev && dataset == 2) {
       data.tutorialNumber = 2;
-      data.tutorialSequenceStep = 60;
+      data.tutorialSequenceStep = 86;
       data.playerX = Vars.AREA_WIDTH * .65;
     }
 

@@ -35,13 +35,13 @@
     },
 
     "RabidBandit": {
-      "bf_boss1_ruthless": "Ruthless animals! Curse you!",
-      "bf_boss1_dogs": "Murderous dogs! You slaughtered them all!",
-      "bf_boss2_where1": "Where were you when the Rays of Gold massacred us!",
-      "bf_boss2_where2": "Where were you when we were slain!",
-      "bf_boss3_choice": "What choice did we have! We had to eat!",
-      "bf_boss3_curse1": "Curse you! Heartless dogs! Curse you both!",
-      "bf_boss3_brethren": "Come on my brethren! Kill them!"
+      "boss1": "Ruthless animals! Curse you!",
+      "boss2": "Murderous dogs! You slaughtered them all!",
+      "boss3": "Where were you when the Rays of Gold massacred us!",
+      "boss4": "Where were you when we were slain!",
+      "boss5": "What choice did we have! We had to eat!",
+      "boss6": "Curse you! Heartless dogs! Curse you both!",
+      "boss7": "Come on my brethren! Kill them!"
     },
     "RedFace": {
       "mam1": "Ah.. Chief. I thought you would be gone for longer!",
