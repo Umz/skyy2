@@ -46,10 +46,10 @@ export default class SaveData {
   static async LOAD_GAME_DATA() {
     const savedData = await localforage.getItem(GAME_DATA);
     if (savedData) {
-      //Object.assign(data, savedData);
+      Object.assign(data, savedData);
     }
 
-    this.DevData(false);
+    this.DevData(true);
 
     console.log("Loaded data", data)
 
@@ -57,7 +57,15 @@ export default class SaveData {
   }
 
   static DevData(loadDev) {
-    if (loadDev) {
+
+    let dataset = 2;
+    if (loadDev && dataset == 2) {
+      data.tutorialNumber = 2;
+      data.tutorialSequenceStep = 60;
+      data.playerX = Vars.AREA_WIDTH * .65;
+    }
+
+    if (loadDev && dataset == 1) {
       data.claimed = [2];
       data.tutorialNumber = 5;
       data.tutorialSequenceStep = 0;

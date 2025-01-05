@@ -11,8 +11,17 @@ export default class Vfx {
 
   /** Shows an icon above the sprite for TTL */
   static ShowIcon(sprite, icon, ttl = 4000) {
-    const spriteIcon = new SpriteIcon(scene, sprite.x, sprite.y, icon);
-    spriteIcon.show(sprite, ttl);
+
+    let current = null;
+    scene.allGroup.children.iterate(function (si) {
+      if (si.sprite === sprite) {
+        current =  si;
+        return false;
+      }
+    });
+
+    const spriteIcon = current || new SpriteIcon(scene, sprite.x, sprite.y, icon);
+    spriteIcon.show(sprite, icon, ttl);
     scene.allGroup.add(spriteIcon);
   }
 

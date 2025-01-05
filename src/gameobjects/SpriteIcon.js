@@ -21,7 +21,7 @@ export default class SpriteIcon extends Phaser.GameObjects.Image {
     }
   }
 
-  show(sprite, ttl) {
+  show(sprite, icon, ttl) {
 
     this.scene.tweens.add({
       targets: this,
@@ -32,6 +32,7 @@ export default class SpriteIcon extends Phaser.GameObjects.Image {
 
     this.sprite = sprite;
     this.ttl = ttl;
+    this.setFrame(icon);
     sprite.isShowingIcon = true;
   }
 

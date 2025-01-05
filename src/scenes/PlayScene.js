@@ -146,6 +146,10 @@ export class PlayScene extends Scene {
     this.player.setX(playerX);
     this.player.setLane(playerLane);
 
+    if (SaveData.Data.hasBlueMoon) {
+      this.spawnBlueMoon();
+    }
+
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
     //  Build scene for area
@@ -173,10 +177,6 @@ export class PlayScene extends Scene {
     const king = this.add.sprite(Vars.AREA_WIDTH * 1.48, Vars.GROUND_TOP, 'king').setOrigin(.5, 1);
     king.play('king_idle');
     this.fgLayer.add(king);
-
-    if (SaveData.Data.hasBlueMoon) {
-      this.spawnBlueMoon();
-    }
 
     this.initialLoad = true;
   }

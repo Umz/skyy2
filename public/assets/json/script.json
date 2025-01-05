@@ -2,33 +2,33 @@
   "EN": {
     "MoonChief": {
 
-      "test": "This is a test from the mighty Moon Chief of the Moon at Midnight Tribe",
       "taunt": "Come! I shall grant you a swift death.",
       "peons": "More peons. How futile",
       
       "bf1": "Hah. So you seek death.",
-      "bf2": "Hold firm, stranger! I have come to aid you!",
-      "bf3": "Your power is impressive.",
-      "bf4": "I am Moon Chief of the Moon at Midnight tribe.",
-      "bf5": "We are victorious.",
-      "bf6": "Then join me, Wildman, as Blue Moon of the Moon at Midnight tribe.",
-      "bf7": "Perhaps I misjudged you.",
-      "bf8": "The forest is safe, the tribe shall defend it.",
+      "bf2": "Fight strong stranger! I will aid you!",
+      "bf3": "Moon Chief, of the Moon at Midnight tribe.",
+      
+      "bf4": "Your power is impressive.",
+      "bf5": "Come and join me, Wildman. Use your strength for the tribe.",
+      "bf6": "I will give you the name Blue Moon, the Warrior General.",
+
+      "bf7": "The forest is safe, the tribe shall defend it.",
+      "bf8": "Perhaps I misjudged you.",
 
       "mam1": "Who dares to attack our tribe!?",
       "mam2": "Red Face!"
     },
     "Wildman": {
-      "bf_battle_2": "A warrior? You're a welcome sight!",
-      "bf_battle_3": "By the might of the Blue Forest, they shall fall!",
-      "bf_battle_5": "And your style is unmatched! You strike like a bird diving into water!",
-      "bf_battle_6": "I am Wildman of the Blue Forest. And you?",
-      "bf_battle_8": "For the Blue Forest, we shall prevail!",
-      "bf_victory_2": "That we are! Never been so thankful for outsiders, but you saved me there.",
-      "bf_victory_4": "Ha!…",
-      "bf_victory_6": "No, I am the defender of this forest.",
-      "bf_victory_8": "Hahaha! You are an interesting one indeed!",
-      "bf_victory_9": "Fine, I will join you!"
+
+      "bf1": "I am grateful, Warrior.",
+      "bf2": "What is your name? I am Wildman of the Blue Forest.",
+      "bf3": "The mighty Moon Chief himself! I am honoured.",
+
+      "bf4": "Haha! I train hard every day.",
+      "bf5": "Ha! How can I... I am the defender of this forst.",
+      "bf6": "Hahaha! You are an interesting one indeed!",
+      "bf7": "Fine, I will join you!"
     },
     "BlueMoon": {
       "mam1": "Amazing. They are as beautiful as the rumours say."

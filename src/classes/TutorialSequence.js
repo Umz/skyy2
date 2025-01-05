@@ -24,6 +24,7 @@ export default class TutorialSequence {
 
   startFrom(skipAmt) {
     this.sequence.splice(0, skipAmt);
+    this.step = skipAmt;
   }
 
   update() {
@@ -115,7 +116,23 @@ export default class TutorialSequence {
     return this;
   }
 
-  //  -
+  addStopSaving() {
+    this.add(()=>{
+      this.turnSavingOff();
+      return true;
+    })
+    return this;
+  }
+
+  addStartSaving() {
+    this.add(()=>{
+      this.turnSavingOn();
+      return true;
+    })
+    return this;
+  }
+
+  //  -------
 
   showConversation(en) {
     this.tutorial.showConversation(en);

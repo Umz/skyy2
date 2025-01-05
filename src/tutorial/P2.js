@@ -4,6 +4,8 @@ import SaveData from "../util/SaveData";
 import Vars from "../const/Vars";
 import BlueMoon from "../ai/BlueMoon";
 import SequenceHelper from "./SequenceHelper";
+import Icon from "../const/Icon";
+import Subtitles from "../util/Subtitles";
 
 export default class P2 extends TutorialSequence {
 
@@ -11,60 +13,85 @@ export default class P2 extends TutorialSequence {
     
     const { scene } = this;
     const player = scene.player;
+    const script = Subtitles.GetScript();
 
     this
     .add(()=>{ return SequenceHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
+    .addIcon(player, Icon.BANNER, 3000)
     .addInstruction(Enum.STORY_2A_CLAIM_BLUE)
+
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH) {
         SequenceHelper.SpawnEnemies(3, [Enum.SOLDIER_BANDIT1]);
         return true;
       }
     })
-    .addConversation(Enum.BF_TEST)
+    .addSpeaker(player, Icon.SPEECH, script.MoonChief.bf1, 3000)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .75) {
         return this.spawnAndWait(3);
       }
     })
+    .addStopSaving()
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .65) {
         SequenceHelper.SpawnEnemiesAt(Vars.AREA_WIDTH* .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
         this.spawnWildman();
-        this.turnSavingOff();
         return true;
       }
     })
-    .addConversation(Enum.BF_BATTLE)
+
+    .addPlayerSpeak(Icon.ALLY, script.MoonChief.bf2, 4000)
+    .add(()=>{ return SequenceHelper.CheckEnemiesLessOrEqual(0) })
+
+    .addSpeakAndSpawn(scene.bluemoon, Icon.SPEECH, script.Wildman.bf1, 2000)
+    .addSpeakAndSpawn(scene.bluemoon, Icon.SPEECH, script.Wildman.bf2, 5000)
+    .addSpeakAndSpawn(player, Icon.SPEECH, script.MoonChief.bf3, 3000)
+    .addSpeakAndSpawn(scene.bluemoon, Icon.EXCLAIM, script.Wildman.bf3, 6000)
+    .addIcon(player, Icon.SPARKLE, 2000)
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
 
-    // Keep spawning until conversation is complete
-    .add(()=>{
-      SequenceHelper.SpawnConstant(3, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
-      return SequenceHelper.CheckConversationComplete();
-    })
-    .add(()=>{
-      return SequenceHelper.CheckEnemiesLessOrEqual(0);
-    })
+    //  - Victory
     
-    .addConversation(Enum.BF_WIN)
-    .addConversationWait()
+    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf4, 3000)
+    .addBlueSpeak(Icon.FIST_FIRE, script.Wildman.bf4, 2000)
+    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf5, 5000)
+    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf6, 5000)
+
+    .addBlueIcon(Icon.ELLIPSE, 2000).addWait(1000)
+    .addBlueSpeak(Icon.SPEECH, script.Wildman.bf5, 5000)
+    .addWait(1000)
+
+    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf7, 4000)
+    .addBlueIcon(Icon.ELLIPSE, 2000).addWait(1000)
+    .addIcon(player, Icon.ELLIPSE, 2000).addWait(1000)
+
+    .addPlayerSpeak(Icon.QUESTION, script.MoonChief.bf8, 2000)
+    .addWait(1000)
+    .addBlueSpeak(Icon.EXCLAIM, script.Wildman.bf6, 5000)
+    .addWait(1000)
+    .addBlueSpeak(Icon.BANNER, script.Wildman.bf7, 4000)
+
+    .add(()=>{
+      this.turnSavingOn();
+      return true;
+    })
+    .addStartSaving()
     
     .add(()=>{
       this.convertWildman();
       SaveData.Data.hasBlueMoon = true;
       SaveData.SAVE_GAME_DATA();
-      this.turnSavingOn();
       return true;
     })
 
-    //  Boss battle   -------------------------------
+    //  - Boss battle   -------------------------------
 
-    .add(()=>{
-      return this.checkCount(3000);
-    })
+    .add(()=>{ return false })
+
+    .addWait(3000)
     .add(()=>{
       this.doOnce(()=>{
         this.turnSavingOff();
@@ -127,7 +154,59 @@ export default class P2 extends TutorialSequence {
     
   }
 
-  //  - Helper functions for P4
+  //  ---------------------------------------------------
+  
+  addPlayerSpeak(ic, text, ttl) {
+    this.add(()=>{
+      const { scene } = this;
+      const player = scene.player;
+      player.speak(ic, text, ttl);
+      return true;
+    })
+    .addWait(ttl + 750)
+    return this;
+  }
+
+  addBlueSpeak(ic, text, ttl) {
+    this.add(()=>{
+      const { scene } = this;
+      const bm = scene.bluemoon;
+      bm.speak(ic, text, ttl);
+      return true;
+    })
+    .addWait(ttl + 750)
+    return this;
+  }
+
+  addSpeakAndSpawn(soldier, icon, text, ttl) {
+
+    this
+    .add(()=>{
+      const sprite = soldier || this.scene.bluemoon;
+      sprite.speak(icon, text, ttl);
+      return true;
+    })
+    .addWait(ttl)
+    .add(()=>{
+      SequenceHelper.SpawnConstant(3, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+      return true;
+    })
+    .addWait(750);
+
+    return this;
+  }
+
+  addBlueIcon(icon, ttl) {
+    this.add(()=>{
+      const sprite = this.scene.bluemoon;
+      sprite.showIcon(icon, ttl);
+      return true;
+    })
+    .addWait(750)
+    return this;
+  }
+
+  //  -----------------------------------
 
   spawnWildman() {
     const { scene } = this;
