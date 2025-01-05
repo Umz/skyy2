@@ -19,7 +19,6 @@ import MapInfo from "../const/MapInfo";
 import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
 import LandClaimer from "../util/LandClaimer";
-import SpriteIcon from "../gameobjects/SpriteIcon";
 import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
 import Vfx from "../util/Vfx";
@@ -127,10 +126,10 @@ export class PlayScene extends Scene {
 
     Vfx.SetScene(this);
 
-    const enScript = this.cache.json.get(Vars.JSON_SCRIPT);
+    const allScripts = this.cache.json.get(Vars.JSON_SCRIPT);
 
     Subtitles.SetScene(this);
-    Subtitles.SetScript(enScript);
+    Subtitles.SetScript(allScripts.EN);
 
     this.test = function() {
     }
@@ -531,7 +530,7 @@ export class PlayScene extends Scene {
 
   spawnRocks(amt) {
 
-    for (let i=0; i<amt; i++) {
+    for (let i=0; i<amt; i++) {i
 
       const areaX = this.mapTracker.getAreaLeftX();
       const minX = areaX + Vars.AREA_WIDTH * .15;
@@ -771,7 +770,7 @@ export class PlayScene extends Scene {
         const pos = sol.getTopCenter();
         
         const velX = Math.abs(sol.velocityX);
-        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) || sol.isSpeech ? -24 : pos.y;
+        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) || sol.isShowingIcon ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
         dom.setAlpha(alpha);
       }

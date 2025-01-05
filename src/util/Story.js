@@ -45,6 +45,9 @@ function getParts(id) {
   return StoryParts.find(obj => obj.id === id);
 }
 
+// Move to JSON
+// Change Story to match Subtitles
+
 const StoryParts = [
   {id:Enum.STORY_0_INTRO, p:["After his heroic feats during the Battle of the New Moon, Moon Chief was appointed army commander.", "He now seeks the path to glory by securing these lands."]},
   {id:Enum.STORY_1A_APPRENTICE, p:["Bandits dare to raid our tribe. Pierce through them. This will be their demise."]},

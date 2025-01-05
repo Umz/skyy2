@@ -32,7 +32,7 @@ export default class SpriteIcon extends Phaser.GameObjects.Image {
 
     this.sprite = sprite;
     this.ttl = ttl;
-    sprite.isSpeech = true;
+    sprite.isShowingIcon = true;
   }
 
   hide() {
@@ -42,7 +42,9 @@ export default class SpriteIcon extends Phaser.GameObjects.Image {
       scaleY: {start:1, to:0},
       ease: Phaser.Math.Easing.Back.In,
       onComplete: ()=>{
-        this.sprite?.isSpeech = false;
+        if (this.sprite) {
+          this.sprite.isShowingIcon = false;
+        }
         this.destroy(true);
       }
     })

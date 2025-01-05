@@ -1,5 +1,5 @@
-const Icons = {
+const Icon = {
   SPEECH: 26,
   ALARM: 47
 }
-export default Icons;
+export default Icon;

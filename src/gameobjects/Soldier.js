@@ -31,6 +31,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.movementSpeed = 0;
     this.lane = 1;
     this.name = "Soldier";
+    this.isShowingIcon = false;
 
     //  Play stats
 
@@ -156,10 +157,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   
   showIcon(icon, ttl) {
     Vfx.ShowIcon(this, icon, ttl);
-    // Vfx
   }
   
-  showDialogue(text) {
+  showDialogue(text, ttl) {
     Subtitles.ShowDialogue(this.name, text, ttl);
   }
 

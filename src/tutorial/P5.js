@@ -1,12 +1,15 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
+import Icon from "../const/Icon";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
+import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
 export default class P5 extends TutorialSequence {
 
   init() {
+
     const { scene } = this;
     const player = scene.player;
 
@@ -16,12 +19,27 @@ export default class P5 extends TutorialSequence {
     })
 
     .add(()=>{
+      player.speak(Icon.SPEECH, Subtitles.GetScript().MoonChief.test, 6000);
       return true;
+    })
+
+    .add(()=>{
+      return !Subtitles.IsShowing();
     })
 
     .add(()=>{
       return (player.x > Vars.AREA_WIDTH * 1.45 && SaveData.Data.hasBlueMoon);
     })
+
+    .add(()=>{
+      const bluemoon = scene.bluemoon;
+      bluemoon.speak(Icon.SPEECH, Subtitles.GetScript().BlueMoon.mam1, 2000);
+      return true;
+    })
+    .add(()=>{
+      return !Subtitles.IsShowing();
+    })
+    
     .addConversation(Enum.MAM_BM_FIRST)
 
     .add(()=>{

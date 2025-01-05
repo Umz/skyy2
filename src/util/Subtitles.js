@@ -26,11 +26,13 @@ export default class Subtitles {
 
   static ShowDialogue(name, text, ttl = 4000) {
     
+    uniqueCount ++;
     const current = uniqueCount;
+
     scene.time.addEvent({
       delay: ttl,
       callback: ()=>{
-        if (current === uid) {
+        if (current === uniqueCount) {
           this.HideDOM();
         }
       }
@@ -38,7 +40,7 @@ export default class Subtitles {
 
     this.SetText(name, text);
     this.ShowDOM();
-    uniqueCount ++;
+    
   }
 
   static SetText(name, content) {
