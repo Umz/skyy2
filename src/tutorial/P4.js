@@ -3,7 +3,7 @@ import Enum from "../const/Enum";
 import SaveData from "../util/SaveData";
 import Vars from "../const/Vars";
 import BlueMoon from "../ai/BlueMoon";
-import PartHelper from "./PartHelper";
+import SequenceHelper from "./SequenceHelper";
 
 export default class P4 extends TutorialSequence {
 
@@ -13,11 +13,11 @@ export default class P4 extends TutorialSequence {
     const player = scene.player;
 
     this
-    .add(()=>{ return PartHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
+    .add(()=>{ return SequenceHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
     .addInstruction(Enum.STORY_2A_CLAIM_BLUE)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH) {
-        PartHelper.SpawnEnemies(3, [Enum.SOLDIER_BANDIT1]);
+        SequenceHelper.SpawnEnemies(3, [Enum.SOLDIER_BANDIT1]);
         return true;
       }
     })
@@ -29,7 +29,7 @@ export default class P4 extends TutorialSequence {
     })
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .65) {
-        PartHelper.SpawnEnemiesAt(Vars.AREA_WIDTH* .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+        SequenceHelper.SpawnEnemiesAt(Vars.AREA_WIDTH* .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
         this.spawnWildman();
         this.turnSavingOff();
         return true;
@@ -37,16 +37,16 @@ export default class P4 extends TutorialSequence {
     })
     .addConversation(Enum.BF_BATTLE)
     .add(()=>{
-      return PartHelper.CheckEnemiesLessOrEqual(0);
+      return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
 
     // Keep spawning until conversation is complete
     .add(()=>{
-      PartHelper.SpawnConstant(3, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
-      return PartHelper.CheckConversationComplete();
+      SequenceHelper.SpawnConstant(3, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+      return SequenceHelper.CheckConversationComplete();
     })
     .add(()=>{
-      return PartHelper.CheckEnemiesLessOrEqual(0);
+      return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
     
     .addConversation(Enum.BF_WIN)
@@ -69,7 +69,7 @@ export default class P4 extends TutorialSequence {
       this.doOnce(()=>{
         this.turnSavingOff();
         this.spawnBoss();
-        PartHelper.SpawnEnemies(4, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+        SequenceHelper.SpawnEnemies(4, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       });
       return true;
     })
@@ -80,25 +80,25 @@ export default class P4 extends TutorialSequence {
 
     // Second speech when 1/3 life gone
     .add(()=>{
-      PartHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+      SequenceHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return this.checkBossHP(this.check1);
     })
     .addConversation(Enum.BF_BOSS2)
 
     // Third speech when 2/3 life gone
     .add(()=>{
-      PartHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+      SequenceHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return this.checkBossHP(this.check2);
     })
     .addConversation(Enum.BF_BOSS3)
     .addConversationWait()
     
     .add(()=>{
-      PartHelper.SpawnEnemies(7, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+      SequenceHelper.SpawnEnemies(7, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return true;
     })
     .add(()=>{
-      return PartHelper.CheckEnemiesLessOrEqual(0);
+      return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
     .add(()=>{
       return this.checkCount(3000);
@@ -113,7 +113,7 @@ export default class P4 extends TutorialSequence {
     .addInstruction(Enum.STORY_2B_PLACE_FLAG)
     .add(()=>{
       this.doOnce(()=>{
-        PartHelper.SpawnClaimerFlag(Vars.AREA_WIDTH * .48);
+        SequenceHelper.SpawnClaimerFlag(Vars.AREA_WIDTH * .48);
       });
       return SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
     })
@@ -169,9 +169,9 @@ export default class P4 extends TutorialSequence {
 
   spawnAndWait(amt) {
     this.doOnce(()=>{
-      PartHelper.SpawnEnemies(amt, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+      SequenceHelper.SpawnEnemies(amt, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
     });
-    return PartHelper.CheckEnemiesLessOrEqual(0);
+    return SequenceHelper.CheckEnemiesLessOrEqual(0);
   }
 
 }

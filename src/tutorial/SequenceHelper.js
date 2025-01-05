@@ -3,7 +3,7 @@ import SaveData from "../util/SaveData";
 let scene = null;
 let tutorial = null;
 
-export default class PartHelper {
+export default class SequenceHelper {
 
   static ShowConversation(id) {
     tutorial.showConversation(id);

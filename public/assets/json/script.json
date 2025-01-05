@@ -1,9 +1,49 @@
 {
   "EN": {
     "MoonChief": {
+
+      "test:": "This is a test from the mighty Moon Chief of the Moon at Midnight Tribe",
+      "taunt": "Come! I shall grant you a swift death.",
+      "peons": "More peons. How futile",
+      
+      "bf1": "Hah. So you seek death.",
+      "bf2": "Hold firm, stranger! I have come to aid you!",
+      "bf3": "Your power is impressive.",
+      "bf4": "I am Moon Chief of the Moon at Midnight tribe.",
+      "bf5": "We are victorious.",
+      "bf6": "Then join me, Wildman, as Blue Moon of the Moon at Midnight tribe.",
+      "bf7": "Perhaps I misjudged you.",
+      "bf8": "The forest is safe, the tribe shall defend it.",
+
+      "mam1": "Who dares to attack our tribe!?"
     },
-    "MaM": {
-      "firstEntrance":"Hah. So you seek death"
+    "RabidBandit": {
+      "bf_boss1_ruthless": "Ruthless animals! Curse you!",
+      "bf_boss1_dogs": "Murderous dogs! You slaughtered them all!",
+      "bf_boss2_where1": "Where were you when the Rays of Gold massacred us!",
+      "bf_boss2_where2": "Where were you when we were slain!",
+      "bf_boss3_choice": "What choice did we have! We had to eat!",
+      "bf_boss3_curse1": "Curse you! Heartless dogs! Curse you both!",
+      "bf_boss3_brethren": "Come on my brethren! Kill them!"
+    },
+    "Soldier": {
+      "mam_alert": "Raiders are attacking!"
+    },
+    "Wildman": {
+      "bf_battle_2": "A warrior? You're a welcome sight!",
+      "bf_battle_3": "By the might of the Blue Forest, they shall fall!",
+      "bf_battle_5": "And your style is unmatched! You strike like a bird diving into water!",
+      "bf_battle_6": "I am Wildman of the Blue Forest. And you?",
+      "bf_battle_8": "For the Blue Forest, we shall prevail!",
+      "bf_victory_2": "That we are! Never been so thankful for outsiders, but you saved me there.",
+      "bf_victory_4": "Ha!…",
+      "bf_victory_6": "No, I am the defender of this forest.",
+      "bf_victory_8": "Hahaha! You are an interesting one indeed!",
+      "bf_victory_9": "Fine, I will join you!"
+    },
+    "BlueMoon": {
+      "mam_bm_first_rumours": "So the rumours were true..",
+      "mam_bm_first_beautiful": "They are indeed as beautiful as they say." 
     }
   }
 }

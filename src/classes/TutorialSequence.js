@@ -76,8 +76,6 @@ export default class TutorialSequence {
     return this;
   }
 
-  addConversationAndWait(text) {}
-
   showConversation(en) {
     this.tutorial.showConversation(en);
   }

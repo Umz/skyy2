@@ -1,6 +1,6 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
-import PartHelper from "./PartHelper";
+import SequenceHelper from "./SequenceHelper";
 
 export default class P3 extends TutorialSequence {
 
@@ -40,9 +40,9 @@ export default class P3 extends TutorialSequence {
 
   spawnAndWait(amt) {
     this.doOnce(()=>{
-      PartHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
+      SequenceHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
     });
-    return PartHelper.CheckEnemiesLessOrEqual(0);
+    return SequenceHelper.CheckEnemiesLessOrEqual(0);
   }
 
 }
