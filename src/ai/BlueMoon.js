@@ -11,6 +11,7 @@ import ActComplete from "../actions/ActComplete";
 import ListenCondition from "../actions/ListenCondition";
 import ActMoveToTargetOffset from "../actions/ActMoveToTargetOffset";
 import Vars from "../const/Vars";
+import ListenStatsRecover from "../actions/ListenStatsRecover";
 
 export default class BlueMoon extends ActionManager {
 
@@ -33,6 +34,7 @@ export default class BlueMoon extends ActionManager {
       this.gotoPlayer();
     });
 
+    this.addBackgroundAction(new ListenStatsRecover(this.sprite));
     this.addAction(new ActWait(10 * 60 * 60));  // Instead of call fn repeatedly
   }
 
@@ -40,6 +42,7 @@ export default class BlueMoon extends ActionManager {
 
   gotoPlayer() {
     const player = this.scene.player;
+    this.addBackgroundAction(new ListenStatsRecover(this.sprite));
     this.addAction(new ActMoveToTargetDistance(this.sprite, player, 46));
   }
 

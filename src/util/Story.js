@@ -45,6 +45,9 @@ function getParts(id) {
   return StoryParts.find(obj => obj.id === id);
 }
 
+// Move to JSON
+// Change Story to match Subtitles
+
 const StoryParts = [
   {id:Enum.STORY_0_INTRO, p:["After his heroic feats during the Battle of the New Moon, Moon Chief was appointed army commander.", "He now seeks the path to glory by securing these lands."]},
   {id:Enum.STORY_1A_APPRENTICE, p:["Bandits dare to raid our tribe. Pierce through them. This will be their demise."]},
@@ -53,6 +56,6 @@ const StoryParts = [
   {id:Enum.STORY_2A_CLAIM_BLUE, p:["Leave no bandits alive. They submit or they die.", "This forest will fly the flag of our tribe now."]},
   {id:Enum.STORY_2B_PLACE_FLAG, p:["Now place our banner by the Teal tree! This forest is our territory now."]},
   {id:Enum.STORY_2C_LEAVE_FOREST, p:["The forest is safe now. It belongs to Moon at Midnight.", "Now head east of the village to expand our territory. Show no mercy to any who oppose us."]},
-  {id:Enum.STORY_3_DESTROY_ROSE, p:["There are still some who would oppose us here? Take out any who dare."]},
+  {id:Enum.STORY_3_CHASE_REDFACE, p:["Red Face the traitor has managed to escape to Rose Forest.", "Go and make sure he meets his end."]},
   {id:Enum.STORY_4_CLAIM_STORM, p:["This village must fly with our tribe now. They submit or they die."]},
 ];

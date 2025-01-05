@@ -1,3 +1,4 @@
+import AllyHeavy1 from "../ai/AllyHeavy1";
 import Bandit1 from "../ai/Bandit1";
 import Bandit2 from "../ai/Bandit2";
 import BanditBoss from "../ai/BanditBoss";
@@ -23,6 +24,7 @@ export default class Spawner {
   /** Spawn a Soldier Sprite with the given pos and spritesheet */
   spawnSoldierBase(posX, lane, sheet) {
     const sprite = new Soldier(this.scene, posX, Vars.GROUND_TOP + 1 + lane, sheet);
+    sprite.setLane(lane);
     sprite.playIdle();
     this.groupSoldiers.add(sprite);
     return sprite;
@@ -87,12 +89,12 @@ export default class Spawner {
 
   /** Generic allies */
   spawnAlly(pX, type) {
-    const wildman = this.spawnSoldierType(pX, type, Enum.TEAM_ALLY);
-    wildman.setHP(25, 25);
-    wildman.setGP(10, 10);
-    wildman.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
-    this.groupAllies.add(wildman);
-    return wildman;
+
+    const sprite = this.spawnSoldierType(pX, type, Enum.TEAM_ALLY);
+    sprite.setHP(5, 5);
+    sprite.setGP(5, 5);
+    this.groupAllies.add(sprite);
+    return sprite;
   }
 
   /** Spawn a given type of enemy */
@@ -132,8 +134,15 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_WILDMAN, {ctrl: Wildman, sheet:Vars.SHEET_WILDMAN}],
   [Enum.SOLDIER_BLUEMOON, {ctrl: BlueMoon, sheet:Vars.SHEET_WILDMAN}],
 
+  [Enum.SOLDIER_ALLY_HEAVY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_HEAVY}],
+  [Enum.SOLDIER_ALLY_INFANTRY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_INFANTRY}],
+  [Enum.SOLDIER_ALLY_LANCER1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_LANCER}],
+
   [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BLUE_BANDIT}],
   [Enum.SOLDIER_BANDIT2, {ctrl: Bandit2, sheet:Vars.SHEET_BLUE_BANDIT_LANCE}],
-  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: BanditBoss, sheet:Vars.SHEET_BLUE_BANDIT_BOSS}]
-  
+  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: BanditBoss, sheet:Vars.SHEET_BLUE_BANDIT_BOSS}],
+
+  [Enum.SOLDIER_RED1, {ctrl: Bandit1, sheet:Vars.SHEET_RED_BANDIT}],
+  [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
+  [Enum.SOLDIER_REDFACE, {ctrl: BanditBoss, sheet:Vars.SHEET_RED_FACE}],
 ]);

@@ -3,6 +3,8 @@ import SoldierView from "../ai/SoldierView";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
+import Subtitles from "../util/Subtitles";
+import Vfx from "../util/Vfx";
 
 export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
@@ -28,6 +30,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.speed = 96;  // Use 72-
     this.movementSpeed = 0;
     this.lane = 1;
+    this.name = "Soldier";
+    this.isShowingIcon = false;
 
     //  Play stats
 
@@ -143,6 +147,20 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     html = html.replace("_name_", name);
     
     this.displayName = this.scene.add.dom(0, 0).createFromHTML(html).setOrigin(.5, .8).setDepth(depth);
+    this.name = name;
+  }
+
+  speak(icon, text, ttl = 4000) {
+    this.showIcon(icon, ttl);
+    this.showDialogue(text, ttl);
+  }
+  
+  showIcon(icon, ttl) {
+    Vfx.ShowIcon(this, icon, ttl);
+  }
+  
+  showDialogue(text, ttl) {
+    Subtitles.ShowDialogue(this.name, text, ttl);
   }
 
   //  ---------------------------------------------------------------------

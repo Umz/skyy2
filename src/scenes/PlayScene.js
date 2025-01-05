@@ -3,7 +3,6 @@ import TilemapBuilder from "../bg/TilemapBuilder";
 import Scenery from "../bg/Scenery";
 import MapBuilder from "../bg/MapBuilder";
 import Shadow from "../bg/Shadow";
-import Soldier from "../gameobjects/Soldier";
 import Vars from "../const/Vars";
 import KeyboardMapper from "../util/KeyboardMapper";
 import ControlKeys from "../util/ControlKeys";
@@ -20,9 +19,10 @@ import MapInfo from "../const/MapInfo";
 import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
 import LandClaimer from "../util/LandClaimer";
-import Speech from "../gameobjects/Speech";
 import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
+import Vfx from "../util/Vfx";
+import Subtitles from "../util/Subtitles";
 
 export class PlayScene extends Scene {
 
@@ -122,7 +122,16 @@ export class PlayScene extends Scene {
     this.convo = new Conversation(this);
 
     Juke.SetScene(this);
-    Juke.PlayMusic(Sfx.MUS_GAME)
+    Juke.PlayMusic(Sfx.MUS_GAME);
+
+    Vfx.SetScene(this);
+
+    const allScripts = this.cache.json.get(Vars.JSON_SCRIPT);
+
+    Subtitles.SetScene(this);
+    Subtitles.SetScript(allScripts.EN);
+
+    this.isPlayerCrowded = false;
 
     this.test = function() {
     }
@@ -136,6 +145,10 @@ export class PlayScene extends Scene {
 
     this.player.setX(playerX);
     this.player.setLane(playerLane);
+
+    if (SaveData.Data.hasBlueMoon) {
+      this.spawnBlueMoon();
+    }
 
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
@@ -164,10 +177,6 @@ export class PlayScene extends Scene {
     const king = this.add.sprite(Vars.AREA_WIDTH * 1.48, Vars.GROUND_TOP, 'king').setOrigin(.5, 1);
     king.play('king_idle');
     this.fgLayer.add(king);
-
-    if (SaveData.Data.hasBlueMoon) {
-      this.spawnBlueMoon();
-    }
 
     this.initialLoad = true;
   }
@@ -199,6 +208,7 @@ export class PlayScene extends Scene {
     this.updateMapArea();
     this.updateMapBuilder();
 
+    this.updateCrowding();
     this.updateSpriteLayers();
     this.updateShadows();
     this.updateSaveData();
@@ -260,8 +270,6 @@ export class PlayScene extends Scene {
   
       SaveData.Data.location = currentAreaID;
       SaveData.SAVE_GAME_DATA();
-
-      this.showSpeech(this.player, Vars.IC_SPEECH, 7000);
     }
 
     //  Instant check for new area
@@ -313,6 +321,14 @@ export class PlayScene extends Scene {
   updateSaveData() {
     SaveData.Data.playerX = this.player.x;
     SaveData.Data.playerLane = this.player.lane;
+  }
+
+  updateCrowding() {
+    let overlapCount = 0;
+    this.physics.overlap(this.player, this.groupSoldiers, (player, soldier) => {
+      overlapCount++;
+    });
+    this.isPlayerCrowded = overlapCount >= 6;
   }
 
   //  -----------------------------------------------------------------------------------------------------
@@ -476,14 +492,6 @@ export class PlayScene extends Scene {
     })
   }
 
-  //  -
-
-  showSpeech(sprite, frame, ttl) {
-    const speech = new Speech(this, sprite.x, sprite.y, frame);
-    speech.show(sprite, ttl);
-    this.allGroup.add(speech);
-  }
-
   //  - Character spawning    -----------------------------------------------------------------------------------------
 
   spawnPlayer() {
@@ -500,7 +508,7 @@ export class PlayScene extends Scene {
   }
 
   spawnAlly(posX, type = Enum.SOLDIER_BANDIT1) {
-    return this.spawner.spawnEnemy(posX, type);
+    return this.spawner.spawnAlly(posX, type);
   }
 
   spawnEnemy(posX, type = Enum.SOLDIER_BANDIT1) {
@@ -533,7 +541,7 @@ export class PlayScene extends Scene {
 
   spawnRocks(amt) {
 
-    for (let i=0; i<amt; i++) {
+    for (let i=0; i<amt; i++) {i
 
       const areaX = this.mapTracker.getAreaLeftX();
       const minX = areaX + Vars.AREA_WIDTH * .15;
@@ -773,7 +781,7 @@ export class PlayScene extends Scene {
         const pos = sol.getTopCenter();
         
         const velX = Math.abs(sol.velocityX);
-        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) || sol.isSpeech ? -24 : pos.y;
+        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) || sol.isShowingIcon ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
         dom.setAlpha(alpha);
       }

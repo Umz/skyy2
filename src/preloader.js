@@ -27,12 +27,23 @@ export class Preloader extends Phaser.Scene {
 
         //  SOLDIER Spritesheets
 
-        this.load.spritesheet(Vars.SHEET_PLAYER, 'spritesheets/Lancer_Player.png', { frameWidth: 43, frameHeight: 30});
-        this.load.spritesheet(Vars.SHEET_WILDMAN, 'spritesheets/Infantry_Wildman.png', { frameWidth: 38, frameHeight:34});
-        
-        this.load.spritesheet(Vars.SHEET_BLUE_BANDIT, 'spritesheets/Infantry_Blue_Bandit.png', { frameWidth: 38, frameHeight:34});
-        this.load.spritesheet(Vars.SHEET_BLUE_BANDIT_LANCE, 'spritesheets/Lancer_Blue_Bandit.png', { frameWidth: 43, frameHeight:30});
-        this.load.spritesheet(Vars.SHEET_BLUE_BANDIT_BOSS, 'spritesheets/Lancer_Blue_Bandit_Boss.png', { frameWidth: 43, frameHeight:30});
+        const LANCERS = [Vars.SHEET_PLAYER, Vars.SHEET_BLUE_BANDIT_LANCE, Vars.SHEET_BLUE_BANDIT_BOSS];
+        const INFANTRY = [Vars.SHEET_WILDMAN, Vars.SHEET_BLUE_BANDIT, Vars.SHEET_RED_BANDIT];
+        const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY];
+
+        for (let lancer of LANCERS) {
+            this.load.spritesheet(lancer, `spritesheets/${lancer}`, { frameWidth: 43, frameHeight: 30});
+        }
+
+        for (let infantry of INFANTRY) {
+            this.load.spritesheet(infantry, `spritesheets/${infantry}`, { frameWidth: 38, frameHeight:34});
+        }
+
+        for (let heavy of H_INFANTRY) {
+            this.load.spritesheet(heavy, `spritesheets/${heavy}`, { frameWidth: 38, frameHeight:34});
+        }
+
+        //this.load.spritesheet(Vars.SHEET_GR_FLAGGER, 'spritesheets/Adviser_GR.png', { frameWidth: 36, frameHeight:26});
         
         // - BG Characters
         
@@ -62,6 +73,10 @@ export class Preloader extends Phaser.Scene {
 
         //  Load JSON files
 
+        let jsons = [Vars.JSON_SCRIPT];
+        for (let file of jsons) {
+            this.load.json(Vars.JSON_SCRIPT, `json/${file}`);
+        }
         this.load.json('sprite_configs', 'json/sprite_configs.json');
         this.load.json("hud_html", "json/hud_html.json");
 
@@ -179,11 +194,23 @@ export class Preloader extends Phaser.Scene {
 
         const data = this.cache.json.get('sprite_configs');
 
-        this.createSpritesheetAnimation(Vars.SHEET_PLAYER, data.lancer);
-        this.createSpritesheetAnimation(Vars.SHEET_WILDMAN, data.infantry);
-        this.createSpritesheetAnimation(Vars.SHEET_BLUE_BANDIT, data.infantry);
-        this.createSpritesheetAnimation(Vars.SHEET_BLUE_BANDIT_LANCE, data.lancer);
-        this.createSpritesheetAnimation(Vars.SHEET_BLUE_BANDIT_BOSS, data.lancer);
+        const LANCERS = [Vars.SHEET_PLAYER, Vars.SHEET_BLUE_BANDIT_LANCE, Vars.SHEET_BLUE_BANDIT_BOSS];
+        const INFANTRY = [Vars.SHEET_WILDMAN, Vars.SHEET_BLUE_BANDIT, Vars.SHEET_RED_BANDIT];
+        const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY];
+
+        for (let lancer of LANCERS) {
+            this.createSpritesheetAnimation(lancer, data.lancer);
+        }
+
+        for (let infantry of INFANTRY) {
+            this.createSpritesheetAnimation(infantry, data.infantry);
+        }
+
+        for (let heavy of H_INFANTRY) {
+            this.createSpritesheetAnimation(heavy, data.heavyInfantry);
+        }
+
+        //  -
 
         this.scene.start("PlayScene");      // Next Scene when all assets are loaded
     }

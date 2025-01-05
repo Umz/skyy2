@@ -3,7 +3,7 @@ import SaveData from "../util/SaveData";
 let scene = null;
 let tutorial = null;
 
-export default class PartHelper {
+export default class SequenceHelper {
 
   static ShowConversation(id) {
     tutorial.showConversation(id);
@@ -20,6 +20,12 @@ export default class PartHelper {
 
   static SpawnClaimerFlag(posX) {
     scene.spawnClaimerFlag(posX);
+  }
+
+  //  -
+
+  static SpawnAlly(pX, type) {
+    return scene.spawnAlly(pX, type);
   }
 
   // -
@@ -56,7 +62,7 @@ export default class PartHelper {
   }
 
   static CheckEnemiesLessOrEqual(amt) {
-    return scene.countEnemies() <= 0;
+    return scene.countEnemies() <= amt;
   }
 
   //  -

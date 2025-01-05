@@ -1,6 +1,6 @@
 import Vars from "../const/Vars";
 
-export default class Speech extends Phaser.GameObjects.Image {
+export default class SpriteIcon extends Phaser.GameObjects.Image {
   
   constructor(scene, x, y, frame) {
     super(scene, x, y, Vars.VFX_SPEECH_SHEET, frame);
@@ -11,7 +11,7 @@ export default class Speech extends Phaser.GameObjects.Image {
 
   update(_, delta) {
     this.ttl = Math.max(0, this.ttl - delta);
-    if (this.ttl === 0) {
+    if (this.ttl === 0 || !this.sprite) {
       this.hide();
     }
     else {
@@ -21,7 +21,7 @@ export default class Speech extends Phaser.GameObjects.Image {
     }
   }
 
-  show(sprite, ttl) {
+  show(sprite, icon, ttl) {
 
     this.scene.tweens.add({
       targets: this,
@@ -32,7 +32,8 @@ export default class Speech extends Phaser.GameObjects.Image {
 
     this.sprite = sprite;
     this.ttl = ttl;
-    sprite.isSpeech = true;
+    this.setFrame(icon);
+    sprite.isShowingIcon = true;
   }
 
   hide() {
@@ -42,7 +43,9 @@ export default class Speech extends Phaser.GameObjects.Image {
       scaleY: {start:1, to:0},
       ease: Phaser.Math.Easing.Back.In,
       onComplete: ()=>{
-        this.sprite.isSpeech = false;
+        if (this.sprite) {
+          this.sprite.isShowingIcon = false;
+        }
         this.destroy(true);
       }
     })

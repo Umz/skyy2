@@ -49,17 +49,31 @@ export default class SaveData {
       Object.assign(data, savedData);
     }
 
-    data.claimed = [2];
-    data.tutorialNumber = 6;
-    data.tutorialSequenceStep = 0;
-    //data.tutorialSequenceStep = 27;
-    data.hasBlueMoon = true;
-    data.playerX = Vars.AREA_WIDTH * 1.45;
-    data.location = Enum.LOC_BLUE_FOREST;
+    this.DevData(true);
 
-    console.log("Loaded data:")
-    console.log(data);
+    console.log("Loaded data", data)
+
     return data;
+  }
+
+  static DevData(loadDev) {
+
+    let dataset = 0;
+    if (loadDev && dataset == 2) {
+      data.tutorialNumber = 2;
+      data.tutorialSequenceStep = 86;
+      data.playerX = Vars.AREA_WIDTH * .65;
+    }
+
+    if (loadDev && dataset == 1) {
+      data.claimed = [2];
+      data.tutorialNumber = 5;
+      data.tutorialSequenceStep = 0;
+      //data.tutorialSequenceStep = 27;
+      data.hasBlueMoon = true;
+      data.playerX = Vars.AREA_WIDTH * 1.45;
+      data.location = Enum.LOC_BLUE_FOREST;
+    }
   }
 
   static get Data() {

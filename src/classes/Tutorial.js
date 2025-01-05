@@ -1,9 +1,7 @@
 import P1 from "../tutorial/P1";
 import P2 from "../tutorial/P2";
 import P3 from "../tutorial/P3";
-import P4 from "../tutorial/P4";
-import P5 from "../tutorial/P5";
-import PartHelper from "../tutorial/PartHelper";
+import SequenceHelper from "../tutorial/SequenceHelper";
 import SaveData from "../util/SaveData";
 import Story from "../util/Story";
 
@@ -19,7 +17,7 @@ export default class Tutorial {
     this.tutorialNumber = 1;
     this.sequence = null;
 
-    PartHelper.SetScene(this);
+    SequenceHelper.SetScene(this);
   }
 
   load() {
@@ -89,8 +87,6 @@ export default class Tutorial {
       case 1: return new P1(this);
       case 2: return new P2(this);
       case 3: return new P3(this);
-      case 4: return new P4(this);
-      case 5: return new P5(this);
     }
     return null;
   }

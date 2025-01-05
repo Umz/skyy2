@@ -1,0 +1,55 @@
+{
+  "EN": {
+    "MoonChief": {
+
+      "taunt": "Come! I shall grant you a swift death.",
+      "peons": "More peons. How futile",
+      
+      "bf1": "Hah. So you seek death.",
+      "bf2": "Fight strong stranger! I will aid you!",
+      "bf3": "Moon Chief, of the Moon at Midnight tribe.",
+      
+      "bf4": "Your power is impressive.",
+      "bf5": "Come and join me, Wildman. Use your strength for the tribe.",
+      "bf6": "I will give you the name Blue Moon, the Warrior General.",
+
+      "bf7": "The forest is safe, the tribe shall defend it.",
+      "bf8": "Perhaps I misjudged you.",
+
+      "mam1": "Who dares to attack our tribe!?",
+      "mam2": "Red Face!"
+    },
+    "Wildman": {
+
+      "bf1": "I am grateful, Warrior.",
+      "bf2": "What is your name? I am Wildman of the Blue Forest.",
+      "bf3": "The mighty Moon Chief himself! I am honoured.",
+
+      "bf4": "Haha! I train hard every day.",
+      "bf5": "Ha! How can I... I am the defender of this forst.",
+      "bf6": "Hahaha! You are an interesting one indeed!",
+      "bf7": "Fine, I will join you!"
+    },
+    "BlueMoon": {
+      "mam1": "Amazing. They are as beautiful as the rumours say."
+    },
+
+    "RabidBandit": {
+      "boss1": "Ruthless animals! Curse you!",
+      "boss2": "Murderous dogs! You slaughtered them all!",
+      "boss3": "Where were you when the Rays of Gold massacred us!",
+      "boss4": "Where were you when we were slain!",
+      "boss5": "What choice did we have! We had to eat!",
+      "boss6": "Curse you! Heartless dogs! Curse you both!",
+      "boss7": "Come on my brethren! Kill them!"
+    },
+    "RedFace": {
+      "mam1": "Ah.. Chief. I thought you would be gone for longer!",
+      "retreat": "Hah. I guess I better retreat"
+    },
+
+    "Soldier": {
+      "mam_alert": "Raiders are attacking!"
+    }
+  }
+}

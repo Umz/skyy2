@@ -1,4 +1,5 @@
 import SaveData from "../util/SaveData";
+import Subtitles from "../util/Subtitles";
 
 export default class TutorialSequence {
   
@@ -23,6 +24,7 @@ export default class TutorialSequence {
 
   startFrom(skipAmt) {
     this.sequence.splice(0, skipAmt);
+    this.step = skipAmt;
   }
 
   update() {
@@ -36,12 +38,18 @@ export default class TutorialSequence {
       }
       return false;
     }
-    
     return true;
   }
 
   add(fn) {
     this.sequence.push(fn);
+    return this;
+  }
+
+  addWait(time) {
+    this.add(()=>{
+      return this.checkCount(time);
+    });
     return this;
   }
 
@@ -54,20 +62,67 @@ export default class TutorialSequence {
     return this;
   }
 
-  addConversation(en) {
+  addDialogue(name, text, ttl) {
     this.add(()=>{
-      this.showConversation(en);
+      Subtitles.ShowDialogue(name, text, ttl)
+      return true;
+    })
+    return this;
+
+  }
+
+  addDialogueAndWait(name, text, ttl) {
+    this
+    .addDialogue(name, text, ttl)
+    .add(()=>{ return !Subtitles.IsShowing() })
+    return this;
+  }
+
+  addWaitForDialogue() {
+    this.add(()=>{ return !Subtitles.IsShowing() });
+    return this;
+  }
+
+  addIcon(sprite, icon, ttl) {
+    this.add(()=>{
+      sprite.showIcon(icon, ttl);
       return true;
     })
     return this;
   }
 
-  addConversationWait() {
+  addSpeaker(sprite, icon, text, ttl) {
     this.add(()=>{
-      return this.tutorial.isConversationComplete();
+      sprite.speak(icon, text, ttl);
+      return true;
     })
     return this;
   }
+
+  addSpeakerAndWait(sprite, icon, text, ttl) {
+    this
+    .addSpeaker(sprite, icon, text, ttl)
+    .add(()=>{ return !Subtitles.IsShowing() })
+    return this;
+  }
+
+  addStopSaving() {
+    this.add(()=>{
+      this.turnSavingOff();
+      return true;
+    })
+    return this;
+  }
+
+  addStartSaving() {
+    this.add(()=>{
+      this.turnSavingOn();
+      return true;
+    })
+    return this;
+  }
+
+  //  -------
 
   showConversation(en) {
     this.tutorial.showConversation(en);
