@@ -5,6 +5,13 @@ let tutorial = null;
 
 export default class SequenceHelper {
 
+  static SetScene(tut) {
+    tutorial = tut;
+    scene = tut.scene;
+  }
+
+  //  -
+
   static ShowConversation(id) {
     tutorial.showConversation(id);
     return true;
@@ -71,8 +78,18 @@ export default class SequenceHelper {
     return scene.countEnemies();
   }
 
-  static SetScene(tut) {
-    tutorial = tut;
-    scene = tut.scene;
+  //  -
+
+  static GetCameraRight() {
+    const camera = scene.cameras.main;
+    const worldView = camera.worldView;
+    return worldView.left;
   }
+
+  static GetCameraLeft() {
+    const camera = scene.cameras.main;
+    const worldView = camera.worldView;
+    return worldView.right;
+  }
+  
 }
