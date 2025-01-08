@@ -1,6 +1,7 @@
 import AllyHeavy1 from "../ai/AllyHeavy1";
 import Bandit1 from "../ai/Bandit1";
 import Bandit2 from "../ai/Bandit2";
+import Bandit3 from "../ai/Bandit3";
 import BanditBoss from "../ai/BanditBoss";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
@@ -144,5 +145,6 @@ const SoldierMap = new Map([
 
   [Enum.SOLDIER_RED1, {ctrl: Bandit1, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
+  [Enum.SOLDIER_RED3, {ctrl: Bandit3, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_REDFACE, {ctrl: BanditBoss, sheet:Vars.SHEET_RED_FACE}],
 ]);

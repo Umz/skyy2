@@ -58,22 +58,32 @@ export default class SaveData {
 
   static DevData(loadDev) {
 
-    let dataset = 0;
-    if (loadDev && dataset == 2) {
-      data.tutorialNumber = 2;
-      data.tutorialSequenceStep = 86;
-      data.playerX = Vars.AREA_WIDTH * .65;
+    let dataset = 3;
+
+    if (loadDev) {
+
+      if (dataset == 3) {
+        data.hasBlueMoon = false;
+      }
+
+      if (dataset == 2) {
+        data.tutorialNumber = 2;
+        data.tutorialSequenceStep = 86;
+        data.playerX = Vars.AREA_WIDTH * .65;
+      }
+  
+      if (dataset == 1) {
+        data.claimed = [2];
+        data.tutorialNumber = 5;
+        data.tutorialSequenceStep = 0;
+        //data.tutorialSequenceStep = 27;
+        data.hasBlueMoon = true;
+        data.playerX = Vars.AREA_WIDTH * 1.45;
+        data.location = Enum.LOC_BLUE_FOREST;
+      }
     }
 
-    if (loadDev && dataset == 1) {
-      data.claimed = [2];
-      data.tutorialNumber = 5;
-      data.tutorialSequenceStep = 0;
-      //data.tutorialSequenceStep = 27;
-      data.hasBlueMoon = true;
-      data.playerX = Vars.AREA_WIDTH * 1.45;
-      data.location = Enum.LOC_BLUE_FOREST;
-    }
+
   }
 
   static get Data() {

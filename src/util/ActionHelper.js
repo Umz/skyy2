@@ -24,6 +24,12 @@ export function GetCloseX(fromX, minDist, maxDist, isAnySide = false) {
   return closeX;
 }
 
+/** Get any other lane than the current lane */
+export function getOtherLane(lane) {
+  const targetLanes = [1,2,3].filter(l => l !== lane);
+  return Phaser.Utils.Array.GetRandom(targetLanes);
+}
+
 //  - INTERNAL FUNCTIONS  -
 
 function getAllyGroupForSprite(sprite) {

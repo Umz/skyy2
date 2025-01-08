@@ -24,7 +24,8 @@ export default class P4 extends TutorialSequence {
     .add(()=> player.x > roseX + 100)
     .addIcon(player, Icon.BANNER, 7000)
 
-    .addEnemiesRight(7, Enum.SOLDIER_BANDIT2, Enum.SOLDIER_RED1)
+    //.addEnemiesRight(3, Enum.SOLDIER_BANDIT2, Enum.SOLDIER_RED3)
+    .addEnemiesRight(1, Enum.SOLDIER_RED3)
     .addWait(7000)
 
     .add(()=>{
