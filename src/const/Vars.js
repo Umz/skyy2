@@ -14,6 +14,10 @@ const Vars = {
   SHEET_PLAYER: 'Lancer_Player.png',
   SHEET_WILDMAN: "Infantry_Wildman.png",
 
+  SHEET_WILDMAN_CREW: "Infantry_Wildman_Crew.png",
+  SHEET_ARCHITECT: "Advisor_Architect.png",
+  SHEET_LUNAR: "Advisor_Lunar.png",
+
   SHEET_MAM_LANCER: 'mam_lancer_sheet',
   SHEET_MAM_INFANTRY: 'mam_infantry_sheet',
   SHEET_MAM_HEAVY: "Heavy_Infantry_MaM.png",

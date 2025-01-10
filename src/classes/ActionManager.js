@@ -43,13 +43,12 @@ export default class ActionManager {
   setDefaultActions() {}
 
   addAction(action) {
-    this.actionsArray.push(action);
+    this.actionsArray.push(new ActComplete(), action);
     return action;
   }
 
   addActions(...actions) {
-    this.actionsArray.push(new ActComplete());
-    this.actionsArray.push(...actions);
+    this.actionsArray.push(new ActComplete(), ...actions);
   }
 
   insertAction(action) {

@@ -1,17 +1,19 @@
 import ActAttack from "../actions/ActAttack";
 import ActComplete from "../actions/ActComplete";
+import ActDefend from "../actions/ActDefend";
 import ActMoveOffX from "../actions/ActMoveOffX";
 import ActMoveToTargetDistance from "../actions/ActMoveToTargetDistance";
 import ActMoveToX from "../actions/ActMoveToX";
 import ActSearchForTarget from "../actions/ActSearchForTarget";
 import ActSearchForTargetLane from "../actions/ActSearchForTargetLane";
 import ActWait from "../actions/ActWait";
+import ListenCondition from "../actions/ListenCondition";
 import ListenMatchLane from "../actions/ListenMatchLane";
 import ListenState from "../actions/ListenState";
 import ListenStatsRecover from "../actions/ListenStatsRecover";
 import ActionManager from "../classes/ActionManager"
 import Enum from "../const/Enum";
-import { GetCloseX, getOtherLane } from "../util/ActionHelper";
+import { GetClosestEnemyWithinRange, GetCloseX, getOtherLane } from "../util/ActionHelper";
 
 /** Always stay close to target but not really attack (hit and run) */
 export default class Bandit3 extends ActionManager {
@@ -21,18 +23,17 @@ export default class Bandit3 extends ActionManager {
     this.addStatRecovery();
   }
 
-  /*
-  1) Find closest ally in lane
-  If none - attack and wait - switch lane
-
-  Move away from overlapping allies (switch lanes if ally is closer)
-  Defend if attacked-
-  */
-
-  //  ---
+  //  Action Sets
 
   addStatRecovery() {
     this.addBackgroundAction(new ListenStatsRecover(this.sprite));
+  }
+
+  addHitListener() {
+    this.addBackgroundAction(new ListenState(this.sprite, Enum.SS_HURT)).addCallback(()=>{
+      this.clearAllActions();
+      this.defend();
+    });
   }
 
   //  ---
@@ -42,15 +43,13 @@ export default class Bandit3 extends ActionManager {
     this.addAction(new ActSearchForTargetLane(this.sprite)).addCallback((action)=>{
       this.sprite.target = action.target;
       this.clearAllActions();
-      this.gotoTargetAndAttack();
+      this.decideAction();
     });
 
     // Wait certain amount of time then switch lane
     this.addBackgroundAction(new ActWait(3000)).addCallback(()=> {
-      this.clearAllActions()
-      this.switchLane();
+      this.clearAllActions().switchLane();
     });
-
   }
 
   /** Switches lane independently if can't find a target */
@@ -61,31 +60,28 @@ export default class Bandit3 extends ActionManager {
     );
   }
 
-  // -
+  // - DECISION
 
-  gotoTargetAndAttack() {
+  decideAction() {
 
     const target = this.sprite.target;
 
-    this.addBackgroundAction(new ListenState(this.sprite, Enum.SS_HURT)).addCallback(()=>{
-      this.clearAllActions();
-      //this.evade();
-    });
-
+    this.addHitListener();
     this.addBackgroundAction(new ListenMatchLane(this.sprite, target));   // Match lane of target
-
-    this.fullAttackMotion(target);
+    this.hitAndRun(target);
   }
 
   //  - BATTLE functions -
 
-  fullAttackMotion(target) {
+  hitAndRun(target) {
 
     const startX = this.sprite.x;
-    const offX = startX > target.x ? 100 : -100;
+    const offX = startX > target.x ? 70 : -70;
     const attackCooldown = Phaser.Math.Between(1500, 2500);
     
     this.addActions(
+      new ActComplete(()=>this.sprite.faceX(target.x)),
+      new ListenCondition(()=> this.sprite.isFacing(target.x), 350),
       new ActMoveToTargetDistance(this.sprite, target, 34),
       new ActAttack(this.sprite),
       new ListenState(this.sprite, Enum.SS_READY),
@@ -96,10 +92,15 @@ export default class Bandit3 extends ActionManager {
 
   }
 
+  //  Defend if hit
   defend() {
-
-    //  Defend if hit attacked
-
+    const target = GetClosestEnemyWithinRange(this.sprite, 450);
+    this.addActions(
+      new ListenState(this.sprite, Enum.SS_READY),
+      new ActComplete(()=>this.sprite.faceX(target.x)),
+      new ListenCondition(()=> this.sprite.isFacing(target.x), 350),
+      new ActDefend(this.sprite, 2000)
+    );
   }
 
 }

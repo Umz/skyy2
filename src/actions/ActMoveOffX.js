@@ -26,8 +26,6 @@ export default class ActMoveOffX extends Action {
 
   init() {
     this.fromX = this.sprite.x;
-
-    console.log(`From ${this.fromX} - to ${this.fromX + this.offset}`);
   }
 
 }

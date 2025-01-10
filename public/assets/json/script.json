@@ -45,7 +45,11 @@
     },
     "RedFace": {
       "mam1": "Ah.. Chief. I thought you would be gone for longer!",
-      "retreat": "Hah. I guess I better retreat"
+      "retreat": "Hah. I guess I better retreat",
+
+      "rose1": "Hahaha. You think you can kill me here! This is MY forest!",
+      "rose2": "Well well.. I guess it's round 2, Chief!",
+      "cc": "Hah."
     },
 
     "Soldier": {

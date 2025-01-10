@@ -63,11 +63,13 @@ export default class SaveData {
     if (loadDev) {
 
       if (dataset == 3) {
-        data.hasBlueMoon = false;
+        data.hasBlueMoon = true;
+        data.playerX = Vars.AREA_WIDTH * 2;
+        data.tutorialSequenceStep = 0;
+        data.tutorialNumber = 4;
       }
-
+      
       if (dataset == 2) {
-        data.tutorialNumber = 2;
         data.tutorialSequenceStep = 86;
         data.playerX = Vars.AREA_WIDTH * .65;
       }

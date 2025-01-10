@@ -83,13 +83,13 @@ export default class SequenceHelper {
   static GetCameraRight() {
     const camera = scene.cameras.main;
     const worldView = camera.worldView;
-    return worldView.left;
+    return worldView.right;
   }
 
   static GetCameraLeft() {
     const camera = scene.cameras.main;
     const worldView = camera.worldView;
-    return worldView.right;
+    return worldView.left;
   }
   
 }

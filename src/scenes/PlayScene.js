@@ -131,9 +131,12 @@ export class PlayScene extends Scene {
     Subtitles.SetScene(this);
     Subtitles.SetScript(allScripts.EN);
 
+    this.crowdRect = new Phaser.Geom.Rectangle(0, 0, 100, 24);
     this.isPlayerCrowded = false;
 
     this.test = function() {
+      this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
+      //this.graphics.strokeRectShape(this.crowdRect);
     }
   }
 
@@ -324,11 +327,10 @@ export class PlayScene extends Scene {
   }
 
   updateCrowding() {
-    let overlapCount = 0;
-    this.physics.overlap(this.player, this.groupSoldiers, (player, soldier) => {
-      overlapCount++;
-    });
-    this.isPlayerCrowded = overlapCount >= 6;
+    this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
+    const rect = this.crowdRect;
+    const bodies = this.physics.overlapRect(rect.x, rect.y, rect.width, rect.height);
+    this.isPlayerCrowded = bodies.length >= 6;
   }
 
   //  -----------------------------------------------------------------------------------------------------

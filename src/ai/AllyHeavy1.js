@@ -11,7 +11,6 @@ import Enum from "../const/Enum";
 import ActComplete from "../actions/ActComplete";
 import ListenCondition from "../actions/ListenCondition";
 import ActMoveToTargetOffset from "../actions/ActMoveToTargetOffset";
-import Vars from "../const/Vars";
 import ActDefend from "../actions/ActDefend";
 import ActMatchLane from "../actions/ActMatchLane";
 
@@ -19,7 +18,6 @@ export default class AllyHeavy1 extends ActionManager {
   
   setSprite(sprite) {
     super.setSprite(sprite);
-    //this.addBackgroundAction(new ListenStatsRecover(this.sprite));
     return this;
   }
 
