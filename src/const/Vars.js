@@ -74,6 +74,8 @@ const Vars = {
   ACT_MOVE_OFF_X: "action_soldier_move_offset_x",
   ACT_MATCH_LANE: "action_soldier_move_to_same_lane",
   ACT_SEARCH_FOR_TARGET: "action_search_for_target",
+  ACT_SEARCH_FOR_RANDOM: "action_search_for_random_target",
+  ACT_SEARCH_FOR_FURTHEST: "action_search_for_furthest_target",
   ACT_SEARCH_FOR_SAME_LANE: "action_search_for_target_same_lane",
   ACT_WAIT_TIME: "action_wait_for_timer",
   LISTEN_CONDITION: "action_wait_for_condition",

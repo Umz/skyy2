@@ -9,6 +9,7 @@ export default class P4 extends TutorialSequence {
 
   init() {
 
+    const { scene } = this;
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
@@ -19,6 +20,11 @@ export default class P4 extends TutorialSequence {
 
     this
     .addStopSaving()  // Temp (dev)
+
+    .add(()=>{
+      SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_WILDMAN);
+      return true;
+    })
 
     .addIcon(player, Icon.ANGER, 3000)
     .add(()=> player.x > roseX + 100)
@@ -42,7 +48,12 @@ export default class P4 extends TutorialSequence {
     .addDialogue("Red Face", script.RedFace.rose2, 5000)
 
     .add(()=>{
-      for (let i=0; i<15; i++) {
+      const enemyCount = scene.countEnemies();
+      for (let i=0; i<enemyCount; i++) {
+        const rand = Phaser.Math.Between(210, 270)
+        SequenceHelper.SpawnAlly(player.x - rand, Enum.SOLDIER_ALLY_WILDMAN);
+      }
+      for (let i=0; i<6; i++) {
         const rand = Phaser.Math.Between(210, 270)
         SequenceHelper.SpawnAlly(player.x - rand, Enum.SOLDIER_ALLY_HEAVY1);
       }
