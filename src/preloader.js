@@ -48,6 +48,9 @@ export class Preloader extends Phaser.Scene {
             this.load.spritesheet(advisor, `spritesheets/${advisor}`, { frameWidth: 36, frameHeight:26});
         }
 
+        //for (let supplyman) : 38
+            //this.load.spritesheet(supplyman, `spritesheets/${supplyman}`, { frameWidth: 38, frameHeight:31});
+
         
         // - BG Characters
         

@@ -1,3 +1,4 @@
+import RedDuel from "../ai/RedDuel";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
@@ -14,12 +15,26 @@ export default class P4 extends TutorialSequence {
     const script = Subtitles.GetScript();
 
     const roseX = Vars.AREA_WIDTH * 2;
+    const stormX = Vars.AREA_WIDTH * 3;
 
     this.enemies = [];
     this.allies = [];
 
     this
     .addStopSaving()  // Temp (dev)
+    
+    .addRedFaceForDuel()
+    .add(()=>{
+      this.redface.speak(Icon.SPEAR, script.RedFace.rose3, 6000);
+      return true;
+    })
+
+    // Stop all other characters - set to Duel mode
+
+
+    .add(()=>{
+      return false;
+    })
 
     .add(()=>{
       SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_WILDMAN);
@@ -53,7 +68,7 @@ export default class P4 extends TutorialSequence {
         const rand = Phaser.Math.Between(210, 270)
         SequenceHelper.SpawnAlly(player.x - rand, Enum.SOLDIER_ALLY_WILDMAN);
       }
-      for (let i=0; i<6; i++) {
+      for (let i=0; i<3; i++) {
         const rand = Phaser.Math.Between(210, 270)
         SequenceHelper.SpawnAlly(player.x - rand, Enum.SOLDIER_ALLY_HEAVY1);
       }
@@ -64,12 +79,42 @@ export default class P4 extends TutorialSequence {
     .addEnemiesRight(10, Enum.SOLDIER_BANDIT2, Enum.SOLDIER_RED1)
     .addEnemiesRight(6, Enum.SOLDIER_RED3)
 
+
+    .add(()=>{
+      this.spawnConstantRight(6, 1);
+      return player.x >= stormX;
+    })
+
+    .addDialogue("Red Face", script.RedFace.rose3, 5000)
+
+    // Start Duel
+
     .add(()=>{
       return false;
     });
   }
 
   //  - P4 functions
+
+  addRedFaceForDuel() {
+    this.add(()=>{
+      this.spawnRedFace();
+      return true;
+    });
+    return this;
+  }
+
+  spawnRedFace() {
+
+    const pX = this.scene.player.x + 140;
+
+    this.redface = this.scene.spawnEnemy(pX, Enum.SOLDIER_REDFACE);
+    this.redface.setHP(15, 15);
+    this.redface.setGP(10, 10);
+    this.redface.setDisplayName("Red Face", Enum.TEAM_ENEMY);
+
+    this.redface.setController(new RedDuel());
+  }
 
   addEnemiesRight(amt, ...types) {
     this.add(()=>{

@@ -44,48 +44,47 @@ export default class SaveData {
   }
 
   static async LOAD_GAME_DATA() {
+
     const savedData = await localforage.getItem(GAME_DATA);
     if (savedData) {
       Object.assign(data, savedData);
     }
 
-    this.DevData(true);
+    this.DevData(3);
 
     console.log("Loaded data", data)
 
     return data;
   }
 
-  static DevData(loadDev) {
-
-    let dataset = 3;
-
-    if (loadDev) {
-
-      if (dataset == 3) {
-        data.hasBlueMoon = true;
+  static DevData(dataset = 0) {
+    switch (dataset) {
+      case 3:
+        data.hasBlueMoon = false;
         data.playerX = Vars.AREA_WIDTH * 2;
         data.tutorialSequenceStep = 0;
         data.tutorialNumber = 4;
-      }
-      
-      if (dataset == 2) {
+        break;
+    
+      case 2:
         data.tutorialSequenceStep = 86;
-        data.playerX = Vars.AREA_WIDTH * .65;
-      }
-  
-      if (dataset == 1) {
+        data.playerX = Vars.AREA_WIDTH * 0.65;
+        break;
+    
+      case 1:
         data.claimed = [2];
         data.tutorialNumber = 5;
         data.tutorialSequenceStep = 0;
-        //data.tutorialSequenceStep = 27;
+        // data.tutorialSequenceStep = 27;
         data.hasBlueMoon = true;
         data.playerX = Vars.AREA_WIDTH * 1.45;
         data.location = Enum.LOC_BLUE_FOREST;
-      }
+        break;
+    
+      default:
+        // Optional: handle cases where dataset doesn't match 1, 2, or 3
+        break;
     }
-
-
   }
 
   static get Data() {
