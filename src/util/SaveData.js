@@ -60,7 +60,7 @@ export default class SaveData {
   static DevData(dataset = 0) {
     switch (dataset) {
       case 3:
-        data.hasBlueMoon = false;
+        data.hasBlueMoon = true;
         data.playerX = Vars.AREA_WIDTH * 2;
         data.tutorialSequenceStep = 0;
         data.tutorialNumber = 4;

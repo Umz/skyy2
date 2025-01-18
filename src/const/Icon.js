@@ -8,9 +8,13 @@ const Icon = {
 
   SPARKLE: 129,
   FIST_FIRE: 197,
+  BLOOD: 217,
+  SLEEP: 218,
   ANGER: 219,
   ALLY: 245, // Row 16
+
   SPEAR: 473, // Row 30
+  SPEAR2: 474, // Row 30
 
   // 51 - Red mask
   STANDARD: 844,

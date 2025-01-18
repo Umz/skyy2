@@ -116,6 +116,18 @@ export default class ActionManager {
     return this.actionsArray[0] || null;
   }
 
+  //  -
+
+  pause() {
+    this.actionsActive = false;
+    this.backgroundActive = false;
+  }
+
+  resume() {
+    this.actionsActive = true;
+    this.backgroundActive = true;
+  }
+
 }
 
 function mapUpdate(map, time, delta) {

@@ -57,5 +57,6 @@ const StoryParts = [
   {id:Enum.STORY_2B_PLACE_FLAG, p:["Now place our banner by the Teal tree! This forest is our territory now."]},
   {id:Enum.STORY_2C_LEAVE_FOREST, p:["The forest is safe now. It belongs to Moon at Midnight.", "Now head east of the village to expand our territory. Show no mercy to any who oppose us."]},
   {id:Enum.STORY_3_CHASE_REDFACE, p:["Red Face the traitor has managed to escape to Rose Forest.", "Go and make sure he meets his end."]},
-  {id:Enum.STORY_4_CLAIM_STORM, p:["This village must fly with our tribe now. They submit or they die."]},
+  {id:Enum.STORY_4_CLAIM_STORM, p:["The traitor held control over the forest and the village." ,"Place our banners high and proud. It belongs to Moon at Midnight now."]},
+  {id:Enum.STORY_4_CITIZEN_TRIALS, p:["Only those that choose to fly with our tribe may remain.", "Those that will not are permitted to leave immediately, or die."]},
 ];

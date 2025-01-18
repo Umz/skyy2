@@ -40,6 +40,12 @@ export function getOtherLane(lane) {
   return Phaser.Utils.Array.GetRandom(targetLanes);
 }
 
+/** Get the distance between the two X points */
+export function getDistanceFrom(x1, x2) {
+  const distance = Math.abs(x1 - x2);
+  return distance;
+}
+
 //  - INTERNAL FUNCTIONS  -
 
 function getAllyGroupForSprite(sprite) {

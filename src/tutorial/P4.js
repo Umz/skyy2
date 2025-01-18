@@ -3,6 +3,7 @@ import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Vars from "../const/Vars";
+import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
@@ -23,18 +24,7 @@ export default class P4 extends TutorialSequence {
     this
     .addStopSaving()  // Temp (dev)
     
-    .addRedFaceForDuel()
-    .add(()=>{
-      this.redface.speak(Icon.SPEAR, script.RedFace.rose3, 6000);
-      return true;
-    })
-
     // Stop all other characters - set to Duel mode
-
-
-    .add(()=>{
-      return false;
-    })
 
     .add(()=>{
       SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_WILDMAN);
@@ -79,15 +69,90 @@ export default class P4 extends TutorialSequence {
     .addEnemiesRight(10, Enum.SOLDIER_BANDIT2, Enum.SOLDIER_RED1)
     .addEnemiesRight(6, Enum.SOLDIER_RED3)
 
+    .add(()=>{
+      this.spawnConstantRight(4, 1);
+      return player.x >= roseX + Vars.AREA_WIDTH * .7;
+    })
+    .addDialogue("Red Face", script.RedFace.rose3, 5000)
 
     .add(()=>{
       this.spawnConstantRight(6, 1);
       return player.x >= stormX;
     })
-
-    .addDialogue("Red Face", script.RedFace.rose3, 5000)
-
+    
     // Start Duel
+
+    .addRedFaceForDuel()
+    .add(()=>{
+      this.redface.speak(Icon.SPEAR, script.RedFace.rose4, 6000);
+      return true;
+    })
+
+    .add(()=>{
+      const group = this.scene.groupSoldiers.getChildren();
+      for (let sol of group) {
+
+        if (sol !== player && sol !== this.redface) {
+          sol.controller.pause();
+          sol.viewController.pause();
+          sol.setActive(false);
+          sol.setAlpha(.05);
+          sol.idle();
+          sol.stopMove();
+          sol.body.enable = false;
+        }
+      }
+      return true;
+    })
+
+    .add(()=>{
+      return this.redface.hp <= 0;
+    })
+    .addDialogueAndWait("Red Face", script.RedFace.death, 7000)
+    .addWait(2000)
+
+    .addSpeakerAndWait(player, Icon.BANNER, script.MoonChief.rose1, 7000)
+    .addSpeakerAndWait(player, Icon.SPEAR2, script.MoonChief.rose2, 4000)
+
+    //  Resume soldiers
+    .add(()=>{
+      const group = this.scene.groupSoldiers.getChildren();
+      for (let sol of group) {
+        if (sol !== player) {
+          sol.controller.resume();
+          sol.viewController.resume();
+          sol.setActive(true);
+          sol.setAlpha(1);
+          sol.body.enable = true;
+        }
+      }
+      return true;
+    })
+
+    .add(()=>{ return SequenceHelper.CheckEnemiesLessOrEqual(0) })
+
+    // Battle Over - Claim Storm
+
+    .addIcon(player, Icon.STANDARD, 15 * 1000)
+    .addInstruction(Enum.STORY_4_CLAIM_STORM)
+
+    //  Claim the land
+
+    .add(()=>{
+      this.doOnce(()=>{
+        SequenceHelper.SpawnClaimerFlag(Vars.AREA_WIDTH * 3.38);
+      });
+      return SaveData.Data.claimed.includes(Enum.LOC_STORM);
+    })
+    .add(()=>{
+      SaveData.Data.claimed.push(Enum.LOC_ROSE_FOREST);
+      return true;
+    })
+    .addWait(3000)
+
+    .addInstruction(Enum.STORY_4_CITIZEN_TRIALS)
+
+    // All citizens display a icon and interact
 
     .add(()=>{
       return false;
