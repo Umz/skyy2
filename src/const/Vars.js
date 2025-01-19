@@ -79,6 +79,8 @@ const Vars = {
   ANIM_FLAG_ELITE: 'flag-gr-golden-elite',
   ANIM_FLAG_KING: 'flag-gr-kings',
 
+  //  - Action Names -
+
   ACT_MOVE_TO_TARGET_DISTANCE: "action_soldier_move_to_target_within_distance",
   ACT_MOVE_TO_TARGET_OFFSET: "action_soldier_move_to_target_with_offset",
   ACT_MOVE_TO_X: "action_soldier_move_to_x_position",
@@ -89,11 +91,11 @@ const Vars = {
   ACT_SEARCH_FOR_FURTHEST: "action_search_for_furthest_target",
   ACT_SEARCH_FOR_SAME_LANE: "action_search_for_target_same_lane",
   ACT_WAIT_TIME: "action_wait_for_timer",
-  LISTEN_CONDITION: "action_wait_for_condition",
   ACT_ATTACK: "action_soldier_attack",
   ACT_DEFEND: "action_soldier_defend",
   ACT_COMPLETE: "action_complete_instant",
-
+  
+  LISTEN_CONDITION: "listener_for_condition",
   LISTEN_PLAYER_DISTANCE: "listener_player_distance",
   LISTEN_AVOID_OVERLAP: "listener_avoid_overlap",
   LISTEN_MATCH_LANE: "listener_match_lane",

@@ -25,7 +25,7 @@ export default class P4 extends TutorialSequence {
     .addStopSaving()  // Temp (dev)
 
     .add(()=>{
-      player.x = Vars.AREA_WIDTH * 1.5;
+      player.x = Vars.AREA_WIDTH * 3.5;
       return true;
     })
     .add(()=>false)
@@ -165,7 +165,7 @@ export default class P4 extends TutorialSequence {
     });
   }
 
-  //  - P4 functions
+  //  - P4 functions    --------------------------------------------------------------------------------
 
   addRedFaceForDuel() {
     this.add(()=>{

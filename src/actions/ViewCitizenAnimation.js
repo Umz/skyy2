@@ -10,6 +10,9 @@ export default class ViewCitizenAnimation extends Action {
 
   update(time, delta) {
 
+    if (!this.sprite)
+      return;
+
     const sprite = this.sprite;
     const velX = sprite.velocityX;
     const state = sprite.state;

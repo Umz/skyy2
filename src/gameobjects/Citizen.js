@@ -1,3 +1,4 @@
+import CitizenCaptive from "../ai/CitizenCaptive";
 import CitizenController from "../ai/CitizenController";
 import CitizenView from "../ai/CitizenView";
 import CSSClasses from "../const/CSSClasses";
@@ -13,18 +14,68 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
     this.setOrigin(.5, 1);
 
-    this.prefix = texture;  // Prefix for animations
+    this.prefix = texture;
     this.state = Enum.CS_IDLE;
+    this.name = "Citizen";
+
+    this.home = Enum.LOC_STORM;
+    this.tribe = Enum.TRIBE_STORM;
 
     this.movementSpeed = 48;
 
     this.controller = new CitizenController().setSprite(this);
     this.viewController = new CitizenView().setSprite(this);
+
+    this.controller = new CitizenCaptive().setSprite(this);
   }
 
   update(time, delta) {
-    this.controller.update(time, delta);
-    this.viewController.update(time, delta);
+    this.controller?.update(time, delta);
+    this.viewController?.update(time, delta);
+  }
+
+  //  -
+
+  kill() {
+    this.controller = null;
+    this.viewController = null;
+    this.destroy(true);
+  }
+
+  //  - Dialogue -
+
+  speak(icon, text, ttl = 4000) {
+    this.showIcon(icon, ttl);
+    this.showDialogue(text, ttl);
+  }
+  
+  showIcon(icon, ttl) {
+    Vfx.ShowIcon(this, icon, ttl);
+  }
+  
+  showDialogue(text, ttl) {
+    Subtitles.ShowDialogue(this.name, text, ttl);
+  }
+
+  //  - Controllers -
+
+  setController(c) {
+    this.controller = c;
+    this.controller.setSprite(this);
+  }
+
+  //  - State -
+
+  setHome(h) {
+    this.home = h;
+  }
+
+  setTribe(t) {
+    this.tribe = t;
+  }
+
+  setState(s) {
+    this.state = s;
   }
 
   //  - Physics -

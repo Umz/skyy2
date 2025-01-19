@@ -9,7 +9,9 @@ const ADVISOR = [Vars.SHEET_LUNAR, Vars.SHEET_ARCHITECT];
 
 const CITIZENS = [
     Vars.SHEET_CITIZEN_MAM_KING,
-    Vars.SHEET_CITIZEN_STORM_F1
+    Vars.SHEET_CITIZEN_STORM_F1,
+    Vars.SHEET_CITIZEN_STORM_F2,
+    Vars.SHEET_CITIZEN_STORM_M1
 ]
 
 export class Preloader extends Phaser.Scene {

@@ -178,9 +178,15 @@ export class PlayScene extends Scene {
     this.spawnAllMaMFlags();
 
     //  King (Harvest Moon) - FG Layer - Display name?
-    const t1 = new Citizen(this, Vars.AREA_WIDTH * 1.52, Vars.GROUND_TOP, Vars.SHEET_CITIZEN_STORM_F1);
-    this.fgLayer.add(t1);
-    this.allGroup.add(t1);
+    for (let i =0; i < 15; i++) {
+      
+      const x = Phaser.Math.Between(Vars.AREA_WIDTH * 3.2, Vars.AREA_WIDTH * 3.8);
+      const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_STORM_F1, Vars.SHEET_CITIZEN_STORM_F2, Vars.SHEET_CITIZEN_STORM_M1]);
+
+      const citi = new Citizen(this, x, Vars.GROUND_TOP, ss);
+      this.fgLayer.add(citi);
+      this.allGroup.add(citi);
+    }
 
     this.initialLoad = true;
   }

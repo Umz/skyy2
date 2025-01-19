@@ -47,6 +47,13 @@ const Enum = {
   CS_TRAVELLING: 4,
   CS_BOWING: 5,
 
+  // Tribes
+
+  TRIBE_MAM: 1,
+  TRIBE_BLUE_FOREST: 2,
+  TRIBE_STORM: 3,
+  TRIBE_WHITELEAF: 4,
+
   // Soldier
 
   TEAM_ALLY: 1,
