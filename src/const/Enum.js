@@ -39,6 +39,14 @@ const Enum = {
   SS_DEAD: 8,
   SS_REPELLED: 9,
 
+  // Citizen States
+
+  CS_IDLE: 1,
+  CS_DIGGING: 2,
+  CS_TALKING: 3,
+  CS_TRAVELLING: 4,
+  CS_BOWING: 5,
+
   // Soldier
 
   TEAM_ALLY: 1,

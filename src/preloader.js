@@ -7,6 +7,11 @@ const INFANTRY = [Vars.SHEET_WILDMAN, Vars.SHEET_BLUE_BANDIT, Vars.SHEET_RED_BAN
 const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY];
 const ADVISOR = [Vars.SHEET_LUNAR, Vars.SHEET_ARCHITECT];
 
+const CITIZENS = [
+    Vars.SHEET_CITIZEN_MAM_KING,
+    Vars.SHEET_CITIZEN_STORM_F1
+]
+
 export class Preloader extends Phaser.Scene {
 
     constructor() {
@@ -54,7 +59,9 @@ export class Preloader extends Phaser.Scene {
         
         // - BG Characters
         
-        this.load.spritesheet("king", 'spritesheets/Beard_King.png', { frameWidth: 34, frameHeight: 36});
+        for (let citi of CITIZENS) {
+            this.load.spritesheet(citi, `spritesheets/${citi}`, { frameWidth: 34, frameHeight:36});
+        }
         
         // - BG animals
         
@@ -131,15 +138,6 @@ export class Preloader extends Phaser.Scene {
 
         this.createGraphics();
 
-        //  Citizens - King Idle (walk, mine, cheer)
-        //  MaM Banner Flapping
-        this.anims.create({
-            key: 'king_idle',
-            frames: this.anims.generateFrameNumbers('king', { start: 0, end: 5 }),
-            frameRate: 6,
-            repeat: -1
-        });
-
         //  MaM Banner Flapping
         this.anims.create({
             key: 'banner_mam',
@@ -215,6 +213,12 @@ export class Preloader extends Phaser.Scene {
 
         for (let advisor of ADVISOR) {
             this.createSpritesheetAnimation(advisor, data.advisor);
+        }
+
+        // -
+
+        for (let citi of CITIZENS) {
+            this.createSpritesheetAnimation(citi, data.citizen);
         }
 
         //  -

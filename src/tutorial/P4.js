@@ -23,6 +23,12 @@ export default class P4 extends TutorialSequence {
 
     this
     .addStopSaving()  // Temp (dev)
+
+    .add(()=>{
+      player.x = Vars.AREA_WIDTH * 1.5;
+      return true;
+    })
+    .add(()=>false)
     
     // Stop all other characters - set to Duel mode
 

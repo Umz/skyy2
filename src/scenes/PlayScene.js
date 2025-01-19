@@ -23,6 +23,7 @@ import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
 import Vfx from "../util/Vfx";
 import Subtitles from "../util/Subtitles";
+import Citizen from "../gameobjects/Citizen";
 
 export class PlayScene extends Scene {
 
@@ -176,10 +177,10 @@ export class PlayScene extends Scene {
 
     this.spawnAllMaMFlags();
 
-    //  King (Harvest Moon) - Display name?
-    const king = this.add.sprite(Vars.AREA_WIDTH * 1.48, Vars.GROUND_TOP, 'king').setOrigin(.5, 1);
-    king.play('king_idle');
-    this.fgLayer.add(king);
+    //  King (Harvest Moon) - FG Layer - Display name?
+    const t1 = new Citizen(this, Vars.AREA_WIDTH * 1.52, Vars.GROUND_TOP, Vars.SHEET_CITIZEN_STORM_F1);
+    this.fgLayer.add(t1);
+    this.allGroup.add(t1);
 
     this.initialLoad = true;
   }

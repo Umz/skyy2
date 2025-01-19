@@ -30,6 +30,11 @@ const Vars = {
   SHEET_RED_HEAVY_BANDIT: "Heavy_Infantry_RF.png",
   SHEET_RED_BANDIT: "Infantry_RF.png",
 
+  SHEET_CITIZEN_MAM_KING: "Citizen_MaM_King.png",
+  SHEET_CITIZEN_STORM_F1: "Citizen_Storm_F1.png",
+  SHEET_CITIZEN_STORM_F2: "Citizen_Storm_F2.png",
+  SHEET_CITIZEN_STORM_M1: "Citizen_Storm_M1.png",
+
   //  -
 
   TX_SPARKLE: "graphic_sparkle",
@@ -55,6 +60,12 @@ const Vars = {
   ANIM_WALK: '-walk',
   ANIM_ATTACK: '-attack',
   ANIM_DEFEND: '-defend',
+
+  ANIM_CIT_IDLE: "-idle",
+  ANIM_CIT_IDLE_SIDE: "-idle-side",
+  ANIM_CIT_WALK: "-walk",
+  ANIM_CIT_DIGGING: "-dig-side",
+  ANIM_CIT_BOW: "-bow",
 
   ANIM_BIRD_FLY: 'bird-fly',
 
@@ -92,6 +103,7 @@ const Vars = {
   VIEW_SOLDIER_FLASH: "view_soldier_flash",
   VIEW_SOLDIER_LANE: "view_soldier_lane_tint",
   VIEW_ANIMATION: "view_soldier_animations",
+  VIEW_CITIZEN_ANIMATION: "view_citizen_animations",
   VIEW_CROWD_CONTROL: "view_crowding_hide_soldiers",
 
   WORLD_LENGTHS: 3,
