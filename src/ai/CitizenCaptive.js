@@ -49,7 +49,7 @@ export default class CitizenCaptive extends ActionManager {
   showDecision() {
 
     const sprite = this.sprite;
-    const isJoining = Math.random() > .5;
+    const isJoining = sprite.getData('isJoining');
 
     const speech = isJoining ? this.getJoinSpeech() : this.getLeaveSpeech();
     const icon = isJoining ? Icon.BANNER : Icon.CROSS;

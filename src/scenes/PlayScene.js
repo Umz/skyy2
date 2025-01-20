@@ -180,12 +180,14 @@ export class PlayScene extends Scene {
     //  King (Harvest Moon) - FG Layer - Display name?
     for (let i =0; i < 15; i++) {
       
-      const x = Phaser.Math.Between(Vars.AREA_WIDTH * 3.2, Vars.AREA_WIDTH * 3.8);
+      const x = Phaser.Math.Between(Vars.AREA_WIDTH * 3.1, Vars.AREA_WIDTH * 3.9);
       const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_STORM_F1, Vars.SHEET_CITIZEN_STORM_F2, Vars.SHEET_CITIZEN_STORM_M1]);
 
       const citi = new Citizen(this, x, Vars.GROUND_TOP, ss);
       this.fgLayer.add(citi);
       this.allGroup.add(citi);
+
+      citi.setData("isJoining", i < 10);
     }
 
     this.initialLoad = true;
