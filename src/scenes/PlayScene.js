@@ -23,7 +23,6 @@ import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
 import Vfx from "../util/Vfx";
 import Subtitles from "../util/Subtitles";
-import Citizen from "../gameobjects/Citizen";
 
 export class PlayScene extends Scene {
 
@@ -44,6 +43,7 @@ export class PlayScene extends Scene {
     this.birdGroup = this.add.group({runChildUpdate:true});
 
     this.allGroup = this.add.group({runChildUpdate: true});
+    this.groupCitizens = this.add.group();
     this.groupRocks = this.add.group();
     this.groupCollectibles = this.add.group();
     this.groupClaimFlags = this.add.group();
@@ -61,8 +61,8 @@ export class PlayScene extends Scene {
     this.shadowLayer = this.add.layer();
     this.bgLayer = this.add.layer();
     this.buildingsLayer = this.add.layer();
-    this.fgLayer = this.add.layer();
     this.animalLayer = this.add.layer();
+    this.fgLayer = this.add.layer();
 
     this.lane_1 = this.add.layer().setDepth(10);
     this.lane_2 = this.add.layer().setDepth(20);
@@ -176,19 +176,6 @@ export class PlayScene extends Scene {
     this.tutorial.load();
 
     this.spawnAllMaMFlags();
-
-    //  King (Harvest Moon) - FG Layer - Display name?
-    for (let i =0; i < 15; i++) {
-      
-      const x = Phaser.Math.Between(Vars.AREA_WIDTH * 3.1, Vars.AREA_WIDTH * 3.9);
-      const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_STORM_F1, Vars.SHEET_CITIZEN_STORM_F2, Vars.SHEET_CITIZEN_STORM_M1]);
-
-      const citi = new Citizen(this, x, Vars.GROUND_TOP, ss);
-      this.fgLayer.add(citi);
-      this.allGroup.add(citi);
-
-      citi.setData("isJoining", i < 10);
-    }
 
     this.initialLoad = true;
   }
@@ -593,6 +580,27 @@ export class PlayScene extends Scene {
     for (let locID of allClaimed) {
       this.spawnMaMFlags(locID);
     }
+  }
+
+  //  -
+
+  spawnCitizen(x, sheet) {
+    const citi = this.spawner.spawnCitizen(x, sheet);
+    return citi;
+  }
+
+  countCitizens() {
+    return this.groupCitizens.countActive();
+  }
+
+  countCitizensOfLoc(home) {
+    const fullCount = this.groupCitizens.getChildren();
+    return fullCount.filter(ci => ci.home === home).length;
+  }
+
+  countCitizensOfLocTribe(home, tribe) {
+    const fullCount = this.groupCitizens.getChildren();
+    return fullCount.filter(ci => ci.home === home && ci.tribe === tribe).length;
   }
   
   //  -

@@ -23,12 +23,6 @@ export default class P4 extends TutorialSequence {
 
     this
     .addStopSaving()  // Temp (dev)
-
-    .add(()=>{
-      player.x = Vars.AREA_WIDTH * 3.5;
-      return true;
-    })
-    .add(()=>false)
     
     // Stop all other characters - set to Duel mode
 
@@ -159,6 +153,30 @@ export default class P4 extends TutorialSequence {
     .addInstruction(Enum.STORY_4_CITIZEN_TRIALS)
 
     // All citizens display a icon and interact
+
+    .add(()=>{
+      player.x = Vars.AREA_WIDTH * 3.5;
+      return true;
+    })
+
+    .add(()=>{
+      for (let i =0; i < 15; i++) {
+        const x = Phaser.Math.Between(Vars.AREA_WIDTH * 3.1, Vars.AREA_WIDTH * 3.9);
+        const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_STORM_F1, Vars.SHEET_CITIZEN_STORM_F2, Vars.SHEET_CITIZEN_STORM_M1]);
+        const citi = scene.spawnCitizen(x, ss);
+        citi.setData("isJoining", i < 10);
+      }
+      return true;
+    })
+
+    .add(()=>{
+      const storm = scene.countCitizensOfLoc(Enum.LOC_STORM);
+      const mam = scene.countCitizensOfLocTribe(Enum.LOC_STORM, Enum.TRIBE_MAM);
+      return storm === mam;
+    })
+
+    .addWait(4000)
+    .addSpeakerAndWait(player, Icon.HOME, "The village is settled. Let us proceed.")
 
     .add(()=>{
       return false;

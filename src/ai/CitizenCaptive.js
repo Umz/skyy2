@@ -87,6 +87,9 @@ export default class CitizenCaptive extends ActionManager {
     }
     else {
       this.addActions(
+        new ActComplete(()=>{
+          sprite.setHome(0);
+        }),
         new ActMoveOffX(sprite, Vars.AREA_WIDTH * .5),
         new ActComplete(()=>{
           this.scene.tweens.add({

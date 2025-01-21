@@ -6,6 +6,7 @@ const LANCERS = [Vars.SHEET_PLAYER, Vars.SHEET_BLUE_BANDIT_LANCE, Vars.SHEET_BLU
 const INFANTRY = [Vars.SHEET_WILDMAN, Vars.SHEET_BLUE_BANDIT, Vars.SHEET_RED_BANDIT, Vars.SHEET_WILDMAN_CREW];
 const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY];
 const ADVISOR = [Vars.SHEET_LUNAR, Vars.SHEET_ARCHITECT];
+const SUPPLYMAN = [Vars.SHEET_MAM_SUPPLY];
 
 const CITIZENS = [
     Vars.SHEET_CITIZEN_MAM_KING,
@@ -55,9 +56,9 @@ export class Preloader extends Phaser.Scene {
             this.load.spritesheet(advisor, `spritesheets/${advisor}`, { frameWidth: 36, frameHeight:26});
         }
 
-        //for (let supplyman) : 38
-            //this.load.spritesheet(supplyman, `spritesheets/${supplyman}`, { frameWidth: 38, frameHeight:31});
-
+        for (let supplyman of SUPPLYMAN) {
+            this.load.spritesheet(supplyman, `spritesheets/${supplyman}`, { frameWidth: 38, frameHeight:31});
+        }
         
         // - BG Characters
         
@@ -215,6 +216,10 @@ export class Preloader extends Phaser.Scene {
 
         for (let advisor of ADVISOR) {
             this.createSpritesheetAnimation(advisor, data.advisor);
+        }
+
+        for (let supp of SUPPLYMAN) {
+            this.createSpritesheetAnimation(supp, data.supplyman);
         }
 
         // -

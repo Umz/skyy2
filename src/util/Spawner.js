@@ -9,6 +9,7 @@ import BlueMoon from "../ai/BlueMoon";
 import Wildman from "../ai/Wildman";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
+import Citizen from "../gameobjects/Citizen";
 import ClaimFlag from "../gameobjects/ClaimFlag";
 import Soldier from "../gameobjects/Soldier";
 
@@ -17,6 +18,7 @@ export default class Spawner {
 
   constructor(scene) {
     this.scene = scene;
+    
     this.groupSoldiers = scene.groupSoldiers;
     this.groupAllies = scene.groupAllies;
     this.groupEnemies = scene.groupEnemies;
@@ -110,6 +112,23 @@ export default class Spawner {
     const enemy = this.spawnSoldierType(deployX, type, Enum.TEAM_ENEMY);
     this.groupEnemies.add(enemy);
     return enemy;
+  }
+
+  //  -
+
+  spawnCitizen(pX, sheet) {
+
+    const allGroup = this.scene.allGroup;
+    const citGroup = this.scene.groupCitizens;
+    const layer = this.scene.animalLayer;
+
+    const citi = new Citizen(this.scene, pX, Vars.GROUND_TOP, sheet);
+
+    allGroup.add(citi);
+    citGroup.add(citi);
+    layer.add(citi);
+
+    return citi;
   }
 
   //  -

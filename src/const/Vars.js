@@ -21,6 +21,7 @@ const Vars = {
   SHEET_MAM_LANCER: 'mam_lancer_sheet',
   SHEET_MAM_INFANTRY: 'mam_infantry_sheet',
   SHEET_MAM_HEAVY: "Heavy_Infantry_MaM.png",
+  SHEET_MAM_SUPPLY: "Supplyman_MaM.png",
 
   SHEET_BLUE_BANDIT: 'Infantry_Blue_Bandit.png',
   SHEET_BLUE_BANDIT_LANCE: 'Lancer_Blue_Bandit.png',
