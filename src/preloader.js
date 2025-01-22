@@ -57,7 +57,7 @@ export class Preloader extends Phaser.Scene {
         }
 
         for (let supplyman of SUPPLYMAN) {
-            this.load.spritesheet(supplyman, `spritesheets/${supplyman}`, { frameWidth: 38, frameHeight:31});
+            this.load.spritesheet(supplyman, `spritesheets/${supplyman}`, { frameWidth: 37, frameHeight:31});
         }
         
         // - BG Characters

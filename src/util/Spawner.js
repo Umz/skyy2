@@ -6,6 +6,7 @@ import Bandit3 from "../ai/Bandit3";
 import BanditBoss from "../ai/BanditBoss";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
+import NightTrain from "../ai/Nighttrain";
 import Wildman from "../ai/Wildman";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
@@ -154,6 +155,7 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_PLAYER, {ctrl: Blank, sheet:Vars.SHEET_PLAYER}],
   [Enum.SOLDIER_WILDMAN, {ctrl: Wildman, sheet:Vars.SHEET_WILDMAN}],
   [Enum.SOLDIER_BLUEMOON, {ctrl: BlueMoon, sheet:Vars.SHEET_WILDMAN}],
+  [Enum.SOLDIER_NIGHTTRAIN, {ctrl: NightTrain, sheet:Vars.SHEET_MAM_SUPPLY}],
 
   [Enum.SOLDIER_ALLY_HEAVY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_HEAVY}],
   [Enum.SOLDIER_ALLY_INFANTRY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_INFANTRY}],

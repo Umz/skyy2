@@ -12,6 +12,8 @@ const data = {
   playMins: 0,
   playHours: 0,
 
+  silica: 0,
+
   playerX: Vars.AREA_WIDTH * 1.5,
   playerLane: 2,
   hasBlueMoon: false,
@@ -49,9 +51,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-
     this.DevData(3);
-
     console.log("Loaded data", data)
 
     return data;
@@ -61,9 +61,10 @@ export default class SaveData {
     switch (dataset) {
       case 3:
         data.hasBlueMoon = true;
-        data.playerX = Vars.AREA_WIDTH * 2;
+        data.playerX = Vars.AREA_WIDTH * 4.5;
         data.tutorialSequenceStep = 0;
-        data.tutorialNumber = 4;
+        data.tutorialNumber = 6;
+        data.silica = 0;
         break;
     
       case 2:

@@ -539,7 +539,7 @@ export class PlayScene extends Scene {
 
   spawnRocks(amt) {
 
-    for (let i=0; i<amt; i++) {i
+    for (let i=0; i<amt; i++) {
 
       const areaX = this.mapTracker.getAreaLeftX();
       const minX = areaX + Vars.AREA_WIDTH * .15;
@@ -721,6 +721,7 @@ export class PlayScene extends Scene {
         scaleY: {from:1, to:1.5},
         alpha: {from:1, to:0},
         onComplete: ()=>{
+          SaveData.Data.silica ++;
           rock.destroy();
         }
       });
