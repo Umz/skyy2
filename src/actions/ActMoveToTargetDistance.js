@@ -22,7 +22,6 @@ export default class ActMoveToTargetDistance extends Action {
     else {
       sprite.stopMove();
       sprite.faceX(target.x);
-      
       this.setComplete();
     }
   }

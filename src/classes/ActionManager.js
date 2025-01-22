@@ -1,3 +1,5 @@
+import ActComplete from "../actions/ActComplete";
+
 /** Handles all active actions for a Sprite */
 export default class ActionManager {
 
@@ -41,12 +43,12 @@ export default class ActionManager {
   setDefaultActions() {}
 
   addAction(action) {
-    this.actionsArray.push(action);
+    this.actionsArray.push(new ActComplete(), action);
     return action;
   }
 
   addActions(...actions) {
-    this.actionsArray.push(...actions);
+    this.actionsArray.push(new ActComplete(), ...actions);
   }
 
   insertAction(action) {
@@ -107,10 +109,23 @@ export default class ActionManager {
   clearAllActions() {
     this.clearActions();
     this.clearBackgroundActions();
+    return this;
   }
 
   getCurrentAction() {
     return this.actionsArray[0] || null;
+  }
+
+  //  -
+
+  pause() {
+    this.actionsActive = false;
+    this.backgroundActive = false;
+  }
+
+  resume() {
+    this.actionsActive = true;
+    this.backgroundActive = true;
   }
 
 }

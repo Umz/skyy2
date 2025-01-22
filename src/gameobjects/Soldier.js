@@ -242,6 +242,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     if (!this.isState(Enum.SS_HURT)) {
       this.hp = Math.max(0, this.hp - 1);
+      this.isDefending = false;
       if (this.hp === 0) {
         this.stopTweening();
         this.destroy(true);

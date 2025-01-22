@@ -7,12 +7,13 @@ export default class ViewSoldierFlash extends Action {
 
   constructor(sprite) {
     super(Vars.VIEW_SOLDIER_FLASH, sprite);
-    this.timer = new Counter(200).setLooping(false);
+    this.timer = new Counter(100).setLooping(false);
   }
 
   update(time, delta) {
 
     //  Flash when hit or collisions
+    //  Any state, change, reset count and flash
 
     switch (this.sprite.state) {
 
@@ -35,6 +36,7 @@ export default class ViewSoldierFlash extends Action {
   }
 
   flash(delta, col, isFill = false) {
+    this.timer.resetCount();
     if (this.timer.update(delta)) {
       this.sprite.clearTint();
     }

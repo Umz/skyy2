@@ -11,7 +11,7 @@ export default class ActComplete extends Action {
   update(time, delta) {
     if (this.fn) {
       this.fn();
-      this.setComplete();
     }
+    this.setComplete();
   }
 }

@@ -17,7 +17,10 @@
       "bf8": "Perhaps I misjudged you.",
 
       "mam1": "Who dares to attack our tribe!?",
-      "mam2": "Red Face!"
+      "mam2": "Red Face!",
+
+      "rose1": "Hear Me! Moon Chief has defeated Red Face in a Duel!",
+      "rose2": "Now cut down the rest of the scum."
     },
     "Wildman": {
 
@@ -45,7 +48,14 @@
     },
     "RedFace": {
       "mam1": "Ah.. Chief. I thought you would be gone for longer!",
-      "retreat": "Hah. I guess I better retreat"
+      "retreat": "Hah. I guess I better retreat",
+
+      "rose1": "Hahaha. You think you can kill me here! This is MY forest!",
+      "rose2": "Go, go! Crimson Bandits! Stop them!",
+      "rose3": "You're still coming! Then come!",
+      "rose4": "Well well.. Fine. I guess it's round 2, Chief!",
+
+      "death": "Hah. I guess it's over..."
     },
 
     "Soldier": {

@@ -14,9 +14,14 @@ const Vars = {
   SHEET_PLAYER: 'Lancer_Player.png',
   SHEET_WILDMAN: "Infantry_Wildman.png",
 
+  SHEET_WILDMAN_CREW: "Infantry_Wildman_Crew.png",
+  SHEET_ARCHITECT: "Advisor_Architect.png",
+  SHEET_LUNAR: "Advisor_Lunar.png",
+
   SHEET_MAM_LANCER: 'mam_lancer_sheet',
   SHEET_MAM_INFANTRY: 'mam_infantry_sheet',
   SHEET_MAM_HEAVY: "Heavy_Infantry_MaM.png",
+  SHEET_MAM_SUPPLY: "Supplyman_MaM.png",
 
   SHEET_BLUE_BANDIT: 'Infantry_Blue_Bandit.png',
   SHEET_BLUE_BANDIT_LANCE: 'Lancer_Blue_Bandit.png',
@@ -25,6 +30,11 @@ const Vars = {
   SHEET_RED_FACE: "HeavyI_RedFace.png",
   SHEET_RED_HEAVY_BANDIT: "Heavy_Infantry_RF.png",
   SHEET_RED_BANDIT: "Infantry_RF.png",
+
+  SHEET_CITIZEN_MAM_KING: "Citizen_MaM_King.png",
+  SHEET_CITIZEN_STORM_F1: "Citizen_Storm_F1.png",
+  SHEET_CITIZEN_STORM_F2: "Citizen_Storm_F2.png",
+  SHEET_CITIZEN_STORM_M1: "Citizen_Storm_M1.png",
 
   //  -
 
@@ -52,6 +62,12 @@ const Vars = {
   ANIM_ATTACK: '-attack',
   ANIM_DEFEND: '-defend',
 
+  ANIM_CIT_IDLE: "-idle",
+  ANIM_CIT_IDLE_SIDE: "-idle-side",
+  ANIM_CIT_WALK: "-walk",
+  ANIM_CIT_DIGGING: "-dig-side",
+  ANIM_CIT_BOW: "-bow",
+
   ANIM_BIRD_FLY: 'bird-fly',
 
   ANIM_FLAG_GR: 'flag-gr',
@@ -64,17 +80,23 @@ const Vars = {
   ANIM_FLAG_ELITE: 'flag-gr-golden-elite',
   ANIM_FLAG_KING: 'flag-gr-kings',
 
+  //  - Action Names -
+
   ACT_MOVE_TO_TARGET_DISTANCE: "action_soldier_move_to_target_within_distance",
   ACT_MOVE_TO_TARGET_OFFSET: "action_soldier_move_to_target_with_offset",
   ACT_MOVE_TO_X: "action_soldier_move_to_x_position",
+  ACT_MOVE_OFF_X: "action_soldier_move_offset_x",
   ACT_MATCH_LANE: "action_soldier_move_to_same_lane",
   ACT_SEARCH_FOR_TARGET: "action_search_for_target",
+  ACT_SEARCH_FOR_RANDOM: "action_search_for_random_target",
+  ACT_SEARCH_FOR_FURTHEST: "action_search_for_furthest_target",
+  ACT_SEARCH_FOR_SAME_LANE: "action_search_for_target_same_lane",
   ACT_WAIT_TIME: "action_wait_for_timer",
-  LISTEN_CONDITION: "action_wait_for_condition",
   ACT_ATTACK: "action_soldier_attack",
   ACT_DEFEND: "action_soldier_defend",
   ACT_COMPLETE: "action_complete_instant",
-
+  
+  LISTEN_CONDITION: "listener_for_condition",
   LISTEN_PLAYER_DISTANCE: "listener_player_distance",
   LISTEN_AVOID_OVERLAP: "listener_avoid_overlap",
   LISTEN_MATCH_LANE: "listener_match_lane",
@@ -84,6 +106,7 @@ const Vars = {
   VIEW_SOLDIER_FLASH: "view_soldier_flash",
   VIEW_SOLDIER_LANE: "view_soldier_lane_tint",
   VIEW_ANIMATION: "view_soldier_animations",
+  VIEW_CITIZEN_ANIMATION: "view_citizen_animations",
   VIEW_CROWD_CONTROL: "view_crowding_hide_soldiers",
 
   WORLD_LENGTHS: 3,

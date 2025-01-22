@@ -2,6 +2,19 @@ import SaveData from "./util/SaveData";
 import Vars from "./const/Vars";
 import Sfx from "./const/Sfx";
 
+const LANCERS = [Vars.SHEET_PLAYER, Vars.SHEET_BLUE_BANDIT_LANCE, Vars.SHEET_BLUE_BANDIT_BOSS];
+const INFANTRY = [Vars.SHEET_WILDMAN, Vars.SHEET_BLUE_BANDIT, Vars.SHEET_RED_BANDIT, Vars.SHEET_WILDMAN_CREW];
+const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY];
+const ADVISOR = [Vars.SHEET_LUNAR, Vars.SHEET_ARCHITECT];
+const SUPPLYMAN = [Vars.SHEET_MAM_SUPPLY];
+
+const CITIZENS = [
+    Vars.SHEET_CITIZEN_MAM_KING,
+    Vars.SHEET_CITIZEN_STORM_F1,
+    Vars.SHEET_CITIZEN_STORM_F2,
+    Vars.SHEET_CITIZEN_STORM_M1
+]
+
 export class Preloader extends Phaser.Scene {
 
     constructor() {
@@ -27,10 +40,6 @@ export class Preloader extends Phaser.Scene {
 
         //  SOLDIER Spritesheets
 
-        const LANCERS = [Vars.SHEET_PLAYER, Vars.SHEET_BLUE_BANDIT_LANCE, Vars.SHEET_BLUE_BANDIT_BOSS];
-        const INFANTRY = [Vars.SHEET_WILDMAN, Vars.SHEET_BLUE_BANDIT, Vars.SHEET_RED_BANDIT];
-        const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY];
-
         for (let lancer of LANCERS) {
             this.load.spritesheet(lancer, `spritesheets/${lancer}`, { frameWidth: 43, frameHeight: 30});
         }
@@ -43,11 +52,19 @@ export class Preloader extends Phaser.Scene {
             this.load.spritesheet(heavy, `spritesheets/${heavy}`, { frameWidth: 38, frameHeight:34});
         }
 
-        //this.load.spritesheet(Vars.SHEET_GR_FLAGGER, 'spritesheets/Adviser_GR.png', { frameWidth: 36, frameHeight:26});
+        for (let advisor of ADVISOR) {
+            this.load.spritesheet(advisor, `spritesheets/${advisor}`, { frameWidth: 36, frameHeight:26});
+        }
+
+        for (let supplyman of SUPPLYMAN) {
+            this.load.spritesheet(supplyman, `spritesheets/${supplyman}`, { frameWidth: 37, frameHeight:31});
+        }
         
         // - BG Characters
         
-        this.load.spritesheet("king", 'spritesheets/Beard_King.png', { frameWidth: 34, frameHeight: 36});
+        for (let citi of CITIZENS) {
+            this.load.spritesheet(citi, `spritesheets/${citi}`, { frameWidth: 34, frameHeight:36});
+        }
         
         // - BG animals
         
@@ -124,15 +141,6 @@ export class Preloader extends Phaser.Scene {
 
         this.createGraphics();
 
-        //  Citizens - King Idle (walk, mine, cheer)
-        //  MaM Banner Flapping
-        this.anims.create({
-            key: 'king_idle',
-            frames: this.anims.generateFrameNumbers('king', { start: 0, end: 5 }),
-            frameRate: 6,
-            repeat: -1
-        });
-
         //  MaM Banner Flapping
         this.anims.create({
             key: 'banner_mam',
@@ -194,10 +202,6 @@ export class Preloader extends Phaser.Scene {
 
         const data = this.cache.json.get('sprite_configs');
 
-        const LANCERS = [Vars.SHEET_PLAYER, Vars.SHEET_BLUE_BANDIT_LANCE, Vars.SHEET_BLUE_BANDIT_BOSS];
-        const INFANTRY = [Vars.SHEET_WILDMAN, Vars.SHEET_BLUE_BANDIT, Vars.SHEET_RED_BANDIT];
-        const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY];
-
         for (let lancer of LANCERS) {
             this.createSpritesheetAnimation(lancer, data.lancer);
         }
@@ -208,6 +212,20 @@ export class Preloader extends Phaser.Scene {
 
         for (let heavy of H_INFANTRY) {
             this.createSpritesheetAnimation(heavy, data.heavyInfantry);
+        }
+
+        for (let advisor of ADVISOR) {
+            this.createSpritesheetAnimation(advisor, data.advisor);
+        }
+
+        for (let supp of SUPPLYMAN) {
+            this.createSpritesheetAnimation(supp, data.supplyman);
+        }
+
+        // -
+
+        for (let citi of CITIZENS) {
+            this.createSpritesheetAnimation(citi, data.citizen);
         }
 
         //  -

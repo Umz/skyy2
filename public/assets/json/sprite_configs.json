@@ -22,6 +22,20 @@
     {"suffix":"-walk", "start":9, "end":14, "frameRate": 15, "repeat":-1},
     {"suffix":"-attack", "start":18, "end":25, "frameRate": 26, "repeat":0},
     {"suffix":"-defend", "start":20, "end":21, "frameRate": 4, "repeat":-1}
+  ],
+  "supplyman": [
+    {"suffix":"-idle", "start":0, "end":3, "frameRate": 8, "repeat":-1},
+    {"suffix":"-walk", "start":11, "end":16, "frameRate": 14, "repeat":-1},
+    {"suffix":"-attack", "start":22, "end":32, "frameRate": 8, "repeat":0},
+    {"suffix":"-defend", "start":25, "end":25, "frameRate": 4, "repeat":-1}
+  ],
+
+  "citizen": [
+    {"suffix":"-idle", "start":0, "end":5, "frameRate": 6, "repeat":-1},
+    {"suffix":"-idle-side", "start":12, "end":17, "frameRate": 6, "repeat":-1},
+    {"suffix":"-walk", "start":30, "end":35, "frameRate": 6, "repeat":-1},
+    {"suffix":"-dig-side", "start":48, "end":52, "frameRate": 5, "repeat":-1},
+    {"suffix":"-bow", "start":72, "end":74, "frameRate": 4, "repeat":0}
   ]
 }
 

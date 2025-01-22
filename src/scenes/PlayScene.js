@@ -43,6 +43,7 @@ export class PlayScene extends Scene {
     this.birdGroup = this.add.group({runChildUpdate:true});
 
     this.allGroup = this.add.group({runChildUpdate: true});
+    this.groupCitizens = this.add.group();
     this.groupRocks = this.add.group();
     this.groupCollectibles = this.add.group();
     this.groupClaimFlags = this.add.group();
@@ -60,8 +61,8 @@ export class PlayScene extends Scene {
     this.shadowLayer = this.add.layer();
     this.bgLayer = this.add.layer();
     this.buildingsLayer = this.add.layer();
-    this.fgLayer = this.add.layer();
     this.animalLayer = this.add.layer();
+    this.fgLayer = this.add.layer();
 
     this.lane_1 = this.add.layer().setDepth(10);
     this.lane_2 = this.add.layer().setDepth(20);
@@ -131,9 +132,12 @@ export class PlayScene extends Scene {
     Subtitles.SetScene(this);
     Subtitles.SetScript(allScripts.EN);
 
+    this.crowdRect = new Phaser.Geom.Rectangle(0, 0, 100, 24);
     this.isPlayerCrowded = false;
 
     this.test = function() {
+      this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
+      //this.graphics.strokeRectShape(this.crowdRect);
     }
   }
 
@@ -172,11 +176,6 @@ export class PlayScene extends Scene {
     this.tutorial.load();
 
     this.spawnAllMaMFlags();
-
-    //  King (Harvest Moon) - Display name?
-    const king = this.add.sprite(Vars.AREA_WIDTH * 1.48, Vars.GROUND_TOP, 'king').setOrigin(.5, 1);
-    king.play('king_idle');
-    this.fgLayer.add(king);
 
     this.initialLoad = true;
   }
@@ -324,11 +323,10 @@ export class PlayScene extends Scene {
   }
 
   updateCrowding() {
-    let overlapCount = 0;
-    this.physics.overlap(this.player, this.groupSoldiers, (player, soldier) => {
-      overlapCount++;
-    });
-    this.isPlayerCrowded = overlapCount >= 6;
+    this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
+    const rect = this.crowdRect;
+    const bodies = this.physics.overlapRect(rect.x, rect.y, rect.width, rect.height);
+    this.isPlayerCrowded = bodies.length >= 6;
   }
 
   //  -----------------------------------------------------------------------------------------------------
@@ -541,7 +539,7 @@ export class PlayScene extends Scene {
 
   spawnRocks(amt) {
 
-    for (let i=0; i<amt; i++) {i
+    for (let i=0; i<amt; i++) {
 
       const areaX = this.mapTracker.getAreaLeftX();
       const minX = areaX + Vars.AREA_WIDTH * .15;
@@ -582,6 +580,27 @@ export class PlayScene extends Scene {
     for (let locID of allClaimed) {
       this.spawnMaMFlags(locID);
     }
+  }
+
+  //  -
+
+  spawnCitizen(x, sheet) {
+    const citi = this.spawner.spawnCitizen(x, sheet);
+    return citi;
+  }
+
+  countCitizens() {
+    return this.groupCitizens.countActive();
+  }
+
+  countCitizensOfLoc(home) {
+    const fullCount = this.groupCitizens.getChildren();
+    return fullCount.filter(ci => ci.home === home).length;
+  }
+
+  countCitizensOfLocTribe(home, tribe) {
+    const fullCount = this.groupCitizens.getChildren();
+    return fullCount.filter(ci => ci.home === home && ci.tribe === tribe).length;
   }
   
   //  -
@@ -702,6 +721,7 @@ export class PlayScene extends Scene {
         scaleY: {from:1, to:1.5},
         alpha: {from:1, to:0},
         onComplete: ()=>{
+          SaveData.Data.silica ++;
           rock.destroy();
         }
       });

@@ -1,12 +1,16 @@
 import AllyHeavy1 from "../ai/AllyHeavy1";
+import AllyLight1 from "../ai/AllyLight1";
 import Bandit1 from "../ai/Bandit1";
 import Bandit2 from "../ai/Bandit2";
+import Bandit3 from "../ai/Bandit3";
 import BanditBoss from "../ai/BanditBoss";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
+import NightTrain from "../ai/Nighttrain";
 import Wildman from "../ai/Wildman";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
+import Citizen from "../gameobjects/Citizen";
 import ClaimFlag from "../gameobjects/ClaimFlag";
 import Soldier from "../gameobjects/Soldier";
 
@@ -15,6 +19,7 @@ export default class Spawner {
 
   constructor(scene) {
     this.scene = scene;
+    
     this.groupSoldiers = scene.groupSoldiers;
     this.groupAllies = scene.groupAllies;
     this.groupEnemies = scene.groupEnemies;
@@ -112,6 +117,23 @@ export default class Spawner {
 
   //  -
 
+  spawnCitizen(pX, sheet) {
+
+    const allGroup = this.scene.allGroup;
+    const citGroup = this.scene.groupCitizens;
+    const layer = this.scene.animalLayer;
+
+    const citi = new Citizen(this.scene, pX, Vars.GROUND_TOP, sheet);
+
+    allGroup.add(citi);
+    citGroup.add(citi);
+    layer.add(citi);
+
+    return citi;
+  }
+
+  //  -
+
   spawnClaimerFlag(pX) {
     return new ClaimFlag(this.scene, pX);
   }
@@ -133,10 +155,12 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_PLAYER, {ctrl: Blank, sheet:Vars.SHEET_PLAYER}],
   [Enum.SOLDIER_WILDMAN, {ctrl: Wildman, sheet:Vars.SHEET_WILDMAN}],
   [Enum.SOLDIER_BLUEMOON, {ctrl: BlueMoon, sheet:Vars.SHEET_WILDMAN}],
+  [Enum.SOLDIER_NIGHTTRAIN, {ctrl: NightTrain, sheet:Vars.SHEET_MAM_SUPPLY}],
 
   [Enum.SOLDIER_ALLY_HEAVY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_HEAVY}],
   [Enum.SOLDIER_ALLY_INFANTRY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_INFANTRY}],
   [Enum.SOLDIER_ALLY_LANCER1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_LANCER}],
+  [Enum.SOLDIER_ALLY_WILDMAN, {ctrl: AllyLight1, sheet:Vars.SHEET_WILDMAN_CREW}],
 
   [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BLUE_BANDIT}],
   [Enum.SOLDIER_BANDIT2, {ctrl: Bandit2, sheet:Vars.SHEET_BLUE_BANDIT_LANCE}],
@@ -144,5 +168,6 @@ const SoldierMap = new Map([
 
   [Enum.SOLDIER_RED1, {ctrl: Bandit1, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
+  [Enum.SOLDIER_RED3, {ctrl: Bandit3, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_REDFACE, {ctrl: BanditBoss, sheet:Vars.SHEET_RED_FACE}],
 ]);
