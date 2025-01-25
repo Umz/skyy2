@@ -78,6 +78,28 @@
             }
         }
 
+        #duel-text {
+            display: none;
+            letter-spacing: 1rem;
+            font-size: 2rem;
+            text-transform: uppercase;
+            text-align: center;
+            top: 45%;
+            position: relative;
+            color: rgb(255, 66, 66);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, .7);
+            animation: 1s ease-in-out flash-duel-text infinite;
+        }
+
+        @keyframes flash-duel-text {
+            0%, 100% {
+                color: red;
+            }
+            50% {
+                color: rgb(255, 80, 80);
+            }
+        }
+
     </style>
 
 </head>
@@ -106,6 +128,10 @@
     <div id="story-container" class="page-container flex-center index-3">
         <div id="storybox" class="hidden">
         </div>
+    </div>
+
+    <div id="duel-container" class="page-container index-5">
+        <h2 id="duel-text" class="">- DUEL -</h2>
     </div>
 
     <div id="dialogue-container" class="page-container flex-center index-4">

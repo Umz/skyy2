@@ -161,7 +161,7 @@ export default class RedDuel extends ActionManager {
     const tar = this.player;
 
     const moveDistance = 120;
-    const centerX = Vars.AREA_WIDTH * 3.5;
+    const centerX = Vars.AREA_WIDTH * 3;
     const destX = Phaser.Math.Between(centerX - moveDistance, centerX + moveDistance);
     const destLane = getOtherLane(tar.lane);
 

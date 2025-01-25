@@ -16,6 +16,12 @@ export function getAnyEnemyWithinRange(sprite, maxDistance) {
   return getAnySpriteInGroup(sprite, group, maxDistance);
 }
 
+/** Get any soldier within range */
+export function getClosestSoldierInRange(sprite, range) {
+  const scene = sprite.scene;
+  return getClosestToSpriteInGroup(sprite, scene.groupSoldiers, range);
+}
+
 /** Get X position close to point with minimum gap distance */
 export function GetCloseX(fromX, minDist, maxDist, isAnySide = false) {
   
@@ -27,6 +33,12 @@ export function GetCloseX(fromX, minDist, maxDist, isAnySide = false) {
 
   const closeX = fromX + distance;
   return closeX;
+}
+
+/** Get the range randomly positive or negative */
+export function getPlusMinusRange(min, max) {
+  const num = Phaser.Math.Between(min, max);
+  return getPlusOrMinus(num);
 }
 
 export function getPlusOrMinus(num) {

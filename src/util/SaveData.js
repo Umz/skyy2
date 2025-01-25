@@ -51,7 +51,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-    this.DevData(3);
+    this.DevData(4);
     console.log("Loaded data", data)
 
     return data;
@@ -59,11 +59,20 @@ export default class SaveData {
 
   static DevData(dataset = 0) {
     switch (dataset) {
+
+      case 4:
+        data.hasBlueMoon = true;
+        //data.playerX = Vars.AREA_WIDTH * 1.8;
+        data.tutorialSequenceStep = 40;
+        data.tutorialNumber = 4;
+        data.claimed = [1,2,3];
+        break;
+
       case 3:
         data.hasBlueMoon = true;
         data.playerX = Vars.AREA_WIDTH * 4.5;
         data.tutorialSequenceStep = 0;
-        data.tutorialNumber = 6;
+        data.tutorialNumber = 7;
         data.silica = 0;
         break;
     

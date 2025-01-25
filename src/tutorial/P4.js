@@ -1,3 +1,4 @@
+import CitizenBattle from "../ai/CitizenBattle";
 import RedDuel from "../ai/RedDuel";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
@@ -15,24 +16,18 @@ export default class P4 extends TutorialSequence {
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
-    const roseX = Vars.AREA_WIDTH * 2;
-    const stormX = Vars.AREA_WIDTH * 3;
+    const roseForestX = Vars.AREA_WIDTH * 2;
+    const stormVillageX = Vars.AREA_WIDTH * 3;
 
     this.enemies = [];
     this.allies = [];
 
-    this
-    .addStopSaving()  // Temp (dev)
-    
-    // Stop all other characters - set to Duel mode
+    //  - Take down Red Face and claim Storm Village
 
-    .add(()=>{
-      SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_WILDMAN);
-      return true;
-    })
+    this
 
     .addIcon(player, Icon.ANGER, 3000)
-    .add(()=> player.x > roseX + 100)
+    .add(()=> player.x > roseForestX + 100)
     .addIcon(player, Icon.BANNER, 7000)
 
     .addDialogue("Red Face", script.RedFace.rose1, 7000)
@@ -48,7 +43,7 @@ export default class P4 extends TutorialSequence {
 
     .add(()=>{
       this.spawnConstantRight(6, 1);
-      return player.x >= roseX + Vars.AREA_WIDTH * .4;
+      return player.x >= roseForestX + Vars.AREA_WIDTH * .4;
     })
     .addDialogue("Red Face", script.RedFace.rose2, 5000)
 
@@ -71,17 +66,36 @@ export default class P4 extends TutorialSequence {
 
     .add(()=>{
       this.spawnConstantRight(4, 1);
-      return player.x >= roseX + Vars.AREA_WIDTH * .7;
+      return player.x >= roseForestX + Vars.AREA_WIDTH * .7;
     })
     .addDialogue("Red Face", script.RedFace.rose3, 5000)
 
+    // - Spawn Civilians -
+
+    .add(()=>{
+      return player.x >= roseForestX + Vars.AREA_WIDTH * .8;
+    })
+    .add(()=>{
+      for (let i =0; i < 15; i++) {
+        const x = Phaser.Math.Between(Vars.AREA_WIDTH * 3.1, Vars.AREA_WIDTH * 3.9);
+        const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_STORM_F1, Vars.SHEET_CITIZEN_STORM_F2, Vars.SHEET_CITIZEN_STORM_M1]);
+        const citi = scene.spawnCitizen(x, ss);
+        citi.setController(new CitizenBattle());
+        citi.setData("isJoining", i < 10);
+      }
+      return true;
+    })
+
     .add(()=>{
       this.spawnConstantRight(6, 1);
-      return player.x >= stormX;
+      return player.x >= stormVillageX;
     })
-    
+
     // Start Duel
 
+    .addSave()
+    .addStopSaving()
+    
     .addRedFaceForDuel()
     .add(()=>{
       this.redface.speak(Icon.SPEAR, script.RedFace.rose4, 6000);
@@ -104,11 +118,17 @@ export default class P4 extends TutorialSequence {
       }
       return true;
     })
+    .addWaitForDialogue()
+    .addShowDuelDOM()
 
     .add(()=>{
       return this.redface.hp <= 0;
     })
+    .addHideDuelDOM()
     .addDialogueAndWait("Red Face", script.RedFace.death, 7000)
+
+    .addSave()
+    .addStartSaving()
     .addWait(2000)
 
     .addSpeakerAndWait(player, Icon.BANNER, script.MoonChief.rose1, 7000)
@@ -208,7 +228,8 @@ export default class P4 extends TutorialSequence {
   addEnemiesRight(amt, ...types) {
     this.add(()=>{
       const pX = SequenceHelper.GetCameraRight() + Phaser.Math.Between(10, 70);
-      SequenceHelper.SpawnEnemiesAt(pX, amt, types);
+      //SequenceHelper.SpawnEnemiesAt(pX, amt, types);
+      SequenceHelper.SpawnEnemiesAt(pX, 1, types);
       return true;
     });
     return this;
@@ -217,9 +238,11 @@ export default class P4 extends TutorialSequence {
   spawnConstantRight(min, add) {
     const { scene } = this;
     const enemyCount = scene.countEnemies();
-    if (enemyCount < min) {
+    //if (enemyCount < min) {
+    if (enemyCount < 1) {
       const pX = SequenceHelper.GetCameraRight() + Phaser.Math.Between(10, 70);
-      SequenceHelper.SpawnEnemiesAt(pX, add, [Enum.SOLDIER_RED1, Enum.SOLDIER_RED2, Enum.SOLDIER_RED3]);
+      SequenceHelper.SpawnEnemiesAt(pX, 1, [Enum.SOLDIER_RED1, Enum.SOLDIER_RED2, Enum.SOLDIER_RED3]);
+      //SequenceHelper.SpawnEnemiesAt(pX, add, [Enum.SOLDIER_RED1, Enum.SOLDIER_RED2, Enum.SOLDIER_RED3]);
       return true;
     }
   }

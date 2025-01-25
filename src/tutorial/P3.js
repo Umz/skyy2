@@ -88,7 +88,7 @@ export default class P3 extends TutorialSequence {
     .addInstruction(Enum.STORY_3_CHASE_REDFACE)
   }
 
-  //  -
+  //  ============================================================================
 
   spawnRedFace() {
     const camera = this.scene.cameras.main;
