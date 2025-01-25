@@ -19,6 +19,7 @@ export default class P4 extends TutorialSequence {
 
     const roseForestX = Vars.AREA_WIDTH * 2;
     const stormVillageX = Vars.AREA_WIDTH * 3;
+    const bossName = "Red Face";
 
     this.enemies = [];
     this.allies = [];
@@ -33,7 +34,7 @@ export default class P4 extends TutorialSequence {
 
     .addTitle("Entering Rose Forest -----")
 
-    .addDialogue("Red Face", script.RedFace.rose1, 7000)
+    .addDialogue(bossName, script.RedFace.rose1, 7000)
     .add(()=>{
       SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_HEAVY1);
       SequenceHelper.SpawnAlly(player.x - 48, Enum.SOLDIER_ALLY_HEAVY1);
@@ -47,7 +48,7 @@ export default class P4 extends TutorialSequence {
       this.spawnConstantRight(6, 1);
       return player.x >= roseForestX + Vars.AREA_WIDTH * .4;
     })
-    .addDialogue("Red Face", script.RedFace.rose2, 5000)
+    .addDialogue(bossName, script.RedFace.rose2, 5000)
 
     .addTitle("Half way point in Rose Forest -----")
 
@@ -72,7 +73,7 @@ export default class P4 extends TutorialSequence {
       this.spawnConstantRight(4, 1);
       return player.x >= roseForestX + Vars.AREA_WIDTH * .7;
     })
-    .addDialogue("Red Face", script.RedFace.rose3, 5000)
+    .addDialogue(bossName, script.RedFace.rose3, 5000)
 
     .addTitle("Spawning Civilians for Storm Village -----")
 
@@ -131,7 +132,7 @@ export default class P4 extends TutorialSequence {
       return this.redface.hp <= 0;
     })
     .addHideDuelDOM()
-    .addDialogueAndWait("Red Face", script.RedFace.death, 7000)
+    .addDialogueAndWait(bossName, script.RedFace.death, 7000)
 
     .addTitle("Ending the Duel -----")
 
@@ -226,8 +227,7 @@ export default class P4 extends TutorialSequence {
   addEnemiesRight(amt, ...types) {
     this.add(()=>{
       const pX = SequenceHelper.GetCameraRight() + Phaser.Math.Between(10, 70);
-      //SequenceHelper.SpawnEnemiesAt(pX, amt, types);
-      SequenceHelper.SpawnEnemiesAt(pX, 1, types);
+      SequenceHelper.SpawnEnemiesAt(pX, amt, types);
       return true;
     });
     return this;
@@ -236,11 +236,9 @@ export default class P4 extends TutorialSequence {
   spawnConstantRight(min, add) {
     const { scene } = this;
     const enemyCount = scene.countEnemies();
-    //if (enemyCount < min) {
-    if (enemyCount < 1) {
+    if (enemyCount < min) {
       const pX = SequenceHelper.GetCameraRight() + Phaser.Math.Between(10, 70);
-      SequenceHelper.SpawnEnemiesAt(pX, 1, [Enum.SOLDIER_RED1, Enum.SOLDIER_RED2, Enum.SOLDIER_RED3]);
-      //SequenceHelper.SpawnEnemiesAt(pX, add, [Enum.SOLDIER_RED1, Enum.SOLDIER_RED2, Enum.SOLDIER_RED3]);
+      SequenceHelper.SpawnEnemiesAt(pX, add, [Enum.SOLDIER_RED1, Enum.SOLDIER_RED2, Enum.SOLDIER_RED3]);
       return true;
     }
   }

@@ -89,9 +89,13 @@ export default class CitizenCaptive extends ActionManager {
     if (isJoining) {
       this.addActions(
         new ActComplete(()=>{
+
           sprite.setTribe(Enum.TRIBE_MAM);
           const controller = new CitizenController();
           sprite.setController(controller);
+
+          const index = SaveData.Data.citizens.findIndex(item => item.uid === sprite.uid);
+          SaveData.Data.citizens[index] = sprite.saveData;
         })
       )
     }
