@@ -1,4 +1,5 @@
 import CitizenBattle from "../ai/CitizenBattle";
+import CitizenCaptive from "../ai/CitizenCaptive";
 import RedDuel from "../ai/RedDuel";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
@@ -22,7 +23,7 @@ export default class P4 extends TutorialSequence {
     this.enemies = [];
     this.allies = [];
 
-    //  - Take down Red Face and claim Storm Village
+    //  - Take down Red Face and claim Storm Village -
 
     this
 
@@ -30,8 +31,9 @@ export default class P4 extends TutorialSequence {
     .add(()=> player.x > roseForestX + 100)
     .addIcon(player, Icon.BANNER, 7000)
 
-    .addDialogue("Red Face", script.RedFace.rose1, 7000)
+    .addTitle("Entering Rose Forest -----")
 
+    .addDialogue("Red Face", script.RedFace.rose1, 7000)
     .add(()=>{
       SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_HEAVY1);
       SequenceHelper.SpawnAlly(player.x - 48, Enum.SOLDIER_ALLY_HEAVY1);
@@ -46,6 +48,8 @@ export default class P4 extends TutorialSequence {
       return player.x >= roseForestX + Vars.AREA_WIDTH * .4;
     })
     .addDialogue("Red Face", script.RedFace.rose2, 5000)
+
+    .addTitle("Half way point in Rose Forest -----")
 
     .add(()=>{
       const enemyCount = scene.countEnemies();
@@ -70,7 +74,7 @@ export default class P4 extends TutorialSequence {
     })
     .addDialogue("Red Face", script.RedFace.rose3, 5000)
 
-    // - Spawn Civilians -
+    .addTitle("Spawning Civilians for Storm Village -----")
 
     .add(()=>{
       return player.x >= roseForestX + Vars.AREA_WIDTH * .8;
@@ -82,6 +86,8 @@ export default class P4 extends TutorialSequence {
         const citi = scene.spawnCitizen(x, ss);
         citi.setController(new CitizenBattle());
         citi.setData("isJoining", i < 10);
+
+        SaveData.Data.citizens.push(citi.saveData); // Save citizens once spawned
       }
       return true;
     })
@@ -91,7 +97,7 @@ export default class P4 extends TutorialSequence {
       return player.x >= stormVillageX;
     })
 
-    // Start Duel
+    .addTitle("Starting the Duel -----")
 
     .addSave()
     .addStopSaving()
@@ -127,11 +133,14 @@ export default class P4 extends TutorialSequence {
     .addHideDuelDOM()
     .addDialogueAndWait("Red Face", script.RedFace.death, 7000)
 
+    .addTitle("Ending the Duel -----")
+
     .addSave()
     .addStartSaving()
     .addWait(2000)
 
     .addSpeakerAndWait(player, Icon.BANNER, script.MoonChief.rose1, 7000)
+    .addWait(500)
     .addSpeakerAndWait(player, Icon.SPEAR2, script.MoonChief.rose2, 4000)
 
     //  Resume soldiers
@@ -151,7 +160,7 @@ export default class P4 extends TutorialSequence {
 
     .add(()=>{ return SequenceHelper.CheckEnemiesLessOrEqual(0) })
 
-    // Battle Over - Claim Storm
+    .addTitle("Battle is Over with all enemies dead - Claim Storm Village for MaM")
 
     .addIcon(player, Icon.STANDARD, 15 * 1000)
     .addInstruction(Enum.STORY_4_CLAIM_STORM)
@@ -168,23 +177,16 @@ export default class P4 extends TutorialSequence {
       SaveData.Data.claimed.push(Enum.LOC_ROSE_FOREST);
       return true;
     })
-    .addWait(3000)
 
+    .addWait(3000)
     .addInstruction(Enum.STORY_4_CITIZEN_TRIALS)
 
-    // All citizens display a icon and interact
+    .addTitle("Citizens set to Captive behaviour -----")
 
     .add(()=>{
-      player.x = Vars.AREA_WIDTH * 3.5;
-      return true;
-    })
-
-    .add(()=>{
-      for (let i =0; i < 15; i++) {
-        const x = Phaser.Math.Between(Vars.AREA_WIDTH * 3.1, Vars.AREA_WIDTH * 3.9);
-        const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_STORM_F1, Vars.SHEET_CITIZEN_STORM_F2, Vars.SHEET_CITIZEN_STORM_M1]);
-        const citi = scene.spawnCitizen(x, ss);
-        citi.setData("isJoining", i < 10);
+      const citizens = scene.groupCitizens.getChildren();
+      for (let citi of citizens) {
+        citi.setController(new CitizenCaptive());
       }
       return true;
     })
@@ -196,11 +198,7 @@ export default class P4 extends TutorialSequence {
     })
 
     .addWait(4000)
-    .addSpeakerAndWait(player, Icon.HOME, "The village is settled. Let us proceed.")
-
-    .add(()=>{
-      return false;
-    });
+    .addSpeakerAndWait(player, Icon.SPEAR2, script.MoonChief.rose3, 4000)
   }
 
   //  - P4 functions    --------------------------------------------------------------------------------

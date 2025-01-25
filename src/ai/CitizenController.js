@@ -29,4 +29,5 @@ export default class CitizenController extends ActionManager {
     )
   }
 
+  get saveID() { return 3 }
 }

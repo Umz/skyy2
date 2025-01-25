@@ -154,6 +154,13 @@ export class PlayScene extends Scene {
       this.spawnBlueMoon();
     }
 
+    for (let sd of SaveData.Data.citizens) {
+      const citizen = this.spawnCitizen(sd.x, sd.sheet);
+      citizen.loadData(sd);
+    }
+
+    //  -
+
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
     //  Build scene for area
@@ -276,17 +283,17 @@ export class PlayScene extends Scene {
     if (this.mapTracker.checkNewArea()) {
 
       //  Set-up rocks for mines  
-      const areaInfo = MapInfo.get(currentAreaID);
-      if (areaInfo.locID == Enum.LOC_MINES) {
+      if (currentAreaID === Enum.LOC_MINES) {
         this.spawnRocks(20);
       }
       else {
         this.clearRocks();
       }
-
+      
       this.birdSpawner.resetCounts();
       this.wildlifeSpawner.resetCounts();
       
+      const areaInfo = MapInfo.get(currentAreaID);
       this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
       this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
     }

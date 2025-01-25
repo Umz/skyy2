@@ -12,11 +12,16 @@ const data = {
   playMins: 0,
   playHours: 0,
 
+  uid: 1,
+
   silica: 0,
 
   playerX: Vars.AREA_WIDTH * 1.5,
   playerLane: 2,
   hasBlueMoon: false,
+
+  citizens: [],
+  soldiers: [],
 
   location: Enum.LOC_MAM,
   claimed: [Enum.LOC_MAM],
@@ -51,7 +56,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-    this.DevData(4);
+    this.DevData(5);
     console.log("Loaded data", data)
 
     return data;
@@ -103,6 +108,12 @@ export default class SaveData {
 
   static get Settings() {
     return settings;
+  }
+
+  static get NewUID() {
+    const uid = data.uid;
+    data.uid ++;
+    return uid;
   }
 
   static SETUP_LOCALFORAGE_CONFIG() {

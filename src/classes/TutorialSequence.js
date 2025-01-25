@@ -148,6 +148,17 @@ export default class TutorialSequence {
     return this;
   }
 
+  // Just used to add section titles in long sequences
+  addTitle(txt, logDetails = false) {
+    if (logDetails) {
+      this.add(()=>{
+        console.log(txt);
+        console.log(`Tutorial Step ${this.step}`)
+      });
+    }
+    return this;
+  }
+
   //  -------
 
   showConversation(en) {

@@ -53,4 +53,5 @@ export default class CitizenBattle extends ActionManager {
     )
   }
 
+  get saveID() { return 1 }
 }
