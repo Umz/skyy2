@@ -2,6 +2,7 @@ import ActMoveOffX from "../actions/ActMoveOffX";
 import ActMoveToTargetDistance from "../actions/ActMoveToTargetDistance";
 import ActMoveToTargetOffset from "../actions/ActMoveToTargetOffset";
 import ActMoveToX from "../actions/ActMoveToX";
+import ActWait from "../actions/ActWait";
 import ListenCondition from "../actions/ListenCondition";
 import ListenPlayerDistance from "../actions/ListenPlayerDistance";
 import ActionManager from "../classes/ActionManager";
@@ -16,15 +17,18 @@ export default class NightTrain extends ActionManager {
 
   gotoPlayer(offset = 48) {
     const player = this.scene.player;
+    this.clearAllActions();
     this.addAction(new ActMoveToTargetOffset(this.sprite, player, offset));
   }
 
   gotoX(x) {
+    this.clearAllActions();
     this.addAction(new ActMoveToX(this.sprite, x))
   }
 
   followPlayer() {
     const player = this.scene.player;
+    this.clearAllActions();
     this.addBackgroundAction(new ListenCondition(()=>{
       return this.sprite.x >= player.x - 40;
     }))

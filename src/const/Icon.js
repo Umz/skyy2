@@ -2,13 +2,25 @@ const Icon = {
 
   HEART: 1,
   HEART_BLACK: 2,
-
-  HOME: 32, 
-
+  SWORD: 7,
+  
   SPEECH: 26,
   EXCLAIM: 27,
   QUESTION: 28,
+  SPEECH_HEART: 29,
+  HAPPY: 30,
+  SAD: 31,
+  
+  HOME: 32,
+  PAGE: 33,
+  SAVE_PAGE: 34,
+  FLOPPY: 35,
+  FLOPPY_DOWN: 36,
+  FLOPPY_UP: 37,
+  LOCK: 38,
+  SEARCH: 39,
   ALARM: 47,
+
   ELLIPSE: 70,
 
   HAND_UP: 80,
@@ -34,6 +46,9 @@ const Icon = {
   FIREBALL: 145,
   FIRE_CIRCLE: 146,
   FIRE_BIG: 147,
+  DROPLET: 148,
+  THREE_DROPS: 149,
+  SPOUT: 150,
 
   FIST_FIRE: 197,
 
@@ -47,6 +62,17 @@ const Icon = {
   CONFUSED: 225,
 
   ALLY: 245, // Row 16
+
+  // Row 26
+  GOLD_BAT: 416,
+  GOLD_LAMP: 417,
+  GOLD_CUP: 418,
+  GOLD_RING: 419,
+  GOLD_THING: 420,
+  GOLD_SPRING: 421,
+  GOLD_MIRROR: 422,
+  BLUE_SILICA: 423,
+  GOLD_SILICA: 424,
 
   SPEAR: 473, // Row 30
   SPEAR2: 474, // Row 30

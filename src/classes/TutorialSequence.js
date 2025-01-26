@@ -154,6 +154,7 @@ export default class TutorialSequence {
       this.add(()=>{
         console.log(txt);
         console.log(`Tutorial Step ${this.step}`)
+        return true;
       });
     }
     return this;

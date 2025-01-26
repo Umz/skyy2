@@ -37,6 +37,10 @@ export default class SequenceHelper {
 
   // -
 
+  static SpawnEnemy(pX, type) {
+    return scene.spawnEnemy(pX, type);
+  }
+
   static SpawnEnemies(amt, types) {
     for (let i=0; i<amt; i++) {
       const type = Phaser.Utils.Array.GetRandom(types);

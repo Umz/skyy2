@@ -1,4 +1,3 @@
-import RedDuel from "../ai/RedDuel";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
@@ -7,41 +6,26 @@ import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
+let night;
+let king;
+let boss;
+
 export default class P5 extends TutorialSequence {
 
   init() {
     
-    // 1- Night train appears from east
-    // 2- Discuss Blue silica, safe to transport now
-    // 3- Go with him, mine it
-    // 4- Take it back to Storm
-    // 5- Harvest Moon says this material can be used- we need the Architect
-    // 6- Return to find Fallen Cloud in the Mines- looting
-    // 7- Go to Green Village
+    //  CLEAN UP - script
 
     const { scene } = this;
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
-    const stormX = Vars.AREA_WIDTH * 3;
-    const minX = Vars.AREA_WIDTH * 4;
-
-    let night;
-    let king;
+    const fallen = "Fallen Cloud";
 
     this
     .addStopSaving()  // Temp (dev)
 
-    .add(()=>{
-      SequenceHelper.SpawnEnemiesAt(player.x + 100, 4, [Enum.SOLDIER_RED1]);
-      return true;
-    })
-
-    .add(()=> {
-      return SequenceHelper.CheckEnemiesLessOrEqual(0);
-    })
-
-    //  Next- goto mines and discover Blue Silica
+    .addTitle("Night Train appears from the east to get Moon Chief!")
 
     .add(()=> {
       night = SequenceHelper.SpawnAlly(player.x + 200, Enum.SOLDIER_NIGHTTRAIN);
@@ -52,29 +36,27 @@ export default class P5 extends TutorialSequence {
 
     .add(()=>{
       night.controller.gotoPlayer();
-      night.speak(Icon.EXCLAIM, "Hey Hey, MC!", 3000);
       return true;
     })
-    .addWaitForDialogue()
+    .addSpeakNightAndWait(Icon.HAPPY, script.NightTrain.mines1, 4000)
+    .addWait(500)
+    .addSpeakNightAndWait(Icon.ANGER, script.NightTrain.mines2, 5000)
+    .addIcon(player, Icon.SPEAR2, 3000)
+
+    .addWait(2000)
+    .addSpeakNightAndWait(Icon.HAND_UP_RIGHT, script.NightTrain.mines3, 2000)
+    .addWait(500)
 
     .add(()=>{
-      night.speak(Icon.EXCLAIM, "Finally took out Red Face!", 3000);
+      night.speak(Icon.EXCLAIM, script.NightTrain.come_on, 2000);
+      night.controller.gotoX(Vars.AREA_WIDTH * 4.1);
       return true;
     })
-    .addWaitForDialogue()
 
     .add(()=>{
-      night.speak(Icon.BANNER, "Come on MC!", 3000);
-      night.controller.gotoX(Vars.AREA_WIDTH * 4);
-      return true;
+      return (player.x > Vars.AREA_WIDTH * 4);
     })
-
     .add(()=>{
-      return (player.x > Vars.AREA_WIDTH * 3.9);
-    })
-
-    .add(()=>{
-      night.speak(Icon.BANNER, "Come on MC!", 3000);
       night.controller.gotoX(Vars.AREA_WIDTH * 4.2);
       return true;
     })
@@ -82,63 +64,60 @@ export default class P5 extends TutorialSequence {
     .add(()=>{
       return (player.x > Vars.AREA_WIDTH * 4.1);
     })
-
     .add(()=>{
-      night.speak(Icon.BANNER, "Come on MC!", 3000);
+      night.speak(Icon.EXCLAIM, script.NightTrain.come_on, 2000);
       night.controller.gotoX(Vars.AREA_WIDTH * 4.4);
       return true;
     })
-
     .add(()=>{
       return (player.x > Vars.AREA_WIDTH * 4.3);
     })
 
+    .addTitle("Moon Chief and Night Train arrive at The Mines together")
+
+    .addSpeakNightAndWait(Icon.BLUE_SILICA, script.NightTrain.mines4, 3000)
+    .addSpeakerAndWait(player, Icon.QUESTION, script.MoonChief.mines1, 2000)
+
+    .addSpeakNightAndWait(Icon.BLUE_SILICA, script.NightTrain.mines5, 8000)
+    .addSpeakNightAndWait(Icon.EXCLAIM, script.NightTrain.mines6, 7000)
+
+    .addSpeakerAndWait(player, Icon.QUESTION, script.MoonChief.mines2, 3000)
+    .addSpeakNightAndWait(Icon.BLUE_SILICA, script.NightTrain.mines7, 3000)
+
     .add(()=>{
-      night.speak(Icon.EXCLAIM, "Blue Silica!", 3000);
+      night.speak(Icon.HAND_DOWN, script.NightTrain.mines8, 7000)
       return true;
     })
-    .addWaitForDialogue()
+    .addWait(500)
 
-    .addSpeakerAndWait(player, Icon.CONFUSED, "What is it?", 2000)
-
-    .add(()=>{
-      night.speak(Icon.EXCLAIM, "Help me break the rocks, the soft ones. Take the blue silica inside. Useful stuff, we can use it building and construction once we refine it.", 3000);
-      return true;
-    })
-    .addWaitForDialogue()
-
-    .addSpeakerAndWait(player, Icon.SLEEP, "Break the rocks", 2000)
-
-    //.addInstruction() Break the rocks to collect Blue Silica
+    .addIcon(player, Icon.ELLIPSE, 1000)
     .addWait(1000)
+    .addSpeakerAndWait(player, Icon.DROPLET, script.MoonChief.mines3, 2000)
+
+    .addWait(500)
+    .addInstruction(Enum.STORY_5_BREAK_ROCKS)
+    
+    .addTitle("Moon Chief breaks the rocks for Night Train and escorts him back")
 
     .add(()=>{
-      scene.spawnRocks(14);
-      return true;
+      return SaveData.Data.silica > 7;
     })
 
-    .add(()=>{
-      return SaveData.Data.silica > 4;
-    })
-
-    .add(()=>{
-      night.speak(Icon.EXCLAIM, "Hey! Take me to Moon at Midnight.", 3000);
-      return true;
-    })
-    .addWaitForDialogue()
-
+    .addSpeakNightAndWait(Icon.BLUE_SILICA, script.NightTrain.mines9, 4000)
     .add(()=>{
       night.controller.followPlayer();
       return true;
     })
 
     .add(()=>{
-      return player.x <= Vars.AREA_WIDTH * 3.4;
+      return player.x <= Vars.AREA_WIDTH * 3.5;
     })
     .add(()=>{
-      night.controller.clearAllActions();
+      night.controller.gotoX(Vars.AREA_WIDTH * 3.28);
       return true;
     })
+
+    .addTitle("Harvest Moon appears and instructs Moon Chief to collect more Blue Silica")
 
     .add(()=>{
       const x = Vars.AREA_WIDTH * 3.3;
@@ -146,38 +125,72 @@ export default class P5 extends TutorialSequence {
       return true;
     })
 
-    .add(()=>{
-      king.speak(Icon.EXCLAIM, "Blue Silica. Incredible", 3000);
-      return true;
-    })
-    .addWaitForDialogue()
+    .add(()=>{ return player.x <= Vars.AREA_WIDTH * 3.3 + 100 })
+    .addSpeakKingAndWait(Icon.BANNER, "Bravo Moon Chief, I came to see the good news myself.", 4000)
 
     .add(()=>{
-      king.speak(Icon.EXCLAIM, "I know a man who knows how to refine this in Green Village. Get him.", 3000);
+      night.faceX(king.x);
       return true;
     })
-    .addWaitForDialogue()
+    .addSpeakNightAndWait(Icon.EXCLAIM, "All of that comes later! We've found some blue silica deposits just passed the village!", 5000)
+    .addSpeakKingAndWait(Icon.EXCLAIM, "Blue Silica! Incredible.", 1500)
+    .addSpeakNightAndWait(Icon.HAPPY, "Haha! Right? Tell MC how great this is.", 3500)
 
-    //.addInstruction()
-    // Head to Green village
+    .addIcon(player, Icon.SLEEP, 3000)
+    .addSpeakKingAndWait(Icon.SPEECH, "I know a man who used to refine this in Green Village to the east... The Architect.", 5500)
+    .addSpeakNightAndWait(Icon.EXCLAIM, "The Architect?", 1500)
+
+    .add(()=>{
+      night.controller.gotoPlayer(-32)
+      return true;
+    })
+    .addSpeakNightAndWait(Icon.HAND_RIGHT, "The Architect! We're counting on you MC!", 2500)
+
+    .addInstruction(Enum.STORY_5_MISSION)
+
+    .addTitle("Leave Storm Village and travel toward Green Village - Fight at the Mines", true)
 
     .add(()=>{
       return player.x >= Vars.AREA_WIDTH * 4.1;
     })
-    // Spawn soldiers
-
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "Who would dare to loot our mines", 3000)
-    .addDialogueAndWait("Fallen Cloud", "Your mines!? Since when!?", 2000)
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "These Mines belong to Moon at Midnight now.", 3000)
-    
     .add(()=>{
-      // All enemies dead
+      const pX = SequenceHelper.GetCameraRight() + Phaser.Math.Between(10, 70);
+      SequenceHelper.SpawnEnemiesAt(pX, 6, [Enum.SOLDIER_GR1]);
       return true;
     })
+    .addSpeakerAndWait(player, Icon.EXCLAIM, "Who would dare to loot our mines", 3000)
+    .addDialogueAndWait("Fallen Cloud", "Your mines!? Since when!?", 3000)
+    .addSpeakerAndWait(player, Icon.SPEAR, "Then let us settle the claim now.", 3000)
 
-    .addDialogueAndWait("Fallen Cloud", "Retreat! Retreat!", 2000)
+    .add(()=>{
+      return player.x >= Vars.AREA_WIDTH * 4.3;
+    })
+    .add(()=>{
+      const left = SequenceHelper.GetCameraLeft() - 28;
+      const right = SequenceHelper.GetCameraRight() + 28;
+      SequenceHelper.SpawnEnemiesAt(left, 6, [Enum.SOLDIER_GR1]);
+      SequenceHelper.SpawnEnemiesAt(right, 6, [Enum.SOLDIER_GR1]);
+      return true;
+    })
+    .add(()=>{
+      boss = SequenceHelper.SpawnEnemy(Vars.AREA_WIDTH * 4.45, Enum.SOLDIER_FALLEN_CLOUD);
+      boss.showIcon(Icon.SWORD, 10000);
+      boss.setDisplayName("Fallen Cloud", Enum.TEAM_ENEMY);
+      boss.setHP(20, 20);
+      boss.setGP(12, 12);
+      return true;
+    })
+    
+    .add(()=>{
+      return SequenceHelper.CheckEnemiesLessOrEqual(0);
+    })
+    .addDialogueAndWait("Fallen Cloud", "Retreat! Retreat!", 3000)
+    .addWait(500)
 
-    //  Claim the land
+    .addTitle("Claim The Mines when Fallen Cloud has been defeated.")
+    .addSpeakerAndWait(player, Icon.SPEAR, "The matter is settled.", 3000)
+
+    .addInstruction(Enum.STORY_5_CLAIM_MINES)
 
     .add(()=>{
       this.doOnce(()=>{
@@ -187,10 +200,41 @@ export default class P5 extends TutorialSequence {
     })
     .addWait(3000)
 
-    .addInstruction(Enum.STORY_4_CITIZEN_TRIALS)
-    // Go to Green Village
+    .addSpeakerAndWait(player, Icon.HAND_RIGHT, "Now. To Green Village in the east.", 3000)
 
     .add(()=>false)
+  }
+
+  //  ===================================================================================================
+
+  /** Night train speaking with Icon */
+  addSpeakNightAndWait(icon, text, ttl) {
+    this.add(()=> {
+      night.speak(icon, text, ttl);
+      return true;
+    })
+    .addWaitForDialogue()
+    return this;
+  }
+
+  /** Night train speaking with Icon */
+  addSpeakKingAndWait(icon, text, ttl) {
+    this.add(()=> {
+      king.speak(icon, text, ttl);
+      return true;
+    })
+    .addWaitForDialogue()
+    return this;
+  }
+
+  /** Fallen Cloud speaking with Icon */
+  addBossSpeakAndWait(icon, text, ttl) {
+    this.add(()=> {
+      boss.speak(icon, text, ttl);
+      return true;
+    })
+    .addWaitForDialogue()
+    return this;
   }
 
 }
