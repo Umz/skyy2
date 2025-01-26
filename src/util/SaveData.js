@@ -12,7 +12,7 @@ const data = {
   playMins: 0,
   playHours: 0,
 
-  uid: 1,
+  uid: 100,
 
   silica: 0,
 
@@ -56,7 +56,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-    this.DevData(5);
+    this.DevData(0);
     console.log("Loaded data", data)
 
     return data;

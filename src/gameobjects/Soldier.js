@@ -2,7 +2,9 @@ import Blank from "../ai/Blank";
 import SoldierView from "../ai/SoldierView";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import Juke from "../util/Juke";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
 
@@ -246,15 +248,18 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       if (this.hp === 0) {
         this.stopTweening();
         this.destroy(true);
+        Juke.PlaySound(Sfx.DIE1);
         if (this.displayName) {
           this.displayName.destroy(true);
         }
         return true;
       }
     }
+
     // only do damage if not already HURT state- no double hits
     this.state = Enum.SS_HURT;
     this.movementSpeed = (attacker.x > this.x) ? -this.getSpeed() : this.getSpeed();
+    Juke.PlaySound(Sfx.HIT1);
 
     return false;
   }
@@ -343,11 +348,19 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       const dir = this.flipX ? -1 : 1;
       this.movementSpeed = this.speed * 1.1 * dir;
       this.showMovementDust();
+
+      const snd = Phaser.Utils.Array.GetRandom([Sfx.ATTACK1, Sfx.ATTACK2])
+      Juke.PlaySound(snd);
     }
   }
 
   defend(isDefending) {
     if (!this.isState(Enum.SS_HURT)) {
+
+      if (this.state !== Enum.SS_DEFEND) {
+        Juke.PlaySound(Sfx.BLOCK_ACTION);
+      }
+
       this.state = isDefending ? Enum.SS_DEFEND : Enum.SS_READY;
       this.movementSpeed = isDefending ? 0 : this.movementSpeed;
     }

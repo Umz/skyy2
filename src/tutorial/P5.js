@@ -32,6 +32,15 @@ export default class P5 extends TutorialSequence {
     this
     .addStopSaving()  // Temp (dev)
 
+    .add(()=>{
+      SequenceHelper.SpawnEnemiesAt(player.x + 100, 4, [Enum.SOLDIER_RED1]);
+      return true;
+    })
+
+    .add(()=> {
+      return SequenceHelper.CheckEnemiesLessOrEqual(0);
+    })
+
     //  Next- goto mines and discover Blue Silica
 
     .add(()=> {

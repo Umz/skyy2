@@ -645,10 +645,12 @@ export class PlayScene extends Scene {
 
         // M<ust be facing enemy to defend
         if (activeDefense) {
+
           attacker.recoil(16);
           defender.guard();
           defender.kickback(2, attacker.x);
           this.emitClash(point.x, point.y, attacker.lane);
+          Juke.PlaySound(Sfx.DEFENDED);
 
           if (attacker.isPlayer) {
             this.tinyCameraShake();
@@ -685,6 +687,8 @@ export class PlayScene extends Scene {
 
         this.emitClash(p1.x, p1.y, ally.lane);
         this.emitClash(p2.x, p2.y, en.lane);
+
+        Juke.PlaySound(Sfx.CLASHED);
       }
       if (ally.isState(Enum.SS_ATTACK) && ally.isFacing(en.x)) {
         checkAttack(ally, en);
