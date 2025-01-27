@@ -99,6 +99,7 @@ const Enum = {
   STORY_5_BREAK_ROCKS: 10,
   STORY_5_MISSION: 11,
   STORY_5_CLAIM_MINES: 12,
+  STORY_5_GREEN_VILLAGE: 13,
 
   //  Dialogue
 

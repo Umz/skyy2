@@ -63,4 +63,5 @@ const StoryParts = [
   {id:Enum.STORY_5_BREAK_ROCKS, p:["Break the purple rocks to collect the blue silica held within."]},
   {id:Enum.STORY_5_MISSION, p:["Travel to the east to find Green Village. Once we have found the village, we will return here with 'The Architect'."]},
   {id:Enum.STORY_5_CLAIM_MINES, p:["These Mines belong to Moon at Midnight. The resources will serve our people.", "Place our banner to warn any others, this land is ours now."]},
+  {id:Enum.STORY_5_GREEN_VILLAGE, p:["Use 'diplomacy' to locate The Architect and take him back to Moon at Midnight."]},
 ];

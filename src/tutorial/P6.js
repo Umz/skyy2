@@ -2,73 +2,50 @@ import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Vars from "../const/Vars";
-import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
-import SequenceHelper from "./SequenceHelper";
 
 export default class P6 extends TutorialSequence {
 
   init() {
     
-    // 1- Journey from The Mines to Green Village
+    // Journey from The Mines to Green Village
 
-    const { scene } = this;
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
-    const minesX = Vars.AREA_WIDTH * 5;
-
     this
-    .addStopSaving()  // Temp (dev)
+    .addTitle("Just generic conversation till Green Village")
 
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 4.8
-    })
+    .addPlayerDistanceCheck(4.8)
+    .addBlueSpeakAndWait(Icon.EXCLAIM, script.BlueMoon.plains1, 3000)
+    .addSpeakerAndWait(player, Icon.QUESTION, script.MoonChief.plains1, 2000)
+    .addBlueSpeakAndWait(Icon.QUESTION, script.BlueMoon.plains2, 1000)
 
-    .addBlueSpeakAndWait(Icon.EXCLAIM, "This is far from the forest", 3000)
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "What of it?", 2000)
-    .addBlueSpeakAndWait(Icon.EXCLAIM, "What..", 1000)
+    .addPlayerDistanceCheck(5.1)
+    .addBlueSpeakAndWait(Icon.SPEECH, script.BlueMoon.plains3, 2000)
+    
+    .addPlayerDistanceCheck(5.5)
+    .addBlueSpeakAndWait(Icon.QUESTION, script.BlueMoon.plains4, 3000)
+    .addSpeakerAndWait(player, Icon.STAR_THREE, script.MoonChief.plains2, 2000)
 
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 5.1
-    })
+    .addPlayerDistanceCheck(5.9)
+    .addBlueSpeakAndWait(Icon.QUESTION, script.BlueMoon.plains5, 3000)
+    .addSpeakerAndWait(player, Icon.EXCLAIM, script.MoonChief.plains3, 2000)
 
-    .addBlueSpeakAndWait(Icon.EXCLAIM, "These lands..", 3000)
+    .addTitle("Blue Moon - Should we claim these lands")
+    .addPlayerDistanceCheck(6.4)
+    .addBlueSpeakAndWait(Icon.BANNER, script.BlueMoon.plains6, 3000)
+    .addSpeakerAndWait(player, Icon.SPEECH, script.MoonChief.plains4, 2000)
 
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 5.5
-    })
-    .addBlueSpeakAndWait(Icon.EXCLAIM, "What are these chests?", 3000)
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "Paying homage.", 2000)
+    .addTitle("Blue Moon - How are we going to get the Architect")
+    .addPlayerDistanceCheck(6.8)
+    .addBlueSpeakAndWait(Icon.QUESTION, script.BlueMoon.plains7, 4000)
+    .addSpeakerAndWait(player, Icon.SPEAR2, script.MoonChief.plains5, 2000)
 
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 5.9
-    })
-
-    .addBlueSpeakAndWait(Icon.EXCLAIM, "What forest is this?", 3000)
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "I don't know of it.", 2000)
-
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 6.4
-    })
-
-    .addBlueSpeakAndWait(Icon.EXCLAIM, "Shall we claim this place?", 3000)
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "Soon.", 2000)
-
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 6.8
-    })
-
-    .addBlueSpeakAndWait(Icon.EXCLAIM, "What is the plan to take the Architect?", 3000)
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "Diplomacy.", 2000)
-
-    //.addInstruction()
-    // Take the Architect and return home
-
-    .add(()=>false)
+    .addInstruction(Enum.STORY_5_GREEN_VILLAGE)
   }
 
-  //  -
+  //  =================================================================================================
 
   /** Add speech for Blue Moon and wait for completion */
   addBlueSpeakAndWait(icon, text, ttl) {
@@ -80,6 +57,15 @@ export default class P6 extends TutorialSequence {
       return true;
     })
     .addWaitForDialogue();
+    return this;
+  }
+
+  /** Add distance check for Player */
+  addPlayerDistanceCheck(mul) {
+    const player = this.scene.player;
+    this.add(()=>{
+      return player.x >= Vars.AREA_WIDTH * mul;
+    });
     return this;
   }
 

@@ -30,7 +30,11 @@
       "mines5": "Then let us settle the matter now.",
       "mines6": "The matter is settled.",
 
-      "plains1": ""
+      "plains1": "What of it?",
+      "plains2": "Paying homage.",
+      "plains3": "I don't know of it.",
+      "plains4": "Soon.",
+      "plains5": "Diplomacy."
     },
     "Wildman": {
 
@@ -44,7 +48,15 @@
       "bf7": "Fine, I will join you!"
     },
     "BlueMoon": {
-      "mam1": "Amazing. They are as beautiful as the rumours say."
+      "mam1": "Amazing. They are as beautiful as the rumours say.",
+
+      "plains1": "This place is far from the forest",
+      "plains2": "What..",
+      "plains3": "These lands..",
+      "plains4": "What are these chests?",
+      "plains5": "What forest is this?",
+      "plains6": "Shall we claim this place?",
+      "plains7": "What is the plan to take the Architect?"
     },
     "NightTrain": {
 
