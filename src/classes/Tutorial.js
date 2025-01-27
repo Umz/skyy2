@@ -4,6 +4,8 @@ import P3 from "../tutorial/P3";
 import P4 from "../tutorial/P4";
 import P5 from "../tutorial/P5";
 import P6 from "../tutorial/P6";
+import P7 from "../tutorial/P7";
+import P8 from "../tutorial/P8";
 import SequenceHelper from "../tutorial/SequenceHelper";
 import SaveData from "../util/SaveData";
 import Story from "../util/Story";
@@ -93,6 +95,8 @@ export default class Tutorial {
       case 4: return new P4(this);
       case 5: return new P5(this);
       case 6: return new P6(this);
+      case 7: return new P7(this);
+      case 8: return new P8(this);
     }
     return null;
   }

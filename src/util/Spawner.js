@@ -170,4 +170,7 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
   [Enum.SOLDIER_RED3, {ctrl: Bandit3, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_REDFACE, {ctrl: BanditBoss, sheet:Vars.SHEET_RED_FACE}],
+
+  [Enum.SOLDIER_GR1, {ctrl: Bandit1, sheet:Vars.SHEET_GR_INFANTRY}],
+  [Enum.SOLDIER_FALLEN_CLOUD, {ctrl: BanditBoss, sheet:Vars.SHEET_FALLEN_CLOUD}],
 ]);

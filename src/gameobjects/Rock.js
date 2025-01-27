@@ -11,8 +11,18 @@ export default class Rock extends Phaser.Physics.Arcade.Sprite {
   update(t, delta) {
     const player = this.scene.player;
     if (player) {
-      //const alpha = this.lane === player.lane ? 1 : 1;
-      //this.setAlpha(alpha);
+      const alpha = this.lane === player.lane ? 1 : .4;
+      this.setAlpha(alpha);
+
+      if (this.lane !== player.lane) {
+        const laneDist = Math.abs(this.lane - player.lane);
+        const tint = laneDist === 1 ? 0x999999 : 0x555555;
+        this.setTint(tint);
+      }
+      else {
+        this.clearTint();
+      }
+
     }
   }
 

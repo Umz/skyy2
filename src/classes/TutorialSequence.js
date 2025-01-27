@@ -122,6 +122,44 @@ export default class TutorialSequence {
     return this;
   }
 
+  addSave() {
+    this.add(()=>{
+      SaveData.SAVE_GAME_DATA();
+      return true;
+    });
+    return this;
+  }
+
+  addShowDuelDOM() {
+    this.add(()=>{
+      const element = document.getElementById("duel-text");
+      element.style.display = "block";
+      return true;
+    });
+    return this;
+  }
+
+  addHideDuelDOM() {
+    this.add(()=>{
+      const element = document.getElementById("duel-text");
+      element.style.display = "none";
+      return true;
+    });
+    return this;
+  }
+
+  // Just used to add section titles in long sequences
+  addTitle(txt, logDetails = false) {
+    if (logDetails) {
+      this.add(()=>{
+        console.log(txt);
+        console.log(`Tutorial Step ${this.step}`)
+        return true;
+      });
+    }
+    return this;
+  }
+
   //  -------
 
   showConversation(en) {

@@ -59,4 +59,8 @@ const StoryParts = [
   {id:Enum.STORY_3_CHASE_REDFACE, p:["Red Face the traitor has managed to escape to Rose Forest.", "Go and make sure he meets his end."]},
   {id:Enum.STORY_4_CLAIM_STORM, p:["The traitor held control over the forest with captives in the village." ,"Place our banners high and proud. It belongs to Moon at Midnight now."]},
   {id:Enum.STORY_4_CITIZEN_TRIALS, p:["Only those that choose to fly with our tribe may remain.", "Those that will not are permitted to leave immediately, or die."]},
+
+  {id:Enum.STORY_5_BREAK_ROCKS, p:["Break the purple rocks to collect the blue silica held within."]},
+  {id:Enum.STORY_5_MISSION, p:["Travel to the east to find Green Village. Once we have found the village, we will return here with 'The Architect'."]},
+  {id:Enum.STORY_5_CLAIM_MINES, p:["These Mines belong to Moon at Midnight. The resources will serve our people.", "Place our banner to warn any others, this land is ours now."]},
 ];

@@ -154,6 +154,13 @@ export class PlayScene extends Scene {
       this.spawnBlueMoon();
     }
 
+    for (let sd of SaveData.Data.citizens) {
+      const citizen = this.spawnCitizen(sd.x, sd.sheet);
+      citizen.loadData(sd);
+    }
+
+    //  -
+
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
     
     //  Build scene for area
@@ -276,17 +283,17 @@ export class PlayScene extends Scene {
     if (this.mapTracker.checkNewArea()) {
 
       //  Set-up rocks for mines  
-      const areaInfo = MapInfo.get(currentAreaID);
-      if (areaInfo.locID == Enum.LOC_MINES) {
+      if (currentAreaID === Enum.LOC_MINES) {
         this.spawnRocks(20);
       }
       else {
         this.clearRocks();
       }
-
+      
       this.birdSpawner.resetCounts();
       this.wildlifeSpawner.resetCounts();
       
+      const areaInfo = MapInfo.get(currentAreaID);
       this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
       this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
     }
@@ -638,10 +645,12 @@ export class PlayScene extends Scene {
 
         // M<ust be facing enemy to defend
         if (activeDefense) {
+
           attacker.recoil(16);
           defender.guard();
           defender.kickback(2, attacker.x);
           this.emitClash(point.x, point.y, attacker.lane);
+          Juke.PlaySound(Sfx.DEFENDED);
 
           if (attacker.isPlayer) {
             this.tinyCameraShake();
@@ -678,6 +687,8 @@ export class PlayScene extends Scene {
 
         this.emitClash(p1.x, p1.y, ally.lane);
         this.emitClash(p2.x, p2.y, en.lane);
+
+        Juke.PlaySound(Sfx.CLASHED);
       }
       if (ally.isState(Enum.SS_ATTACK) && ally.isFacing(en.x)) {
         checkAttack(ally, en);

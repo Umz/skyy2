@@ -1,9 +1,11 @@
+import CitizenBattle from "../ai/CitizenBattle";
 import CitizenCaptive from "../ai/CitizenCaptive";
 import CitizenController from "../ai/CitizenController";
 import CitizenView from "../ai/CitizenView";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
+import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
 
@@ -17,6 +19,7 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     this.prefix = texture;
     this.state = Enum.CS_IDLE;
     this.name = "Citizen";
+    this.uid = SaveData.NewUID;
 
     this.home = Enum.LOC_STORM;
     this.tribe = Enum.TRIBE_STORM;
@@ -25,8 +28,6 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
 
     this.controller = new CitizenController().setSprite(this);
     this.viewController = new CitizenView().setSprite(this);
-
-    this.controller = new CitizenCaptive().setSprite(this);
   }
 
   update(time, delta) {
@@ -111,4 +112,48 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
 
   get velocityX() { return this.body.velocity.x }
   get velocityY() { return this.body.velocity.y }
+
+  // - Save Data -
+
+  loadData(data) {
+
+    this.uid = data.uid;
+
+    this.setTexture(data.sheet);
+    this.prefix = data.sheet;
+    this.x = data.x;
+
+    this.setHome(data.home);
+    this.setTribe(data.tribe);
+
+    const controller = this.getController(data.controllerID);
+    this.setController(controller);
+
+    for (const key in data.data) {
+      if (Object.hasOwn(data.data, key)) {
+        this.setData(key, data.data[key])
+      }
+    }
+  }
+
+  get saveData() {
+    return {
+      uid: this.uid,
+      sheet: this.prefix,
+      x: this.x,
+      home: this.home,
+      tribe: this.tribe,
+      controllerID: this.controller.saveID,
+      address: -1,
+      data: this.data.list
+    }
+  }
+
+  getController(id) {
+    switch (id) {
+      case 1: return new CitizenBattle();
+      case 2: return new CitizenCaptive();
+      default: return new CitizenController();
+    }
+  }
 }

@@ -16,6 +16,18 @@ export function getAnyEnemyWithinRange(sprite, maxDistance) {
   return getAnySpriteInGroup(sprite, group, maxDistance);
 }
 
+/** Get any soldier within range */
+export function getClosestSoldierInRange(sprite, range) {
+  const scene = sprite.scene;
+  return getClosestToSpriteInGroup(sprite, scene.groupSoldiers, range);
+}
+
+/** Get the closest citizen to the Player in village */
+export function getClosestCitizen(sprite) {
+  const scene = sprite.scene;
+  return getClosestToSpriteInGroup(sprite, scene.groupCitizens, 600);
+}
+
 /** Get X position close to point with minimum gap distance */
 export function GetCloseX(fromX, minDist, maxDist, isAnySide = false) {
   
@@ -29,6 +41,13 @@ export function GetCloseX(fromX, minDist, maxDist, isAnySide = false) {
   return closeX;
 }
 
+/** Get the range randomly positive or negative */
+export function getPlusMinusRange(min, max) {
+  const num = Phaser.Math.Between(min, max);
+  return getPlusOrMinus(num);
+}
+
+/** Return the number with a random plus or minus number */
 export function getPlusOrMinus(num) {
   const mul = Math.random() > .5 ? 1 : -1;
   return num * mul;
@@ -46,7 +65,7 @@ export function getDistanceFrom(x1, x2) {
   return distance;
 }
 
-//  - INTERNAL FUNCTIONS  -
+//  - INTERNAL FUNCTIONS  ---------------------------------------------------------
 
 function getAllyGroupForSprite(sprite) {
   const scene = sprite.scene;
@@ -60,16 +79,6 @@ function getEnemyGroupForSprite(sprite) {
 
 function isAlly(sprite) {
   return sprite.team === Enum.TEAM_ALLY;
-}
-
-function findClosestInAllies(scene) {
-  const group = scene.groupAllies;
-  return this.getClosestToSpriteInGroup(group);
-}
-
-function findClosestInEnemies(scene) {
-  const group = scene.groupEnemies;
-  return this.getClosestToSpriteInGroup(group);
 }
 
 function getSpritesInRange(sprite, group, range) {
@@ -108,10 +117,7 @@ function getClosestToSpriteInGroup(sprite, group, maxDistance = Infinity) {
   return closest;
 }
 
-
 function getAnySpriteInGroup(sprite, group, maxDistance) {
   const close = getSpritesInRange(sprite, group, maxDistance);
   return Phaser.Utils.Array.GetRandom(close);
 }
-
-//  -
