@@ -25,7 +25,10 @@
 
       "mines1": "I see. What is it?",
       "mines2": "... What is it you want me to do?",
-      "mines3": "OK. Then I'll break some rocks."
+      "mines3": "OK. Then I'll break some rocks.",
+      "mines4": "Who would dare to loot our mines",
+      "mines5": "Then let us settle the matter now.",
+      "mines6": "The matter is settled."
     },
     "Wildman": {
 
@@ -54,7 +57,18 @@
       "mines7": "Help me collect the silica! Break the rocks, the purple-ish ones.",
       "mines8": "Gather up the small blue stones tha drop out and hand them to me. I'll cart it back to Moon at Midnight and we'll ask Harvest Moon about processing the lot.",
 
-      "mines9": "Great! That's enough for now, MC. Let's go see Harvest Moon."
+      "mines9": "Great! That's enough for now, MC. Let's go see Harvest Moon.",
+
+      "storm1": "All of that comes later! We've found some blue silica deposits just passed the village!",
+      "storm2": "Haha! Right? Tell MC how great this is.",
+      "storm3": "The Architect?",
+      "storm4": "The Architect! We're counting on you MC!"
+    },
+
+    "HarvestMoon": {
+      "storm1": "Bravo Moon Chief, I came to see the good news myself.",
+      "storm2": "Blue Silica! Incredible.",
+      "storm3": "I know a man who used to refine this in Green Village to the east... The Architect."
     },
 
     "RabidBandit": {
@@ -76,6 +90,10 @@
       "rose4": "Well well.. Fine. I guess it's round 2, Chief!",
 
       "death": "Hah. I guess it's over..."
+    },
+    "FallenCloud": {
+      "mines1": "Your mines!? Since when!?",
+      "mines2": "Retreat! Retreat!"
     },
 
     "Soldier": {

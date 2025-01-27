@@ -21,6 +21,7 @@ export default class P5 extends TutorialSequence {
     const script = Subtitles.GetScript();
 
     const fallen = "Fallen Cloud";
+    const nt = "Night Train";
 
     this
     .addStopSaving()  // Temp (dev)
@@ -30,7 +31,7 @@ export default class P5 extends TutorialSequence {
     .add(()=> {
       night = SequenceHelper.SpawnAlly(player.x + 200, Enum.SOLDIER_NIGHTTRAIN);
       night.speed = 128;
-      night.setDisplayName("Night Train", Enum.TEAM_ALLY);
+      night.setDisplayName(nt, Enum.TEAM_ALLY);
       return true;
     })
 
@@ -126,25 +127,25 @@ export default class P5 extends TutorialSequence {
     })
 
     .add(()=>{ return player.x <= Vars.AREA_WIDTH * 3.3 + 100 })
-    .addSpeakKingAndWait(Icon.BANNER, "Bravo Moon Chief, I came to see the good news myself.", 4000)
+    .addSpeakKingAndWait(Icon.BANNER, script.HarvestMoon.storm1, 4000)
 
     .add(()=>{
       night.faceX(king.x);
       return true;
     })
-    .addSpeakNightAndWait(Icon.EXCLAIM, "All of that comes later! We've found some blue silica deposits just passed the village!", 5000)
-    .addSpeakKingAndWait(Icon.EXCLAIM, "Blue Silica! Incredible.", 1500)
-    .addSpeakNightAndWait(Icon.HAPPY, "Haha! Right? Tell MC how great this is.", 3500)
+    .addSpeakNightAndWait(Icon.EXCLAIM, script.NightTrain.storm1, 5000)
+    .addSpeakKingAndWait(Icon.EXCLAIM, script.HarvestMoon.storm2, 1500)
+    .addSpeakNightAndWait(Icon.HAPPY, script.NightTrain.storm2, 3500)
 
     .addIcon(player, Icon.SLEEP, 3000)
-    .addSpeakKingAndWait(Icon.SPEECH, "I know a man who used to refine this in Green Village to the east... The Architect.", 5500)
-    .addSpeakNightAndWait(Icon.EXCLAIM, "The Architect?", 1500)
+    .addSpeakKingAndWait(Icon.SPEECH, script.HarvestMoon.storm3, 5500)
+    .addSpeakNightAndWait(Icon.EXCLAIM, script.NightTrain.storm3, 1500)
 
     .add(()=>{
       night.controller.gotoPlayer(-32)
       return true;
     })
-    .addSpeakNightAndWait(Icon.HAND_RIGHT, "The Architect! We're counting on you MC!", 2500)
+    .addSpeakNightAndWait(Icon.HAND_RIGHT, script.NightTrain.storm4, 2500)
 
     .addInstruction(Enum.STORY_5_MISSION)
 
@@ -158,9 +159,9 @@ export default class P5 extends TutorialSequence {
       SequenceHelper.SpawnEnemiesAt(pX, 6, [Enum.SOLDIER_GR1]);
       return true;
     })
-    .addSpeakerAndWait(player, Icon.EXCLAIM, "Who would dare to loot our mines", 3000)
-    .addDialogueAndWait("Fallen Cloud", "Your mines!? Since when!?", 3000)
-    .addSpeakerAndWait(player, Icon.SPEAR, "Then let us settle the claim now.", 3000)
+    .addSpeakerAndWait(player, Icon.EXCLAIM, script.MoonChief.mines4, 3000)
+    .addDialogueAndWait(fallen, script.FallenCloud.mines1, 3000)
+    .addSpeakerAndWait(player, Icon.SPEAR, script.MoonChief.mines5, 3000)
 
     .add(()=>{
       return player.x >= Vars.AREA_WIDTH * 4.3;
@@ -175,7 +176,7 @@ export default class P5 extends TutorialSequence {
     .add(()=>{
       boss = SequenceHelper.SpawnEnemy(Vars.AREA_WIDTH * 4.45, Enum.SOLDIER_FALLEN_CLOUD);
       boss.showIcon(Icon.SWORD, 10000);
-      boss.setDisplayName("Fallen Cloud", Enum.TEAM_ENEMY);
+      boss.setDisplayName(fallen, Enum.TEAM_ENEMY);
       boss.setHP(20, 20);
       boss.setGP(12, 12);
       return true;
@@ -184,11 +185,11 @@ export default class P5 extends TutorialSequence {
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
-    .addDialogueAndWait("Fallen Cloud", "Retreat! Retreat!", 3000)
+    .addDialogueAndWait(fallen, script.FallenCloud.mines2, 3000)
     .addWait(500)
 
     .addTitle("Claim The Mines when Fallen Cloud has been defeated.")
-    .addSpeakerAndWait(player, Icon.SPEAR, "The matter is settled.", 3000)
+    .addSpeakerAndWait(player, Icon.SPEAR, script.MoonChief.mines6, 3000)
 
     .addInstruction(Enum.STORY_5_CLAIM_MINES)
 
