@@ -14,8 +14,6 @@ export default class P5 extends TutorialSequence {
 
   init() {
     
-    //  CLEAN UP - script
-
     const { scene } = this;
     const player = this.scene.player;
     const script = Subtitles.GetScript();
@@ -24,7 +22,6 @@ export default class P5 extends TutorialSequence {
     const nt = "Night Train";
 
     this
-    .addStopSaving()  // Temp (dev)
 
     .addTitle("Night Train appears from the east to get Moon Chief!")
 
@@ -202,8 +199,6 @@ export default class P5 extends TutorialSequence {
     .addWait(3000)
 
     .addSpeakerAndWait(player, Icon.HAND_RIGHT, "Now. To Green Village in the east.", 3000)
-
-    .add(()=>false)
   }
 
   //  ===================================================================================================
