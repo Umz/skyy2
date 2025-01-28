@@ -21,16 +21,11 @@ export default class P7 extends TutorialSequence {
     this
     .addStopSaving()  // Temp (dev)
 
-    .add(()=>{
-      player.x = villageX;
-      return true;
-    })
-
-    .addInstruction(Enum.STORY_4_CLAIM_STORM)
     // Clear any local soldiers.
 
     .add(()=>{
       // spawn and wait to 0
+      Seq
       return true;
     })
 
