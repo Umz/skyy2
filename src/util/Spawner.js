@@ -6,6 +6,8 @@ import Bandit3 from "../ai/Bandit3";
 import BanditBoss from "../ai/BanditBoss";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
+import Defensive from "../ai/Defensive";
+import Lunar1 from "../ai/Lunar1";
 import NightTrain from "../ai/Nighttrain";
 import Wildman from "../ai/Wildman";
 import Enum from "../const/Enum";
@@ -157,6 +159,9 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_BLUEMOON, {ctrl: BlueMoon, sheet:Vars.SHEET_WILDMAN}],
   [Enum.SOLDIER_NIGHTTRAIN, {ctrl: NightTrain, sheet:Vars.SHEET_MAM_SUPPLY}],
 
+  [Enum.SOLDIER_ARCHITECT, {ctrl: Lunar1, sheet:Vars.SHEET_ARCHITECT}],
+  [Enum.SOLDIER_LUNAR, {ctrl: Lunar1, sheet:Vars.SHEET_LUNAR}],
+
   [Enum.SOLDIER_ALLY_HEAVY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_HEAVY}],
   [Enum.SOLDIER_ALLY_INFANTRY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_INFANTRY}],
   [Enum.SOLDIER_ALLY_LANCER1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_LANCER}],
@@ -173,4 +178,9 @@ const SoldierMap = new Map([
 
   [Enum.SOLDIER_GR1, {ctrl: Bandit1, sheet:Vars.SHEET_GR_INFANTRY}],
   [Enum.SOLDIER_FALLEN_CLOUD, {ctrl: BanditBoss, sheet:Vars.SHEET_FALLEN_CLOUD}],
+
+  [Enum.SOLDIER_WL_INFANTRY, {ctrl: Bandit1, sheet:Vars.SHEET_WL_INFANTRY}],
+  [Enum.SOLDIER_WL_HEAVY, {ctrl: Defensive, sheet:Vars.SHEET_WL_HEAVY}],
+  [Enum.SOLDIER_WL_LANCER, {ctrl: Bandit1, sheet:Vars.SHEET_WL_LANCER}],
+  [Enum.SOLDIER_WL_GREEN_SWORD, {ctrl: Bandit1, sheet:Vars.SHEET_WL_LANCER}],
 ]);

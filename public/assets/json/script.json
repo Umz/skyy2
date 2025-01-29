@@ -34,7 +34,10 @@
       "plains2": "Paying homage.",
       "plains3": "I don't know of it.",
       "plains4": "Soon.",
-      "plains5": "Diplomacy."
+      "plains5": "Diplomacy.",
+
+      "green1": "Are you the architect.",
+      "green2": "Night Train has sent me here for you. Come. Fly with our tribe, Moon at Midnight."
     },
     "Wildman": {
 
@@ -78,6 +81,10 @@
       "storm3": "The Architect?",
       "storm4": "The Architect! We're counting on you MC!"
     },
+    "Lunar": {
+      "green1": "I am.",
+      "green2": "Gladly. We are oppressed here."
+    },
 
     "HarvestMoon": {
       "storm1": "Bravo Moon Chief, I came to see the good news myself.",
@@ -111,7 +118,8 @@
     },
 
     "Soldier": {
-      "mam_alert": "Raiders are attacking!"
+      "mam_alert": "Raiders are attacking!",
+      "halt": "Halt! State your business."
     }
   }
 }

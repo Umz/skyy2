@@ -67,7 +67,8 @@ export default class SaveData {
 
       case 5:
         data.silica = 15;
-        data.tutorialSequenceStep = 65;
+        data.tutorialNumber = 7;
+        data.tutorialSequenceStep = 0;
         break;
 
       case 4:

@@ -34,6 +34,10 @@ const Vars = {
   SHEET_RED_HEAVY_BANDIT: "Heavy_Infantry_RF.png",
   SHEET_RED_BANDIT: "Infantry_RF.png",
 
+  SHEET_WL_INFANTRY: "Infantry_WL.png",
+  SHEET_WL_HEAVY: "Heavy_WL.png",
+  SHEET_WL_LANCER: "Lancer_WL.png",
+
   SHEET_CITIZEN_MAM_KING: "Citizen_MaM_King.png",
   SHEET_CITIZEN_STORM_F1: "Citizen_Storm_F1.png",
   SHEET_CITIZEN_STORM_F2: "Citizen_Storm_F2.png",
