@@ -49,6 +49,7 @@ function getParts(id) {
 // Change Story to match Subtitles
 
 const StoryParts = [
+
   {id:Enum.STORY_0_INTRO, p:["After his heroic feats during the Battle of the New Moon, Moon Chief was appointed army commander.", "He now seeks the path to glory by securing these lands."]},
   {id:Enum.STORY_1A_APPRENTICE, p:["Bandits dare to raid our tribe. Pierce through them. This will be their demise."]},
   {id:Enum.STORY_1B_APPRENTICE, p:["There are still enemies here. Find them. Destroy them. Be ruthless."]},
@@ -64,4 +65,6 @@ const StoryParts = [
   {id:Enum.STORY_5_MISSION, p:["Travel to the east to find Green Village. Once we have found the village, we will return here with 'The Architect'."]},
   {id:Enum.STORY_5_CLAIM_MINES, p:["These Mines belong to Moon at Midnight. The resources will serve our people.", "Place our banner to warn any others, this land is ours now."]},
   {id:Enum.STORY_5_GREEN_VILLAGE, p:["Use 'diplomacy' to locate The Architect and take him back to Moon at Midnight."]},
+
+  {id:Enum.STORY_6_HOLD, p:["Hold the enemies here while The Architect escapes to Moon at Midnight.", "Teach them to fear the name of Moon Chief and Moon at Midnight."]},
 ];

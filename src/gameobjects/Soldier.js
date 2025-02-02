@@ -455,6 +455,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  Animations    ---------------------------------------------------------------------
 
+  changeTexture(texture) {
+    this.prefix = texture;
+    this.setTexture(texture);
+  }
+
   playIdle() {
     this.anims.play(this.prefix + Vars.ANIM_IDLE, true);
   }

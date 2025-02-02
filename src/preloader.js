@@ -2,7 +2,13 @@ import SaveData from "./util/SaveData";
 import Vars from "./const/Vars";
 import Sfx from "./const/Sfx";
 
-const LANCERS = [Vars.SHEET_PLAYER, Vars.SHEET_BLUE_BANDIT_LANCE, Vars.SHEET_BLUE_BANDIT_BOSS, Vars.SHEET_WL_LANCER];
+const LANCERS = [
+    Vars.SHEET_PLAYER,
+    Vars.SHEET_BLUE_BANDIT_LANCE,
+    Vars.SHEET_BLUE_BANDIT_BOSS,
+    Vars.SHEET_WL_LANCER,
+    Vars.SHEET_WL_SPLIT_CLOVER
+];
 const H_INFANTRY = [Vars.SHEET_RED_FACE, Vars.SHEET_RED_HEAVY_BANDIT, Vars.SHEET_MAM_HEAVY, Vars.SHEET_WL_HEAVY];
 const ADVISOR = [Vars.SHEET_LUNAR, Vars.SHEET_ARCHITECT];
 const SUPPLYMAN = [Vars.SHEET_MAM_SUPPLY];
@@ -13,7 +19,8 @@ const INFANTRY = [
     Vars.SHEET_RED_BANDIT,
     Vars.SHEET_GR_INFANTRY,
     Vars.SHEET_FALLEN_CLOUD,
-    Vars.SHEET_WL_INFANTRY
+    Vars.SHEET_WL_INFANTRY,
+    Vars.SHEET_WL_GREEN_SWORD
 ];
 
 const CITIZENS = [

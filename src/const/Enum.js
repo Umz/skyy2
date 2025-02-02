@@ -108,6 +108,8 @@ const Enum = {
   STORY_5_CLAIM_MINES: 12,
   STORY_5_GREEN_VILLAGE: 13,
 
+  STORY_6_HOLD: 14,
+
   //  Dialogue
 
   BF_TEST: 1,

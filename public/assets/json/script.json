@@ -119,7 +119,8 @@
 
     "Soldier": {
       "mam_alert": "Raiders are attacking!",
-      "halt": "Halt! State your business."
+      "halt": "Halt! State your business.",
+      "traitor": "Deserter! Deserter! Traitor! Kill them all!"
     }
   }
 }

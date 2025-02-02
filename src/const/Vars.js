@@ -38,6 +38,9 @@ const Vars = {
   SHEET_WL_HEAVY: "Heavy_WL.png",
   SHEET_WL_LANCER: "Lancer_WL.png",
 
+  SHEET_WL_GREEN_SWORD: "Infantry_WL_Green.png",
+  SHEET_WL_SPLIT_CLOVER: "Lancer_WL_Clover.png",
+
   SHEET_CITIZEN_MAM_KING: "Citizen_MaM_King.png",
   SHEET_CITIZEN_STORM_F1: "Citizen_Storm_F1.png",
   SHEET_CITIZEN_STORM_F2: "Citizen_Storm_F2.png",

@@ -179,8 +179,9 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_GR1, {ctrl: Bandit1, sheet:Vars.SHEET_GR_INFANTRY}],
   [Enum.SOLDIER_FALLEN_CLOUD, {ctrl: BanditBoss, sheet:Vars.SHEET_FALLEN_CLOUD}],
 
-  [Enum.SOLDIER_WL_INFANTRY, {ctrl: Bandit1, sheet:Vars.SHEET_WL_INFANTRY}],
+  [Enum.SOLDIER_WL_INFANTRY, {ctrl: Bandit3, sheet:Vars.SHEET_WL_INFANTRY}],
   [Enum.SOLDIER_WL_HEAVY, {ctrl: Defensive, sheet:Vars.SHEET_WL_HEAVY}],
   [Enum.SOLDIER_WL_LANCER, {ctrl: Bandit1, sheet:Vars.SHEET_WL_LANCER}],
-  [Enum.SOLDIER_WL_GREEN_SWORD, {ctrl: Bandit1, sheet:Vars.SHEET_WL_LANCER}],
+
+  [Enum.SOLDIER_WL_GREEN_SWORD, {ctrl: BanditBoss, sheet:Vars.SHEET_WL_GREEN_SWORD}],
 ]);
