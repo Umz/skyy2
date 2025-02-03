@@ -14,6 +14,8 @@ export default class P8 extends TutorialSequence {
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
+    //  - Battle of Storm Village - Destroy buildings and configure battle -
+
     this
     .addStopSaving()  // Temp (dev)
 
