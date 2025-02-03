@@ -56,7 +56,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-    this.DevData(5);
+    this.DevData(6);
     console.log("Loaded data", data)
 
     return data;
@@ -67,7 +67,8 @@ export default class SaveData {
 
       case 5:
         data.silica = 15;
-        data.tutorialSequenceStep = 65;
+        data.tutorialNumber = 7;
+        data.tutorialSequenceStep = 0;
         break;
 
       case 4:

@@ -12,7 +12,7 @@ export default class P1 extends TutorialSequence {
     const script = Subtitles.GetScript();
 
     this
-    .addIcon(player, Icon.SPEAR, 5000)
+    .addIcon(player, Icon.SKY_SPEAR, 15000)
     .addInstruction(Enum.STORY_0_INTRO)
 
     .add(()=>{

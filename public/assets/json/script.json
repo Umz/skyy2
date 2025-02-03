@@ -28,7 +28,22 @@
       "mines3": "OK. Then I'll break some rocks.",
       "mines4": "Who would dare to loot our mines",
       "mines5": "Then let us settle the matter now.",
-      "mines6": "The matter is settled."
+      "mines6": "The matter is settled.",
+
+      "plains1": "What of it?",
+      "plains2": "Paying homage.",
+      "plains3": "I don't know of it.",
+      "plains4": "Soon.",
+      "plains5": "Diplomacy.",
+
+      "green1": "Are you the architect.",
+      "green2": "Night Train has sent me here for you. Come. Fly with our tribe, Moon at Midnight.",
+      "green3": "Go to Moon at Midnight. I will hold them!",
+      "green4": "I am the mighty Moon Chief! I will hold them!",
+      "green5": "Time to head back now.",
+      "green6": "A true warrior. Let us battle to the bitter end.",
+      "green7": "We have returned!",
+      "green8": "Do you have a name for him?"
     },
     "Wildman": {
 
@@ -42,7 +57,15 @@
       "bf7": "Fine, I will join you!"
     },
     "BlueMoon": {
-      "mam1": "Amazing. They are as beautiful as the rumours say."
+      "mam1": "Amazing. They are as beautiful as the rumours say.",
+
+      "plains1": "This place is far from the forest",
+      "plains2": "What..",
+      "plains3": "These lands..",
+      "plains4": "What are these chests?",
+      "plains5": "What forest is this?",
+      "plains6": "Shall we claim this place?",
+      "plains7": "What is the plan to take the Architect?"
     },
     "NightTrain": {
 
@@ -62,7 +85,17 @@
       "storm1": "All of that comes later! We've found some blue silica deposits just passed the village!",
       "storm2": "Haha! Right? Tell MC how great this is.",
       "storm3": "The Architect?",
-      "storm4": "The Architect! We're counting on you MC!"
+      "storm4": "The Architect! We're counting on you MC!",
+
+      "green1": "Architect. Welcome to Moon at Midnight!"
+    },
+    "Lunar": {
+      "green1": "I am.",
+      "green2": "Gladly. We are oppressed here.",
+      "green3": "You. Alone?",
+      "green4": "Finally. I am free of Whiteleaf.",
+      "green5": "I am honoured to fly with the tribe!",
+      "green6": "I am Lunar the Architect of Moon at Midnight!"
     },
 
     "HarvestMoon": {
@@ -95,9 +128,14 @@
       "mines1": "Your mines!? Since when!?",
       "mines2": "Retreat! Retreat!"
     },
+    "GreenSword": {
+      "green1": "Moon Chief. I am Green Sword of Green Village."
+    },
 
     "Soldier": {
-      "mam_alert": "Raiders are attacking!"
+      "mam_alert": "Raiders are attacking!",
+      "halt": "Halt! State your business.",
+      "traitor": "Deserter! Deserter! Traitor! Kill them all!"
     }
   }
 }
