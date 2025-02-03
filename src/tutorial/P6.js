@@ -40,7 +40,7 @@ export default class P6 extends TutorialSequence {
     .addTitle("Blue Moon - How are we going to get the Architect")
     .addPlayerDistanceCheck(6.8)
     .addBlueSpeakAndWait(Icon.QUESTION, script.BlueMoon.plains7, 4000)
-    .addSpeakerAndWait(player, Icon.SPEAR2, script.MoonChief.plains5, 2000)
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, script.MoonChief.plains5, 2000)
 
     .addInstruction(Enum.STORY_5_GREEN_VILLAGE)
   }

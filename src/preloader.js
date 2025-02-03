@@ -264,7 +264,7 @@ export class Preloader extends Phaser.Scene {
     createVFXAnimation(key, frames, frameRate = 10, repeat = 0) {
         this.anims.create({
             key: key,
-            frames: this.anims.generateFrameNumbers(key, { start: 0, end: frames }),
+            frames: this.anims.generateFrameNumbers(key, { start: 0, end: frames - 1 }),
             frameRate: frameRate,
             repeat: repeat
         });

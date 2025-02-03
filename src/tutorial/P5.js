@@ -39,7 +39,7 @@ export default class P5 extends TutorialSequence {
     .addSpeakNightAndWait(Icon.HAPPY, script.NightTrain.mines1, 4000)
     .addWait(500)
     .addSpeakNightAndWait(Icon.ANGER, script.NightTrain.mines2, 5000)
-    .addIcon(player, Icon.SPEAR2, 3000)
+    .addIcon(player, Icon.SKY_SPEAR, 3000)
 
     .addWait(2000)
     .addSpeakNightAndWait(Icon.HAND_UP_RIGHT, script.NightTrain.mines3, 2000)
@@ -158,7 +158,7 @@ export default class P5 extends TutorialSequence {
     })
     .addSpeakerAndWait(player, Icon.EXCLAIM, script.MoonChief.mines4, 3000)
     .addDialogueAndWait(fallen, script.FallenCloud.mines1, 3000)
-    .addSpeakerAndWait(player, Icon.SPEAR, script.MoonChief.mines5, 3000)
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, script.MoonChief.mines5, 3000)
 
     .add(()=>{
       return player.x >= Vars.AREA_WIDTH * 4.3;
@@ -186,7 +186,7 @@ export default class P5 extends TutorialSequence {
     .addWait(500)
 
     .addTitle("Claim The Mines when Fallen Cloud has been defeated.")
-    .addSpeakerAndWait(player, Icon.SPEAR, script.MoonChief.mines6, 3000)
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, script.MoonChief.mines6, 3000)
 
     .addInstruction(Enum.STORY_5_CLAIM_MINES)
 

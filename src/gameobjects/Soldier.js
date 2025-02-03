@@ -5,6 +5,7 @@ import Enum from "../const/Enum";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Juke from "../util/Juke";
+import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
 
@@ -24,6 +25,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.hitbox = new Phaser.Geom.Rectangle(0,0,1,1);
 
     this.lastTarget = null;
+
+    this.uid = SaveData.NewUID;
 
     //  Stats / settings
 

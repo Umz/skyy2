@@ -105,7 +105,7 @@ export default class P4 extends TutorialSequence {
     
     .addRedFaceForDuel()
     .add(()=>{
-      this.redface.speak(Icon.SPEAR, script.RedFace.rose4, 6000);
+      this.redface.speak(Icon.SWORD, script.RedFace.rose4, 6000);
       return true;
     })
 
@@ -142,7 +142,7 @@ export default class P4 extends TutorialSequence {
 
     .addSpeakerAndWait(player, Icon.BANNER, script.MoonChief.rose1, 7000)
     .addWait(500)
-    .addSpeakerAndWait(player, Icon.SPEAR2, script.MoonChief.rose2, 4000)
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, script.MoonChief.rose2, 4000)
 
     //  Resume soldiers
     .add(()=>{
@@ -199,7 +199,7 @@ export default class P4 extends TutorialSequence {
     })
 
     .addWait(4000)
-    .addSpeakerAndWait(player, Icon.SPEAR2, script.MoonChief.rose3, 4000)
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, script.MoonChief.rose3, 4000)
   }
 
   //  - P4 functions    --------------------------------------------------------------------------------

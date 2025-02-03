@@ -89,6 +89,7 @@ const Icon = {
   BLUE_SILICA: 423,
   GOLD_SILICA: 424,
 
+  SKY_SPEAR: 472,
   SPEAR: 473, // Row 30
   SPEAR2: 474, // Row 30
 

@@ -37,7 +37,13 @@
       "plains5": "Diplomacy.",
 
       "green1": "Are you the architect.",
-      "green2": "Night Train has sent me here for you. Come. Fly with our tribe, Moon at Midnight."
+      "green2": "Night Train has sent me here for you. Come. Fly with our tribe, Moon at Midnight.",
+      "green3": "Go to Moon at Midnight. I will hold them!",
+      "green4": "I am the mighty Moon Chief! I will hold them!",
+      "green5": "Time to head back now.",
+      "green6": "A true warrior. Let us battle to the bitter end.",
+      "green7": "We have returned!",
+      "green8": "Do you have a name for him?"
     },
     "Wildman": {
 
@@ -79,11 +85,17 @@
       "storm1": "All of that comes later! We've found some blue silica deposits just passed the village!",
       "storm2": "Haha! Right? Tell MC how great this is.",
       "storm3": "The Architect?",
-      "storm4": "The Architect! We're counting on you MC!"
+      "storm4": "The Architect! We're counting on you MC!",
+
+      "green1": "Architect. Welcome to Moon at Midnight!"
     },
     "Lunar": {
       "green1": "I am.",
-      "green2": "Gladly. We are oppressed here."
+      "green2": "Gladly. We are oppressed here.",
+      "green3": "You. Alone?",
+      "green4": "Finally. I am free of Whiteleaf.",
+      "green5": "I am honoured to fly with the tribe!",
+      "green6": "I am Lunar the Architect of Moon at Midnight!"
     },
 
     "HarvestMoon": {
@@ -115,6 +127,9 @@
     "FallenCloud": {
       "mines1": "Your mines!? Since when!?",
       "mines2": "Retreat! Retreat!"
+    },
+    "GreenSword": {
+      "green1": "Moon Chief. I am Green Sword of Green Village."
     },
 
     "Soldier": {

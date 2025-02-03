@@ -17,11 +17,12 @@ export default class P8 extends TutorialSequence {
     this
     .addStopSaving()  // Temp (dev)
 
+    .addTitle("Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm")
     // Full scale war destroys Storm Village
 
     // announcement from Soldier (The Whiteleaf tribe is attacking)
-    .addSpeakerAndWait(player, Icon.SPEAR, "They dare to attack us!? Moon at Midnight!")
-    .addSpeakerAndWait(player, Icon.SPEAR, "To battle!")
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, "They dare to attack us!? Moon at Midnight!")
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, "To battle!")
 
     .add(()=>{
       return player.x >= Vars.AREA_WIDTH * 2.1;
