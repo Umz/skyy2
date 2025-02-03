@@ -499,4 +499,13 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   get velocityY() {
     return this.body.velocity.y;
   }
+
+  //  - Save Data -
+
+  loadData() {
+  }
+
+  getSaveData() {
+  }
+  
 }
