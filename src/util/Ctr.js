@@ -1,3 +1,5 @@
+import ActWait from "../actions/ActWait";
+
 export default class Ctr {
 
   static ClearActions(soldier) {
@@ -12,6 +14,13 @@ export default class Ctr {
 
   static RetreatAndDie(soldier) {
     const controller = soldier.controller;
+  }
+
+  static Wait(soldier, ttl) {
+    const controller = soldier.controller;
+    controller.addActions(
+      new ActWait(ttl)
+    );
   }
 
 }

@@ -29,13 +29,14 @@ export default class P8 extends TutorialSequence {
     .add(()=>{
       Ctr.ClearActions(this.braver);
       Ctr.MoveToX(this.braver);
+      Ctr.Wait(this.braver, 60 * 1000);
+
       return true;
     })
     .addBraverSpeakAndWait(Icon.ALARM, "Whiteleaf have sent an army! They are destroying Storm!", 5000)
 
     // spawn solder
     // run to Moon Chief
-
     // Annoucement
 
     .addSpeakerAndWait(player, Icon.SKY_SPEAR, "They dare to attack us!? Moon at Midnight!")

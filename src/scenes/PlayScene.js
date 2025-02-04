@@ -526,6 +526,13 @@ export class PlayScene extends Scene {
     }
   }
 
+  // -
+
+  getSoldier(uid) {
+    const group = this.groupSoldiers.getChildren();
+    return group.find(sprite => sprite.uid === uid);
+  }
+
   //  -
 
   spawnCollectible(posX, lane, type) {
