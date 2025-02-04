@@ -66,4 +66,9 @@ export default class Action {
     this.name = name;
     return this;
   }
+
+  setSprite(ss) {
+    this.sprite = ss;
+    this.scene = ss.scene;
+  }
 }

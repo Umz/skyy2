@@ -1,26 +1,23 @@
+import ActMoveToX from "../actions/ActMoveToX";
 import ActWait from "../actions/ActWait";
 
 export default class Ctr {
 
-  static ClearActions(soldier) {
+  static SetActions(soldier, ...actions) {
     const controller = soldier.controller;
     controller.clearAllActions();
+    for (let aa of actions) {
+      aa.setSprite(soldier);
+      controller.addAction(aa);
+    }
   }
 
-  static MoveToX(soldier) {
-    const controller = soldier.controller;
-    // Add actions
+  static MoveToX(toX) {
+    return new ActMoveToX(null, toX);
   }
 
-  static RetreatAndDie(soldier) {
-    const controller = soldier.controller;
-  }
-
-  static Wait(soldier, ttl) {
-    const controller = soldier.controller;
-    controller.addActions(
-      new ActWait(ttl)
-    );
+  static Wait(ttl) {
+    return new ActWait(ttl);
   }
 
 }

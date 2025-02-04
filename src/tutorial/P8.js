@@ -17,30 +17,29 @@ export default class P8 extends TutorialSequence {
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
+    const WAIT = 60 * 60 * 1000;
+
     //  - Battle of Storm Village - Destroy buildings and configure battle -
 
     this
     .addStopSaving()  // Temp (dev)
 
-    .addTitle("Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm")
-
-    // announcement from Soldier (The Whiteleaf tribe is attacking)
+    .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")
 
     .add(()=>{
-      Ctr.ClearActions(this.braver);
-      Ctr.MoveToX(this.braver);
-      Ctr.Wait(this.braver, 60 * 1000);
-
+      Ctr.SetActions(this.braver,
+        Ctr.MoveToX(player.x + 80),
+        Ctr.Wait(WAIT)
+      );
       return true;
     })
     .addBraverSpeakAndWait(Icon.ALARM, "Whiteleaf have sent an army! They are destroying Storm!", 5000)
 
-    // spawn solder
-    // run to Moon Chief
-    // Annoucement
-
-    .addSpeakerAndWait(player, Icon.SKY_SPEAR, "They dare to attack us!? Moon at Midnight!")
-    .addSpeakerAndWait(player, Icon.SKY_SPEAR, "To battle!")
+    .addSpeakerAndWait(player, Icon.ANGER, "What!")
+    .addWait(750)
+    .addSpeakerAndWait(player, Icon.ANGER, "They dare to attack us!? Do not fear the Moon at Midnight? The dare to dream they can defeat us!?", 8000)
+    .addWait(1000)
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, "To battle!", 4000)
 
     // Instructions - Head to Storm village! Quickly.
 

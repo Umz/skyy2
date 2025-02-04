@@ -8,7 +8,7 @@ import P7 from "../tutorial/P7";
 import P8 from "../tutorial/P8";
 import SequenceHelper from "../tutorial/SequenceHelper";
 import SaveData from "../util/SaveData";
-import Story from "../util/Story";
+import StoryDOM from "../util/StoryDOM";
 
 export default class Tutorial {
 
@@ -64,11 +64,10 @@ export default class Tutorial {
     }
   }
 
-  showInstructions(storyID) {
-    
+  showInstructions(arrey) {
     this.spriteController.setActive(false);
     this.controllerActive = true;
-    Story.ShowStory(storyID);
+    StoryDOM.ShowInstruction(arrey);
   }
 
   showConversation(enu) {
@@ -83,7 +82,7 @@ export default class Tutorial {
 
     this.spriteController.setActive();
     this.controllerActive = false;
-    Story.HideStory();
+    StoryDOM.HideStory();
     this.sequence.nextStep();
   }
 

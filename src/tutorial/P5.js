@@ -1,6 +1,7 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
@@ -93,7 +94,7 @@ export default class P5 extends TutorialSequence {
     .addSpeakerAndWait(player, Icon.DROPLET, script.MoonChief.mines3, 2000)
 
     .addWait(500)
-    .addInstruction(Enum.STORY_5_BREAK_ROCKS)
+    .addInstruction(Instructions.P5A_BREAK_ROCKS)
     
     .addTitle("Moon Chief breaks the rocks for Night Train and escorts him back")
 
@@ -144,7 +145,7 @@ export default class P5 extends TutorialSequence {
     })
     .addSpeakNightAndWait(Icon.HAND_RIGHT, script.NightTrain.storm4, 2500)
 
-    .addInstruction(Enum.STORY_5_MISSION)
+    .addInstruction(Instructions.P5B_MISSION)
 
     .addTitle("Leave Storm Village and travel toward Green Village - Fight at the Mines", true)
 
@@ -188,7 +189,7 @@ export default class P5 extends TutorialSequence {
     .addTitle("Claim The Mines when Fallen Cloud has been defeated.")
     .addSpeakerAndWait(player, Icon.SKY_SPEAR, script.MoonChief.mines6, 3000)
 
-    .addInstruction(Enum.STORY_5_CLAIM_MINES)
+    .addInstruction(Instructions.P5C_CLAIM_MINES)
 
     .add(()=>{
       this.doOnce(()=>{

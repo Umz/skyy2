@@ -1,6 +1,7 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Instructions from "../const/Instructions";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
@@ -13,12 +14,12 @@ export default class P1 extends TutorialSequence {
 
     this
     .addIcon(player, Icon.SKY_SPEAR, 15000)
-    .addInstruction(Enum.STORY_0_INTRO)
+    .addInstruction(Instructions.P0_INTRO)
 
     .add(()=>{
       return this.checkCount(2000);
     })
-    .addInstruction(Enum.STORY_1A_APPRENTICE)
+    .addInstruction(Instructions.P1A_APPRENTICE)
     .add(()=>{
       this.doOnce(()=>{
         SequenceHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
@@ -27,7 +28,7 @@ export default class P1 extends TutorialSequence {
     })
 
     .addWait(2000)
-    .addInstruction(Enum.STORY_1B_APPRENTICE)
+    .addInstruction(Instructions.P1B_APPRENTICE)
     .add(()=>{
       return this.spawnAndWait(2);
     })
@@ -48,7 +49,7 @@ export default class P1 extends TutorialSequence {
       return this.checkCount(1000);
     })
     .addWait(1000)
-    .addInstruction(Enum.STORY_1C_BLUEFOREST);
+    .addInstruction(Instructions.P1C_BLUEFOREST);
 
   }
 

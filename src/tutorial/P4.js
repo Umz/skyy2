@@ -4,6 +4,7 @@ import RedDuel from "../ai/RedDuel";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
@@ -164,7 +165,7 @@ export default class P4 extends TutorialSequence {
     .addTitle("Battle is Over with all enemies dead - Claim Storm Village for MaM")
 
     .addIcon(player, Icon.STANDARD, 15 * 1000)
-    .addInstruction(Enum.STORY_4_CLAIM_STORM)
+    .addInstruction(Instructions.P4A_CLAIM_STORM)
 
     //  Claim the land
 
@@ -180,7 +181,7 @@ export default class P4 extends TutorialSequence {
     })
 
     .addWait(3000)
-    .addInstruction(Enum.STORY_4_CITIZEN_TRIALS)
+    .addInstruction(Instructions.P4B_CITIZEN_TRIALS)
 
     .addTitle("Citizens set to Captive behaviour -----")
 

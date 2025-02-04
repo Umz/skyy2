@@ -1,6 +1,7 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
@@ -85,7 +86,7 @@ export default class P3 extends TutorialSequence {
     
     //  -
 
-    .addInstruction(Enum.STORY_3_CHASE_REDFACE)
+    .addInstruction(Instructions.P3_CHASE_REDFACE)
   }
 
   //  ============================================================================
