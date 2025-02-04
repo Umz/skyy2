@@ -27,6 +27,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.lastTarget = null;
 
     this.uid = SaveData.NewUID;
+    this.home = Enum.LOC_MAM;
 
     //  Stats / settings
 
@@ -506,6 +507,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   getSaveData() {
+    return {
+      uid: this.uid,
+      sheet: this.prefix,
+      x: this.x,
+      name: this.name,
+      showName: this.name !== "Soldier",
+      home: this.home,
+      controller: this.controller.getSaveName()
+    }
   }
   
 }

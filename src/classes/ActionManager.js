@@ -1,4 +1,5 @@
 import ActComplete from "../actions/ActComplete";
+import ControllerMap from "../const/ControllerMap";
 
 /** Handles all active actions for a Sprite */
 export default class ActionManager {
@@ -126,6 +127,18 @@ export default class ActionManager {
   resume() {
     this.actionsActive = true;
     this.backgroundActive = true;
+  }
+
+  //  -
+
+  getSaveName() {
+    for (let [name, clazz] of ControllerMap) {
+      if (this instanceof clazz) {
+        return name;
+      }
+    }
+    console.error("Could not find save name in ControllerMap for:", this);
+    return null;
   }
 
 }
