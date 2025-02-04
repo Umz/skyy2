@@ -1,6 +1,7 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
 import SaveData from "../util/SaveData";
@@ -41,9 +42,13 @@ export default class P8 extends TutorialSequence {
     .addWait(1000)
     .addSpeakerAndWait(player, Icon.SKY_SPEAR, "To battle!", 4000)
 
-    // Instructions - Head to Storm village! Quickly.
+    .addInstruction(Instructions.P8A_GOTO)
+    .addIcon(player, Icon.BANNER, 30 * 1000)
 
-    .addTitle("Battles are already taking place in the forest as you pass through")
+    .addTitle(" >>> Battles are already taking place in the forest as you pass through")
+
+    .addPositionCheck(1.9)
+    .addBattleSpawn(6, 10)
 
     // spawn soldiers allies and enemies ahead of MC to fight
     // spawn them amongst each other
@@ -98,6 +103,39 @@ export default class P8 extends TutorialSequence {
     .addWait(500);
     return this;
   }
+
+  addPositionCheck(mul) {
+    this.add(()=>{
+      return this.player.x >= Vars.AREA_WIDTH * mul;
+    });
+    return this;
+  }
+
+  addBattleSpawn(allies, enemies) {
+    this
+    .add(() => {
+      for (let i=0; i<allies; i++) {
+        const opts = [Enum.SOLDIER_ALLY_INFANTRY1];
+        const soldierID = Phaser.Utils.Array.GetRandom(opts);
+        const farRight = SequenceHelper.GetCameraRight() + SequenceHelper.GetCameraWidth();
+        const posX = Phaser.Math.Between(SequenceHelper.GetCameraRight(), farRight);
+        SequenceHelper.SpawnAlly(posX, soldierID);
+      }
+      return true;
+    })
+    .add(() => {
+      for (let i=0; i<enemies; i++) {
+        const opts = [Enum.SOLDIER_WL_INFANTRY];
+        const soldierID = Phaser.Utils.Array.GetRandom(opts);
+        const farRight = SequenceHelper.GetCameraRight() + SequenceHelper.GetCameraWidth();
+        const posX = Phaser.Math.Between(SequenceHelper.GetCameraRight(), farRight);
+        SequenceHelper.SpawnEnemy(posX, soldierID);
+      }
+      return true;
+    });
+    return this;
+  }
+
   //  - Creation of Sprites -
 
   get braver() {

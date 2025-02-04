@@ -14,5 +14,7 @@ const Instructions = {
   P5C_CLAIM_MINES: ["These Mines belong to Moon at Midnight. The resources will serve our people.", "Place our banner to warn any others, this land is ours now."],
   P6A_GREEN_VILLAGE: ["Use 'diplomacy' to locate The Architect and take him back to Moon at Midnight."],
   P7A_HOLD: ["Hold the enemies here while The Architect escapes to Moon at Midnight.", "Teach them to fear the name of Moon Chief and Moon at Midnight."],
+
+  P8A_GOTO: ["The Whiteleaf Tribe have the audacity to retaliate against us.", "Take a subjugation force and defeat the attacking army immediately.", "They must fear Moon at Midnight!"]
 };
 export default Instructions;
