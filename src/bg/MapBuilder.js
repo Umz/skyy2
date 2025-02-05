@@ -36,7 +36,7 @@ export default class MapBuilder extends BaseBuilder {
 
       //  Area label in the sky
       if (data.area) {
-        this.addLabel(houseSprite, data.area);
+        this.addLabel(sprite, data.area);
       }
 
       sprite.setDepth(data.depth);
@@ -103,19 +103,6 @@ export default class MapBuilder extends BaseBuilder {
     const fgJSON = this.scene.cache.json.get(fg);
 
     const isStorm = name === "storm";
-    if (isStorm) {
-      console.log(villageJSON);
-    }
-
-    // Destroyed ? Load from SaveData!
-    // House- type House, Tower
-    // Build - 0-100
-
-    // Next version, change how city loading works. Think data first.
-
-    // SaveData to store - Build%, Level.
-    // If Level 2 > frame = Build% and Type (New Sprite)
-
     if (isStorm) {
       this.addBuildings(villageJSON, posX, this.buildings);
     }

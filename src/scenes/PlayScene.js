@@ -497,6 +497,28 @@ export class PlayScene extends Scene {
     })
   }
 
+  //  - Building Management -
+
+  resetAllStorm() {
+    const all = this.buildingsLayer.getChildren();
+    const storm = all.filter(sprite => sprite.level);
+    for (let building of storm) {
+      if (building.buildingType === Enum.BUILDING_HOUSE || building.buildingType === Enum.BUILDING_TOWER) {
+        building.setLevel(2);
+      }
+    }
+  }
+
+  addRandomProgress() {
+    const all = this.buildingsLayer.getChildren();
+    const storm = all.filter(sprite => sprite.level);
+    for (let building of storm) {
+      if (building.buildingType === Enum.BUILDING_HOUSE || building.buildingType === Enum.BUILDING_TOWER) {
+        building.addProgress(Phaser.Math.Between(20, 40));
+      }
+    }
+  }
+
   //  - Character spawning    -----------------------------------------------------------------------------------------
 
   spawnPlayer() {

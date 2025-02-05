@@ -29,6 +29,10 @@ export default class P8 extends TutorialSequence {
       player.x = Vars.AREA_WIDTH * 3.3;
       return true;
     })
+    .add(()=>{
+      scene.resetAllStorm();
+      return true;
+    })
     .add(()=>false)
 
     .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")

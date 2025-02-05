@@ -1,7 +1,7 @@
 import Enum from "../const/Enum";
 import SaveData from "../util/SaveData";
 
-export default class Building extends Phaser.GameObjects.Image {
+export default class Building extends Phaser.GameObjects.Sprite {
 
   constructor(scene, x, y, atlas, frame) {
     super(scene, x, y, atlas, frame);
@@ -31,17 +31,17 @@ export default class Building extends Phaser.GameObjects.Image {
 
   updateFrame() {
     if (this.level > 1) {
-      const newFrame = this.getBuildingFrame(this.progress);
-      this.setFrame(newFrame);
+      const newFrame = this.getBuildingFrame();
+      this.setTexture("atlas", newFrame)
     }
   }
 
   getBuildingFrame() {
     if (this.buildingType === Enum.BUILDING_HOUSE) {
-      this.getStormHouseFrame();
+      return this.getStormHouseFrame();
     }
     else if (this.buildingType === Enum.BUILDING_TOWER) {
-      this.getStormTowerFrame();
+      return this.getStormTowerFrame();
     }
     else {
       return this.frame;
@@ -49,6 +49,7 @@ export default class Building extends Phaser.GameObjects.Image {
   }
 
   getStormHouseFrame() {
+    const percent = this.progress;
     if (percent >= 100) {
       return "storm_house_b4";
     }
@@ -64,6 +65,7 @@ export default class Building extends Phaser.GameObjects.Image {
   }
 
   getStormTowerFrame() {
+    const percent = this.progress;
     if (percent >= 100) {
       return "storm_block_b3";
     }
@@ -78,7 +80,7 @@ export default class Building extends Phaser.GameObjects.Image {
   getBuildingType(frame) {
     switch (frame) {
       case "storm_hut": return Enum.BUILDING_HOUSE;
-      case "storm_block": return Enum.BUILDING_TOWER
+      case "storm_block": return Enum.BUILDING_TOWER;
       default: return Enum.BUILDING_GENERIC;
     }
   }
