@@ -1,5 +1,6 @@
 import Blank from "../ai/Blank";
 import SoldierView from "../ai/SoldierView";
+import { getSaveName as getControllerSaveName } from "../const/ControllerMap";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
 import Sfx from "../const/Sfx";
@@ -514,7 +515,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       name: this.name,
       showName: this.name !== "Soldier",
       home: this.home,
-      controller: this.controller.getSaveName()
+      controller: getControllerSaveName(this.controller)
     }
   }
   

@@ -41,3 +41,13 @@ const ControllerMap = new Map([
 ]);
 
 export default ControllerMap;
+
+export function getSaveName(cont) {
+  for (let [name, clazz] of ControllerMap) {
+    if (cont instanceof clazz) {
+      return name;
+    }
+  }
+  console.error("Could not find save name in ControllerMap for:", this);
+  return null;
+}

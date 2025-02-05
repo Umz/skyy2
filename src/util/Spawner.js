@@ -184,4 +184,5 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_WL_LANCER, {ctrl: Bandit1, sheet:Vars.SHEET_WL_LANCER}],
 
   [Enum.SOLDIER_WL_GREEN_SWORD, {ctrl: BanditBoss, sheet:Vars.SHEET_WL_GREEN_SWORD}],
+  [Enum.SOLDIER_WL_SPLIT_CLOVER, {ctrl: BanditBoss, sheet:Vars.SHEET_WL_SPLIT_CLOVER}],
 ]);

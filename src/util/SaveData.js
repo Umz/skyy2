@@ -22,6 +22,7 @@ const data = {
 
   citizens: [],
   soldiers: [],
+  houses: [],
 
   location: Enum.LOC_MAM,
   claimed: [Enum.LOC_MAM],

@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.4.0</string>
+        <string>7.5.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -340,6 +340,7 @@
                 <false/>
             </struct>
             <key type="filename">buildings/storm_block.png</key>
+            <key type="filename">buildings/storm_block_b1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -351,6 +352,22 @@
                 <rect>17,14,33,28</rect>
                 <key>scale9Paddings</key>
                 <rect>17,14,33,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_block_b2.png</key>
+            <key type="filename">buildings/storm_block_b3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,23,33,45</rect>
+                <key>scale9Paddings</key>
+                <rect>17,23,33,45</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -381,6 +398,52 @@
                 <rect>13,11,27,22</rect>
                 <key>scale9Paddings</key>
                 <rect>13,11,27,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_house_b1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,11,27,21</rect>
+                <key>scale9Paddings</key>
+                <rect>13,11,27,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_house_b2.png</key>
+            <key type="filename">buildings/storm_house_b3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,13,36,26</rect>
+                <key>scale9Paddings</key>
+                <rect>18,13,36,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buildings/storm_house_b4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,13,38,26</rect>
+                <key>scale9Paddings</key>
+                <rect>19,13,38,26</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

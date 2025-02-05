@@ -8,7 +8,7 @@ import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
-let braverSprite;
+let braverSprite, cloverSprite;
 
 export default class P8 extends TutorialSequence {
 
@@ -25,22 +25,29 @@ export default class P8 extends TutorialSequence {
     this
     .addStopSaving()  // Temp (dev)
 
+    .add(()=>{
+      player.x = Vars.AREA_WIDTH * 3.3;
+      return true;
+    })
+    .add(()=>false)
+
     .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")
 
     .add(()=>{
       Ctr.SetActions(this.braver,
-        Ctr.MoveToX(player.x + 80),
-        Ctr.Wait(WAIT)
+        Ctr.MoveToX(player.x + 80)
       );
       return true;
     })
     .addBraverSpeakAndWait(Icon.ALARM, "Whiteleaf have sent an army! They are destroying Storm!", 5000)
 
+    /*
     .addSpeakerAndWait(player, Icon.ANGER, "What!")
     .addWait(750)
     .addSpeakerAndWait(player, Icon.ANGER, "They dare to attack us!? Do not fear the Moon at Midnight? The dare to dream they can defeat us!?", 8000)
     .addWait(1000)
     .addSpeakerAndWait(player, Icon.SKY_SPEAR, "To battle!", 4000)
+    */
 
     .addInstruction(Instructions.P8A_GOTO)
     .addIcon(player, Icon.BANNER, 30 * 1000)
@@ -50,35 +57,40 @@ export default class P8 extends TutorialSequence {
     .addPositionCheck(1.9)
     .addBattleSpawn(6, 10)
 
-    // spawn soldiers allies and enemies ahead of MC to fight
-    // spawn them amongst each other
-    // loop (1 by 1) { random(x) }
+    .addPositionCheck(2)
+    .addSpeakerAndWait(player, Icon.BANNER, "Give no ground!", 2000)
 
-    // optional fighting, doesn't make any real difference
+    .addPositionCheck(2.2)
+    .addBattleSpawn(10, 18)
 
-    .addTitle("Arriving in Storm village to full scale battle")
+    .addPositionCheck(2.3)
+    .addSpeakerAndWait(player, Icon.BANNER, "Press onward!", 2000)
 
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 2;
-    })
+    .addPositionCheck(2.5)
+    .addSpeaker(player, Icon.SKY_SPEAR, "Fight! Fight!", 2000)
+    .addBattleSpawn(15, 10)
 
-    // They are demonlishing Storm Village!
+    .addPositionCheck(2.8)
+    .addSpeaker(player, Icon.SKY_SPEAR, "To the village!", 2000)
 
-    .add(()=>{
-      return player.x >= Vars.AREA_WIDTH * 2.5;
-    })
+    .addPositionCheck(2.9)
+    .addBattleSpawn(15, 15)
 
-    // Spawn From right
+    .addTitle(" >>> Arriving in Storm village to full scale battle")
 
+    // Destroy all buildings - save
     // Village is already destroyed - buildings down!
-    // ALOT of enemies and allies
 
-    // Just a big battle-
+    .addPositionCheck(3.1)
+    .addBattleSpawn(5, 30)
+    .addSpeaker(player, Icon.BANNER, "Now you face the Moon at Midnight!", 3000)
+
+    // Spawn Split Clover and Generals
     // No Duel - but Split Clover attacks Player only, and bodyguards divert others (AI models - set target with Icon)
 
-    // Split Clover attacking
-
     // Enemies stop spawning once Split Clover is dead
+
+    .add(()=>false)
 
     .addSpeakerAndWait(player, Icon.BANNER, "Moon Chief has slain the enemy general")
     .addSpeakerAndWait(player, Icon.BANNER, "Push back the rest of them!")
@@ -87,6 +99,8 @@ export default class P8 extends TutorialSequence {
     // Enemies all retreat - retreat and die
 
     .addInstruction() // You have won the battle but Storm suffered haeavy damage - we must rebuild
+
+    .add(()=>false)
 
   }
 
@@ -106,7 +120,7 @@ export default class P8 extends TutorialSequence {
 
   addPositionCheck(mul) {
     this.add(()=>{
-      return this.player.x >= Vars.AREA_WIDTH * mul;
+      return this.scene.player.x >= Vars.AREA_WIDTH * mul;
     });
     return this;
   }
@@ -115,7 +129,7 @@ export default class P8 extends TutorialSequence {
     this
     .add(() => {
       for (let i=0; i<allies; i++) {
-        const opts = [Enum.SOLDIER_ALLY_INFANTRY1];
+        const opts = [Enum.SOLDIER_ALLY_INFANTRY1, Enum.SOLDIER_ALLY_WILDMAN];
         const soldierID = Phaser.Utils.Array.GetRandom(opts);
         const farRight = SequenceHelper.GetCameraRight() + SequenceHelper.GetCameraWidth();
         const posX = Phaser.Math.Between(SequenceHelper.GetCameraRight(), farRight);
@@ -125,7 +139,7 @@ export default class P8 extends TutorialSequence {
     })
     .add(() => {
       for (let i=0; i<enemies; i++) {
-        const opts = [Enum.SOLDIER_WL_INFANTRY];
+        const opts = [Enum.SOLDIER_WL_INFANTRY, Enum.SOLDIER_WL_HEAVY];
         const soldierID = Phaser.Utils.Array.GetRandom(opts);
         const farRight = SequenceHelper.GetCameraRight() + SequenceHelper.GetCameraWidth();
         const posX = Phaser.Math.Between(SequenceHelper.GetCameraRight(), farRight);
@@ -136,12 +150,27 @@ export default class P8 extends TutorialSequence {
     return this;
   }
 
+  spawnConstant() {
+    return false;
+  }
+
   //  - Creation of Sprites -
+
+  get clover() {
+    if (!cloverSprite) {
+      const player = this.scene.player;
+      cloverSprite = SequenceHelper.SpawnEnemy(player.x + 200, Enum.SOLDIER_WL_SPLIT_CLOVER);
+      cloverSprite.setDisplayName("Split Clover", Enum.TEAM_ALLY);
+      cloverSprite.setHP(35, 35);
+      cloverSprite.setGP(15, 15);
+    }
+    return cloverSprite;
+  }
 
   get braver() {
     if (!braverSprite) {
       const player = this.scene.player;
-      braverSprite = SequenceHelper.SpawnAlly(player.x + 200, Enum.SOLDIER_ARCHITECT);
+      braverSprite = SequenceHelper.SpawnAlly(player.x + 200, Enum.SOLDIER_ALLY_LANCER1);
       braverSprite.setDisplayName("Braver", Enum.TEAM_ALLY);
       braverSprite.setHP(15, 15);
       braverSprite.setGP(15, 15);
