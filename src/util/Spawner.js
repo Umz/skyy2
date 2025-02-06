@@ -6,6 +6,7 @@ import Bandit3 from "../ai/Bandit3";
 import BanditBoss from "../ai/BanditBoss";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
+import CloverBoss from "../ai/CloverBoss";
 import Defensive from "../ai/Defensive";
 import Lunar1 from "../ai/Lunar1";
 import NightTrain from "../ai/Nighttrain";
@@ -184,5 +185,5 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_WL_LANCER, {ctrl: Bandit1, sheet:Vars.SHEET_WL_LANCER}],
 
   [Enum.SOLDIER_WL_GREEN_SWORD, {ctrl: BanditBoss, sheet:Vars.SHEET_WL_GREEN_SWORD}],
-  [Enum.SOLDIER_WL_SPLIT_CLOVER, {ctrl: BanditBoss, sheet:Vars.SHEET_WL_SPLIT_CLOVER}],
+  [Enum.SOLDIER_WL_SPLIT_CLOVER, {ctrl: CloverBoss, sheet:Vars.SHEET_WL_SPLIT_CLOVER}],
 ]);

@@ -26,14 +26,20 @@ export default class P8 extends TutorialSequence {
     .addStopSaving()  // Temp (dev)
 
     .add(()=>{
-      player.x = Vars.AREA_WIDTH * 3.3;
+      //player.x = Vars.AREA_WIDTH * 3.3;
+      player.x = Vars.AREA_WIDTH * 2.0;
       return true;
     })
+
     .add(()=>{
-      scene.resetAllStorm();
+      const clover = SequenceHelper.SpawnEnemy(player.x + 40, Enum.SOLDIER_WL_SPLIT_CLOVER);
+      clover.setDisplayName("Split Clover", Enum.TEAM_ENEMY);
+      clover.setHP(30, 30);
+      clover.setGP(20, 20);
       return true;
     })
-    .add(()=>false)
+
+    .add(() => false)
 
     .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")
 
@@ -82,8 +88,10 @@ export default class P8 extends TutorialSequence {
 
     .addTitle(" >>> Arriving in Storm village to full scale battle")
 
-    // Destroy all buildings - save
-    // Village is already destroyed - buildings down!
+    .add(()=>{
+      scene.resetAllStorm();
+      return true;
+    })
 
     .addPositionCheck(3.1)
     .addBattleSpawn(5, 30)
