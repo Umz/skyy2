@@ -2,8 +2,8 @@ import Lunar1 from "../ai/Lunar1";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
-import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
@@ -90,7 +90,7 @@ export default class P7 extends TutorialSequence {
       this.lunar.controller.gotoX(WIDTH * 1.5);
       return true;
     })
-    .addInstruction(Enum.STORY_6_HOLD)
+    .addInstruction(Instructions.P7A_HOLD)
 
     .addTitle("Moon Chief stays in Green Village to hold back the enemies")
 

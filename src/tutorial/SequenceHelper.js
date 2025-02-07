@@ -95,5 +95,11 @@ export default class SequenceHelper {
     const worldView = camera.worldView;
     return worldView.left;
   }
+
+  static GetCameraWidth() {
+    const camera = scene.cameras.main;
+    const worldView = camera.worldView;
+    return worldView.width;
+  }
   
 }

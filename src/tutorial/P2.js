@@ -6,6 +6,7 @@ import BlueMoon from "../ai/BlueMoon";
 import SequenceHelper from "./SequenceHelper";
 import Icon from "../const/Icon";
 import Subtitles from "../util/Subtitles";
+import Instructions from "../const/Instructions";
 
 export default class P2 extends TutorialSequence {
 
@@ -18,7 +19,7 @@ export default class P2 extends TutorialSequence {
     this
     .add(()=>{ return SequenceHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
     .addIcon(player, Icon.BANNER, 3000)
-    .addInstruction(Enum.STORY_2A_CLAIM_BLUE)
+    .addInstruction(Instructions.P2A_CLAIM_BLUE)
 
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH) {
@@ -136,7 +137,7 @@ export default class P2 extends TutorialSequence {
 
     .addStartSaving()
     .addIcon(player, Icon.STANDARD, 15 * 1000)
-    .addInstruction(Enum.STORY_2B_PLACE_FLAG)
+    .addInstruction(Instructions.P2B_PLACE_FLAG)
     .add(()=>{
       this.doOnce(()=>{
         SequenceHelper.SpawnClaimerFlag(Vars.AREA_WIDTH * .48);
@@ -150,7 +151,7 @@ export default class P2 extends TutorialSequence {
       return true;
     })
     .addWait(3000)
-    .addInstruction(Enum.STORY_2C_LEAVE_FOREST);
+    .addInstruction(Instructions.P2C_LEAVE_FOREST);
     
   }
 

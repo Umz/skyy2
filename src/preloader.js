@@ -4,6 +4,7 @@ import Sfx from "./const/Sfx";
 
 const LANCERS = [
     Vars.SHEET_PLAYER,
+    Vars.SHEET_MAM_LANCER,
     Vars.SHEET_BLUE_BANDIT_LANCE,
     Vars.SHEET_BLUE_BANDIT_BOSS,
     Vars.SHEET_WL_LANCER,
@@ -15,6 +16,7 @@ const SUPPLYMAN = [Vars.SHEET_MAM_SUPPLY];
 const INFANTRY = [
     Vars.SHEET_WILDMAN,
     Vars.SHEET_WILDMAN_CREW,
+    Vars.SHEET_MAM_INFANTRY,
     Vars.SHEET_BLUE_BANDIT,
     Vars.SHEET_RED_BANDIT,
     Vars.SHEET_GR_INFANTRY,

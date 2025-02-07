@@ -1,5 +1,6 @@
 import Blank from "../ai/Blank";
 import SoldierView from "../ai/SoldierView";
+import { getSaveName as getControllerSaveName } from "../const/ControllerMap";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
 import Sfx from "../const/Sfx";
@@ -27,6 +28,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.lastTarget = null;
 
     this.uid = SaveData.NewUID;
+    this.home = Enum.LOC_MAM;
 
     //  Stats / settings
 
@@ -276,6 +278,14 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  kill() {
+    this.stopTweening();
+    this.destroy(true);
+    if (this.displayName) {
+      this.displayName.destroy(true);
+    }
+  }
+
   //  Calculated values
 
   getSpeed() {
@@ -506,6 +516,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   getSaveData() {
+    return {
+      uid: this.uid,
+      sheet: this.prefix,
+      x: this.x,
+      name: this.name,
+      showName: this.name !== "Soldier",
+      home: this.home,
+      controller: getControllerSaveName(this.controller)
+    }
   }
   
 }

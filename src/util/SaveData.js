@@ -22,6 +22,7 @@ const data = {
 
   citizens: [],
   soldiers: [],
+  houses: [],
 
   location: Enum.LOC_MAM,
   claimed: [Enum.LOC_MAM],
@@ -56,7 +57,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-    this.DevData(6);
+    this.DevData(5);
     console.log("Loaded data", data)
 
     return data;
@@ -67,8 +68,9 @@ export default class SaveData {
 
       case 5:
         data.silica = 15;
-        data.tutorialNumber = 7;
+        data.tutorialNumber = 9;
         data.tutorialSequenceStep = 0;
+        data.hasBlueMoon = true;
         break;
 
       case 4:

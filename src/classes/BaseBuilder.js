@@ -1,3 +1,5 @@
+import Building from "../gameobjects/Building";
+
 /**
  * Base Builder contains the shared logic for adding buildings, trees, environment, etc
  * to the scene on top of the floating island
@@ -13,6 +15,12 @@ export default class BaseBuilder {
     const {scene} = this;
     const image = scene.add.image(x, laneY, 'atlas', frame).setOrigin(0, 1);
     return image;
+  }
+
+  addBuilding(x, laneY, frame) {
+    const {scene} = this;
+    const building = new Building(scene, x, laneY, "atlas", frame).setOrigin(0,1);
+    return building;
   }
 
   addAnimated(x, laneY, spritesheet, animation) {

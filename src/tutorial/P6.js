@@ -1,6 +1,7 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
 import Subtitles from "../util/Subtitles";
 
@@ -42,7 +43,7 @@ export default class P6 extends TutorialSequence {
     .addBlueSpeakAndWait(Icon.QUESTION, script.BlueMoon.plains7, 4000)
     .addSpeakerAndWait(player, Icon.SKY_SPEAR, script.MoonChief.plains5, 2000)
 
-    .addInstruction(Enum.STORY_5_GREEN_VILLAGE)
+    .addInstruction(Instructions.P6A_GREEN_VILLAGE)
   }
 
   //  =================================================================================================

@@ -53,10 +53,10 @@ export default class TutorialSequence {
     return this;
   }
 
-  addInstruction(instructionID) {
+  addInstruction(instruction) {
     this.add(()=>{
       this.doOnce(()=>{
-        this.tutorial.showInstructions(instructionID);
+        this.tutorial.showInstructions(instruction);
       });
     });
     return this;

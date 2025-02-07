@@ -497,6 +497,28 @@ export class PlayScene extends Scene {
     })
   }
 
+  //  - Building Management -
+
+  resetAllStorm() {
+    const all = this.buildingsLayer.getChildren();
+    const storm = all.filter(sprite => sprite.level);
+    for (let building of storm) {
+      if (building.buildingType === Enum.BUILDING_HOUSE || building.buildingType === Enum.BUILDING_TOWER) {
+        building.setLevel(2);
+      }
+    }
+  }
+
+  addRandomProgress() {
+    const all = this.buildingsLayer.getChildren();
+    const storm = all.filter(sprite => sprite.level);
+    for (let building of storm) {
+      if (building.buildingType === Enum.BUILDING_HOUSE || building.buildingType === Enum.BUILDING_TOWER) {
+        building.addProgress(Phaser.Math.Between(20, 40));
+      }
+    }
+  }
+
   //  - Character spawning    -----------------------------------------------------------------------------------------
 
   spawnPlayer() {
@@ -524,6 +546,13 @@ export class PlayScene extends Scene {
     for (let i=0; i<amt; i++) {
       this.spawnEnemy(posX, type);
     }
+  }
+
+  // -
+
+  getSoldier(uid) {
+    const group = this.groupSoldiers.getChildren();
+    return group.find(sprite => sprite.uid === uid);
   }
 
   //  -
@@ -618,6 +647,11 @@ export class PlayScene extends Scene {
 
   countEnemies() {
     const count = this.groupEnemies.countActive();
+    return count;
+  }
+
+  countAllies() {
+    const count = this.groupAllies.countActive();
     return count;
   }
 
@@ -811,8 +845,8 @@ export class PlayScene extends Scene {
         const dom = sol.displayName;
         const pos = sol.getTopCenter();
         
-        const velX = Math.abs(sol.velocityX);
-        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) || sol.isShowingIcon ? -24 : pos.y;
+        //const velX = Math.abs(sol.velocityX);
+        const pY = sol.isState(Enum.SS_DEFEND) || sol.isShowingIcon ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
         dom.setAlpha(alpha);
       }
