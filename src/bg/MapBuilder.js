@@ -11,9 +11,12 @@ export default class MapBuilder extends BaseBuilder {
 
   /** Set the layers to be used for building the map scenes */
   setLayers({ bgLayer, fgLayer, buildingsLayer }) {
+    
     this.bg = bgLayer;
     this.fg = fgLayer;
     this.buildings = buildingsLayer;
+
+    this.builtAreas = [];
   }
 
   /** Full function to load all background images from the json data */
@@ -156,18 +159,25 @@ export default class MapBuilder extends BaseBuilder {
     const areaX = index * Vars.AREA_WIDTH;
 
     if (index >= 0 && index < allLocations.length) {
+
       const location = allLocations[index];
       const json = location.json;
-      switch (location.type) {
-        case FOREST:
-          this.loadBigForest(json, areaX);
-          break;
-        case VILLAGE:
-          this.loadVillage(json, areaX);
-          break;
-        case RESOURCE:
-          this.loadLocation(json, areaX);
+      const areaBuilt = this.builtAreas.findIndex(name => name === json);
+
+      if (areaBuilt < 0) {
+        this.builtAreas.push(json);
+        switch (location.type) {
+          case FOREST:
+            this.loadBigForest(json, areaX);
+            break;
+          case VILLAGE:
+            this.loadVillage(json, areaX);
+            break;
+          case RESOURCE:
+            this.loadLocation(json, areaX);
+        }
       }
+
     }
   }
 

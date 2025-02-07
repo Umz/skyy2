@@ -41,6 +41,11 @@ const Icon = {
   HAND_FIST_LEFT: 95,
 
   SPARKLE: 129,
+  STAR_SHINE: 130,
+  POWER_SHINE: 131,
+  SMOKE_WISP: 132,
+  DARK_WHIRL: 133,
+  DARK_ENERGY: 134,
 
   FIRE: 144,
   FIREBALL: 145,
@@ -118,7 +123,21 @@ const Icon = {
 
   // 51 - Red mask
   STANDARD: 844,
-  BANNER: 845
+  BANNER: 845,
+
+  // 58 - Chisel hammer
+  CHISEL_HAMMER: 928,
+  SLEDGE: 940,
+  PICKAXE: 941,
+  WATER_CAN: 942,
+  IRON_POT: 943,
+
+  // 59 - Nut
+  NUT: 944,
+  WOOD_BLOCK1: 956,
+  WOOD_BLOCK2: 957,
+  WOOD_LOG1: 958,
+  WOOD_LOG2: 959
   
 }
 export default Icon;

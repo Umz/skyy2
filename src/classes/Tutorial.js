@@ -6,6 +6,7 @@ import P5 from "../tutorial/P5";
 import P6 from "../tutorial/P6";
 import P7 from "../tutorial/P7";
 import P8 from "../tutorial/P8";
+import P9 from "../tutorial/P9";
 import SequenceHelper from "../tutorial/SequenceHelper";
 import SaveData from "../util/SaveData";
 import StoryDOM from "../util/StoryDOM";
@@ -96,6 +97,7 @@ export default class Tutorial {
       case 6: return new P6(this);
       case 7: return new P7(this);
       case 8: return new P8(this);
+      case 9: return new P9(this);
     }
     return null;
   }

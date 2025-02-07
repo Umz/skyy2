@@ -519,6 +519,18 @@ export class PlayScene extends Scene {
     }
   }
 
+  getStormTowers() {
+    const all = this.buildingsLayer.getChildren();
+    const storm = all.filter(sprite => sprite.buildingType === Enum.BUILDING_TOWER);
+    return storm;
+  }
+
+  getStormHouses() {
+    const all = this.buildingsLayer.getChildren();
+    const storm = all.filter(sprite => sprite.buildingType === Enum.BUILDING_HOUSE);
+    return storm;
+  }
+
   //  - Character spawning    -----------------------------------------------------------------------------------------
 
   spawnPlayer() {
