@@ -17,7 +17,8 @@ export default class P9 extends TutorialSequence {
     this
     .addStopSaving()  // Temp (dev)
 
-    // Rebuild the village
+    //  - Rebuild the village  -------------
+    
     // Repeat 2 times then war breaks out before village is complete
 
     // Lunar comes - Need materials to rebuild

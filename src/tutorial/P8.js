@@ -18,28 +18,9 @@ export default class P8 extends TutorialSequence {
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
-    const WAIT = 60 * 60 * 1000;
-
     //  - Battle of Storm Village - Destroy buildings and configure battle -
 
     this
-    .addStopSaving()  // Temp (dev)
-
-    .add(()=>{
-      //player.x = Vars.AREA_WIDTH * 3.3;
-      player.x = Vars.AREA_WIDTH * 2.0;
-      return true;
-    })
-
-    .add(()=>{
-      const clover = SequenceHelper.SpawnEnemy(player.x + 40, Enum.SOLDIER_WL_SPLIT_CLOVER);
-      clover.setDisplayName("Split Clover", Enum.TEAM_ENEMY);
-      clover.setHP(30, 30);
-      clover.setGP(20, 20);
-      return true;
-    })
-
-    .add(() => false)
 
     .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")
 
@@ -51,13 +32,11 @@ export default class P8 extends TutorialSequence {
     })
     .addBraverSpeakAndWait(Icon.ALARM, "Whiteleaf have sent an army! They are destroying Storm!", 5000)
 
-    /*
     .addSpeakerAndWait(player, Icon.ANGER, "What!")
     .addWait(750)
-    .addSpeakerAndWait(player, Icon.ANGER, "They dare to attack us!? Do not fear the Moon at Midnight? The dare to dream they can defeat us!?", 8000)
+    .addSpeakerAndWait(player, Icon.ANGER, "They dare to attack us!? Do they not fear the Moon at Midnight? They dare to dream they can defeat us!?", 8000)
     .addWait(1000)
     .addSpeakerAndWait(player, Icon.SKY_SPEAR, "To battle!", 4000)
-    */
 
     .addInstruction(Instructions.P8A_GOTO)
     .addIcon(player, Icon.BANNER, 30 * 1000)
@@ -86,34 +65,64 @@ export default class P8 extends TutorialSequence {
     .addPositionCheck(2.9)
     .addBattleSpawn(15, 15)
 
-    .addTitle(" >>> Arriving in Storm village to full scale battle")
+    .addTitle(" >>> Arriving in Storm village to full scale battle", true)
 
     .add(()=>{
       scene.resetAllStorm();
       return true;
     })
+    .addSave()
 
     .addPositionCheck(3.1)
-    .addBattleSpawn(5, 30)
+    .addBattleSpawn(5, 20)
     .addSpeaker(player, Icon.BANNER, "Now you face the Moon at Midnight!", 3000)
 
-    // Spawn Split Clover and Generals
-    // No Duel - but Split Clover attacks Player only, and bodyguards divert others (AI models - set target with Icon)
+    .add(()=>{
+      this.clover.setHP(25, 25);
+      return true;
+    })
 
-    // Enemies stop spawning once Split Clover is dead
+    .add(()=> {
+      const ens = [Enum.SOLDIER_WL_INFANTRY, Enum.SOLDIER_WL_HEAVY];
+      SequenceHelper.SpawnConstant(7, 3, ens);
+      
+      this.spawnAlliesConstant(11);
+      
+      return this.clover.isDead();
+    })
+    
+    .addSpeakerAndWait(player, Icon.BANNER, "Moon Chief has slain the enemy general", 5000)
+    .addWait(750)
+    .addSpeakerAndWait(player, Icon.FIST_FIRE, "Push back the rest of them!", 3000)
+    
+    .add(()=>{
 
-    .add(()=>false)
+      const allEns = this.scene.groupEnemies.getChildren();
+      for (let en of allEns) {
+        Ctr.SetActions(en,
+          Ctr.Do(()=> en.idle()),
+          Ctr.MoveToX(en.x + 640),
+          Ctr.Die()
+        )
+      }
 
-    .addSpeakerAndWait(player, Icon.BANNER, "Moon Chief has slain the enemy general")
-    .addSpeakerAndWait(player, Icon.BANNER, "Push back the rest of them!")
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        const icon = Phaser.Utils.Array.GetRandom([Icon.BANNER, Icon.STANDARD, Icon.FIST_SHIELD, Icon.FIST_FIRE])
+        const iconWait = Phaser.Math.Between(1000, 6000);
+        Ctr.SetActions(ally,
+          Ctr.Do(()=> ally.idle()),
+          Ctr.Wait(iconWait),
+          Ctr.Do(()=>{ ally.showIcon(icon, 7000) }),
+          Ctr.Wait(20 * 1000)
+        )
+      }
 
-    // battle is over once Split Clover is dead
-    // Enemies all retreat - retreat and die
+      return true;
+    })
 
-    .addInstruction() // You have won the battle but Storm suffered haeavy damage - we must rebuild
-
-    .add(()=>false)
-
+    .addWait(1000)
+    .addInstruction(Instructions.P8B_VICTORY)
   }
 
   //  ====================================================================================================
@@ -135,6 +144,15 @@ export default class P8 extends TutorialSequence {
       return this.scene.player.x >= Vars.AREA_WIDTH * mul;
     });
     return this;
+  }
+
+  spawnAlliesConstant(min) {
+    const player = this.scene.player;
+    const allies = this.scene.countAllies();
+    if (allies < min) {
+      const ally = Phaser.Utils.Array.GetRandom([Enum.SOLDIER_ALLY_LANCER1, Enum.SOLDIER_ALLY_HEAVY1, Enum.SOLDIER_ALLY_INFANTRY1]);
+      SequenceHelper.SpawnAlly(player.x - 120, ally);
+    }
   }
 
   addBattleSpawn(allies, enemies) {
@@ -172,8 +190,8 @@ export default class P8 extends TutorialSequence {
     if (!cloverSprite) {
       const player = this.scene.player;
       cloverSprite = SequenceHelper.SpawnEnemy(player.x + 200, Enum.SOLDIER_WL_SPLIT_CLOVER);
-      cloverSprite.setDisplayName("Split Clover", Enum.TEAM_ALLY);
-      cloverSprite.setHP(35, 35);
+      cloverSprite.setDisplayName("Split Clover", Enum.TEAM_ENEMY);
+      cloverSprite.setHP(25, 25);
       cloverSprite.setGP(15, 15);
     }
     return cloverSprite;

@@ -278,6 +278,14 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  kill() {
+    this.stopTweening();
+    this.destroy(true);
+    if (this.displayName) {
+      this.displayName.destroy(true);
+    }
+  }
+
   //  Calculated values
 
   getSpeed() {

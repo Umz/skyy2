@@ -68,9 +68,9 @@ export default class SaveData {
 
       case 5:
         data.silica = 15;
-        data.tutorialNumber = 8;
+        data.tutorialNumber = 9;
         data.tutorialSequenceStep = 0;
-        data.hasBlueMoon = false;
+        data.hasBlueMoon = true;
         break;
 
       case 4:

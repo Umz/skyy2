@@ -15,6 +15,7 @@ const Instructions = {
   P6A_GREEN_VILLAGE: ["Use 'diplomacy' to locate The Architect and take him back to Moon at Midnight."],
   P7A_HOLD: ["Hold the enemies here while The Architect escapes to Moon at Midnight.", "Teach them to fear the name of Moon Chief and Moon at Midnight."],
 
-  P8A_GOTO: ["The Whiteleaf Tribe have the audacity to retaliate against us.", "Take a subjugation force and defeat the attacking army immediately.", "They must fear Moon at Midnight!"]
+  P8A_GOTO: ["The Whiteleaf Tribe have the audacity to retaliate against us.", "Take a subjugation force and defeat the attacking army immediately.", "They must fear Moon at Midnight!"],
+  P8B_VICTORY: ["We have defeated the Whiteleaf army! They have tasted the might of Moon at Midnight.", "But Storm village has suffered heavy damage. We must rebuild it."]
 };
 export default Instructions;

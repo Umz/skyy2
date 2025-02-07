@@ -650,6 +650,11 @@ export class PlayScene extends Scene {
     return count;
   }
 
+  countAllies() {
+    const count = this.groupAllies.countActive();
+    return count;
+  }
+
   //  -----------------------------------------------------------------------------------------
 
   addHitFx(att, target) {
@@ -840,8 +845,8 @@ export class PlayScene extends Scene {
         const dom = sol.displayName;
         const pos = sol.getTopCenter();
         
-        const velX = Math.abs(sol.velocityX);
-        const pY = (velX > 24) || sol.isState(Enum.SS_DEFEND) || sol.isShowingIcon ? -24 : pos.y;
+        //const velX = Math.abs(sol.velocityX);
+        const pY = sol.isState(Enum.SS_DEFEND) || sol.isShowingIcon ? -24 : pos.y;
         dom.setPosition(pos.x, pY);
         dom.setAlpha(alpha);
       }
