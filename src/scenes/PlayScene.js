@@ -764,12 +764,15 @@ export class PlayScene extends Scene {
     const rockLeft = r.left;
     const rockRight = r.right;
     
-    const contains = (point.x >= rockLeft && point.x <= rockRight);
+    const contains = (point.x >= rockLeft && point.x <= rockRight) && !rock.isHit;
     
     if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
+
       sprite.recoil(2);
       this.emitDust(rock.x, rock.y, rock.lane);
       this.emitRock(rock.x, rock.getCenter().y);
+      rock.isHit = true;
+      
       // Tween expand and vanish
       this.tweens.add({
         targets: rock,

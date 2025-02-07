@@ -92,19 +92,25 @@ export default class P9 extends TutorialSequence {
     .addWait(1000)
     .add(()=>{ return this.night.x >= WIDTH * 4.3 })
 
-    // Night train goes to mine to wait
-    // Break all rocks at the mines
-    // Back to storm - interact with Lunar
-    // Go around and speak to citizens (optional)
+    /*
+    After 2 trips NT says to recruit the villagers
+    Recruit the villagers and optionally continue mining
+    Soldier report - Whiteleaf are gathering in the Plains.
+    Take an army for a Surprise attack while they are off guard
+    */
 
-    // Go back to Mines 
-    // Break all rocks in mines
+    // AI - NT goes back and forward delivering (respawns rocks)
+    // AI - Citizens go to the mines to increase amount
 
-    // Back to Storm - see some progress.
-    // Soldier comes running- Whiteleaf are attacking
+    // Rocks - only hit once
+
+    // Sounds - Building - Crafting
+    // Delivery - Pickup
+    // Break rock -
+    
+    // Animation - Citizen miniing - Walk with pick
 
     .add(()=>false)
-
   }
 
   //  -------------------------------------------------------------------------------------
