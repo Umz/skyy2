@@ -15,6 +15,8 @@ const data = {
   uid: 100,
 
   silica: 0,
+  transportedSilica: 0,
+  buildingMaterial: 0,
 
   playerX: Vars.AREA_WIDTH * 1.5,
   playerLane: 2,
@@ -67,7 +69,7 @@ export default class SaveData {
     switch (dataset) {
 
       case 5:
-        data.silica = 15;
+        data.transportedSilica = 1050;
         data.tutorialNumber = 9;
         data.tutorialSequenceStep = 0;
         data.hasBlueMoon = true;

@@ -4,7 +4,6 @@ import Icon from "../const/Icon";
 import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
-import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 

@@ -44,7 +44,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
       return this.getStormTowerFrame();
     }
     else {
-      return this.frame;
+      return "storm_hut";
     }
   }
 
@@ -54,7 +54,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
       return "storm_house_b4";
     }
     else if (percent > 70) {
-      return "storm_house_b1";
+      return "storm_house_b3";
     }
     else if (percent > 20) {
       return "storm_house_b2";
@@ -90,6 +90,7 @@ export default class Building extends Phaser.GameObjects.Sprite {
   updateSaveData() {
     const houseData = SaveData.Data.houses.find(data => data.num === this.buildingNo);
     houseData.progress = this.progress;
+    houseData.level = this.level;
   }
 
   getSaveData() {
