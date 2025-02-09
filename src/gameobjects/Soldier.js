@@ -317,6 +317,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     } else if (this.isState(Enum.SS_DEFEND) && velX === 0 && ((direction === -1 && !this.flipX) || (direction === 1 && this.flipX))) {
       this.body.velocity.x = adjustedSpeed * 1.3;
       this.showMovementDust();
+      Juke.PlaySound(Sfx.MOVE);
     }
   
     this.movePressed = true;
@@ -346,12 +347,14 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   moveUp() {
     if (!this.isTweening() && this.state === Enum.SS_READY) {
       this.lane = Math.max(1, this.lane - 1);
+      Juke.PlaySound(Sfx.MOVE);
     }
   }
 
   moveDown() {
     if (!this.isTweening() && this.state === Enum.SS_READY) {
       this.lane = Math.min(3, this.lane + 1);
+      Juke.PlaySound(Sfx.MOVE);
     }
   }
 

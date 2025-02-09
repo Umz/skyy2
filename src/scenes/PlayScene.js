@@ -772,6 +772,7 @@ export class PlayScene extends Scene {
       this.emitDust(rock.x, rock.y, rock.lane);
       this.emitRock(rock.x, rock.getCenter().y);
       rock.isHit = true;
+      Juke.PlaySound(Sfx.ROCK_SMASH);
       
       // Tween expand and vanish
       this.tweens.add({

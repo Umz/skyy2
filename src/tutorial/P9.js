@@ -9,7 +9,7 @@ import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
-let nightSprite, lunarSprite;
+let nightSprite, lunarSprite, zollSprite;
 
 export default class P9 extends TutorialSequence {
 
@@ -24,13 +24,6 @@ export default class P9 extends TutorialSequence {
     //  - Rebuild the village  -----------------------------------------------------------
 
     this
-    .addStopSaving()  // Temp (dev)
-
-    .addWait(1000)
-    .add(()=>{
-      scene.resetAllStorm();
-      return true;
-    })
     .add(() => {
       this.night.idle();
       this.lunar.idle();
@@ -75,7 +68,7 @@ export default class P9 extends TutorialSequence {
       this.night.speak(Icon.PICKAXE, "Come on MC! We need more silica. Let's work.", 5000);
       return true;
     })
-    .addWait(6000)
+    .addWait(8000)
     .add(()=>{
       Ctr.SetActions(this.night,
         Ctr.MoveToX(this.lunar.x),
@@ -92,28 +85,92 @@ export default class P9 extends TutorialSequence {
     .addWait(1000)
     .add(()=>{ return this.night.x >= WIDTH * 4.3 })
 
-    /*
-    After 2 trips NT says to recruit the villagers
-    Recruit the villagers and optionally continue mining
-    Soldier report - Whiteleaf are gathering in the Plains.
-    Take an army for a Surprise attack while they are off guard
-    */
+    .addNightSpeak(Icon.PICKAXE, "We'll need more. We'll need alot more!", 3000)
+    .add(()=>{
+      Ctr.SetActions(this.night,
+        Ctr.MoveToX(WIDTH * 4 - 120)
+      );
+      this.night.speak(Icon.SPEECH, "Come to Storm, I'll hire some villagers.", 3000);
+      return true;
+    })
 
-    // AI - NT goes back and forward delivering (respawns rocks)
-    // AI - Citizens go to the mines to increase amount
-    // AI - Citizens go to MaM to come back well dressed - save new sheet
+    .add(()=>{ return player.x <= WIDTH * 4 })
+    .add(()=>{
+      // Convert all villagers to miners
+      return true;
+    })
 
-    // Sounds - Building - Crafting
-    // Delivery - Pickup
-    // Break rock -
+    .add(()=>{
+      Ctr.SetActions(this.zoll,
+        Ctr.MoveToX(player.x - 30)
+      );
+      this.zoll.speak(Icon.SPEECH, "Sir, we have news on Whiteleaf. Please come to Rose Forest.", 7000);
+      return true;
+    })
+    .addWaitForDialogue()
+
+    .add(()=>{
+      Ctr.SetActions(this.zoll,
+        Ctr.MoveToX(WIDTH * 2.5),
+        Ctr.Wait(60 * 60 * 1000)
+      );
+      return true;
+    })
+
+    .add(()=>{ return player.x <= WIDTH * 2.8})
+    .add(()=>{
+      
+      for (let i=0; i< 15; i++) {
+        const pX = this.zoll.x - 24 - (i * 18);
+        const ally = SequenceHelper.SpawnAlly(pX, Enum.SOLDIER_ALLY_HEAVY1);
+        ally.faceX(this.zoll.x);
+        ally.p9 = true;
+
+        Ctr.SetActions(ally,
+          Ctr.Wait(60 * 60 * 1000)
+        );
+      }
+      return true;
+    })
+
+    .add(()=>{ return player.x <= WIDTH * 2.5 + 60 })
+
+    .add(()=>{
+      Ctr.SetActions(this.zoll,
+        Ctr.Wait(100)
+      );
+      this.zoll.faceX(player.x);
+      return true;
+    })
+
+    .add(()=>{
+      this.zoll.speak(Icon.EXCLAIM, "Sir! The Whiteleaf tribe are camped in The Plains preparing an attack.", 7000);
+      return true;
+    })
+    .addWaitForDialogue()
+
+    .add(()=>{
+      this.zoll.speak(Icon.EXCLAIM, "My unit are ready to ambush them. Please lead us!.", 5000);
+      return true;
+    })
+    .addWaitForDialogue()
     
-    // Animation - Citizen miniing - Walk with pick
-
-    .add(()=>false)
+    .addSpeakerAndWait(player, Icon.SKY_SPEAR, "A true warrior!", 3000)
+    .addWait(2000)
+    .addSpeakerAndWait(player, Icon.BANNER, "To battle!", 5000)
   }
 
   //  -------------------------------------------------------------------------------------
 
+  addNightSpeak(icon, text, ttl) {
+    this.add(()=>{
+      this.night.speak(icon, text, ttl);
+      return true;
+    })
+    .addWaitForDialogue()
+    .addWait(500);
+    return this;
+  }
 
   //  - Creation of Sprites -
   get night() {
@@ -139,6 +196,18 @@ export default class P9 extends TutorialSequence {
       lunarSprite.speed = 64;
     }
     return lunarSprite;
+  }
+
+  get zoll() {
+    if (!zollSprite) {
+      const player = this.scene.player;
+      zollSprite = SequenceHelper.SpawnAlly(player.x - 240, Enum.SOLDIER_ALLY_LANCER1);
+      zollSprite.setDisplayName("Zoll", Enum.TEAM_ALLY);
+      zollSprite.setHP(30, 30);
+      zollSprite.setGP(10, 10);
+      zollSprite.speed = 104;
+    }
+    return zollSprite;
   }
 
 }
