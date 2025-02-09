@@ -106,7 +106,14 @@ const Icon = {
 
   ALLY: 245, // Row 16
 
-  // Row 26
+  // 22 - Keys
+  WOOD_KEY: 352,
+  SILVER_KEY: 353,
+  GOLD_KEY: 354,
+  GOLD_PURSE: 359,
+  SILVER_PURSE: 360,
+
+  // 26
   GOLD_BAT: 416,
   GOLD_LAMP: 417,
   GOLD_CUP: 418,
@@ -120,6 +127,20 @@ const Icon = {
   SKY_SPEAR: 472,
   SPEAR: 473, // Row 30
   SPEAR2: 474, // Row 30
+
+  // 34 - Bows
+  // 35 - Slingshot
+  // 36 - Gun
+
+  // 38 - Robes
+  BROWN_SHIRT: 608,
+  RED_ROBE: 620,
+
+  // 41 - Dresses
+  BROWN_DRESS: 656,
+  WHITE_DRESS: 657,
+  RED_DRESS: 658,
+  WHITE_DRESS2: 662,
 
   // 51 - Red mask
   STANDARD: 844,

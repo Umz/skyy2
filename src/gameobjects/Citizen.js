@@ -1,6 +1,7 @@
 import CitizenBattle from "../ai/CitizenBattle";
 import CitizenCaptive from "../ai/CitizenCaptive";
 import CitizenController from "../ai/CitizenController";
+import CitizenStorm from "../ai/CitizenStorm";
 import CitizenView from "../ai/CitizenView";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
@@ -24,7 +25,8 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     this.home = Enum.LOC_STORM;
     this.tribe = Enum.TRIBE_STORM;
 
-    this.movementSpeed = 48;
+    //this.movementSpeed = 40;
+    this.movementSpeed = 40;
 
     this.controller = new CitizenController().setSprite(this);
     this.viewController = new CitizenView().setSprite(this);
@@ -153,7 +155,8 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     switch (id) {
       case 1: return new CitizenBattle();
       case 2: return new CitizenCaptive();
-      default: return new CitizenController();
+      case 3: return new CitizenStorm();
+      default: return new CitizenStorm();
     }
   }
 }

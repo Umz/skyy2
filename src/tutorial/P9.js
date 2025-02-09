@@ -101,8 +101,7 @@ export default class P9 extends TutorialSequence {
 
     // AI - NT goes back and forward delivering (respawns rocks)
     // AI - Citizens go to the mines to increase amount
-
-    // Rocks - only hit once
+    // AI - Citizens go to MaM to come back well dressed - save new sheet
 
     // Sounds - Building - Crafting
     // Delivery - Pickup

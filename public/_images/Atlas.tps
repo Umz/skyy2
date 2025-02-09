@@ -278,6 +278,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">buildings/mam_shop.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>26,12,51,23</rect>
+                <key>scale9Paddings</key>
+                <rect>26,12,51,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">buildings/mam_spikes.png</key>
             <key type="filename">buildings/mam_spikes_left.png</key>
             <struct type="IndividualSpriteSettings">
@@ -383,21 +398,6 @@
                 <rect>9,4,17,7</rect>
                 <key>scale9Paddings</key>
                 <rect>9,4,17,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">buildings/storm_house.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,11,27,22</rect>
-                <key>scale9Paddings</key>
-                <rect>13,11,27,22</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

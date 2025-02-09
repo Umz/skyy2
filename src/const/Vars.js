@@ -46,6 +46,11 @@ const Vars = {
   SHEET_CITIZEN_STORM_F2: "Citizen_Storm_F2.png",
   SHEET_CITIZEN_STORM_M1: "Citizen_Storm_M1.png",
 
+  SHEET_CITIZEN_STORM_F1A: "Citizen_Storm_F1A.png",
+  SHEET_CITIZEN_STORM_F2A: "Citizen_Storm_F2A.png",
+  SHEET_CITIZEN_STORM_F2B: "Citizen_Storm_F2B.png",
+  SHEET_CITIZEN_STORM_M1A: "Citizen_Storm_M1A.png",
+
   //  -
 
   TX_SPARKLE: "graphic_sparkle",

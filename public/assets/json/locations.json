@@ -7,7 +7,7 @@
     {"x": 485, "frame":"green_banner", "depth": 5, "animation":"banner_mam", "fx":true},
     {"x": 615, "frame":"mam_spikes_left", "depth": 1},
 
-    {"x": 740, "frame":"mam_store", "depth": 1},
+    {"x": 685, "frame":"mam_shop", "depth": 1, "special": "shop"},
     {"x": 795, "frame":"mam_house", "depth": 2},
     {"x": 825, "frame":"mam_base", "depth": 1, "area": "Moon at Midnight"},
 
