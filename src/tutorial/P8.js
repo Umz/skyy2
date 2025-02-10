@@ -179,10 +179,6 @@ export default class P8 extends TutorialSequence {
     return this;
   }
 
-  spawnConstant() {
-    return false;
-  }
-
   //  - Creation of Sprites -
 
   get clover() {

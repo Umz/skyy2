@@ -25,9 +25,9 @@ export default class P7 extends TutorialSequence {
     const soldier = "Soldier";
     const nameGreen = "Green Sword";
     const nameLunar = "Lunar";
+    let kills = 0;
 
     this
-
     .add(()=>{ return player.x >= Vars.AREA_WIDTH * 6.8 })
     .add(()=>{
       SequenceHelper.SpawnEnemiesAt(WIDTH * 7.1, 3, [Enum.SOLDIER_WL_HEAVY]);
@@ -37,7 +37,6 @@ export default class P7 extends TutorialSequence {
     .addDialogueAndWait(soldier, script.Soldier.halt, 2000)
 
     .add(()=>{
-      this.lunar = SequenceHelper.SpawnAlly(WIDTH * 7.5, Enum.SOLDIER_ARCHITECT);
       this.lunar.setDisplayName("The Architect", Enum.TEAM_ALLY);
       return true;
     })
