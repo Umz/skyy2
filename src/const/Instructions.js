@@ -16,6 +16,18 @@ const Instructions = {
   P7A_HOLD: ["Hold the enemies here while The Architect escapes to Moon at Midnight.", "Teach them to fear the name of Moon Chief and Moon at Midnight."],
 
   P8A_GOTO: ["The Whiteleaf Tribe have the audacity to retaliate against us.", "Take a subjugation force and defeat the attacking army immediately.", "They must fear Moon at Midnight!"],
-  P8B_VICTORY: ["We have defeated the Whiteleaf army! They have tasted the might of Moon at Midnight.", "But Storm village has suffered heavy damage. We must rebuild it."]
+  P8B_VICTORY: ["We have defeated the Whiteleaf army! They have tasted the might of Moon at Midnight.", "But Storm village has suffered heavy damage. We must rebuild it."],
+
+  P10_GOTO_WAR: ["Lead this unit to ambush the Whiteleaf army in the Plains."],
+
+  P11_CONQUER: ["Conquer the remaining land to the east. This land belongs to Moon at Midnight now!"],
+  // Stick around to build Storm
+    // Talk to NPCs
+    // Collect rocks
+  P11_COMPLETE: [
+    "The Year of the New Moon was filled with skirmishes and conflicts as Moon Chief lead his tribe to eradicate all their enemies in the region.",
+    "At the conclusion of the year, Moon at Midnight stood victorious having wiped out the bandits, crushed the Whiteleaf attacks and annexed all the nearby territory",
+    "Now Moon Chief was faced with raising an army to lead an expedition to conquer the Whiteleaf tribe... (Skyy Tribes 3)."
+  ]
 };
 export default Instructions;

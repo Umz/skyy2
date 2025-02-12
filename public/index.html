@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umz Games | Interconnected Gaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;700&family=Roboto+Slab&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: skyblue;
+      display: flex; /* Enable flexbox for layout */
+      flex-direction: column; /* Stack header, content, footer vertically */
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif; /* Use Montserrat for general text */
+    }
+    h1, h2, h3 {
+      font-family: 'Bungee', cursive; /* Use Bungee for headings or titles */
+    }
+    p {
+      font-family: 'Montserrat', serif; /* Use Roboto Slab for paragraphs */
+    }
+    .title {
+
+    }
+
+    header {
+      background-color: black; /* Changed to black */
+      color: white; /* Added white text for contrast */
+      padding: 7px 2rem;
+      border-bottom: 2px solid #ffa500;
+    }
+    header img { /* Targets the image inside the header */
+      height: 32px;
+    }
+
+    #main-content {
+    flex: 1;
+    position: relative; /* For absolute positioning of lines */
+    overflow: hidden; /* Hide overflowing lines */
+    background-color: skyblue;
+    height: 100%; /* Fill the available height */
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Arrange content vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+
+}.fade-lines-container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}.fade-line {
+    height: 20%; /* Each line takes 20% of the container height */
+    background-color: black; /* Or any color you like */
+    transform-origin: left;
+}.main-content-wrapper {
+    padding: 2rem;
+    text-align: center; /* Center the text */
+    color: #fff;
+}.main-content-wrapper h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.content-columns {
+    display: flex; /* Make the content area a flex container */
+    gap: 2rem; /* Spacing between columns */
+    height: auto; /* Allow content to determine height */
+    align-items: center; /* Vertically align items in columns */
+}.content-columns > div {
+    flex: 1; /* Each column takes equal space */
+}.content-columns img {
+    max-width: 100%; /* Image doesn't exceed column width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+    footer {
+      background-color: black; /* Changed to black */
+      color: white; /* Added white text for contrast */
+      text-align: center;
+      border-top: 2px solid #a00;
+      padding: 10px 1.5rem;
+      display: flex; /* Enable flexbox for footer */
+      align-items: flex-start; /* Align items to the top of the container */
+    }
+    footer > div { /* Style the direct children of the footer */
+      padding: 10px; /* Add some padding to each column */
+      text-align: center;
+      display: flex; /* Make each column a flex container */
+      flex-direction: column; /* Arrange content vertically within the column */
+      align-items: flex-start; /* Align content to the top of the column */
+    }
+
+    footer > div:nth-child(2) { /* Center column */
+      flex: 2;
+      align-items: center; /* Center horizontally in column */
+      text-align: center;   /* Center text within column */
+    }
+
+    footer > div:nth-child(2) p { /* Style paragraphs in center column */
+        margin: 5px 0; /* Add some spacing between paragraphs */
+    }
+
+    footer > div:not(:nth-child(2)) { /* Target the other columns */
+      flex: 1; /* Make them equal */
+    }
+    footer > div:first-child { /* Target the left column */
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+    }
+
+    footer > div:first-child img { /* Target the image within the left column */
+      width: 96px;
+      height: 96px;
+    }
+
+    #date-column { /* Target the date column specifically */
+      align-items: flex-end; /* Align to the right of the column */
+      margin-left: auto; /* Push to the right */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="umz_games.png" alt="Umz Games Logo">
+  </header>
+
+  <div class="fade-lines-container">
+    <div class="fade-line" style="opacity: 1;"></div>
+    <div class="fade-line" style="opacity: 0.8;"></div>
+    <div class="fade-line" style="opacity: 0.6;"></div>
+    <div class="fade-line" style="opacity: 0.4;"></div>
+    <div class="fade-line" style="opacity: 0.2;"></div>
+  </div>
+
+  <div id="main-content">
+    
+    <div class="main-content-wrapper content-columns">
+      <div>
+        <p>Interconnected Gaming</p>
+        <h1>We Make Games.</h1>
+        <div>Busy cooking up some games, not websites! Currently working on the title to the right:</div>
+      </div>
+      <div><img src="skyy2_logo.png" alt="Skyy Tribes 2"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div><img src="ug-itcn.png" alt="ITCN Logo"></div>
+    <div>
+      <p>Let's Get Interconnected</p>
+      <p>Game <span>2</span> Game</p>
+      <p>
+        We're building our games and connecting with developers and content creators to create an interconnected gaming experience, no matter where you are or what you play!
+        <br />
+        #ITCN
+      </p>
+    </div>
+    <div id="date-column"></div>
+  </footer>
+  <script>
+    function formatDate(date) {
+      const day = date.getDate();
+      const month = date.toLocaleString('default', { month: 'short' }); // Short month name
+      const year = date.getFullYear();
+      return `${day} ${month}, ${year}`;
+    }
+
+    const today = new Date();
+    const formattedDate = formatDate(today);
+    const dateColumn = document.getElementById('date-column');
+    dateColumn.textContent = formattedDate;
+  </script>
+</body>
+</html>

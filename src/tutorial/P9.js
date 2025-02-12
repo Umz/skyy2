@@ -3,11 +3,11 @@ import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Vars from "../const/Vars";
-import { getDistanceFrom } from "../util/ActionHelper";
 import Ctr from "../util/Ctr";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
+import { getDistanceFrom } from "../util/ActionHelper";
 
 let nightSprite, lunarSprite, zollSprite;
 
