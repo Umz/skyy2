@@ -42,6 +42,19 @@ const Vars = {
   SHEET_WL_SPLIT_CLOVER: "Lancer_WL_Clover.png",
 
   SHEET_CITIZEN_MAM_KING: "Citizen_MaM_King.png",
+  SHEET_CITIZEN_MAM_GLOW: "Citizen_MaM_Glow.png",
+  SHEET_CITIZEN_MAM_ROSE: "Citizen_MaM_Rose.png",
+  SHEET_CITIZEN_MAM_M1: "Citizen_MaM_M1.png",
+  SHEET_CITIZEN_MAM_M2: "Citizen_MaM_M2.png",
+  SHEET_CITIZEN_MAM_F1: "Citizen_MaM_F1.png",
+  SHEET_CITIZEN_MAM_F2: "Citizen_MaM_F2.png",
+
+  SHEET_CITIZEN_GV_CHIEF: "Citizen_GV_Chief.png",
+  SHEET_CITIZEN_GV_M1: "Citizen_GV_M1.png",
+  SHEET_CITIZEN_GV_M2: "Citizen_GV_M2.png",
+  SHEET_CITIZEN_GV_F1: "Citizen_GV_F1.png",
+  SHEET_CITIZEN_GV_F2: "Citizen_GV_F2.png",
+
   SHEET_CITIZEN_STORM_F1: "Citizen_Storm_F1.png",
   SHEET_CITIZEN_STORM_F2: "Citizen_Storm_F2.png",
   SHEET_CITIZEN_STORM_M1: "Citizen_Storm_M1.png",

@@ -21,9 +21,6 @@ const Instructions = {
   P10_GOTO_WAR: ["Lead this unit to ambush the Whiteleaf army in the Plains."],
 
   P11_CONQUER: ["Conquer the remaining land to the east. This land belongs to Moon at Midnight now!"],
-  // Stick around to build Storm
-    // Talk to NPCs
-    // Collect rocks
   P11_COMPLETE: [
     "The Year of the New Moon was filled with skirmishes and conflicts as Moon Chief lead his tribe to eradicate all their enemies in the region.",
     "At the conclusion of the year, Moon at Midnight stood victorious having wiped out the bandits, crushed the Whiteleaf attacks and annexed all the nearby territory",
