@@ -16,7 +16,6 @@ import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
-import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
 import LandClaimer from "../util/LandClaimer";
 import Juke from "../util/Juke";
@@ -120,11 +119,9 @@ export class PlayScene extends Scene {
     //  DEV  --------------------------------------------------------------------------
 
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
-    this.convo = new Conversation(this);
 
     Juke.SetScene(this);
     Juke.PlayMusic(Sfx.MUS_GAME);
-
     Vfx.SetScene(this);
 
     const allScripts = this.cache.json.get(Vars.JSON_SCRIPT);
@@ -204,7 +201,6 @@ export class PlayScene extends Scene {
 
     //  - Normal updating -
     
-    this.convo.update(time, delta);
     this.tutorial.update();
 
     this.mapTracker.updateCurrentArea(this.player.x);

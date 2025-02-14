@@ -28,6 +28,4 @@ export default class CitizenController extends ActionManager {
       //new ActWait(10000),
     )
   }
-
-  get saveID() { return 3 }
 }

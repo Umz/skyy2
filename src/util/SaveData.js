@@ -68,6 +68,11 @@ export default class SaveData {
   static DevData(dataset = 0) {
     switch (dataset) {
 
+      case 6:
+        data.tutorialNumber = 1;
+        data.tutorialSequenceStep = 0;
+        break;
+
       case 5:
         data.transportedSilica = 1050;
         data.tutorialNumber = 9;

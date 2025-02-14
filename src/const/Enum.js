@@ -47,6 +47,8 @@ const Enum = {
   CS_TRAVELLING: 4,
   CS_BOWING: 5,
 
+  CS_HUNGRY: 6,
+
   // Tribes
 
   TRIBE_MAM: 1,
@@ -97,22 +99,18 @@ const Enum = {
   BUILDING_HOUSE: 100,
   BUILDING_TOWER: 101,
 
-  //  Dialogue - Remove below
+  //  Unique IDs
 
-  BF_TEST: 1,
-  BF_BATTLE: 2,   // Blue Forest Battle
-  BF_WIN: 3,      // Blue Forest Victory
+  ID_MOON_CHIEF: 1,
+  ID_BLUE_MOON: 2,
+  ID_NIGHT_TRAIN: 3,
+  ID_LUNAR: 4,
 
-  BF_BOSS1: 4,
-  BF_BOSS2: 5,
-  BF_BOSS3: 6,
+  ID_HARVEST_MOON: 5,
+  ID_MOON_GLOW: 6,
+  ID_MOON_ROSE: 7,
 
-  MAM_BM_FIRST: 10,   // Blue Moon first time in MaM
-  MAM_SOLDIER_ALERT: 11,
-  MAM_MC_WHO_DARES: 12,
-
-  MC_TAUNT: 101,
-  MC_PEOMS: 102,
+  ID_GREEN_CHIEF: 8
 
 }
 export default Enum;

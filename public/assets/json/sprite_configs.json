@@ -31,9 +31,9 @@
   ],
 
   "citizen": [
-    {"suffix":"-idle", "start":0, "end":5, "frameRate": 6, "repeat":-1},
+    {"suffix":"-idle", "start":0, "end":5, "frameRate": 7, "repeat":-1},
     {"suffix":"-idle-side", "start":12, "end":17, "frameRate": 6, "repeat":-1},
-    {"suffix":"-walk", "start":30, "end":35, "frameRate": 6, "repeat":-1},
+    {"suffix":"-walk", "start":30, "end":35, "frameRate": 8, "repeat":-1},
     {"suffix":"-dig-side", "start":48, "end":52, "frameRate": 5, "repeat":-1},
     {"suffix":"-bow", "start":72, "end":74, "frameRate": 4, "repeat":0}
   ]

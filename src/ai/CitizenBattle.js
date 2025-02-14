@@ -52,6 +52,4 @@ export default class CitizenBattle extends ActionManager {
       new ActWait(1000)
     )
   }
-
-  get saveID() { return 1 }
 }

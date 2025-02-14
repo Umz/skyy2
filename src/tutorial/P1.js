@@ -1,7 +1,10 @@
+import CitizenMaM from "../ai/CitizenMaM";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Instructions from "../const/Instructions";
+import Vars from "../const/Vars";
+import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
@@ -13,6 +16,40 @@ export default class P1 extends TutorialSequence {
     const script = Subtitles.GetScript();
 
     this
+    .addTitle(" >>> Spawn citizens and setup initial army and in-game characters -")
+    .add(()=>{
+
+      for (let i =0; i < 9; i++) {
+        
+        const x = Phaser.Math.Between(Vars.AREA_WIDTH * 1.4, Vars.AREA_WIDTH * 1.85);
+        const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_MAM_M1, Vars.SHEET_CITIZEN_MAM_M2, Vars.SHEET_CITIZEN_MAM_F1, Vars.SHEET_CITIZEN_MAM_F2]);
+
+        const citi = this.spawnCitizen(x, ss);
+        SaveData.Data.citizens.push(citi.getSaveData());
+      }
+
+      //  Specific Sprites -
+      
+      const king = this.spawnCitizen(Vars.AREA_WIDTH * 1.52, Vars.SHEET_CITIZEN_MAM_KING);
+      king.setName("Harvest Moon");
+      king.uid = Enum.ID_HARVEST_MOON;
+      SaveData.Data.citizens.push(king.getSaveData());
+
+      const glow = this.spawnCitizen(Vars.AREA_WIDTH * 1.52, Vars.SHEET_CITIZEN_MAM_GLOW);
+      glow.setName("Moon Glow");
+      glow.uid = Enum.ID_MOON_GLOW;
+      SaveData.Data.citizens.push(glow.getSaveData());
+
+      const rose = this.spawnCitizen(Vars.AREA_WIDTH * 1.54, Vars.SHEET_CITIZEN_MAM_ROSE);
+      rose.setName("Moon Rose");
+      rose.uid = Enum.ID_MOON_ROSE;
+      SaveData.Data.citizens.push(rose.getSaveData());
+
+      return true;
+    })
+
+    .add(()=> false)
+
     .addIcon(player, Icon.SKY_SPEAR, 15000)
     .addInstruction(Instructions.P0_INTRO)
 
@@ -60,5 +97,15 @@ export default class P1 extends TutorialSequence {
       SequenceHelper.SpawnEnemies(amt, [Enum.SOLDIER_BANDIT1]);
     });
     return SequenceHelper.CheckEnemiesLessOrEqual(0);
+  }
+
+  //  -
+
+  spawnCitizen(x, sheet) {
+    const sprite = this.scene.spawnCitizen(Vars.AREA_WIDTH * 1.54, Vars.SHEET_CITIZEN_MAM_ROSE);
+    sprite.setController(new CitizenMaM());
+    sprite.setHome(Enum.LOC_MAM)
+    sprite.setTribe(Enum.TRIBE_MAM);
+    return sprite;
   }
 }

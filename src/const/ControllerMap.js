@@ -9,6 +9,7 @@ import BlueMoon from "../ai/BlueMoon";
 import CitizenBattle from "../ai/CitizenBattle";
 import CitizenCaptive from "../ai/CitizenCaptive";
 import CitizenController from "../ai/CitizenController";
+import CitizenMaM from "../ai/CitizenMaM";
 import CitizenView from "../ai/CitizenView";
 import Defensive from "../ai/Defensive";
 import DuelIdle from "../ai/DuelIdle";
@@ -30,6 +31,7 @@ const ControllerMap = new Map([
   ["CitizenBattle", CitizenBattle],
   ["CitizenCaptive", CitizenCaptive],
   ["CitizenController", CitizenController],
+  ["CitizenMaM", CitizenMaM],
   ["CitizenView", CitizenView],
   ["Defensive", Defensive],
   ["DuelIdle", DuelIdle],
@@ -42,7 +44,7 @@ const ControllerMap = new Map([
 
 export default ControllerMap;
 
-export function getSaveName(cont) {
+export function getControllerSaveName(cont) {
   for (let [name, clazz] of ControllerMap) {
     if (cont instanceof clazz) {
       return name;

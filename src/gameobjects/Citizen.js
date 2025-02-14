@@ -9,6 +9,7 @@ import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
+import ControllerMap, { getControllerSaveName } from "../const/ControllerMap";
 
 export default class Citizen extends Phaser.Physics.Arcade.Sprite {
 
@@ -24,8 +25,8 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
 
     this.home = Enum.LOC_STORM;
     this.tribe = Enum.TRIBE_STORM;
+    this.setData("role", "citizen");
 
-    //this.movementSpeed = 40;
     this.movementSpeed = 40;
 
     this.controller = new CitizenController().setSprite(this);
@@ -81,6 +82,10 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     this.state = s;
   }
 
+  setName(n) {
+    this.name = n;
+  }
+
   //  - Physics -
 
   moveTowards(x) {
@@ -128,7 +133,8 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     this.setHome(data.home);
     this.setTribe(data.tribe);
 
-    const controller = this.getController(data.controllerID);
+    const ctr = ControllerMap.get(data.controller);
+    const controller = new ctr();
     this.setController(controller);
 
     for (const key in data.data) {
@@ -138,25 +144,16 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  get saveData() {
+  getSaveData() {
     return {
       uid: this.uid,
+      data: this.data.list,
       sheet: this.prefix,
       x: this.x,
       home: this.home,
       tribe: this.tribe,
-      controllerID: this.controller.saveID,
       address: -1,
-      data: this.data.list
-    }
-  }
-
-  getController(id) {
-    switch (id) {
-      case 1: return new CitizenBattle();
-      case 2: return new CitizenCaptive();
-      case 3: return new CitizenStorm();
-      default: return new CitizenStorm();
+      controller: getControllerSaveName(this.controller)
     }
   }
 }

@@ -159,5 +159,4 @@ export default class CitizenCaptive extends ActionManager {
     return Phaser.Utils.Array.GetRandom(options);
   }
 
-  get saveID() { return 2 }
 }
