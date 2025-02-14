@@ -30,7 +30,7 @@ export default class P1 extends TutorialSequence {
 
       //  Specific Sprites -
       
-      const king = this.spawnCitizen(Vars.AREA_WIDTH * 1.52, Vars.SHEET_CITIZEN_MAM_KING);
+      const king = this.spawnCitizen(Vars.AREA_WIDTH * 1.48, Vars.SHEET_CITIZEN_MAM_KING);
       king.setName("Harvest Moon");
       king.uid = Enum.ID_HARVEST_MOON;
       SaveData.Data.citizens.push(king.getSaveData());
@@ -102,7 +102,7 @@ export default class P1 extends TutorialSequence {
   //  -
 
   spawnCitizen(x, sheet) {
-    const sprite = this.scene.spawnCitizen(Vars.AREA_WIDTH * 1.54, Vars.SHEET_CITIZEN_MAM_ROSE);
+    const sprite = this.scene.spawnCitizen(x, sheet);
     sprite.setController(new CitizenMaM());
     sprite.setHome(Enum.LOC_MAM)
     sprite.setTribe(Enum.TRIBE_MAM);

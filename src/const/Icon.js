@@ -87,6 +87,7 @@ const Icon = {
   ANGER: 219,
   CROSS: 223,
 
+  // 14 - Snail
   SNAIL: 224,
   CONFUSED: 225,
   DOWN_PURPLE: 226,
@@ -104,7 +105,17 @@ const Icon = {
   STAR_TWO: 238,
   STAR_THREE: 239,
 
-  ALLY: 245, // Row 16
+  ALLY: 245, // Row 15
+
+  // 19 - Vegetables
+  RED_PEPPER: 304,
+  YELLOW_PEPPER: 305,
+  GREENS: 306,
+  TURNIP: 307,
+  STRAWBERRY: 308,
+  PUMPKIN: 309,
+  CARROT: 310,
+  POTATO: 311,
 
   // 22 - Keys
   WOOD_KEY: 352,

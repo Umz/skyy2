@@ -105,6 +105,9 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
   playIdleSide() {
     this.play(this.prefix + Vars.ANIM_CIT_IDLE_SIDE, true);
   }
+  playIdleBack() {
+    this.play(this.prefix + Vars.ANIM_CIT_IDLE_BACK, true);
+  }
   playWalk() {
     this.play(this.prefix + Vars.ANIM_CIT_WALK, true);
   }

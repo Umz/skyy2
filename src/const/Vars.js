@@ -92,6 +92,7 @@ const Vars = {
 
   ANIM_CIT_IDLE: "-idle",
   ANIM_CIT_IDLE_SIDE: "-idle-side",
+  ANIM_CIT_IDLE_BACK: "-idle-back",
   ANIM_CIT_WALK: "-walk",
   ANIM_CIT_DIGGING: "-dig-side",
   ANIM_CIT_BOW: "-bow",

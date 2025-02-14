@@ -48,6 +48,8 @@ const Enum = {
   CS_BOWING: 5,
 
   CS_HUNGRY: 6,
+  CS_CONVERSATION: 7,
+  CS_FORAGING: 8,
 
   // Tribes
 

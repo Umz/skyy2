@@ -29,6 +29,14 @@ export default class ViewCitizenAnimation extends Action {
         }
         break;
 
+      case Enum.CS_FORAGING:
+        sprite.playIdleBack();
+        break;
+
+      case Enum.CS_CONVERSATION:
+        sprite.playIdleSide();
+        break;
+
       case Enum.CS_BOWING:
         sprite.playBow();
         break;

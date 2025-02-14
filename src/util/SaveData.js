@@ -57,7 +57,7 @@ export default class SaveData {
 
     const savedData = await localforage.getItem(GAME_DATA);
     if (savedData) {
-      Object.assign(data, savedData);
+      //Object.assign(data, savedData);
     }
     this.DevData(6);
     console.log("Loaded data", data)
