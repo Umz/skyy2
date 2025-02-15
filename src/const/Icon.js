@@ -124,7 +124,7 @@ const Icon = {
   GOLD_PURSE: 359,
   SILVER_PURSE: 360,
 
-  // 26
+  // 26 - Valuables
   GOLD_BAT: 416,
   GOLD_LAMP: 417,
   GOLD_CUP: 418,
@@ -135,13 +135,23 @@ const Icon = {
   BLUE_SILICA: 423,
   GOLD_SILICA: 424,
 
+  // 29 - Spears
   SKY_SPEAR: 472,
   SPEAR: 473, // Row 30
   SPEAR2: 474, // Row 30
 
-  // 34 - Bows
-  // 35 - Slingshot
-  // 36 - Gun
+  // 31 - Clubs and maces
+  TWIG: 496,
+  STICK: 497,
+  WAND_POINT: 498, //?
+  WAND_BIT: 499, //?
+  WAND: 500,
+  DART: 501,
+  ANGEL_STICK: 502,
+  ANGEL_STICK2: 503,
+  CLUB: 504,
+  STUDDED_CLUB: 505,
+  BLACK_CLUB: 506,
 
   // 38 - Robes
   BROWN_SHIRT: 608,

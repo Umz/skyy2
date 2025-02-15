@@ -96,6 +96,7 @@ const Vars = {
   ANIM_CIT_WALK: "-walk",
   ANIM_CIT_DIGGING: "-dig-side",
   ANIM_CIT_BOW: "-bow",
+  ANIM_CIT_CHEERING: "-cheer",
 
   ANIM_BIRD_FLY: 'bird-fly',
 

@@ -28,6 +28,14 @@ export function getClosestCitizen(sprite) {
   return getClosestToSpriteInGroup(sprite, scene.groupCitizens, 600);
 }
 
+/** Get closest citizen from MaM village for a conversation */
+export function getClosestMaMCitizenForChat(sprite) {
+  const scene = sprite.scene;
+  const citizens = scene.groupCitizens.getChildren();
+  const available = citizens.filter(sprite => sprite.home === Enum.LOC_MAM && sprite.tribe === Enum.TRIBE_MAM && sprite.uid > 100);
+  return getClosestToSpriteInArray(sprite, available, 400);
+}
+
 /** Get X position close to point with minimum gap distance */
 export function GetCloseX(fromX, minDist, maxDist, isAnySide = false) {
   
@@ -99,8 +107,11 @@ function getSpritesInRange(sprite, group, range) {
 }
 
 function getClosestToSpriteInGroup(sprite, group, maxDistance = Infinity) {
+  return getClosestToSpriteInArray(sprite, group.getChildren(), maxDistance);
+}
 
-  const all = group.getChildren();
+function getClosestToSpriteInArray(sprite, all, maxDistance = Infinity) {
+
   let closest = null;
   let closestDistance = Infinity;
 

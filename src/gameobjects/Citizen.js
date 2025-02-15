@@ -97,6 +97,10 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     this.body.velocity.x = 0;
   }
 
+  faceX(x) {
+    this.setFlipX(x < this.x);
+  }
+
   //  - Animations -
 
   playIdle() {
@@ -116,6 +120,9 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
   }
   playDigging() {
     this.play(this.prefix + Vars.ANIM_CIT_DIGGING, true);
+  }
+  playCheering() {
+    this.play(this.prefix + Vars.ANIM_CIT_CHEERING, true);
   }
 
   //  - Getters -
