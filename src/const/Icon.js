@@ -105,7 +105,14 @@ const Icon = {
   STAR_TWO: 238,
   STAR_THREE: 239,
 
-  ALLY: 245, // Row 15
+  //  15 - Ally
+  ALLY: 240,
+  ALLY_UP: 241,
+  ALY_DOWN: 242,
+  ALLY_FAST: 243,
+  ALLY_SLOW: 244,
+  ALLY_SWORD: 245,
+  ALLY_SHIELD: 246,
 
   // 19 - Vegetables
   RED_PEPPER: 304,

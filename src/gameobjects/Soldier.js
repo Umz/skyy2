@@ -46,6 +46,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.maxGP = 2;   // Guard Points
     this.hp = this.maxHP;
     this.gp = this.maxGP;
+
+    this.att = 1;
+    this.def = 1;
+    this.attBoost = 0;
+    this.defBoost = 0;
     
     this.setOrigin(.5, 1);
 
@@ -110,6 +115,14 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   getGPPercent() {
     return this.gp / this.maxGP;
+  }
+
+  boostAttack(amt) {
+    this.attBoost = amt;
+  }
+
+  boostDefense(amt) {
+    this.defBoost = amt;
   }
 
   //  Battle functions   ------------------------------------------------------------

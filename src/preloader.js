@@ -118,6 +118,7 @@ export class Preloader extends Phaser.Scene {
         this.load.spritesheet(Vars.VFX_SPARKLE1, 'vfx/Spark1.png', { frameWidth: 16, frameHeight: 80});
         this.load.spritesheet(Vars.VFX_SQUAREFORE0, 'vfx/Square0Fore.png', { frameWidth: 16, frameHeight: 32});
         this.load.spritesheet(Vars.VFX_CONSUME, 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
+        this.load.spritesheet(Vars.VFX_CONSUME2, 'vfx/Consume2.png', { frameWidth: 16, frameHeight: 48});
         this.load.spritesheet(Vars.VFX_BLOOD3, 'vfx/BloodSplatter3.png', { frameWidth: 32, frameHeight: 32});
 
         //  - Audio
@@ -229,7 +230,8 @@ export class Preloader extends Phaser.Scene {
         this.createVFXAnimation(Vars.VFX_SPARKLE0, 10, 16, -1);
         this.createVFXAnimation(Vars.VFX_SPARKLE1, 10, 16, -1);
         this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 19, 16, 0);
-        this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, -1);
+        this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, 0);
+        this.createVFXAnimation(Vars.VFX_CONSUME2, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_BLOOD3, 7, 16, 0);
 
         //  Sprite animation

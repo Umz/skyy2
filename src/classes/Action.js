@@ -71,4 +71,9 @@ export default class Action {
     this.sprite = ss;
     this.scene = ss.scene;
   }
+
+  /** Alter name slightly for multiple background listeners */
+  alterName(num) {
+    this.name = `${this.name}_${num}`;
+  }
 }

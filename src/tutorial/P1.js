@@ -1,4 +1,5 @@
 import CitizenMaM from "../ai/CitizenMaM";
+import CitizenWife from "../ai/CitizenWife";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
@@ -37,26 +38,30 @@ export default class P1 extends TutorialSequence {
 
       const glow = this.spawnCitizen(Vars.AREA_WIDTH * 1.52, Vars.SHEET_CITIZEN_MAM_GLOW);
       glow.setName("Moon Glow");
+      glow.setController(new CitizenWife())
       glow.uid = Enum.ID_MOON_GLOW;
       SaveData.Data.citizens.push(glow.getSaveData());
 
-      const rose = this.spawnCitizen(Vars.AREA_WIDTH * 1.54, Vars.SHEET_CITIZEN_MAM_ROSE);
+      const rose = this.spawnCitizen(Vars.AREA_WIDTH * 1.48, Vars.SHEET_CITIZEN_MAM_ROSE);
       rose.setName("Moon Rose");
+      rose.setController(new CitizenWife())
       rose.uid = Enum.ID_MOON_ROSE;
       SaveData.Data.citizens.push(rose.getSaveData());
 
       return true;
     })
 
-    .add(()=> false)
-
     .addIcon(player, Icon.SKY_SPEAR, 15000)
+    .add(()=> false)
+    
     .addInstruction(Instructions.P0_INTRO)
 
     .add(()=>{
       return this.checkCount(2000);
     })
     .addInstruction(Instructions.P1A_APPRENTICE)
+
+    .addCitizenStateChange(Enum.CS_BATTLE_MODE)
     .add(()=>{
       this.doOnce(()=>{
         SequenceHelper.SpawnEnemies(2, [Enum.SOLDIER_BANDIT1]);
@@ -82,12 +87,23 @@ export default class P1 extends TutorialSequence {
       return this.spawnAndWait(5);
     })
 
-    .add(()=>{
-      return this.checkCount(1000);
-    })
+    .addCitizenStateChange(Enum.CS_IDLE)
     .addWait(1000)
     .addInstruction(Instructions.P1C_BLUEFOREST);
+  }
 
+  //  -
+
+  addCitizenStateChange(state) {
+    this.add(()=>{
+      const citizens = this.scene.groupCitizens.getChildren();
+      for (let citi of citizens) {
+        citi.controller.state = state;
+        citi.controller.clearAllActions();
+      }
+      return true;
+    });
+    return this;
   }
 
   //  -

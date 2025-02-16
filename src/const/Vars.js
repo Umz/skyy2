@@ -75,6 +75,7 @@ const Vars = {
 
   VFX_BLOOD3: "vfx_bloodsplatter3",
   VFX_CONSUME: "vfx_consume0",
+  VFX_CONSUME2: "vfx_consume2",
   VFX_SPARKLE0: "vfx_sparkle0",
   VFX_SPARKLE1: "vfx_sparkle1",
   VFX_SQUAREFORE0: "vfx_squarefore0",
@@ -125,6 +126,7 @@ const Vars = {
   ACT_ATTACK: "action_soldier_attack",
   ACT_DEFEND: "action_soldier_defend",
   ACT_COMPLETE: "action_complete_instant",
+  ACT_REPEAT_INTERVALS: "action_repeat_function_at_intervals",
   
   LISTEN_CONDITION: "listener_for_condition",
   LISTEN_PLAYER_DISTANCE: "listener_player_distance",

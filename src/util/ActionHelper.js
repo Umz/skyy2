@@ -73,6 +73,11 @@ export function getDistanceFrom(x1, x2) {
   return distance;
 }
 
+/** Check if the number is within the given ranges (including the minimum and maximum) */
+export function isNumberInRange(number, min, max) {
+  return number >= min && number <= max;
+}
+
 //  - INTERNAL FUNCTIONS  ---------------------------------------------------------
 
 function getAllyGroupForSprite(sprite) {

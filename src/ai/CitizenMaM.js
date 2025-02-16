@@ -19,14 +19,19 @@ export default class CitizenMaM extends ActionManager {
     this.minX = Vars.AREA_WIDTH * 1.2;
     this.maxX = Vars.AREA_WIDTH * 1.8;
 
-    this.state = Enum.CS_BATTLE_MODE;
+    this.state = Enum.CS_IDLE;
     this.hunger = 5 + Phaser.Math.Between(5, 10);
     this.social = Phaser.Math.Between(1, 4);
   }
 
   setDefaultActions() {
 
-    const ownForest = !SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
+    if (this.state === Enum.CS_BATTLE_MODE) {
+      this.battleMode();
+      return;
+    }
+
+    const ownForest = SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
     if (this.social <= 0) {
       this.state = Enum.CS_SOCIAL;
     }
@@ -40,9 +45,6 @@ export default class CitizenMaM extends ActionManager {
         break;
       case Enum.CS_SOCIAL:
         this.chat();
-        break;
-      case Enum.CS_BATTLE_MODE:
-        this.battleMode();
         break;
       default:
         this.wander();
@@ -102,7 +104,7 @@ export default class CitizenMaM extends ActionManager {
             this.clearAllActions();
           }
         }));
-        
+
       }),
       new ActWait(60 * 1000)
     );
