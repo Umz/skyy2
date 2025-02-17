@@ -150,6 +150,9 @@ export default class P2 extends TutorialSequence {
       });
       return true;
     })
+    .addWait(1000)
+    .addHealing()
+    
     .addWait(3000)
     .addInstruction(Instructions.P2C_LEAVE_FOREST);
     

@@ -10,6 +10,8 @@ import Vars from "../const/Vars";
 import { getDistanceFrom, isNumberInRange } from "../util/ActionHelper";
 import ActRepeatAtIntervals from "../actions/ActRepeatAtIntervals";
 import Vfx from "../util/Vfx";
+import Juke from "../util/Juke";
+import Sfx from "../const/Sfx";
 
 export default class CitizenWife extends ActionManager {
 
@@ -155,6 +157,7 @@ export default class CitizenWife extends ActionManager {
 
     if (player.getHPPercent() < 1 || player.getGPPercent() < 1) {
       sprite.speak(Icon.ALLY_SHIELD, "You look weary my love, let me heal you.", 5000);
+      Juke.PlaySound(Sfx.HEAL);
 
       player.recoverHP(player.maxHP);
       player.recoverGP(player.maxGP);

@@ -1,4 +1,6 @@
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
@@ -168,6 +170,7 @@ export default class TutorialSequence {
       for (let ally of allies) {
         ally.recoverHP(ally.maxHP);
         Vfx.ShowAnimatedFX(ally, Vars.VFX_CONSUME);
+        Juke.PlaySound(Sfx.HEAL);
       }
       return true;
     });

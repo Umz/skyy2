@@ -59,7 +59,7 @@ export default class SaveData {
     if (savedData) {
       //Object.assign(data, savedData);
     }
-    this.DevData(6);
+    this.DevData(1);
     console.log("Loaded data", data)
 
     return data;
@@ -102,12 +102,10 @@ export default class SaveData {
         break;
     
       case 1:
-        data.claimed = [2];
-        data.tutorialNumber = 5;
-        data.tutorialSequenceStep = 0;
-        // data.tutorialSequenceStep = 27;
+        data.tutorialNumber = 2;
+        data.tutorialSequenceStep = 88;
         data.hasBlueMoon = true;
-        data.playerX = Vars.AREA_WIDTH * 1.45;
+        data.playerX = Vars.AREA_WIDTH * .45;
         data.location = Enum.LOC_BLUE_FOREST;
         break;
     
