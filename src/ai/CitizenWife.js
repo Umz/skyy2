@@ -40,7 +40,7 @@ export default class CitizenWife extends ActionManager {
     }
     else {
       this.listenPlayerLocal();
-      this.idleActivity();
+      this.idlePosition();
     }
 
     this.giftTimer();
@@ -90,10 +90,6 @@ export default class CitizenWife extends ActionManager {
   }
 
   //  - Player too far -
-
-  idleActivity() {
-    this.addAction(new ActWait(5 * 60 * 1000));
-  }
   
   /** Listener to check when Player is in Moon at Midnight */
   listenPlayerLocal() {

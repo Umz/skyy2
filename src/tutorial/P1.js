@@ -52,8 +52,6 @@ export default class P1 extends TutorialSequence {
     })
 
     .addIcon(player, Icon.SKY_SPEAR, 15000)
-    .add(()=> false)
-    
     .addInstruction(Instructions.P0_INTRO)
 
     .add(()=>{
@@ -89,7 +87,10 @@ export default class P1 extends TutorialSequence {
 
     .addCitizenStateChange(Enum.CS_IDLE)
     .addWait(1000)
-    .addInstruction(Instructions.P1C_BLUEFOREST);
+    .addInstruction(Instructions.P1C_BLUEFOREST)
+
+    .addIcon(player, Icon.HAND_LEFT, 4000)
+    .addHealing()
   }
 
   //  -

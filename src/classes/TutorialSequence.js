@@ -1,5 +1,7 @@
+import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
+import Vfx from "../util/Vfx";
 
 export default class TutorialSequence {
   
@@ -68,7 +70,6 @@ export default class TutorialSequence {
       return true;
     })
     return this;
-
   }
 
   addDialogueAndWait(name, text, ttl) {
@@ -157,6 +158,19 @@ export default class TutorialSequence {
         return true;
       });
     }
+    return this;
+  }
+
+  /** Heal the whole team back to full health */
+  addHealing() {
+    this.add(()=> {
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        ally.recoverHP(ally.maxHP);
+        Vfx.ShowAnimatedFX(ally, Vars.VFX_CONSUME);
+      }
+      return true;
+    });
     return this;
   }
 
