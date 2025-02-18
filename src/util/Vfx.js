@@ -33,4 +33,9 @@ export default class Vfx {
     scene.allGroup.add(fx);
   }
 
+  /** Show the amount of damage */
+  static ShowDamageNum(x, y, amt) {
+    // Show and fade very quickly.
+  }
+
 }

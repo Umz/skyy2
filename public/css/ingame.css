@@ -36,13 +36,15 @@
   background-color: rgba(0,0,0,.5);
   text-shadow: 1px 1px 1px #000;
 
-  font-size: 1.2rem;
-  letter-spacing: .2rem;
+  font-size: 1.6rem;
+  letter-spacing: .1rem;
+
+  font-family: 'Mogra', sans-serif;
 }
 #storybox div  {
   position: relative;
   top: 3rem;
-  font-size: .75rem;
+  font-size: 1rem;
   text-align: center;
 }
 .keyboard-key {

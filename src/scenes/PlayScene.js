@@ -181,6 +181,12 @@ export class PlayScene extends Scene {
 
     this.spawnAllMaMFlags();
 
+    this.add.text(this.player.x, this.player.y - 40, "12", {
+			fontFamily: 'f-forward',
+			fontSize: '8px',
+			color: '#fff'
+		});
+
     this.initialLoad = true;
   }
 
@@ -330,6 +336,11 @@ export class PlayScene extends Scene {
     const rect = this.crowdRect;
     const bodies = this.physics.overlapRect(rect.x, rect.y, rect.width, rect.height);
     this.isPlayerCrowded = bodies.length >= 6;
+
+    // - Update Emitter -
+
+    const view = this.cameras.main.worldView;
+    this.streamEmitter.setPosition(view.left, view.top);
   }
 
   //  -----------------------------------------------------------------------------------------------------
@@ -433,6 +444,15 @@ export class PlayScene extends Scene {
       frequency: 50,
       emitting: false
     });
+
+    this.streamEmitter = this.add.particles(0, 0, Vars.TX_SPARKLE, {
+      speedX: { min: -40, max: -20 },
+      alpha: .25,
+      lifespan: 6 * 1000,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 215, 480, 30), quantity: 18 },
+      frequency: 500,
+      emitting: true
+    }).setDepth(55);
   }
 
   emitDust(x, y, lane) {

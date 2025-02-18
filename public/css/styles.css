@@ -21,3 +21,8 @@
   font-family: "Righteous";
   src: url('Righteous-Regular.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: "Mogra";
+  src: url('Mogra-Regular.ttf') format('truetype');
+}
