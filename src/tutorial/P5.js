@@ -198,6 +198,7 @@ export default class P5 extends TutorialSequence {
       return SaveData.Data.claimed.includes(Enum.LOC_MINES);
     })
     .addWait(3000)
+    .addHealing()
 
     .addSpeakerAndWait(player, Icon.HAND_RIGHT, "Now. To Green Village in the east.", 3000)
   }

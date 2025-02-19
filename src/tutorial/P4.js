@@ -181,6 +181,7 @@ export default class P4 extends TutorialSequence {
     })
 
     .addWait(3000)
+    .addHealing()
     .addInstruction(Instructions.P4B_CITIZEN_TRIALS)
 
     .addTitle("Citizens set to Captive behaviour -----")

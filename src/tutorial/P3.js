@@ -14,17 +14,19 @@ export default class P3 extends TutorialSequence {
     const player = scene.player;
     const script = Subtitles.GetScript();
 
+    const redface = "Red Face";
+
     this
+    .addTitle("Moon Chief and Blue Moon arrive in Moon at Midnight together")
     .add(()=>{
-      if (player.x > Vars.AREA_WIDTH * 1.45) {
+      if (player.x > Vars.AREA_WIDTH * 1.35) {
         this.bluemoonSpeak(script.BlueMoon.mam1, 5000);
         return true;
       }
     })
     .add(()=>{ return (player.x > Vars.AREA_WIDTH * 1.6) })
-
-    //  -
     
+    .addTitle("Soldier arrives on high alert to inform of attacking enemies")
     .add(()=>{
       
       const spawnDist = .15;
@@ -39,11 +41,11 @@ export default class P3 extends TutorialSequence {
 
       return true;
     })
-    .addWait(2500)
-    .add(()=>{
-      player.speak(Icon.SPEECH, script.MoonChief.mam1, 4000);
-      return true;
-    })
+    .addWaitForDialogue()
+    .addWait(500)
+    .addSpeaker(player, Icon.SPEECH, script.MoonChief.mam1, 4000)
+
+    .addTitle("Enemies spawning from the right - initial wave without Red Face")
     .addEnemiesRight(4, Enum.SOLDIER_RED1)
     .addWait(10 * 1000)
     .addEnemiesRight(4, Enum.SOLDIER_RED1)
@@ -57,11 +59,7 @@ export default class P3 extends TutorialSequence {
     //  -
 
     .addWait(2000)
-    .add(()=>{
-      Subtitles.ShowDialogue("Red Face", script.RedFace.mam1, 7000)
-      return true;
-    })
-    .add(()=>{ return !Subtitles.IsShowing(); })
+    .addDialogueAndWait(redface, script.RedFace.mam1, 7000)
 
     // Stop saving - RefFace is one block
 
@@ -79,7 +77,7 @@ export default class P3 extends TutorialSequence {
       return this.redface.hp <= 0;
     })
     .add(()=>{
-      Subtitles.ShowDialogue("Red Face", script.RedFace.retreat, 7000)
+      Subtitles.ShowDialogue(redface, script.RedFace.retreat, 7000)
       return true;
     })
     .add(()=>{ return !Subtitles.IsShowing(); })

@@ -144,12 +144,8 @@ export default class P2 extends TutorialSequence {
       });
       return SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
     })
-    .add(()=>{
-      this.doOnce(()=> {
-        SaveData.SAVE_GAME_DATA();
-      });
-      return true;
-    })
+    .addSave()
+
     .addWait(1000)
     .addHealing()
     

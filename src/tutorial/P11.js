@@ -30,6 +30,7 @@ export default class P11 extends TutorialSequence {
       return SaveData.Data.claimed.includes(Enum.LOC_GREEN_FOREST);
     })
     .addSave()
+    .addHealing()
     .addWait(4000)
     .addSpeakerAndWait(player, Icon.BANNER, "The village is next.", 5000)
 
@@ -42,6 +43,7 @@ export default class P11 extends TutorialSequence {
       return SaveData.Data.claimed.includes(Enum.LOC_GREEN_FOREST);
     })
     .addSave()
+    .addHealing()
     .addWait(4000)
 
     .addSpeakerAndWait(player, Icon.BANNER, "All the land belongs to Moon at Midnight!", 5000)
