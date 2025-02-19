@@ -59,7 +59,7 @@ export default class SaveData {
     if (savedData) {
       //Object.assign(data, savedData);
     }
-    this.DevData(1);
+    this.DevData(2);
     console.log("Loaded data", data)
 
     return data;
@@ -97,8 +97,9 @@ export default class SaveData {
         break;
     
       case 2:
-        data.tutorialSequenceStep = 86;
-        data.playerX = Vars.AREA_WIDTH * 0.65;
+        data.tutorialNumber = 1;
+        data.tutorialSequenceStep = 0;
+        data.playerX = Vars.AREA_WIDTH * 1.45;
         break;
     
       case 1:

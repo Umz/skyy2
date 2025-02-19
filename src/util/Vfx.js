@@ -34,8 +34,56 @@ export default class Vfx {
   }
 
   /** Show the amount of damage */
-  static ShowDamageNum(x, y, amt) {
+  static ShowDamageNum(x, y, amt, dir, col = '#f00') {
+
+    const shadow = scene.add.text(x + 1, y + 1, amt, { // Slightly offset
+      fontFamily: 'f-forward',
+      fontSize: '8px',
+      color: '#000' // Darker color for the shadow
+    });
+
     // Show and fade very quickly.
+    const dmg = scene.add.text(x, y, amt, {
+			fontFamily: 'f-forward',
+			fontSize: '8px',
+			color: col
+		});
+
+    scene.tweens.add({
+      targets: dmg,
+      duration: 250,
+      x: x + (24 * dir),
+      y: y - 30,
+      ease: 'Power2',
+      onComplete: () => {
+        scene.tweens.add({
+          targets: dmg,
+          duration: 500,
+          alpha: 0,
+          onComplete: () => {
+            dmg.destroy();
+          }
+        });
+      }
+    });
+
+    scene.tweens.add({
+      targets: shadow,
+      duration: 250,
+      x: x + (25 * dir),
+      y: y - 29,
+      ease: 'Power2',
+      onComplete: () => {
+        scene.tweens.add({
+          targets: shadow,
+          duration: 500,
+          alpha: 0,
+          onComplete: () => {
+            shadow.destroy();
+          }
+        });
+      }
+    });
   }
 
 }

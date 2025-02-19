@@ -336,7 +336,7 @@ export class Preloader extends Phaser.Scene {
             graphics.fillStyle(0xffffff, 1);
             graphics.fillRect(0, 0, 8, 1);
 
-            graphics.generateTexture('bbb', 8, 1);
+            graphics.generateTexture('bbb', 5, 1);
             graphics.clear();
         }
 

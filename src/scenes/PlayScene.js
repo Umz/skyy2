@@ -181,12 +181,6 @@ export class PlayScene extends Scene {
 
     this.spawnAllMaMFlags();
 
-    this.add.text(this.player.x, this.player.y - 40, "12", {
-			fontFamily: 'f-forward',
-			fontSize: '8px',
-			color: '#fff'
-		});
-
     this.initialLoad = true;
   }
 
@@ -689,11 +683,15 @@ export class PlayScene extends Scene {
     
     const pp = target.getCenter();
     const y = pp.y + 3;
+    const amt = Phaser.Math.Between(10, 16);
+
     if (att.x < target.x) {
       this.emitRightHit(pp.x, y, target.lane);
+      Vfx.ShowDamageNum(pp.x, pp.y, amt, 1);
     }
     else {
       this.emitLeftHit(pp.x, y, target.lane);
+      Vfx.ShowDamageNum(pp.x, pp.y, amt, -1);
     }
   }
 
@@ -705,14 +703,20 @@ export class PlayScene extends Scene {
 
         const activeDefense = defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x) && defender.hasGP();
 
-        // M<ust be facing enemy to defend
+        // Must be facing enemy to defend
         if (activeDefense) {
 
           attacker.recoil(16);
           defender.guard();
           defender.kickback(2, attacker.x);
           this.emitClash(point.x, point.y, attacker.lane);
+
+          const pp = defender.getCenter();
+          const dir = attacker.x < defender.x ? 1 : -1;
+          const amt = Phaser.Math.Between(4, 9);
+
           Juke.PlaySound(Sfx.DEFENDED);
+          Vfx.ShowDamageNum(pp.x, pp.y, amt, dir, "#0055ff");
 
           if (attacker.isPlayer) {
             this.tinyCameraShake();
@@ -726,7 +730,6 @@ export class PlayScene extends Scene {
           if (fatal) {
             this.showDeath(defender);
           }
-
         }
       }
     }
