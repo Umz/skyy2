@@ -56,8 +56,7 @@ export default class P3 extends TutorialSequence {
     .addEnemiesRight(2, Enum.SOLDIER_RED2)
     .add(()=>{return SequenceHelper.CheckEnemiesLessOrEqual(0)})
 
-    //  -
-
+    .addTitle("Red Face dialogue, then appears from the right")
     .addWait(2000)
     .addDialogueAndWait(redface, script.RedFace.mam1, 7000)
 

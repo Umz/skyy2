@@ -80,6 +80,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.body.velocity.x = Math.abs(newVelocity) < 4 ? 0 : newVelocity;
     }
 
+    //  Min Max position
+
+    Phaser.Math.Clamp(this.x, this.width, Vars.AREA_WIDTH * 8 - this.width);
+
     //  State updating
     
     if (this.isState(Enum.SS_REBOUND) || this.isState(Enum.SS_REPELLED) || this.isState(Enum.SS_HURT)) {
