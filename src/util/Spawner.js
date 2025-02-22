@@ -49,6 +49,7 @@ export default class Spawner {
     const soldier = this.spawnSoldierBase(pX, lane, sheet);
     soldier.setTeam(team);
     soldier.setController(controller);
+    soldier.setType(type);
     
     return soldier;
   }

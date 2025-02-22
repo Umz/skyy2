@@ -156,6 +156,11 @@ export class PlayScene extends Scene {
       citizen.loadData(sd);
     }
 
+    for (let sd of SaveData.Data.soldiers) {
+      const soldier = this.spawnAlly(sd.x, sd.sType);
+      soldier.loadData(sd);
+    }
+
     //  -
 
     const areaID = this.mapTracker.getCurrentAreaID(playerX);
