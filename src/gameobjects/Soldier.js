@@ -8,7 +8,7 @@ import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
-import { getControllerSaveName } from "../const/ControllerMap";
+import ControllerMap, { getControllerSaveName } from "../const/ControllerMap";
 
 export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
@@ -532,18 +532,45 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  - Save Data -
 
-  loadData() {
+  loadData(data) {
+
+    for (const key in data.data) {
+      if (Object.hasOwn(data.data, key)) {
+        this.setData(key, data.data[key])
+      }
+    }
+
+    this.setTexture(data.prefix);
+    this.setHP(data.hp, data.hp);
+    this.setGP(data.gp, data.gp);
+    
+    const ctr = ControllerMap.get(data.ctr);
+    this.setController(new ctr());
+    
+    if (this.name !== "Soldier") {
+      this.setDisplayName(data.name);
+    }
   }
 
   getSaveData() {
     return {
+
       uid: this.uid,
-      sheet: this.prefix,
+      prefix: this.prefix,
       x: this.x,
+
+      state: this.state,
+      team: this.team,
+
+      speed: this.speed,
+      hp: this.maxHP,
+      gp: this.maxGP,
+
+      lane: this.lane,
       home: this.home,
       name: this.name,
-      showName: this.name !== "Soldier",
-      controller: getControllerSaveName(this.controller)
+
+      ctr: getControllerSaveName(this.controller)
     }
   }
   

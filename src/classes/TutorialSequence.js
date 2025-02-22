@@ -1,5 +1,7 @@
+import Enum from "../const/Enum";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import SequenceHelper from "../tutorial/SequenceHelper";
 import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
@@ -94,6 +96,15 @@ export default class TutorialSequence {
     return this;
   }
 
+  addIconUID(uid, icon, ttl) {
+    this.add(()=>{
+      const sprite = this.getSoldierbyUID(uid);
+      sprite.showIcon(icon, ttl);
+      return true;
+    });
+    return this;
+  }
+
   addSpeaker(sprite, icon, text, ttl) {
     this.add(()=>{
       sprite.speak(icon, text, ttl);
@@ -106,6 +117,16 @@ export default class TutorialSequence {
     this
     .addSpeaker(sprite, icon, text, ttl)
     .add(()=>{ return !Subtitles.IsShowing() })
+    return this;
+  }
+
+  /** Soldier with the specified UID will speak */
+  addSpeakAndWait(uid, icon, text, ttl) {
+    this.add(()=>{
+      const sprite = this.getSoldierbyUID(uid);
+      sprite.speak(icon, text, ttl);
+      return true;
+    });
     return this;
   }
 
@@ -221,6 +242,39 @@ export default class TutorialSequence {
   /** Resume saving steps when complete */
   turnSavingOn() {
     this.shouldSaveStepID = true;
+  }
+
+  //  -
+
+  /** Spawn an ally soldier */
+  spawnAlly(x, soldierEnum, hp, gp, name) {
+    const soldier = SequenceHelper.SpawnAlly(x, soldierEnum);
+    this.setSoldierStats(soldier, hp, gp, Enum.TEAM_ALLY, name);
+    return soldier;
+  }
+
+  /** Spawn an enemy soldier */
+  spawnEnemy(x, soldierEnum, hp, gp, name) {
+    const soldier = SequenceHelper.SpawnEnemy(x, soldierEnum);
+    this.setSoldierStats(soldier, hp, gp, Enum.TEAM_ENEMY, name);
+    return soldier;
+  }
+
+  /** Set the stats for soldier */
+  setSoldierStats(soldier, hp, gp, team, name) {
+    soldier.setHP(hp, hp);
+    soldier.setGP(gp, gp);
+    if (name) {
+      soldier.setDisplayName(name, team);
+    }
+  }
+
+  /** Get a specific Soldier by their UID from all existing */
+  getSoldierbyUID(uid) {
+    const { scene } = this;
+    const all = scene.groupSoldiers.getChildren();
+    const soldier = all.find(sprite => sprite.uid === uid);
+    return soldier;
   }
 
 }

@@ -67,39 +67,11 @@ export default class SaveData {
 
   static DevData(dataset = 0) {
     switch (dataset) {
-
-      case 6:
-        data.tutorialNumber = 1;
-        data.tutorialSequenceStep = 0;
-        break;
-
-      case 5:
-        data.transportedSilica = 1050;
-        data.tutorialNumber = 9;
-        data.tutorialSequenceStep = 0;
-        data.hasBlueMoon = true;
-        break;
-
-      case 4:
-        data.hasBlueMoon = true;
-        //data.playerX = Vars.AREA_WIDTH * 1.8;
-        data.tutorialSequenceStep = 40;
-        data.tutorialNumber = 4;
-        data.claimed = [1,2,3];
-        break;
-
-      case 3:
-        data.hasBlueMoon = true;
-        data.playerX = Vars.AREA_WIDTH * 4.5;
-        data.tutorialSequenceStep = 0;
-        data.tutorialNumber = 7;
-        data.silica = 0;
-        break;
     
       case 2:
-        data.tutorialNumber = 1;
+        data.tutorialNumber = 2;
         data.tutorialSequenceStep = 0;
-        data.playerX = Vars.AREA_WIDTH * 1.45;
+        data.playerX = Vars.AREA_WIDTH * 1;
         break;
     
       case 1:
@@ -129,6 +101,20 @@ export default class SaveData {
     data.uid ++;
     return uid;
   }
+
+  //  -
+
+  static SaveSoldierData(soldierData) {
+    const saved = data.soldiers.find(sd => sd.uid === soldierData.uid);
+    if (saved) {
+      Object.assign(saved, soldierData);
+    }
+    else {
+      data.soldiers.push(soldierData);
+    }
+  }
+
+  //  =
 
   static SETUP_LOCALFORAGE_CONFIG() {
     localforage.config({

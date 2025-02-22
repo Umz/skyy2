@@ -69,7 +69,7 @@ const Enum = {
 
   SOLDIER_BANDIT1: 101,
   SOLDIER_BANDIT2: 102,
-  SOLDIER_BANDIT_BOSS: 110,
+  SOLDIER_RABID_BANDIT: 110,
 
   SOLDIER_RED1: 111,
   SOLDIER_RED2: 112,
@@ -115,7 +115,8 @@ const Enum = {
   ID_MOON_GLOW: 6,
   ID_MOON_ROSE: 7,
 
-  ID_GREEN_CHIEF: 8
+  ID_GREEN_CHIEF: 8,
+  ID_BOSS: 9
 
 }
 export default Enum;

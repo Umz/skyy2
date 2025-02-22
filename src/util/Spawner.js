@@ -67,6 +67,7 @@ export default class Spawner {
     player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER, 2);
     player.setTeam(Enum.TEAM_ALLY);
     player.isPlayer = true;
+    player.uid = Enum.ID_MOON_CHIEF;
 
     this.groupAllies.add(player);
     return player;
@@ -170,7 +171,7 @@ const SoldierMap = new Map([
 
   [Enum.SOLDIER_BANDIT1, {ctrl: Bandit1, sheet:Vars.SHEET_BLUE_BANDIT}],
   [Enum.SOLDIER_BANDIT2, {ctrl: Bandit2, sheet:Vars.SHEET_BLUE_BANDIT_LANCE}],
-  [Enum.SOLDIER_BANDIT_BOSS, {ctrl: BanditBoss, sheet:Vars.SHEET_BLUE_BANDIT_BOSS}],
+  [Enum.SOLDIER_RABID_BANDIT, {ctrl: BanditBoss, sheet:Vars.SHEET_BLUE_BANDIT_BOSS}],
 
   [Enum.SOLDIER_RED1, {ctrl: Bandit1, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
