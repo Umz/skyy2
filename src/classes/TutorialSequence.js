@@ -62,6 +62,7 @@ export default class TutorialSequence {
   addInstruction(instruction) {
     this.add(()=>{
       this.doOnce(()=>{
+        Juke.PlaySound(Sfx.UI_SHOW_INSTRUCTIONS);
         this.tutorial.showInstructions(instruction);
       });
     });

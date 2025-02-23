@@ -12,6 +12,8 @@ import SequenceHelper from "../tutorial/SequenceHelper";
 import SaveData from "../util/SaveData";
 import StoryDOM from "../util/StoryDOM";
 import P11 from "../tutorial/P11";
+import Juke from "../util/Juke";
+import Sfx from "../const/Sfx";
 
 export default class Tutorial {
 
@@ -86,6 +88,7 @@ export default class Tutorial {
     this.spriteController.setActive();
     this.controllerActive = false;
     StoryDOM.HideStory();
+    Juke.PlaySound(Sfx.UI_CLOSE_INSTRUCTIONS);
     this.sequence.nextStep();
   }
 

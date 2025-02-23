@@ -701,6 +701,7 @@ export class PlayScene extends Scene {
     if (att.isBoosted()) {
       Vfx.ShowDamageNum(pp.x, pp.y, "HIT", dir, "#FFA500");
       Vfx.ShowAnimatedFX(target, Vars.VFX_SMALL_SLASH_HIT2);
+      Juke.PlaySound(Sfx.HIT_CRITICAL);
     }
     else {
       Vfx.ShowDamageNum(pp.x, pp.y, amt, dir);
@@ -747,6 +748,7 @@ export class PlayScene extends Scene {
 
           if (defender.gp === 0) {
             Vfx.ShowAnimatedFX(defender, Vars.VFX_SMALL_STING_HIT);
+            Juke.PlaySound(Sfx.GUARD_BREAK);
           }
 
           const pp = defender.getCenter();

@@ -163,6 +163,7 @@ export default class CitizenWife extends ActionManager {
       player.recoverGP(player.maxGP);
 
       Vfx.ShowAnimatedFX(player, Vars.VFX_CONSUME);
+      Juke.PlaySound(Sfx.HEAL);
     }
     else {
       sprite.speak(Icon.SPEECH_HEART, "Come home soon, OK.", 5000);
@@ -180,6 +181,7 @@ export default class CitizenWife extends ActionManager {
       player.boostAttack(10);
 
       Vfx.ShowAnimatedFX(this.scene.player, Vars.VFX_CONSUME2);
+      Juke.PlaySound(Sfx.ATTACK_BOOST);
     }
     else {
       sprite.speak(Icon.SPEECH_HEART, "Finish your business quickly and come home, OK.", 5000);
