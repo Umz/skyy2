@@ -144,6 +144,7 @@ const Vars = {
   VIEW_ANIMATION: "view_soldier_animations",
   VIEW_CITIZEN_ANIMATION: "view_citizen_animations",
   VIEW_CROWD_CONTROL: "view_crowding_hide_soldiers",
+  VIEW_SOLDIER_STEPS: "view_soldier_steps_sfx",
 
   WORLD_LENGTHS: 3,
   GRAVITY: 60,

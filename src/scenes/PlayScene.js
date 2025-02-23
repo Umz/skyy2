@@ -732,6 +732,7 @@ export class PlayScene extends Scene {
 
           Vfx.ShowDamageNum(pp.x, pp.y, "BREAK", dir, "#0055ff");
           Vfx.ShowAnimatedFX(defender, Vars.VFX_SMALL_STING_HIT);
+          Juke.PlaySound(Sfx.GUARD_BREAK);
 
           if (attacker.isPlayer) {
             this.tinyCameraShake();

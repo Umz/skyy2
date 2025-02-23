@@ -1,7 +1,23 @@
 {
   "EN": {
     "Names": {
-      "MoonChief": "Moon Chief"
+      "HarvestMoon": "Harvest Moon",
+      "MoonRose": "Moon Rose",
+      "MoonGlow": "Moon Glow",
+
+      "MoonChief": "Moon Chief",
+      "Wildman": "Wildman",
+      "BlueMoon": "Blue Moon",
+      "Architect": "Architect",
+      "Lunar": "Lunar",
+      "NightTrain": "NightTrain",
+
+      "RabidBandit": "Rabid Bandit",
+      "RedFace": "Red Face",
+      "FallenCloud": "Fallen Cloud",
+      "GreenSword": "Green Sword",
+
+      "Soldier": "Soldier"
     },
     "MoonChief": {
 
