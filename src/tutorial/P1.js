@@ -7,6 +7,7 @@ import Instructions from "../const/Instructions";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
+import Vfx from "../util/Vfx";
 import SequenceHelper from "./SequenceHelper";
 
 export default class P1 extends TutorialSequence {

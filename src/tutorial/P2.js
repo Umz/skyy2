@@ -159,7 +159,6 @@ export default class P2 extends TutorialSequence {
   //  ---------------------------------------------------
 
   addSpeakAndSpawn(uid, icon, text, ttl) {
-
     this
     .add(()=>{
       const sprite = this.getSoldierbyUID(uid);

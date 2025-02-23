@@ -120,6 +120,7 @@ export class Preloader extends Phaser.Scene {
         this.load.spritesheet(Vars.VFX_CONSUME, 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
         this.load.spritesheet(Vars.VFX_CONSUME2, 'vfx/Consume2.png', { frameWidth: 16, frameHeight: 48});
         this.load.spritesheet(Vars.VFX_BLOOD3, 'vfx/BloodSplatter3.png', { frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet(Vars.VFX_TELEPORT2, 'vfx/Teleport2.png', { frameWidth: 16, frameHeight: 48});
 
         //  - Audio
 
@@ -233,6 +234,7 @@ export class Preloader extends Phaser.Scene {
         this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_CONSUME2, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_BLOOD3, 7, 16, 0);
+        this.createVFXAnimation(Vars.VFX_TELEPORT2, 9, 21, -1);
 
         //  Sprite animation
 

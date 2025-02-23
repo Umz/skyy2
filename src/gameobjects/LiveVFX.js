@@ -4,10 +4,6 @@ export default class LiveVFX extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, sheet);
     this.setOrigin(.5, 1);
     scene.add.existing(this);
-
-    this.on('animationcomplete', function () {
-      this.destroy();
-    }, this);
   }
 
   update() {
@@ -23,6 +19,15 @@ export default class LiveVFX extends Phaser.Physics.Arcade.Sprite {
   setSprite(sprite) {
     this.sprite = sprite;
     this.setDepth(sprite.lane * 10 + 5);
+
+    this.on('animationcomplete', function () {
+      this.destroy();
+    }, this);
+  }
+
+  setFollow(sprite) {
+    this.sprite = sprite;
+    this.setDepth(sprite.lane * 10 + 4);
   }
 
 }

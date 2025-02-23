@@ -126,7 +126,8 @@ export default class TutorialSequence {
       const sprite = this.getSoldierbyUID(uid);
       sprite.speak(icon, text, ttl);
       return true;
-    });
+    })
+    .addWaitForDialogue();
     return this;
   }
 

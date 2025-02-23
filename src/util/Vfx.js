@@ -13,15 +13,10 @@ export default class Vfx {
   /** Shows an icon above the sprite for TTL */
   static ShowIcon(sprite, icon, ttl = 4000) {
 
-    let current = null;
-    scene.allGroup.children.iterate(function (si) {
-      if (si.sprite === sprite) {
-        current =  si;
-        return false;
-      }
-    });
+    const all = scene.allGroup.getChildren();
+    const ic = all.find(fx => fx.sprite === sprite && fx instanceof SpriteIcon);
 
-    const spriteIcon = current || new SpriteIcon(scene, sprite.x, sprite.y, icon);
+    const spriteIcon = ic || new SpriteIcon(scene, sprite.x, sprite.y, icon);
     spriteIcon.show(sprite, icon, ttl);
     scene.allGroup.add(spriteIcon);
   }
@@ -31,6 +26,19 @@ export default class Vfx {
     fx.play(sheet);
     fx.setSprite(sprite);
     scene.allGroup.add(fx);
+  }
+
+  static ShowAnimatedFollow(sprite, sheet) {
+    const fx = new LiveVFX(scene, -20, 0, sheet);
+    fx.play(sheet);
+    fx.setFollow(sprite);
+    scene.allGroup.add(fx);
+  }
+
+  static DestroyFX(sprite) {
+    const all = scene.allGroup.getChildren();
+    const fx = all.find(fx => fx.sprite === sprite && fx instanceof LiveVFX);
+    fx?.destroy(true);
   }
 
   /** Show the amount of damage */
