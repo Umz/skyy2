@@ -106,9 +106,14 @@ export default class TutorialSequence {
     return this;
   }
 
-  addSpeaker(sprite, icon, text, ttl) {
+  addSpeaker(uid, icon, text, ttl, sfx = null) {
     this.add(()=>{
+      const sprite = this.getSoldierbyUID(uid);
       sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+        console.log("Speaking")
+      }
       return true;
     })
     return this;
@@ -122,10 +127,13 @@ export default class TutorialSequence {
   }
 
   /** Soldier with the specified UID will speak */
-  addSpeakAndWait(uid, icon, text, ttl) {
+  addSpeakAndWait(uid, icon, text, ttl, sfx = null) {
     this.add(()=>{
       const sprite = this.getSoldierbyUID(uid);
       sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
       return true;
     })
     .addWaitForDialogue();

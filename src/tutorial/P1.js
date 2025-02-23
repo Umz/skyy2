@@ -4,6 +4,7 @@ import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Instructions from "../const/Instructions";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
@@ -33,18 +34,18 @@ export default class P1 extends TutorialSequence {
       //  Specific Sprites -
       
       const king = this.spawnCitizen(Vars.AREA_WIDTH * 1.48, Vars.SHEET_CITIZEN_MAM_KING);
-      king.setName("Harvest Moon");
+      king.setName(script.Names.HarvestMoon);
       king.uid = Enum.ID_HARVEST_MOON;
       SaveData.Data.citizens.push(king.getSaveData());
 
       const glow = this.spawnCitizen(Vars.AREA_WIDTH * 1.52, Vars.SHEET_CITIZEN_MAM_GLOW);
-      glow.setName("Moon Glow");
+      glow.setName(script.Names.MoonGlow);
       glow.setController(new CitizenWife())
       glow.uid = Enum.ID_MOON_GLOW;
       SaveData.Data.citizens.push(glow.getSaveData());
 
       const rose = this.spawnCitizen(Vars.AREA_WIDTH * 1.48, Vars.SHEET_CITIZEN_MAM_ROSE);
-      rose.setName("Moon Rose");
+      rose.setName(script.Names.MoonRose);
       rose.setController(new CitizenWife())
       rose.uid = Enum.ID_MOON_ROSE;
       SaveData.Data.citizens.push(rose.getSaveData());
@@ -52,7 +53,7 @@ export default class P1 extends TutorialSequence {
       return true;
     })
 
-    .addIcon(player, Icon.SKY_SPEAR, 15000)
+    .addIconUID(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, 15000)
     .addInstruction(Instructions.P0_INTRO)
 
     .add(()=>{
@@ -75,13 +76,13 @@ export default class P1 extends TutorialSequence {
     })
 
     .addWait(1000)
-    .addSpeaker(player, Icon.SPEECH, script.MoonChief.peons)
+    .addSpeaker(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.peons, 3000, Sfx.VOICE_AMUSED3)
     .add(()=>{
       return this.spawnAndWait(4);
     })
 
     .addWait(1000)
-    .addSpeaker(player, Icon.SPEECH, script.MoonChief.taunt, 2000)
+    .addSpeaker(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.taunt, 2000)
     .add(()=>{
       return this.spawnAndWait(5);
     })
