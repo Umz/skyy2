@@ -174,11 +174,10 @@ export default class CitizenWife extends ActionManager {
     const sprite = this.sprite;
     const player = this.scene.player;
 
-    if (player.attBoost === 0 || player.defBoost === 0) {
+    if (player.attBoost === 0) {
+      
       sprite.speak(Icon.ALLY_SWORD, "Moon, my love, let me invigorate you.", 5000);
-
-      player.boostAttack(1);
-      player.boostDefense(1);
+      player.boostAttack(10);
 
       Vfx.ShowAnimatedFX(this.scene.player, Vars.VFX_CONSUME2);
     }

@@ -80,6 +80,9 @@ const Vars = {
   VFX_SPARKLE1: "vfx_sparkle1",
   VFX_SQUAREFORE0: "vfx_squarefore0",
   VFX_TELEPORT2: "Teleport2",
+  VFX_SMALL_SLASH_HIT2: "Small_slash_hit_2",
+  VFX_SMALL_STING_HIT: "Small_sting_hit",
+
 
   //  -
 

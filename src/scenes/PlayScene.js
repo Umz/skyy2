@@ -689,14 +689,21 @@ export class PlayScene extends Scene {
     const pp = target.getCenter();
     const y = pp.y + 3;
     const amt = Phaser.Math.Between(10, 16);
+    const dir = att.x < target.x ? 1 : -1;
 
     if (att.x < target.x) {
       this.emitRightHit(pp.x, y, target.lane);
-      Vfx.ShowDamageNum(pp.x, pp.y, amt, 1);
     }
     else {
       this.emitLeftHit(pp.x, y, target.lane);
-      Vfx.ShowDamageNum(pp.x, pp.y, amt, -1);
+    }
+    
+    if (att.isBoosted()) {
+      Vfx.ShowDamageNum(pp.x, pp.y, "HIT", dir, "#FFA500");
+      Vfx.ShowAnimatedFX(target, Vars.VFX_SMALL_SLASH_HIT2);
+    }
+    else {
+      Vfx.ShowDamageNum(pp.x, pp.y, amt, dir);
     }
   }
 
@@ -707,14 +714,40 @@ export class PlayScene extends Scene {
       if (defender.hitboxContainsX(point.x)) {
 
         const activeDefense = defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x) && defender.hasGP();
+        const isGuardBreak = attacker.isBoosted() //|| attacker.guardBreak;
 
+        // Guard break
+        if (isGuardBreak && activeDefense) {
+          
+          const pp = defender.getCenter();
+          const dir = attacker.x < defender.x ? 1 : -1;
+
+          attacker.reduceBoostAttack(1);
+          attacker.recoil(4);
+          
+          defender.setGP(0);
+          defender.kickback(4, attacker.x);
+          this.emitClash(point.x, point.y, attacker.lane);
+
+          Vfx.ShowDamageNum(pp.x, pp.y, "BREAK", dir, "#0055ff");
+          Vfx.ShowAnimatedFX(defender, Vars.VFX_SMALL_STING_HIT);
+
+          if (attacker.isPlayer) {
+            this.tinyCameraShake();
+          }
+
+        }
         // Must be facing enemy to defend
-        if (activeDefense) {
+        else if (activeDefense) {
 
           attacker.recoil(16);
           defender.guard();
           defender.kickback(2, attacker.x);
           this.emitClash(point.x, point.y, attacker.lane);
+
+          if (defender.gp === 0) {
+            Vfx.ShowAnimatedFX(defender, Vars.VFX_SMALL_STING_HIT);
+          }
 
           const pp = defender.getCenter();
           const dir = attacker.x < defender.x ? 1 : -1;
@@ -728,7 +761,10 @@ export class PlayScene extends Scene {
           }
         }
         else {
+
           attacker.rebound(4);
+          attacker.reduceBoostAttack(1);
+
           this.addHitFx(attacker, defender);
 
           const fatal = defender.hit(attacker);
@@ -748,7 +784,7 @@ export class PlayScene extends Scene {
 
       const facing = ally.isFacing(en.x) && en.isFacing(ally.x);
 
-      if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK) && facing) {
+      if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK) && facing && !ally.isBoosted()) {
         ally.recoil(16);
         en.recoil(16);
 
@@ -767,9 +803,6 @@ export class PlayScene extends Scene {
         checkAttack(en, ally);
       }
     }
-
-    // scaleX .9
-    // kick back
   }
 
   playerItemCollision(player, item) {

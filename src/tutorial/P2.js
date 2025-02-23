@@ -23,13 +23,13 @@ export default class P2 extends TutorialSequence {
     .addIconUID(Enum.ID_MOON_CHIEF, Icon.BANNER, 3000)
     .addInstruction(Instructions.P2A_CLAIM_BLUE)
 
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH) {
         SequenceHelper.SpawnEnemies(3, [Enum.SOLDIER_BANDIT1]);
         return true;
       }
     })
-    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .75) {
         return this.spawnAndWait(3);
@@ -47,7 +47,6 @@ export default class P2 extends TutorialSequence {
       }
     })
 
-    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000)
     .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.ALLY, script.MoonChief.bf2, 4000)
     .add(()=>{ return SequenceHelper.CheckEnemiesLessOrEqual(0) })
 

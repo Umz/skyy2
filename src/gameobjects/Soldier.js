@@ -124,6 +124,18 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   boostAttack(amt) {
     this.attBoost = amt;
+    Vfx.ShowAnimatedFollow(this, Vars.VFX_TELEPORT2);
+  }
+
+  reduceBoostAttack(amt) {
+    this.attBoost = Math.max(0, this.attBoost - amt);
+    if (this.attBoost === 0) {
+      Vfx.DestroyFX(this);
+    }
+  }
+
+  isBoosted() {
+    return this.attBoost > 0;
   }
 
   boostDefense(amt) {
@@ -270,7 +282,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   hit(attacker) {
 
     if (!this.isState(Enum.SS_HURT)) {
-      this.hp = Math.max(0, this.hp - 1);
+      const damage = attacker.isBoosted() ? 4 : 1;
+      this.hp = Math.max(0, this.hp - damage);
       this.isDefending = false;
       if (this.hp === 0) {
         this.stopTweening();
@@ -395,7 +408,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   defend(isDefending) {
     if (!this.isState(Enum.SS_HURT)) {
 
-      if (this.state !== Enum.SS_DEFEND) {
+      if (this.state !== Enum.SS_DEFEND && isDefending) {
         Juke.PlaySound(Sfx.BLOCK_ACTION);
       }
 
@@ -552,8 +565,8 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     const ctr = ControllerMap.get(data.ctr);
     this.setController(new ctr());
     
-    if (this.name !== "Soldier") {
-      this.setDisplayName(data.name);
+    if (data.name !== "Soldier") {
+      this.setDisplayName(data.name, Enum.TEAM_ALLY);
     }
   }
 
