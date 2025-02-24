@@ -74,7 +74,7 @@ export default class P1 extends TutorialSequence {
     })
 
     .addWait(1000)
-    .addSpeaker(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.peons, 3000, Sfx.VOICE_AMUSED3)
+    .addSpeaker(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.peons, 3000, Sfx.VOICE_AMUSED1)
     .add(()=>{
       return this.spawnAndWait(4);
     })

@@ -20,7 +20,7 @@ export default class P2 extends TutorialSequence {
     .addTitle(" >>> Moon Chief arrived in Blue Forest and defeats initial enemies")
 
     .add(()=>{ return SequenceHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
-    .addIconUID(Enum.ID_MOON_CHIEF, Icon.BANNER, 3000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 3000)
     .addInstruction(Instructions.P2A_CLAIM_BLUE)
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000)
@@ -54,7 +54,7 @@ export default class P2 extends TutorialSequence {
     .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf2, 5000)
     .addSpeakAndSpawn(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf3, 3000)
     .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.Wildman.bf3, 6000)
-    .addIconUID(Enum.ID_MOON_CHIEF, Icon.SPARKLE, 2000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.SPARKLE, 2000)
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
@@ -66,13 +66,13 @@ export default class P2 extends TutorialSequence {
     .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf5, 5000)
     .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf6, 5000)
 
-    .addIconUID(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
+    .addIcon(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
     .addWait(1000)
     .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf5, 5000)
     .addWait(1000)
 
     .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf7, 4000)
-    .addIconUID(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
+    .addIcon(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
     .addWait(1000)
     .addIcon(player, Icon.ELLIPSE, 2000).addWait(1000)
 
@@ -137,7 +137,7 @@ export default class P2 extends TutorialSequence {
     .addTitle(" >>> Claim the Blue Forest and place a flag near the teal tree")
 
     .addStartSaving()
-    .addIconUID(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
     .addInstruction(Instructions.P2B_PLACE_FLAG)
     .add(()=>{
       this.doOnce(()=>{

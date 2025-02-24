@@ -59,7 +59,7 @@ export default class SaveData {
     if (savedData) {
       //Object.assign(data, savedData);
     }
-    this.DevData(0);
+    this.DevData(2);
     console.log("Loaded data", data)
 
     return data;
