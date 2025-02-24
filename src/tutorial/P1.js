@@ -8,14 +8,12 @@ import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
-import Vfx from "../util/Vfx";
 import SequenceHelper from "./SequenceHelper";
 
 export default class P1 extends TutorialSequence {
 
   init() {
 
-    const player = this.scene.player;
     const script = Subtitles.GetScript();
 
     this
@@ -53,7 +51,7 @@ export default class P1 extends TutorialSequence {
       return true;
     })
 
-    .addIconUID(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, 15000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, 15000)
     .addInstruction(Instructions.P0_INTRO)
 
     .add(()=>{
@@ -82,7 +80,7 @@ export default class P1 extends TutorialSequence {
     })
 
     .addWait(1000)
-    .addSpeaker(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.taunt, 2000)
+    .addSpeaker(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.taunt, 2000, Sfx.VOICE_AMUSED3)
     .add(()=>{
       return this.spawnAndWait(5);
     })
@@ -91,7 +89,7 @@ export default class P1 extends TutorialSequence {
     .addWait(1000)
     .addInstruction(Instructions.P1C_BLUEFOREST)
 
-    .addIcon(player, Icon.HAND_LEFT, 4000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.HAND_LEFT, 4000)
     .addHealing()
   }
 

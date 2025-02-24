@@ -364,6 +364,11 @@ export class PlayScene extends Scene {
         domLabel.destroy(true);
       }
     });
+
+    //  Play Sounds for area
+    if (data.sound) {
+      Juke.PlaySound(data.sound);
+    }
   }
 
   //  -----------------------------------------------------------------------------------------

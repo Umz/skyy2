@@ -89,15 +89,7 @@ export default class TutorialSequence {
     return this;
   }
 
-  addIcon(sprite, icon, ttl) {
-    this.add(()=>{
-      sprite.showIcon(icon, ttl);
-      return true;
-    })
-    return this;
-  }
-
-  addIconUID(uid, icon, ttl) {
+  addIcon(uid, icon, ttl) {
     this.add(()=>{
       const sprite = this.getSoldierbyUID(uid);
       sprite.showIcon(icon, ttl);
