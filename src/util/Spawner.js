@@ -16,6 +16,7 @@ import Vars from "../const/Vars";
 import Citizen from "../gameobjects/Citizen";
 import ClaimFlag from "../gameobjects/ClaimFlag";
 import Soldier from "../gameobjects/Soldier";
+import Subtitles from "./Subtitles";
 
 /** Handle all spawning in this class */
 export default class Spawner {
@@ -61,38 +62,18 @@ export default class Spawner {
 
     const camera = this.scene.cameras.main;
     const player = this.spawnSoldierBase(0, 1, Vars.SHEET_PLAYER);
+    const script = Subtitles.GetScript();
     
     camera.startFollow(player, true, .8);
     player.setHP(50, 50);
     player.setGP(7, 7);
-    player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER, 2);
+    player.setDisplayName(script.Names.MoonChief, Enum.TEAM_PLAYER, 2);
     player.setTeam(Enum.TEAM_ALLY);
     player.isPlayer = true;
     player.uid = Enum.ID_MOON_CHIEF;
 
     this.groupAllies.add(player);
     return player;
-  }
-
-  spawnBlueMoon(pX) {
-    const blue = this.spawnSoldierType(pX, Enum.SOLDIER_BLUEMOON, Enum.TEAM_ALLY);
-    blue.setHP(35, 35);
-    blue.setGP(10, 10);
-    blue.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
-    this.groupAllies.add(blue);
-    return blue;
-  }
-
-  spawnWildman() {
-
-    const pX = Vars.AREA_WIDTH * .5;
-
-    const wildman = this.spawnSoldierType(pX, Enum.SOLDIER_WILDMAN, Enum.TEAM_ALLY);
-    wildman.setHP(25, 25);
-    wildman.setGP(10, 10);
-    wildman.setDisplayName("Wildman", Enum.TEAM_ALLY);
-    this.groupAllies.add(wildman);
-    return wildman;
   }
 
   //  - Soldiers generic

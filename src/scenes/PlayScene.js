@@ -147,10 +147,6 @@ export class PlayScene extends Scene {
     this.player.setX(playerX);
     this.player.setLane(playerLane);
 
-    if (SaveData.Data.hasBlueMoon) {
-      this.spawnBlueMoon();
-    }
-
     for (let sd of SaveData.Data.citizens) {
       const citizen = this.spawnCitizen(sd.x, sd.sheet);
       citizen.loadData(sd);
@@ -414,7 +410,7 @@ export class PlayScene extends Scene {
       emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
       emitting: false
     });
-    this.ccc = this.add.particles(0, 0, 'bbb', {
+    this.ccc = this.add.particles(0, 0, Vars.TX_LINE, {
       speedX: { min: -emitMin, max: -emitMax },
       speedY: { min: -ySpray, max: ySpray },
       alpha: { start: 1, end: 0},
@@ -431,7 +427,7 @@ export class PlayScene extends Scene {
       emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
       emitting: false
     });
-    this.bbb = this.add.particles(0, 0, 'bbb', {
+    this.hitLines = this.add.particles(0, 0, Vars.TX_LINE, {
       speedX: { min: emitMin, max: emitMax },
       speedY: { min: -ySpray, max: ySpray },
       alpha: { start: 1, end: 0},
@@ -483,8 +479,8 @@ export class PlayScene extends Scene {
   emitRightHit(x, y, lane) {
     this.hitRightEmitter.setDepth(lane * 10 + 1);
     this.hitRightEmitter.emitParticleAt(x, y, 10);
-    this.bbb.setDepth(lane * 10 + 2);
-    this.bbb.emitParticleAt(x, y, 4);
+    this.hitLines.setDepth(lane * 10 + 2);
+    this.hitLines.emitParticleAt(x, y, 4);
   }
 
   //  -
@@ -555,15 +551,6 @@ export class PlayScene extends Scene {
 
   spawnPlayer() {
     return this.spawner.spawnPlayer();
-  }
-
-  spawnWildman() {
-    this.bluemoon = this.spawner.spawnWildman();
-  }
-
-  spawnBlueMoon() {
-    const pX = this.player.x + 24;
-    this.bluemoon = this.spawner.spawnBlueMoon(pX);
   }
 
   spawnAlly(posX, type = Enum.SOLDIER_BANDIT1) {

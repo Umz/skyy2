@@ -7,6 +7,7 @@ import SequenceHelper from "./SequenceHelper";
 import Icon from "../const/Icon";
 import Subtitles from "../util/Subtitles";
 import Instructions from "../const/Instructions";
+import Sfx from "../const/Sfx";
 
 export default class P2 extends TutorialSequence {
 
@@ -23,7 +24,7 @@ export default class P2 extends TutorialSequence {
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 3000)
     .addInstruction(Instructions.P2A_CLAIM_BLUE)
 
-    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000, Sfx.VOICE_AMUSED3)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH) {
         SequenceHelper.SpawnEnemies(3, [Enum.SOLDIER_BANDIT1]);
@@ -184,18 +185,20 @@ export default class P2 extends TutorialSequence {
   //  -----------------------------------
 
   spawnWildman() {
+    const script = Subtitles.GetScript();
     const pX = Vars.AREA_WIDTH * .5;
-    const wildman = this.spawnAlly(pX, Enum.SOLDIER_WILDMAN, 25, 10, "Wildman");
+    const wildman = this.spawnAlly(pX, Enum.SOLDIER_WILDMAN, 25, 10, script.Names.Wildman);
     wildman.uid = Enum.ID_BLUE_MOON;
     SaveData.SaveSoldierData(wildman.getSaveData());
   }
 
   convertWildman() {
+    const script = Subtitles.GetScript();
     const bm = this.getSoldierbyUID(Enum.ID_BLUE_MOON);
     if (bm) {
       bm.setHP(45, 45);
       bm.setGP(10, 10);
-      bm.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
+      bm.setDisplayName(script.Names.BlueMoon, Enum.TEAM_ALLY);
       bm.setController(new BlueMoon());
       SaveData.SaveSoldierData(bm.getSaveData());
     }
@@ -211,7 +214,9 @@ export default class P2 extends TutorialSequence {
 
   spawnRabidBandit() {
 
-    const boss = this.spawnEnemy(null, Enum.SOLDIER_RABID_BANDIT, 20, 7, "Rabid Bandit");
+    const script = Subtitles.GetScript();
+
+    const boss = this.spawnEnemy(null, Enum.SOLDIER_RABID_BANDIT, 20, 7, script.Names.RabidBandit);
     boss.uid = Enum.ID_BOSS;
 
     this.bossHpCheck1 = 20 - 6;

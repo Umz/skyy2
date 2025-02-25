@@ -8,6 +8,8 @@ const Vars = {
 
   SHEET_BIRDS1: 'bg_birds',
   SHEET_BIRDS2: 'bg_bird',
+  SHEET_DOE: "doe_test",
+
   SHEET_ALL_BANNERS: 'all_banners',
   SHEET_ALL_FLAGS: 'all_flags',
 
@@ -68,6 +70,7 @@ const Vars = {
 
   TX_SPARKLE: "graphic_sparkle",
   TX_HIT: "graphic_hit_fx",
+  TX_LINE: "graphic_h_line",
 
   VFX_SPEECH_SHEET: "vfx_speech_icons",
 

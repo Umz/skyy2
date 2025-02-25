@@ -103,7 +103,7 @@ export class Preloader extends Phaser.Scene {
         // - BG animals
         
         this.load.spritesheet(Vars.SHEET_BIRDS1, 'spritesheets/bg_birds.png', { frameWidth: 32, frameHeight: 43});
-        this.load.spritesheet("doe_test", 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet(Vars.SHEET_DOE, 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
 
         // - BG Items
         this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
@@ -207,21 +207,21 @@ export class Preloader extends Phaser.Scene {
 
         this.anims.create({
             key: 'doe1',
-            frames: this.anims.generateFrameNumbers("doe_test", { start: 6, end: 9 }),
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_DOE, { start: 6, end: 9 }),
             frameRate: 12,
             repeat: -1
         });
 
         this.anims.create({
             key: 'doe2',
-            frames: this.anims.generateFrameNumbers("doe_test", { start: 42, end: 45 }),
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_DOE, { start: 42, end: 45 }),
             frameRate: 12,
             repeat: -1
         });
 
         this.anims.create({
             key: 'doe3',
-            frames: this.anims.generateFrameNumbers("doe_test", { start: 78, end: 81 }),
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_DOE, { start: 78, end: 81 }),
             frameRate: 12,
             repeat: -1
         });
@@ -342,7 +342,7 @@ export class Preloader extends Phaser.Scene {
             graphics.fillStyle(0xffffff, 1);
             graphics.fillRect(0, 0, 8, 1);
 
-            graphics.generateTexture('bbb', 5, 1);
+            graphics.generateTexture(Vars.TX_LINE, 5, 1);
             graphics.clear();
         }
 

@@ -61,7 +61,7 @@ export default class AnimalHandler {
 
   getDoe(x, y) {
 
-    const animal = this.scene.physics.add.sprite(x, y, "doe_test");
+    const animal = this.scene.physics.add.sprite(x, y, Vars.SHEET_DOE);
     const camera = this.scene.cameras.main;
     animal.setOrigin(.5, 1);
 
