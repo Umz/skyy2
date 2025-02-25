@@ -114,6 +114,16 @@ export default class SaveData {
     }
   }
 
+  static SaveCitizenData(citData) {
+    const saved = data.citizens.find(dd => dd.uid === citData.uid);
+    if (saved) {
+      Object.assign(saved, citData);
+    }
+    else {
+      data.citizens.push(citData);
+    }
+  }
+
   //  =
 
   static SETUP_LOCALFORAGE_CONFIG() {

@@ -62,12 +62,11 @@ export default class Spawner {
 
     const camera = this.scene.cameras.main;
     const player = this.spawnSoldierBase(0, 1, Vars.SHEET_PLAYER);
-    const script = Subtitles.GetScript();
     
     camera.startFollow(player, true, .8);
     player.setHP(50, 50);
     player.setGP(7, 7);
-    player.setDisplayName(script.Names.MoonChief, Enum.TEAM_PLAYER, 2);
+    player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER, 2);
     player.setTeam(Enum.TEAM_ALLY);
     player.isPlayer = true;
     player.uid = Enum.ID_MOON_CHIEF;

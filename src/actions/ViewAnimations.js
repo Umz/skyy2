@@ -23,7 +23,8 @@ export default class ViewAnimation extends Action {
           // Don't always flip tween
     
           if (!this.sprite.flipX && velX < 0 && !this.sprite.isTweening() && this.sprite.movePressed) {
-            this.sprite.flipXTween();
+            //this.sprite.flipXTween();
+            this.sprite.flipX = true;
           }
           else if (this.sprite.flipX && velX > 0 && !this.sprite.isTweening() && this.sprite.movePressed) {
             this.sprite.flipXTween();

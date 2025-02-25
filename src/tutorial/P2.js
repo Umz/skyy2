@@ -8,6 +8,7 @@ import Icon from "../const/Icon";
 import Subtitles from "../util/Subtitles";
 import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
+import Juke from "../util/Juke";
 
 export default class P2 extends TutorialSequence {
 
@@ -48,13 +49,13 @@ export default class P2 extends TutorialSequence {
       }
     })
 
-    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.ALLY, script.MoonChief.bf2, 4000)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.ALLY, script.MoonChief.bf2, 4000, Sfx.VOICE_ATTACK1)
     .add(()=>{ return SequenceHelper.CheckEnemiesLessOrEqual(0) })
 
-    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf1, 2000)
-    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf2, 5000)
-    .addSpeakAndSpawn(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf3, 3000)
-    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.Wildman.bf3, 6000)
+    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf1, 2000, Sfx.VOICE_THANKFUL1)
+    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf2, 5000, Sfx.VOICE_AMUSED3)
+    .addSpeakAndSpawn(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf3, 3000, Sfx.VOICE_AMUSED3)
+    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.Wildman.bf3, 6000, Sfx.VOICE_THANKFUL1)
     .addIcon(Enum.ID_MOON_CHIEF, Icon.SPARKLE, 2000)
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
@@ -62,17 +63,17 @@ export default class P2 extends TutorialSequence {
     
     .addTitle(" >>> Enemies are defeated and Moon Chief recruits Wildman to Moon at Midnight")
 
-    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf4, 3000)
-    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.FIST_FIRE, script.Wildman.bf4, 2000)
-    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf5, 5000)
-    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf6, 5000)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf4, 3000, Sfx.VOICE_AMUSED3)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.FIST_FIRE, script.Wildman.bf4, 2000, Sfx.VOICE_AMUSED1)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf5, 5000, Sfx.VOICE_AMUSED3)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf6, 5000, Sfx.VOICE_AMUSED3)
 
     .addIcon(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
     .addWait(1000)
-    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf5, 5000)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf5, 5000, Sfx.VOICE_AMUSED1)
     .addWait(1000)
 
-    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf7, 4000)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf7, 4000, Sfx.VOICE_ATTACK1)
     .addIcon(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
     .addWait(1000)
     .addIcon(player, Icon.ELLIPSE, 2000).addWait(1000)
@@ -158,11 +159,14 @@ export default class P2 extends TutorialSequence {
 
   //  ---------------------------------------------------
 
-  addSpeakAndSpawn(uid, icon, text, ttl) {
+  addSpeakAndSpawn(uid, icon, text, ttl, sfx) {
     this
     .add(()=>{
       const sprite = this.getSoldierbyUID(uid);
       sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
       return true;
     })
     .addWait(ttl)
@@ -175,9 +179,9 @@ export default class P2 extends TutorialSequence {
     return this;
   }
 
-  addSpeakWithDelay(uid, icon, text, ttl) {
+  addSpeakWithDelay(uid, icon, text, ttl, sfx) {
     this
-    .addSpeakAndWait(uid, icon, text, ttl)
+    .addSpeakAndWait(uid, icon, text, ttl, sfx)
     .addWait(500);
     return this;
   }

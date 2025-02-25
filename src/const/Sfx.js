@@ -26,6 +26,8 @@ const Sfx = {
 
   VOICE_AMUSED1: { key: "voice_amused1.mp3", config: {volume: .3} },
   VOICE_AMUSED3: { key: "voice_amused3.mp3", config: {volume: .3} },
+  VOICE_ATTACK1: { key: "voice_attack1.mp3", config: {volume: .3} },
+  VOICE_THANKFUL1: { key: "voice_thankful1.mp3", config: {volume: .3} },
 
   CROW_CALL: { key: "amb_crow.mp3", config: {volume: .3} },
   WING_FLAP: { key: "amb_wing_flap.mp3", config: {volume: 1} },

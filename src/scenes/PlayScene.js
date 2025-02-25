@@ -229,6 +229,23 @@ export class PlayScene extends Scene {
 
   //  UPDATE helper functions     -------------------------------------------------------------------------
 
+  updateSaveData() {
+
+    const allCitizens = this.groupCitizens.getChildren();
+    const allSoldiers = this.groupAllies.getChildren();
+    
+    // Buildings
+
+    for (let cit of allCitizens) {
+      //SaveData.SaveCitizenData(cit.getSaveData());
+    }
+
+    for (let sol of allSoldiers) {
+      //SaveData.SaveSoldierData(sol.getSaveData());
+    }
+
+  }
+
   /** Update the layers of the Sprites according to their lane */
   updateSpriteLayers() {
 
