@@ -76,7 +76,8 @@ export default class P2 extends TutorialSequence {
     .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf7, 4000, Sfx.VOICE_ATTACK1)
     .addIcon(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
     .addWait(1000)
-    .addIcon(player, Icon.ELLIPSE, 2000).addWait(1000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.ELLIPSE, 2000)
+    .addWait(1000)
 
     .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.QUESTION, script.MoonChief.bf8, 2000)
     .addWait(1000)

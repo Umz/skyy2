@@ -454,33 +454,24 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   flipXTween(flipDirection = 0) {
     
-    let skipFirst = false;
-    const duration = 150;
-
-    this.scene.tweens.chain({
+    const duration = 100;
+    this.scene.tweens.add({
       targets: this,
-      tweens: [
-        {
-          scaleX: .2,
-          duration: duration,
-          ease: 'Power2'
-        },
-        {
-          onActive: () => {
-            if (skipFirst) {
-              const velX = this.body.velocity.x;
-              const flipX = flipDirection === 0 ? velX < 0 : flipDirection < 0;
-              this.setFlipX(flipX);
-            }
-            skipFirst = true;
-          }
-        },
-        {
-          scaleX: 1,
-          duration: duration,
-          ease: 'Power2'
-        }
-      ]
+      duration: duration,
+      scaleX: .2,
+      ease: 'Power2',
+      onComplete: ()=>{
+        const velX = this.body.velocity.x;
+        const flipX = flipDirection === 0 ? velX < 0 : flipDirection < 0;
+        this.setFlipX(flipX);
+      }
+    });
+    this.scene.tweens.add({
+      targets: this,
+      duration: duration,
+      scaleX: 1,
+      delay: duration,
+      ease: 'Power2'
     });
   }
 
