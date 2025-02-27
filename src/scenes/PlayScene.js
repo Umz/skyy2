@@ -733,7 +733,7 @@ export class PlayScene extends Scene {
           const dir = attacker.x < defender.x ? 1 : -1;
 
           attacker.reduceBoostAttack(1);
-          attacker.recoil(4);
+          attacker.recoil(.5);
           
           defender.setGP(0);
           defender.kickback(4, attacker.x);
@@ -751,9 +751,9 @@ export class PlayScene extends Scene {
         // Must be facing enemy to defend
         else if (activeDefense) {
 
-          attacker.recoil(16);
+          attacker.recoil(1);
           defender.guard();
-          defender.kickback(2, attacker.x);
+          defender.kickback(.5, attacker.x);
           this.emitClash(point.x, point.y, attacker.lane);
 
           if (defender.gp === 0) {
@@ -774,7 +774,7 @@ export class PlayScene extends Scene {
         }
         else {
 
-          attacker.rebound(4);
+          attacker.rebound(.5);
           attacker.reduceBoostAttack(1);
 
           this.addHitFx(attacker, defender);
@@ -797,8 +797,8 @@ export class PlayScene extends Scene {
       const facing = ally.isFacing(en.x) && en.isFacing(ally.x);
 
       if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK) && facing && !ally.isBoosted()) {
-        ally.recoil(16);
-        en.recoil(16);
+        ally.recoil(1);
+        en.recoil(1);
 
         const p1 = ally.getAttackPoint();
         const p2 = en.getAttackPoint();

@@ -76,8 +76,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     //  Calculate the slow down
 
     const velX = this.body.velocity.x;
-    if (velX !== 0) {
-      const newVelocity = velX * .95;
+    if (velX !== 0 && this.movementSpeed === 0) {
+      const minus = delta * this.speed * .001 * Math.sign(velX);
+      const newVelocity = velX - (2 * minus);
       this.body.velocity.x = Math.abs(newVelocity) < 4 ? 0 : newVelocity;
     }
 
@@ -271,12 +272,12 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   rebound_calc(intensity = 1) {
     const vX = this.body.velocity.x;
     const recoilSpeed = vX > 0 ? -this.getSpeed() : this.getSpeed();
-    this.movementSpeed = recoilSpeed * (intensity * .1);
+    this.movementSpeed = recoilSpeed * (intensity);
   }
 
   kickback(intensity, pX) {
-    const speed = pX > this.x ? -this.getSpeed() : this.getSpeed();
-    this.body.velocity.x = speed * (intensity * .1);
+    const speed = pX > this.x ? -this.speed : this.speed;
+    this.body.velocity.x = speed * (intensity);
   }
 
   hit(attacker) {
