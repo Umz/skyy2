@@ -79,11 +79,11 @@ export default class P2 extends TutorialSequence {
     .addIcon(Enum.ID_MOON_CHIEF, Icon.ELLIPSE, 2000)
     .addWait(1000)
 
-    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.QUESTION, script.MoonChief.bf8, 2000)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.QUESTION, script.MoonChief.bf8, 2000, Sfx.VOICE_HO2)
     .addWait(1000)
-    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.Wildman.bf6, 5000)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.Wildman.bf6, 5000, Sfx.VOICE_LAUGH1)
     .addWait(1000)
-    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.BANNER, script.Wildman.bf7, 4000)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.BANNER, script.Wildman.bf7, 4000, Sfx.VOICE_HO1)
 
     .addStartSaving()
     
@@ -104,8 +104,8 @@ export default class P2 extends TutorialSequence {
       });
       return true;
     })
-    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss1, 4000)
-    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss2, 4000)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss1, 4000, Sfx.VOICE_ANGRY1)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss2, 4000, Sfx.VOICE_ANGRY3)
     .addWait(1000)
 
     .addTitle(" >>> Second boss speech starts when HP is 2/3")
@@ -115,8 +115,8 @@ export default class P2 extends TutorialSequence {
       return this.checkBossHP(this.bossHpCheck1);
     })
 
-    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss3, 4000)
-    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss4, 4000)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss3, 4000, Sfx.VOICE_ANGRY3)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss4, 4000, Sfx.VOICE_ANGRY1)
 
     .addTitle(" >>> Last boss speech starts when HP is 1/3")
 
@@ -124,9 +124,9 @@ export default class P2 extends TutorialSequence {
       SequenceHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       return this.checkBossHP(this.bossHPCheck2);
     })
-    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss5, 4000)
-    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss6, 4000)
-    .addSpeakWithDelay(Enum.ID_BOSS, Icon.FIST_FIRE, script.RabidBandit.boss7, 5000)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss5, 4000, Sfx.VOICE_ANGRY1)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss6, 4000, Sfx.VOICE_ANGRY2)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.FIST_FIRE, script.RabidBandit.boss7, 5000, Sfx.VOICE_ANGRY3)
     
     .add(()=>{
       SequenceHelper.SpawnEnemies(7, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
