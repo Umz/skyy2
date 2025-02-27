@@ -69,7 +69,7 @@ export default class SaveData {
     switch (dataset) {
     
       case 2:
-        data.tutorialNumber = 2;
+        data.tutorialNumber = 3;
         data.tutorialSequenceStep = 0;
         data.playerX = Vars.AREA_WIDTH * 1;
         break;

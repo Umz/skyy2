@@ -14,16 +14,19 @@ export default class P3 extends TutorialSequence {
     const player = scene.player;
     const script = Subtitles.GetScript();
 
-    const redface = "Red Face";
+    const redface = script.Names.RedFace;
 
     this
-    .addTitle("Moon Chief and Blue Moon arrive in Moon at Midnight together")
+    .addTitle(" >>> Moon Chief and Blue Moon arrive in Moon at Midnight together -")
+    
     .add(()=>{
       if (player.x > Vars.AREA_WIDTH * 1.35) {
         this.bluemoonSpeak(script.BlueMoon.mam1, 5000);
         return true;
       }
     })
+    // Add speaker.
+    // Data- Add blue moon to soldiers data
     .add(()=>{ return (player.x > Vars.AREA_WIDTH * 1.6) })
     
     .addTitle("Soldier arrives on high alert to inform of attacking enemies")
