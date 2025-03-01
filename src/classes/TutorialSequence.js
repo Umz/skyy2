@@ -118,6 +118,19 @@ export default class TutorialSequence {
     return this;
   }
 
+  /** Speak (UID) without stopping flow to wait for dialogue */
+  addSpeak(uid, icon, text, ttl, sfx = null) {
+    this.add(()=>{
+      const sprite = this.getSoldierbyUID(uid);
+      sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
+      return true;
+    });
+    return this;
+  }
+
   /** Soldier with the specified UID will speak */
   addSpeakAndWait(uid, icon, text, ttl, sfx = null) {
     this.add(()=>{
@@ -151,6 +164,14 @@ export default class TutorialSequence {
   addSave() {
     this.add(()=>{
       SaveData.SAVE_GAME_DATA();
+      return true;
+    });
+    return this;
+  }
+
+  addSound(sfx) {
+    this.add(()=>{
+      Juke.PlaySound(sfx);
       return true;
     });
     return this;

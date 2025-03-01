@@ -34,7 +34,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     this.state = Enum.SS_READY;
     this.team = Enum.TEAM_ENEMY;
-    this.sType = -1;
+    this.sType = -1;  // Soldier Type
     this.speed = 96;  // Use 72-
     this.movementSpeed = 0;
     this.lane = 1;
@@ -560,6 +560,16 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     if (data.name !== "Soldier") {
       this.setDisplayName(data.name, Enum.TEAM_ALLY);
     }
+
+    this.uid = data.uid;
+    this.prefix = data.prefix;
+    this.x = data.x;
+    this.state = data.state;
+    this.team = data.team;
+    this.sType = data.sType;
+    this.speed = data.speed;
+    this.lane = data.lane;
+    this.home = data.home;
   }
 
   getSaveData() {
