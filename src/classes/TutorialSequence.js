@@ -145,6 +145,21 @@ export default class TutorialSequence {
     return this;
   }
 
+  /** Citizen will speak with Icon (GET using UID) */  
+  addSpeakCitizenW(uid, icon, text, ttl, sfx = null) {
+    this.add(()=>{
+      const sprite = this.getCitizenByUID(uid);
+      sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
+      return true;
+    })
+    .addWaitForDialogue()
+    .addWait(500);
+    return this;
+  }
+
   addStopSaving() {
     this.add(()=>{
       this.turnSavingOff();
@@ -298,6 +313,13 @@ export default class TutorialSequence {
     const all = scene.groupSoldiers.getChildren();
     const soldier = all.find(sprite => sprite.uid === uid);
     return soldier;
+  }
+
+  getCitizenByUID(uid) {
+    const { scene } = this;
+    const all = scene.groupCitizens.getChildren();
+    const citizen = all.find(sprite => sprite.uid === uid);
+    return citizen;
   }
 
 }

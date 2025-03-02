@@ -837,7 +837,7 @@ export class PlayScene extends Scene {
     
     if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
 
-      sprite.recoil(2);
+      sprite.recoil(1);
       this.emitDust(rock.x, rock.y, rock.lane);
       this.emitRock(rock.x, rock.getCenter().y);
       rock.isHit = true;

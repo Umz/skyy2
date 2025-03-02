@@ -198,26 +198,30 @@ export default class CitizenStorm extends ActionManager {
       new ActMoveToX(sprite, rockX),
       new ActWait(500),
       new ActComplete(()=>{
-        sprite.setState(Enum.CS_DIGGING);
-        sprite.showIcon(Icon.SEARCH, 6 * 1000);
+        sprite.showIcon(Icon.SEARCH, 4 * 1000);
       }),
-      new ActWait(7000),
+      new ActWait(3000),
       new ActComplete(()=>{
         sprite.showIcon(Icon.PICKAXE, 20 * 1000);
-        sprite.playDigging();
+        sprite.setState(Enum.CS_DIGGING);
       }),
       new ActWait(21 * 1000),
       new ActComplete(()=>{
+
+        const money = sprite.getData("money") || 0;
         
         sprite.setState(Enum.CS_IDLE);
         sprite.showIcon(Icon.BLUE_SILICA, 15 * 1000);
 
-        // Add to silica
-        // Add to money
+        SaveData.Data.silica += thi.energy;
+        sprite.setData("money", money + this.energy);
 
         this.food = 0;
         this.energy = 0;
-      })
+      }),
+
+      new ActWait(3000),
+      new ActMoveToX(sprite, Vars.AREA_WIDTH * 3.9)
     );
   }
 
