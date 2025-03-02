@@ -24,6 +24,9 @@ export default class P5 extends TutorialSequence {
 
     this
 
+    // Disperse troops to posts, except Blue Moon
+    // Restrict citizen movement
+
     .addTitle("Night Train appears from the east to get Moon Chief!")
 
     .add(()=> {

@@ -69,12 +69,15 @@ export default class SaveData {
     switch (dataset) {
     
       case 2:
-        data.tutorialNumber = 3;
+
+        const pX = Vars.AREA_WIDTH * 3.8;
+
+        data.tutorialNumber = 5;
         data.tutorialSequenceStep = 0;
-        data.playerX = Vars.AREA_WIDTH * 1;
+        data.playerX = pX;
         data.soldiers.push(
           {
-            uid: Enum.ID_BLUE_MOON, prefix: Vars.SHEET_WILDMAN, x: Vars.AREA_WIDTH * 1, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_BLUEMOON,
+            uid: Enum.ID_BLUE_MOON, prefix: Vars.SHEET_WILDMAN, x: pX - 32, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_BLUEMOON,
             speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_BLUE_FOREST, name: "Blue Moon", ctr: "BlueMoon"
           }
         )

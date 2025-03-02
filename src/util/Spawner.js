@@ -146,7 +146,7 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_LUNAR, {ctrl: Lunar1, sheet:Vars.SHEET_LUNAR}],
 
   [Enum.SOLDIER_ALLY_HEAVY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_HEAVY}],
-  [Enum.SOLDIER_ALLY_INFANTRY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_INFANTRY}],
+  [Enum.SOLDIER_ALLY_INFANTRY1, {ctrl: AllyLight1, sheet:Vars.SHEET_MAM_INFANTRY}],
   [Enum.SOLDIER_ALLY_LANCER1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_LANCER}],
   [Enum.SOLDIER_ALLY_WILDMAN, {ctrl: AllyLight1, sheet:Vars.SHEET_WILDMAN_CREW}],
 

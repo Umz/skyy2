@@ -7,8 +7,8 @@ import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Vars from "../const/Vars";
 import CitizenController from "./CitizenController";
-import { getClosestCitizen, getDistanceFrom } from "../util/ActionHelper";
 import SaveData from "../util/SaveData";
+import { getClosestCitizen, getDistanceFrom } from "../util/ActionHelper";
 
 export default class CitizenCaptive extends ActionManager {
 
@@ -95,7 +95,7 @@ export default class CitizenCaptive extends ActionManager {
           sprite.setController(controller);
 
           const index = SaveData.Data.citizens.findIndex(item => item.uid === sprite.uid);
-          SaveData.Data.citizens[index] = sprite.saveData;
+          SaveData.Data.citizens[index] = sprite.getSaveData();
         })
       )
     }
