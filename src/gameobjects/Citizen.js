@@ -139,6 +139,7 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
     this.setTexture(data.sheet);
     this.prefix = data.sheet;
     this.x = data.x;
+    this.name = data.name;
 
     this.setHome(data.home);
     this.setTribe(data.tribe);
@@ -162,6 +163,7 @@ export default class Citizen extends Phaser.Physics.Arcade.Sprite {
       x: this.x,
       home: this.home,
       tribe: this.tribe,
+      name: this.name,
       address: -1,
       controller: getControllerSaveName(this.controller)
     }

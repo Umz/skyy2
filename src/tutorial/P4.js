@@ -203,7 +203,8 @@ export default class P4 extends TutorialSequence {
     .addTitle(" >>> Citizens set to Captive behaviour and wait till all have been interacted with -")
 
     .add(()=>{
-      const citizens = scene.groupCitizens.getChildren();
+      const all = scene.groupCitizens.getChildren();
+      const citizens = all.filter(ss => ss.tribe === Enum.TRIBE_STORM);
       for (let citi of citizens) {
         citi.setController(new CitizenCaptive());
       }

@@ -109,6 +109,7 @@ export default class P5 extends TutorialSequence {
     .add(()=>{
       const x = Vars.AREA_WIDTH * 3.3;
       const hm = this.getCitizenByUID(Enum.ID_HARVEST_MOON);
+      hm.setX(x);
       Ctr.SetActions(hm,
         Ctr.Wait(120 * 1000)
       )
