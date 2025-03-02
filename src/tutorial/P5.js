@@ -1,3 +1,4 @@
+import AllyStandby from "../ai/AllyStandby";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
@@ -19,15 +20,26 @@ export default class P5 extends TutorialSequence {
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
-    const fallen = "Fallen Cloud";
-    const nt = "Night Train";
+    const fallen = script.Names.FallenCloud;
+    const nt = script.Names.NightTrain;
 
     this
+    .addTitle(" >>> Transition from battle mode to focus on mining and civilians -")
 
-    // Disperse troops to posts, except Blue Moon
+    .add(()=>{
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        if (ally.uid > 100) {
+          ally.home = Enum.LOC_STORM;
+          ally.setController(new AllyStandby());
+        }
+      }
+      return true;
+    })
+
     // Restrict citizen movement
 
-    .addTitle("Night Train appears from the east to get Moon Chief!")
+    .addTitle(" >>> Night Train appears from the east to get Moon Chief! -")
 
     .add(()=> {
       night = SequenceHelper.SpawnAlly(player.x + 200, Enum.SOLDIER_NIGHTTRAIN);
@@ -40,6 +52,8 @@ export default class P5 extends TutorialSequence {
       night.controller.gotoPlayer();
       return true;
     })
+    .add(()=>{})
+
     .addSpeakNightAndWait(Icon.HAPPY, script.NightTrain.mines1, 4000)
     .addWait(500)
     .addSpeakNightAndWait(Icon.ANGER, script.NightTrain.mines2, 5000)

@@ -79,6 +79,11 @@ export default class SaveData {
           {
             uid: Enum.ID_BLUE_MOON, prefix: Vars.SHEET_WILDMAN, x: pX - 32, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_BLUEMOON,
             speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_BLUE_FOREST, name: "Blue Moon", ctr: "BlueMoon"
+          },
+
+          {
+            uid: 101, prefix: Vars.SHEET_MAM_INFANTRY, x: pX - 32, state: Enum.SS_READY, team:Enum.TEAM_ALLY, sType: Enum.SOLDIER_ALLY_INFANTRY1,
+            speed: 96, hp: 5, gp: 4, lane: 3, home: Enum.LOC_STORM, name:"Soldier", ctr: "AllyLight1"
           }
         )
         break;

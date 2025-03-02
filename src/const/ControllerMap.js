@@ -1,5 +1,6 @@
 import AllyHeavy1 from "../ai/AllyHeavy1";
 import AllyLight1 from "../ai/AllyLight1";
+import AllyStandby from "../ai/AllyStandby";
 import Bandit1 from "../ai/Bandit1";
 import Bandit2 from "../ai/Bandit2";
 import Bandit3 from "../ai/Bandit3";
@@ -23,6 +24,7 @@ import Wildman from "../ai/Wildman";
 const ControllerMap = new Map([
   ["AllyHeavy1", AllyHeavy1],
   ["AllyLight1", AllyLight1],
+  ["AllyStandby", AllyStandby],
   ["Bandit1", Bandit1],
   ["Bandit2", Bandit2],
   ["Bandit3", Bandit3],
