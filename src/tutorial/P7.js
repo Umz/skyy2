@@ -13,21 +13,18 @@ export default class P7 extends TutorialSequence {
 
   init() {
     
-    // Take the Architect and return home
-
     const { scene } = this;
     const player = this.scene.player;
     const script = Subtitles.GetScript();
-    const WIDTH = Vars.AREA_WIDTH;
-
-    // Green Village is x7
+    const WIDTH = Vars.AREA_WIDTH;  // Green Village x7
 
     const soldier = "Soldier";
     const nameGreen = "Green Sword";
     const nameLunar = "Lunar";
-    let kills = 0;
 
     this
+    .addTitle(" >>> Section to take the Architect and fight the way home -")
+
     .add(()=>{ return player.x >= Vars.AREA_WIDTH * 6.8 })
     .add(()=>{
       SequenceHelper.SpawnEnemiesAt(WIDTH * 7.1, 3, [Enum.SOLDIER_WL_HEAVY]);
