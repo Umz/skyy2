@@ -59,7 +59,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-    this.DevData(3);
+    this.DevData(2);
     console.log("Loaded data", data)
 
     return data;
@@ -70,28 +70,29 @@ export default class SaveData {
     
       case 2:
 
-        const pX = Vars.AREA_WIDTH * 3.8;
+        const pX = Vars.AREA_WIDTH * 1.6;
 
-        data.tutorialNumber = 5;
-        data.tutorialSequenceStep = 73;
+        data.tutorialNumber = 8;
+        data.tutorialSequenceStep = 0;
         data.playerX = pX;
-        data.soldiers.push(
+        data.soldiers =[
           {
             uid: Enum.ID_BLUE_MOON, prefix: Vars.SHEET_WILDMAN, x: pX - 32, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_BLUEMOON,
             speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_BLUE_FOREST, name: "Blue Moon", ctr: "BlueMoon"
           },
           {
-            uid: Enum.ID_NIGHT_TRAIN, prefix: Vars.SHEET_MAM_SUPPLY, x: pX + 200, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_NIGHTTRAIN,
+            uid: Enum.ID_NIGHT_TRAIN, prefix: Vars.SHEET_MAM_SUPPLY, x: Vars.AREA_WIDTH * 1.45, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_NIGHTTRAIN,
             speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_MINES, name: "Night Train", ctr: "Nighttrain"
           },
-
           {
-            uid: 101, prefix: Vars.SHEET_MAM_INFANTRY, x: pX - 32, state: Enum.SS_READY, team:Enum.TEAM_ALLY, sType: Enum.SOLDIER_ALLY_INFANTRY1,
-            speed: 96, hp: 5, gp: 4, lane: 3, home: Enum.LOC_STORM, name:"Soldier", ctr: "AllyLight1"
-          }
-        )
+            uid: Enum.ID_LUNAR, prefix: Vars.SHEET_LUNAR, x: Vars.AREA_WIDTH * 1.5, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_LUNAR,
+            speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_MINES, name: "Lunar", ctr: "Lunar1"
+          },
 
-        data.citizens.push(
+          //{ uid: 101, prefix: Vars.SHEET_MAM_INFANTRY, x: pX - 32, state: Enum.SS_READY, team:Enum.TEAM_ALLY, sType: Enum.SOLDIER_ALLY_INFANTRY1, speed: 96, hp: 5, gp: 4, lane: 3, home: Enum.LOC_STORM, name:"Soldier", ctr: "AllyLight1" }
+        ]
+
+        data.citizens = [
           {
             uid: Enum.ID_HARVEST_MOON,
             data: {
@@ -104,7 +105,7 @@ export default class SaveData {
             address: -1,
             controller: "CitizenController"
           }
-        )
+        ]
         break;
     
       case 1:
