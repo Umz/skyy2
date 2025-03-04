@@ -2,9 +2,11 @@ import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Instructions from "../const/Instructions";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
 import Subtitles from "../util/Subtitles";
+import Vfx from "../util/Vfx";
 import SequenceHelper from "./SequenceHelper";
 
 let braverSprite, cloverSprite;
@@ -18,27 +20,36 @@ export default class P8 extends TutorialSequence {
     const script = Subtitles.GetScript();
 
     //  - Battle of Storm Village - Destroy buildings and configure battle -
+    // Max troops
+    // Split and divide after
+  
+    // - When to save sequence advancements (Die and reload in specific places)
+    // - Which enemies drop items
+    // - When does NT drop help
 
     this
-
     .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")
 
     .add(()=>{
+
+      player.boostAttack(40);
+      Vfx.ShowAnimatedFX(player, Vars.VFX_CONSUME2);
+
       Ctr.SetActions(this.braver,
         Ctr.MoveToX(player.x + 80)
       );
       return true;
     })
-    .addBraverSpeakAndWait(Icon.ALARM, "Whiteleaf have sent an army! They are destroying Storm!", 5000)
+    .addSpeakAndWait(this.braverID, Icon.ALARM, script.Braver.mam1, 5000, Sfx.VOICE_HO1)
 
-    .addSpeakerAndWait(player, Icon.ANGER, "What!")
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.ANGER, script.MoonChief.mam3, 2000, Sfx.VOICE_ANGRY3)
     .addWait(750)
-    .addSpeakerAndWait(player, Icon.ANGER, "They dare to attack us!? Do they not fear the Moon at Midnight? They dare to dream they can defeat us!?", 8000)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.ANGER, script.MoonChief.mam4, 8000, Sfx.VOICE_ANGRY2)
     .addWait(1000)
-    .addSpeakerAndWait(player, Icon.SKY_SPEAR, "To battle!", 4000)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.mam5, 4000, Sfx.VOICE_ATTACK1)
 
     .addInstruction(Instructions.P8A_GOTO)
-    .addIcon(player, Icon.BANNER, 30 * 1000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 30 * 1000)
 
     .addTitle(" >>> Battles are already taking place in the forest as you pass through")
 
@@ -46,25 +57,25 @@ export default class P8 extends TutorialSequence {
     .addBattleSpawn(6, 10)
 
     .addPositionCheck(2)
-    .addSpeakerAndWait(player, Icon.BANNER, "Give no ground!", 2000)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.rose4, 2000, Sfx.VOICE_ATTACK1)
 
     .addPositionCheck(2.2)
     .addBattleSpawn(10, 18)
 
     .addPositionCheck(2.3)
-    .addSpeakerAndWait(player, Icon.BANNER, "Press onward!", 2000)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.rose5, 2000, Sfx.VOICE_ATTACK1)
 
     .addPositionCheck(2.5)
-    .addSpeaker(player, Icon.SKY_SPEAR, "Fight! Fight!", 2000)
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose6, 2000)
     .addBattleSpawn(15, 10)
 
     .addPositionCheck(2.8)
-    .addSpeaker(player, Icon.SKY_SPEAR, "To the village!", 2000)
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose7, 2000)
 
     .addPositionCheck(2.9)
     .addBattleSpawn(15, 15)
 
-    .addTitle(" >>> Arriving in Storm village to full scale battle", true)
+    .addTitle(" >>> Arriving in Storm village to full scale battle -", true)
 
     .add(()=>{
       scene.resetAllStorm();
@@ -74,7 +85,7 @@ export default class P8 extends TutorialSequence {
 
     .addPositionCheck(3.1)
     .addBattleSpawn(5, 20)
-    .addSpeaker(player, Icon.BANNER, "Now you face the Moon at Midnight!", 3000)
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.storm1, 3000, Sfx.VOICE_ANGRY1)
 
     .add(()=>{
       this.clover.setHP(25, 25);
@@ -90,9 +101,9 @@ export default class P8 extends TutorialSequence {
       return this.clover.isDead();
     })
     
-    .addSpeakerAndWait(player, Icon.BANNER, "Moon Chief has slain the enemy general", 5000)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.storm2, 5000, Sfx.VOICE_HO1)
     .addWait(750)
-    .addSpeakerAndWait(player, Icon.FIST_FIRE, "Push back the rest of them!", 3000)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.FIST_FIRE, script.MoonChief.storm3, 3000, Sfx.VOICE_ATTACK1)
     
     .add(()=>{
 
@@ -155,6 +166,7 @@ export default class P8 extends TutorialSequence {
   }
 
   addBattleSpawn(allies, enemies) {
+    // Only Spawn if less than X (too many is pointless)
     this
     .add(() => {
       for (let i=0; i<allies; i++) {
@@ -194,13 +206,16 @@ export default class P8 extends TutorialSequence {
 
   get braver() {
     if (!braverSprite) {
+      const script = Subtitles.GetScript();
       const player = this.scene.player;
-      braverSprite = SequenceHelper.SpawnAlly(player.x + 200, Enum.SOLDIER_ALLY_LANCER1);
-      braverSprite.setDisplayName("Braver", Enum.TEAM_ALLY);
-      braverSprite.setHP(15, 15);
-      braverSprite.setGP(15, 15);
+      braverSprite = this.spawnAlly(player.x + 200, Enum.SOLDIER_ALLY_LANCER1, 20, 12, script.Names.Braver);
     }
     return braverSprite;
+  }
+
+  get braverID() {
+    const braver = this.braver;
+    return braver.uid;
   }
 
 }

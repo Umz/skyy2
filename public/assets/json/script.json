@@ -22,6 +22,7 @@
       "FallingWillow": "Falling Willow",
       "GreenMeadow": "Green Meadow",
 
+      "Braver": "Braver",
       "Soldier": "Soldier"
     },
     "MoonChief": {
@@ -42,10 +43,21 @@
 
       "mam1": "Who dares to attack our tribe!?",
       "mam2": "Red Face!",
+      "mam3": "What!",
+      "mam4": "They dare to attack us!? Do they not fear the Moon at Midnight? They dare to dream they can defeat us!?",
+      "mam5": "To Battle!",
 
       "rose1": "Hear Me! Moon Chief has defeated Red Face in a Duel!",
       "rose2": "Now cut down the rest of the scum.",
       "rose3": "The matter is settled. Let us proceed.",
+      "rose4": "Give no ground!",
+      "rose5": "Press onward!",
+      "rose6": "Fight! Fight!",
+      "rose7": "To the village!",
+
+      "storm1": "Now you face the Moon at Midnight!",
+      "storm2": "Moon Chief has slain the enemy general",
+      "storm3": "Push back the rest of them!",
 
       "mines1": "I see. What is it?",
       "mines2": "... What is it you want me to do?",
@@ -121,6 +133,9 @@
       "green4": "Finally. I am free of Whiteleaf.",
       "green5": "I am honoured to fly with the tribe!",
       "green6": "I am Lunar the Architect of Moon at Midnight!"
+    },
+    "Braver": {
+      "mam1": "Whiteleaf have sent an army! They are destroying Storm!"
     },
 
     "HarvestMoon": {
