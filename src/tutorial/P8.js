@@ -66,11 +66,11 @@ export default class P8 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.rose5, 2000, Sfx.VOICE_ATTACK1)
 
     .addPositionCheck(2.5)
-    .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose6, 2000)
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose6, 2000, Sfx.VOICE_ATTACK1)
     .addBattleSpawn(15, 10)
 
     .addPositionCheck(2.8)
-    .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose7, 2000)
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose7, 2000, Sfx.VOICE_ATTACK1)
 
     .addPositionCheck(2.9)
     .addBattleSpawn(15, 15)
@@ -95,9 +95,7 @@ export default class P8 extends TutorialSequence {
     .add(()=> {
       const ens = [Enum.SOLDIER_WL_INFANTRY, Enum.SOLDIER_WL_HEAVY];
       SequenceHelper.SpawnConstant(7, 3, ens);
-      
       this.spawnAlliesConstant(11);
-      
       return this.clover.isDead();
     })
     
@@ -137,18 +135,6 @@ export default class P8 extends TutorialSequence {
 
   //  ====================================================================================================
 
-  /** Add speech for Lunar and wait for completion */
-  addBraverSpeakAndWait(icon, text, ttl) {
-    this
-    .add(()=>{
-      this.braver.speak(icon, text, ttl);
-      return true;
-    })
-    .addWaitForDialogue()
-    .addWait(500);
-    return this;
-  }
-
   addPositionCheck(mul) {
     this.add(()=>{
       return this.scene.player.x >= Vars.AREA_WIDTH * mul;
@@ -167,6 +153,7 @@ export default class P8 extends TutorialSequence {
 
   addBattleSpawn(allies, enemies) {
     // Only Spawn if less than X (too many is pointless)
+    const maxTroops = 16;
     this
     .add(() => {
       for (let i=0; i<allies; i++) {
@@ -175,6 +162,10 @@ export default class P8 extends TutorialSequence {
         const farRight = SequenceHelper.GetCameraRight() + SequenceHelper.GetCameraWidth();
         const posX = Phaser.Math.Between(SequenceHelper.GetCameraRight(), farRight);
         SequenceHelper.SpawnAlly(posX, soldierID);
+
+        if (this.scene.countAllies() > maxTroops) {
+          break;
+        }
       }
       return true;
     })
@@ -185,6 +176,10 @@ export default class P8 extends TutorialSequence {
         const farRight = SequenceHelper.GetCameraRight() + SequenceHelper.GetCameraWidth();
         const posX = Phaser.Math.Between(SequenceHelper.GetCameraRight(), farRight);
         SequenceHelper.SpawnEnemy(posX, soldierID);
+
+        if (this.scene.countEnemies() > maxTroops) {
+          break;
+        }
       }
       return true;
     });
@@ -195,11 +190,9 @@ export default class P8 extends TutorialSequence {
 
   get clover() {
     if (!cloverSprite) {
+      const script = Subtitles.GetScript();
       const player = this.scene.player;
-      cloverSprite = SequenceHelper.SpawnEnemy(player.x + 200, Enum.SOLDIER_WL_SPLIT_CLOVER);
-      cloverSprite.setDisplayName("Split Clover", Enum.TEAM_ENEMY);
-      cloverSprite.setHP(25, 25);
-      cloverSprite.setGP(15, 15);
+      cloverSprite = this.spawnEnemy(player.x + 200, Enum.SOLDIER_WL_SPLIT_CLOVER, 25, 15, script.Names.SplitClover);
     }
     return cloverSprite;
   }
