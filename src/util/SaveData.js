@@ -81,12 +81,12 @@ export default class SaveData {
             speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_BLUE_FOREST, name: "Blue Moon", ctr: "BlueMoon"
           },
           {
-            uid: Enum.ID_NIGHT_TRAIN, prefix: Vars.SHEET_MAM_SUPPLY, x: Vars.AREA_WIDTH * 1.45, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_NIGHTTRAIN,
-            speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_MINES, name: "Night Train", ctr: "Nighttrain"
+            uid: Enum.ID_NIGHT_TRAIN, prefix: Vars.SHEET_MAM_SUPPLY, x: pX - 200, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_NIGHTTRAIN,
+            speed: 128, hp: 45, gp: 20, lane: 2, home: Enum.LOC_MINES, name: "Night Train", ctr: "Nighttrain"
           },
           {
-            uid: Enum.ID_LUNAR, prefix: Vars.SHEET_LUNAR, x: Vars.AREA_WIDTH * 1.5, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_LUNAR,
-            speed: 96, hp: 45, gp: 20, lane: 2, home: Enum.LOC_MINES, name: "Lunar", ctr: "Lunar1"
+            uid: Enum.ID_LUNAR, prefix: Vars.SHEET_LUNAR, x: pX - 200, state: Enum.SS_READY, team: Enum.TEAM_ALLY, sType: Enum.SOLDIER_LUNAR,
+            speed: 90, hp: 45, gp: 20, lane: 2, home: Enum.LOC_MINES, name: "Lunar", ctr: "Lunar1"
           },
 
           //{ uid: 101, prefix: Vars.SHEET_MAM_INFANTRY, x: pX - 32, state: Enum.SS_READY, team:Enum.TEAM_ALLY, sType: Enum.SOLDIER_ALLY_INFANTRY1, speed: 96, hp: 5, gp: 4, lane: 3, home: Enum.LOC_STORM, name:"Soldier", ctr: "AllyLight1" }

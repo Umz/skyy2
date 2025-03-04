@@ -23,6 +23,7 @@
       "GreenMeadow": "Green Meadow",
 
       "Braver": "Braver",
+      "Zoll": "Zoll",
       "Soldier": "Soldier"
     },
     "MoonChief": {
@@ -54,6 +55,7 @@
       "rose5": "Press onward!",
       "rose6": "Fight! Fight!",
       "rose7": "To the village!",
+      "rose8": "A true warrior!",
 
       "storm1": "Now you face the Moon at Midnight!",
       "storm2": "Moon Chief has slain the enemy general",
@@ -116,13 +118,18 @@
       "mines6": "Because it has so many uses, all the tribes covet it. Thus the prices have skyrocketed ever since someone discovered how to process it!",
       "mines7": "Help me collect the silica! Break the rocks, the purple-ish ones.",
       "mines8": "Gather up the small blue stones tha drop out and hand them to me. I'll cart it back to Moon at Midnight and we'll ask Harvest Moon about processing the lot.",
-
       "mines9": "Great! That's enough for now, MC. Let's go see Harvest Moon.",
+      "mines10": "Hah! I was worried for nothing, it's all clear!",
+      "mines11": "Come on MC! We need more silica. Let's work.",
+      "mines12": "I'll run it to Storm. Keep it coming!",
+      "mines13": "We'll need more. We'll need alot more!",
+      "mines14": "Come to Storm, I'll hire some villagers.",
 
       "storm1": "All of that comes later! We've found some blue silica deposits just passed the village!",
       "storm2": "Haha! Right? Tell MC how great this is.",
       "storm3": "The Architect?",
       "storm4": "The Architect! We're counting on you MC!",
+      "storm5": "No time to rest MC! We need to secure The Mines!",
 
       "green1": "Architect. Welcome to Moon at Midnight!"
     },
@@ -136,6 +143,11 @@
     },
     "Braver": {
       "mam1": "Whiteleaf have sent an army! They are destroying Storm!"
+    },
+    "Zoll": {
+      "storm1": "Sir, we have news on Whiteleaf. Please come to Rose Forest.",
+      "storm2": "Sir! The Whiteleaf tribe are camped in The Plains preparing an attack.",
+      "storm3": "My unit are ready to ambush them. Please lead us!."
     },
 
     "HarvestMoon": {
