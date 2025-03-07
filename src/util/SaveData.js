@@ -70,10 +70,10 @@ export default class SaveData {
     
       case 2:
 
-        const pX = Vars.AREA_WIDTH * 3.2;
+        const pX = Vars.AREA_WIDTH * 2.9;
 
         data.tutorialNumber = 9;
-        data.tutorialSequenceStep = 0;
+        data.tutorialSequenceStep = 23;
         data.playerX = pX;
         data.soldiers =[
           {

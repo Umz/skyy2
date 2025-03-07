@@ -133,7 +133,9 @@ export default class P9 extends TutorialSequence {
     .add(()=>{
       Ctr.SetActions(this.zoll,
         Ctr.MoveToX(WIDTH * 2.5),
-        Ctr.Wait(60 * 60 * 1000)
+        Ctr.Do(()=>{
+          this.zoll.controller.pause();
+        })
       );
       return true;
     })
@@ -142,14 +144,10 @@ export default class P9 extends TutorialSequence {
     .add(()=>{
       
       for (let i=0; i< 15; i++) {
-        const pX = this.zoll.x - 24 - (i * 18);
+        const pX = (WIDTH * 2.47) - 24 - (i * 18);
         const ally = SequenceHelper.SpawnAlly(pX, Enum.SOLDIER_ALLY_HEAVY1);
         ally.faceX(this.zoll.x);
-        ally.p9 = true;
-
-        Ctr.SetActions(ally,
-          Ctr.Wait(60 * 60 * 1000)
-        );
+        ally.controller.pause();
       }
       return true;
     })
@@ -157,9 +155,6 @@ export default class P9 extends TutorialSequence {
     .add(()=>{ return player.x <= WIDTH * 2.5 + 60 })
 
     .add(()=>{
-      Ctr.SetActions(this.zoll,
-        Ctr.Wait(100)
-      );
       this.zoll.faceX(player.x);
       return true;
     })

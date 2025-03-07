@@ -24,6 +24,7 @@
 
       "Braver": "Braver",
       "Zoll": "Zoll",
+      "Madogu": "Madogu",
       "Soldier": "Soldier"
     },
     "MoonChief": {
@@ -74,6 +75,15 @@
       "plains3": "I don't know of it.",
       "plains4": "Soon.",
       "plains5": "Diplomacy.",
+
+      "plains6": "Slaughter the rest of them while they are surprised",
+      "plains7": "Move forward, quickly, we still have the upper hand",
+      "plains8": "Slaughter the rest! Don't let them regroup",
+      "plains9": "Come my warriors, now we charge their main force",
+      "plains10": "Brace yourselves! More are coming!",
+      "plains11": "Hah! Dig deep for the next wave!",
+      "plains12": "I am Moon Chief of Moon at Midnight.",
+      "plains13": "We have defeated the Whiteleaf Army!",
 
       "green1": "Are you the architect.",
       "green2": "Night Train has sent me here for you. Come. Fly with our tribe, Moon at Midnight.",
@@ -149,6 +159,9 @@
       "storm2": "Sir! The Whiteleaf tribe are camped in The Plains preparing an attack.",
       "storm3": "My unit are ready to ambush them. Please lead us!."
     },
+    "Madogu": {
+      "plains1": "You should have called us Moon Chief! We came here to aid you!"
+    },
 
     "HarvestMoon": {
       "storm1": "Bravo Moon Chief, I came to see the good news myself.",
@@ -182,6 +195,13 @@
     },
     "GreenSword": {
       "green1": "Moon Chief. I am Green Sword of Green Village."
+    },
+    "Boss": {
+      "TallAsh": "Why are you here!? Moon Chief the bastard warrior!",
+      "FallingWillow": "Hah! So you caught us off guard!",
+      "GreenMeadow1": "What a joke. Who knew this backwater hovel had any actual warriors!",
+      "GreenMeadow2": "Country bumpkin. You are no one! From this unknown jut in the middle of nowhere!",
+      "GreenMeadow3": "Powerful indeed. You have defeated me bumpkin. Maybe you will be strong enough to see the real world."
     },
 
     "Soldier": {
