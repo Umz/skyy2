@@ -35,6 +35,10 @@ const data = {
 
 const settings = {
   controllerActive: true
+  // Language
+  // Sound
+  // Music
+  // Difficulty
 }
 
 export default class SaveData {
