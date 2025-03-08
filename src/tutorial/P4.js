@@ -33,7 +33,7 @@ export default class P4 extends TutorialSequence {
     .addTitle(" >>> Player must pursue Red Face into the forest and fight in a duel -")
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.ANGER, 3000)
-    .add(()=> player.x > roseForestX + 100)
+    .add(()=> player.x > roseForestX)
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 7000)
 
     .addTitle(" >>> Entering Rose Forest or past the initial forest line -")

@@ -63,7 +63,7 @@ export default class SaveData {
     if (savedData) {
       Object.assign(data, savedData);
     }
-    this.DevData(2);
+    this.DevData(1);
     console.log("Loaded data", data)
 
     return data;
@@ -113,11 +113,7 @@ export default class SaveData {
         break;
     
       case 1:
-        data.tutorialNumber = 2;
-        data.tutorialSequenceStep = 88;
-        data.hasBlueMoon = true;
-        data.playerX = Vars.AREA_WIDTH * .45;
-        data.location = Enum.LOC_BLUE_FOREST;
+        Object.assign(data, getSaveDataChrome());
         break;
     
       default:
@@ -184,4 +180,203 @@ function convertPlaytime(saveData) {
   saveData.playSecs = seconds;
   saveData.playMins = minutes;
   saveData.playHours = hours;
+}
+
+function getSaveDataChrome() {
+  return {
+    "playtime": 678100,
+    "playSecs": 678,
+    "playMins": 11,
+    "playHours": 0,
+    "uid": 195,
+    "silica": 0,
+    "transportedSilica": 0,
+    "buildingMaterial": 0,
+    "playerX": 3387,
+    "playerLane": 2,
+    "hasBlueMoon": false,
+    "citizens": [
+      {
+        "uid": 101,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_F1.png",
+        "x": 3490,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 102,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_M1.png",
+        "x": 3105,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 103,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_M2.png",
+        "x": 2834,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 104,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_M2.png",
+        "x": 2738,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 105,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_M2.png",
+        "x": 3330,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 106,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_M1.png",
+        "x": 3211,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 107,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_F2.png",
+        "x": 2749,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 108,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_F1.png",
+        "x": 2747,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 109,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_M2.png",
+        "x": 2920,
+        "home": 2,
+        "tribe": 1,
+        "name": "Citizen",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 5,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_King.png",
+        "x": 2841.6,
+        "home": 2,
+        "tribe": 1,
+        "name": "Harvest Moon",
+        "address": -1,
+        "controller": "CitizenMaM"
+      },
+      {
+        "uid": 6,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_Glow.png",
+        "x": 2918.4,
+        "home": 2,
+        "tribe": 1,
+        "name": "Moon Glow",
+        "address": -1,
+        "controller": "CitizenWife"
+      },
+      {
+        "uid": 7,
+        "data": {
+          "role": "citizen"
+        },
+        "sheet": "Citizen_MaM_Rose.png",
+        "x": 2841.6,
+        "home": 2,
+        "tribe": 1,
+        "name": "Moon Rose",
+        "address": -1,
+        "controller": "CitizenWife"
+      }
+    ],
+    "soldiers": [
+      {
+        "uid": 2,
+        "prefix": "Infantry_Wildman.png",
+        "x": 3300,
+        "state": 1,
+        "team": 1,
+        "sType": 10,
+        "speed": 96,
+        "hp": 45,
+        "gp": 10,
+        "lane": 3,
+        "home": 2,
+        "name": "Blue Moon",
+        "ctr": "BlueMoon"
+      }
+    ],
+    "houses": [],
+    "location": 2,
+    "claimed": [
+      2,
+      1
+    ],
+    "tutorialNumber": 4,
+    "tutorialSequenceStep": 0
+  }
 }

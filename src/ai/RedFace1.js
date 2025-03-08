@@ -11,8 +11,9 @@ import ListenStatsRecover from "../actions/ListenStatsRecover";
 import ActionManager from "../classes/ActionManager"
 import Enum from "../const/Enum";
 import { GetCloseX } from "../util/ActionHelper";
+import Vars from "../const/Vars";
 
-export default class BanditBoss extends ActionManager {
+export default class RedFace1 extends ActionManager {
 
   setDefaultActions() {
     this.searchForNewTarget();
@@ -28,6 +29,13 @@ export default class BanditBoss extends ActionManager {
   //  ---
 
   searchForNewTarget() {
+
+    if (this.sprite.x > Vars.AREA_WIDTH * 2) {
+      this.addActions(
+        new ActMoveToX(this.sprite, Vars.AREA_WIDTH * 1.65)
+      );
+    }
+
     this.addAction(new ActSearchForTarget(this.sprite)).addCallback((action)=>{
       this.sprite.target = action.target;
       this.gotoTargetAndAttack();

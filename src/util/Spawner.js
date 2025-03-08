@@ -10,6 +10,7 @@ import CloverBoss from "../ai/CloverBoss";
 import Defensive from "../ai/Defensive";
 import Lunar1 from "../ai/Lunar1";
 import NightTrain from "../ai/Nighttrain";
+import RedFace1 from "../ai/RedFace1";
 import Wildman from "../ai/Wildman";
 import Enum from "../const/Enum";
 import Vars from "../const/Vars";
@@ -157,7 +158,7 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_RED1, {ctrl: Bandit1, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
   [Enum.SOLDIER_RED3, {ctrl: Bandit3, sheet:Vars.SHEET_RED_BANDIT}],
-  [Enum.SOLDIER_REDFACE, {ctrl: BanditBoss, sheet:Vars.SHEET_RED_FACE}],
+  [Enum.SOLDIER_REDFACE, {ctrl: RedFace1, sheet:Vars.SHEET_RED_FACE}],
 
   [Enum.SOLDIER_GR1, {ctrl: Bandit1, sheet:Vars.SHEET_GR_INFANTRY}],
   [Enum.SOLDIER_FALLEN_CLOUD, {ctrl: BanditBoss, sheet:Vars.SHEET_FALLEN_CLOUD}],
