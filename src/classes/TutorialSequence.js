@@ -16,6 +16,7 @@ export default class TutorialSequence {
 
     this.sequence = [];
     this.shouldSaveStepID = true;
+    this.stepToSave = 0;
 
     this.step = 0;
     this.once = -1;
@@ -176,6 +177,14 @@ export default class TutorialSequence {
     return this;
   }
 
+  addUpdateSaveStep() {
+    this.add(()=>{
+      this.stepToSave = this.step;
+      return true;
+    });
+    return this;
+  }
+
   addSave() {
     this.add(()=>{
       SaveData.SAVE_GAME_DATA();
@@ -260,7 +269,11 @@ export default class TutorialSequence {
     this.date = new Date();
 
     if (this.shouldSaveStepID) {
-      SaveData.Data.tutorialSequenceStep = this.step;
+      SaveData.Data.tutorialSequenceStep = this.stepToSave;
+
+      // Go through from P1- deciding when to save next step
+      // Save Soldier+Citizen Data automatically every second
+      
     }
   }
 

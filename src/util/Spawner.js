@@ -1,8 +1,10 @@
 import AllyHeavy1 from "../ai/AllyHeavy1";
+import AllyHeavy2 from "../ai/AllyHeavy2";
 import AllyLight1 from "../ai/AllyLight1";
 import Bandit1 from "../ai/Bandit1";
 import Bandit2 from "../ai/Bandit2";
 import Bandit3 from "../ai/Bandit3";
+import Bandit4 from "../ai/Bandit4";
 import BanditBoss from "../ai/BanditBoss";
 import Blank from "../ai/Blank";
 import BlueMoon from "../ai/BlueMoon";
@@ -147,6 +149,7 @@ const SoldierMap = new Map([
   [Enum.SOLDIER_LUNAR, {ctrl: Lunar1, sheet:Vars.SHEET_LUNAR}],
 
   [Enum.SOLDIER_ALLY_HEAVY1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_HEAVY}],
+  [Enum.SOLDIER_ALLY_HEAVY2, {ctrl: AllyHeavy2, sheet:Vars.SHEET_MAM_HEAVY}],
   [Enum.SOLDIER_ALLY_INFANTRY1, {ctrl: AllyLight1, sheet:Vars.SHEET_MAM_INFANTRY}],
   [Enum.SOLDIER_ALLY_LANCER1, {ctrl: AllyHeavy1, sheet:Vars.SHEET_MAM_LANCER}],
   [Enum.SOLDIER_ALLY_WILDMAN, {ctrl: AllyLight1, sheet:Vars.SHEET_WILDMAN_CREW}],
@@ -157,7 +160,7 @@ const SoldierMap = new Map([
 
   [Enum.SOLDIER_RED1, {ctrl: Bandit1, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_RED2, {ctrl: Bandit1, sheet:Vars.SHEET_RED_HEAVY_BANDIT}],
-  [Enum.SOLDIER_RED3, {ctrl: Bandit3, sheet:Vars.SHEET_RED_BANDIT}],
+  [Enum.SOLDIER_RED3, {ctrl: Bandit4, sheet:Vars.SHEET_RED_BANDIT}],
   [Enum.SOLDIER_REDFACE, {ctrl: RedFace1, sheet:Vars.SHEET_RED_FACE}],
 
   [Enum.SOLDIER_GR1, {ctrl: Bandit1, sheet:Vars.SHEET_GR_INFANTRY}],

@@ -131,6 +131,7 @@ export class PlayScene extends Scene {
 
     this.crowdRect = new Phaser.Geom.Rectangle(0, 0, 100, 24);
     this.isPlayerCrowded = false;
+    this.deathCounter = 0;
 
     this.test = function() {
       this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
@@ -777,7 +778,17 @@ export class PlayScene extends Scene {
 
           const fatal = defender.hit(attacker);
           if (fatal) {
+            
             this.showDeath(defender);
+            
+            // Spawn Collectible on enemy or ally death
+            const eligible = SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
+            this.deathCounter ++;
+            if (this.deathCounter % 33 === 0 && eligible) {
+              const ctype = Phaser.Utils.Array.GetRandom([Enum.COLLECT_HEART, Enum.COLLECT_POWER]);
+              this.spawnCollectible(defender.x, defender.lane, ctype);
+            }
+
           }
         }
       }

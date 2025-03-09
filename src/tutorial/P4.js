@@ -30,13 +30,6 @@ export default class P4 extends TutorialSequence {
     this
     .addTitle(" >>> Player must pursue Red Face into the forest and fight in a duel -")
 
-    .add(()=>{
-
-      scene.spawnCollectible(player.x + 40, player.lane, Enum.COLLECT_POWER);
-
-      return true;
-    })
-
     .addIcon(Enum.ID_MOON_CHIEF, Icon.ANGER, 3000)
     .add(()=> player.x > roseForestX)
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 7000)
@@ -46,10 +39,11 @@ export default class P4 extends TutorialSequence {
     .addDialogue(bossName, script.RedFace.rose1, 7000)
     .addSound(Sfx.VOICE_HO1)
     .add(()=>{
-      SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_HEAVY1);
-      SequenceHelper.SpawnAlly(player.x - 48, Enum.SOLDIER_ALLY_HEAVY1);
       SequenceHelper.SpawnAlly(player.x - 32, Enum.SOLDIER_ALLY_INFANTRY1);
       SequenceHelper.SpawnAlly(player.x - 40, Enum.SOLDIER_ALLY_INFANTRY1);
+      SequenceHelper.SpawnAlly(player.x - 24, Enum.SOLDIER_ALLY_HEAVY1);
+      const heavy = SequenceHelper.SpawnAlly(player.x - 48, Enum.SOLDIER_ALLY_HEAVY2);
+      heavy.setDisplayName("CC 192", Enum.TEAM_ALLY);
       return true;
     })
 
@@ -73,7 +67,7 @@ export default class P4 extends TutorialSequence {
       }
       for (let i=0; i<3; i++) {
         const rand = Phaser.Math.Between(210, 270)
-        SequenceHelper.SpawnAlly(player.x - rand, Enum.SOLDIER_ALLY_HEAVY1);
+        SequenceHelper.SpawnAlly(player.x - rand, Enum.SOLDIER_ALLY_HEAVY2);
       }
       return true;
     })
