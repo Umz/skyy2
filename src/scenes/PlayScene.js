@@ -595,17 +595,13 @@ export class PlayScene extends Scene {
 
   spawnCollectible(posX, lane, type) {
     
-    //  Collectible
-
-    const frame = "collect_heart";
-    // getFrame -
-
-    const item = new Collectible(this, posX, 0, frame);
+    const item = new Collectible(this, posX, type);
     item.initCollectible(lane);
-    //item.setType(type);
 
     this.add.existing(item);
     this.physics.add.existing(item);
+
+    this.allGroup.add(item);
     this.groupCollectibles.add(item);
   }
 
@@ -817,10 +813,26 @@ export class PlayScene extends Scene {
     }
   }
 
+  /** Apply effects of collected item and VFX */
   playerItemCollision(player, item) {
     if (player.lane === item.lane) {
+
+      const allies = this.groupAllies.getChildren();
+
+      switch (item.type) {
+        case Enum.COLLECT_HEART:
+          for (let ally of allies) {
+            ally.recoverHP(4);
+            Vfx.ShowAnimatedFX(ally, Vars.VFX_CONSUME);
+          }
+          break;
+
+        case Enum.COLLECT_POWER:
+          this.player.boostAttack(10);
+          break;
+      }
+
       item.collectAndDestroy();
-      //  Apply effects of collected item and VFX
     }
   }
 

@@ -104,6 +104,14 @@ const Enum = {
   BUILDING_HOUSE: 100,
   BUILDING_TOWER: 101,
 
+  //  Collectible types
+
+  COLLECT_HEART: 1,
+  COLLECT_POWER: 2,
+  COLLECT_DEFENSE: 3,
+  COLLECT_SPEED: 4,
+  COLLECT_TROOPS: 5,
+
   //  Unique IDs
 
   ID_MOON_CHIEF: 1,

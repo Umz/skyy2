@@ -73,6 +73,7 @@ const Vars = {
   TX_LINE: "graphic_h_line",
 
   VFX_SPEECH_SHEET: "vfx_speech_icons",
+  VFX_COLLECT_SHEET: "vfx_collect_icons",
 
   VFX_CLAIM: "vfx_claimEffect",
 

@@ -27,10 +27,15 @@ export default class P4 extends TutorialSequence {
     this.enemies = [];
     this.allies = [];
 
-    //  - Take down Red Face and claim Storm Village -
-
     this
     .addTitle(" >>> Player must pursue Red Face into the forest and fight in a duel -")
+
+    .add(()=>{
+
+      scene.spawnCollectible(player.x + 40, player.lane, Enum.COLLECT_POWER);
+
+      return true;
+    })
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.ANGER, 3000)
     .add(()=> player.x > roseForestX)

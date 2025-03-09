@@ -111,6 +111,7 @@ export class Preloader extends Phaser.Scene {
         // - VFX
 
         this.load.spritesheet(Vars.VFX_SPEECH_SHEET, 'vfx/icons_full_24.png', { frameWidth: 24, frameHeight: 24});
+        this.load.spritesheet(Vars.VFX_COLLECT_SHEET, 'vfx/icons_full_32.png', { frameWidth: 32, frameHeight: 32});
 
         this.load.spritesheet(Vars.VFX_CLAIM, 'vfx/Spark0.png', { frameWidth: 16, frameHeight: 80});
         
