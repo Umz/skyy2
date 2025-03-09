@@ -23,6 +23,7 @@ export default class P2 extends TutorialSequence {
 
     .add(()=>{ return SequenceHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 3000)
+    .addUpdateSaveStep()
     .addInstruction(Instructions.P2A_CLAIM_BLUE)
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000, Sfx.VOICE_AMUSED3)
@@ -37,13 +38,13 @@ export default class P2 extends TutorialSequence {
         return this.spawnAndWait(3);
       }
     })
+    .addSave()
 
     .addTitle(" >>> Wildman appears and Moon Chief comes in to help him")
 
-    .addStopSaving()
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .65) {
-        SequenceHelper.SpawnEnemiesAt(Vars.AREA_WIDTH* .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+        SequenceHelper.SpawnEnemiesAt(Vars.AREA_WIDTH * .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
         this.spawnWildman();
         return true;
       }
@@ -85,8 +86,6 @@ export default class P2 extends TutorialSequence {
     .addWait(1000)
     .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.BANNER, script.Wildman.bf7, 4000, Sfx.VOICE_HO1)
 
-    .addStartSaving()
-    
     .add(()=>{
       this.convertWildman();
       return true;
@@ -96,7 +95,6 @@ export default class P2 extends TutorialSequence {
     .addTitle(" >>> Rabid Bandit appears to start the boss battle")
 
     .addWait(3000)
-    .addStopSaving()
     .add(()=>{
       this.doOnce(()=>{
         this.spawnRabidBandit();
@@ -139,7 +137,6 @@ export default class P2 extends TutorialSequence {
 
     .addTitle(" >>> Claim the Blue Forest and place a flag near the teal tree")
 
-    .addStartSaving()
     .addIcon(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
     .addInstruction(Instructions.P2B_PLACE_FLAG)
     .add(()=>{

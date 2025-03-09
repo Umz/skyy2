@@ -161,22 +161,6 @@ export default class TutorialSequence {
     return this;
   }
 
-  addStopSaving() {
-    this.add(()=>{
-      this.turnSavingOff();
-      return true;
-    })
-    return this;
-  }
-
-  addStartSaving() {
-    this.add(()=>{
-      this.turnSavingOn();
-      return true;
-    })
-    return this;
-  }
-
   addUpdateSaveStep() {
     this.add(()=>{
       this.stepToSave = this.step;
@@ -186,7 +170,9 @@ export default class TutorialSequence {
   }
 
   addSave() {
-    this.add(()=>{
+    this
+    .addUpdateSaveStep()
+    .add(()=>{
       SaveData.SAVE_GAME_DATA();
       return true;
     });
@@ -273,7 +259,7 @@ export default class TutorialSequence {
 
       // Go through from P1- deciding when to save next step
       // Save Soldier+Citizen Data automatically every second
-      
+
     }
   }
 

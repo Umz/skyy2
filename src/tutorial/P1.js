@@ -18,6 +18,7 @@ export default class P1 extends TutorialSequence {
 
     this
     .addTitle(" >>> Spawn citizens and setup initial army and in-game characters -")
+
     .add(()=>{
 
       for (let i =0; i < 9; i++) {
@@ -50,6 +51,7 @@ export default class P1 extends TutorialSequence {
 
       return true;
     })
+    .addSave()
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, 15000)
     .addInstruction(Instructions.P0_INTRO)
@@ -68,6 +70,8 @@ export default class P1 extends TutorialSequence {
     })
 
     .addWait(2000)
+    .addUpdateSaveStep()
+
     .addInstruction(Instructions.P1B_APPRENTICE)
     .add(()=>{
       return this.spawnAndWait(2);
@@ -87,6 +91,7 @@ export default class P1 extends TutorialSequence {
 
     .addCitizenStateChange(Enum.CS_IDLE)
     .addWait(1000)
+    .addUpdateSaveStep()
     .addInstruction(Instructions.P1C_BLUEFOREST)
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.HAND_LEFT, 4000)

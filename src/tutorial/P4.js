@@ -113,7 +113,6 @@ export default class P4 extends TutorialSequence {
     .addTitle(" >>> When Player reaches far right start the Duel -")
 
     .addSave()
-    .addStopSaving()
     
     .addRedFace()
     .addSound(Sfx.VOICE_AMUSED1)
@@ -151,7 +150,6 @@ export default class P4 extends TutorialSequence {
     .addTitle(" >>> Duel ends with final words and Red Face defeated -")
 
     .addSave()
-    .addStartSaving()
     .addWait(2000)
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.rose1, 7000, Sfx.VOICE_EFFORT1)
