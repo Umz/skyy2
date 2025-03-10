@@ -93,9 +93,7 @@ export default class CitizenCaptive extends ActionManager {
           sprite.setTribe(Enum.TRIBE_MAM);
           const controller = new CitizenController();
           sprite.setController(controller);
-
-          const index = SaveData.Data.citizens.findIndex(item => item.uid === sprite.uid);
-          SaveData.Data.citizens[index] = sprite.getSaveData();
+          SaveData.SaveCitizenData(sprite.getSaveData())
         })
       )
     }
