@@ -22,6 +22,7 @@ import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
 import Vfx from "../util/Vfx";
 import Subtitles from "../util/Subtitles";
+import Counter from "../util/Counter";
 
 export class PlayScene extends Scene {
 
@@ -132,6 +133,7 @@ export class PlayScene extends Scene {
     this.crowdRect = new Phaser.Geom.Rectangle(0, 0, 100, 24);
     this.isPlayerCrowded = false;
     this.deathCounter = 0;
+    this.counter = new Counter(5000);
 
     this.test = function() {
       this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
@@ -199,8 +201,6 @@ export class PlayScene extends Scene {
       return true;
     }
 
-    SaveData.Data.playtime += delta;
-
     //  - Normal updating -
     
     this.tutorial.update();
@@ -215,7 +215,6 @@ export class PlayScene extends Scene {
     this.updateCrowding();
     this.updateSpriteLayers();
     this.updateShadows();
-    this.updateSaveData();
 
     this.birdSpawner.update(time, delta);
     this.wildlifeSpawner.update(time, delta);
@@ -224,6 +223,11 @@ export class PlayScene extends Scene {
     this.drawSoldierHP();       // HP and GP bars
     this.showSoldierNames();    // Soldier names
     this.showSoldierIcon();     // Icons for soldiers
+
+    SaveData.Data.playtime += delta;
+    if (this.counter.update(delta)) {
+      this.updateSaveData();
+    }
     
     this.test();
   }
@@ -235,16 +239,18 @@ export class PlayScene extends Scene {
     const allCitizens = this.groupCitizens.getChildren();
     const allSoldiers = this.groupAllies.getChildren();
     
-    // Buildings
+    // Buildings updated when used
 
     for (let cit of allCitizens) {
-      //SaveData.SaveCitizenData(cit.getSaveData());
+      SaveData.SaveCitizenData(cit.getSaveData());
     }
 
     for (let sol of allSoldiers) {
-      //SaveData.SaveSoldierData(sol.getSaveData());
+      SaveData.SaveSoldierData(sol.getSaveData());
     }
 
+    SaveData.Data.playerX = this.player.x;
+    SaveData.Data.playerLane = this.player.lane;
   }
 
   /** Update the layers of the Sprites according to their lane */
@@ -337,11 +343,6 @@ export class PlayScene extends Scene {
     if (this.mapTracker.isFirstTimeInAreaThisSession(rightCheckPosX)) {
       buildMap(rightCheckPosX);
     }
-  }
-
-  updateSaveData() {
-    SaveData.Data.playerX = this.player.x;
-    SaveData.Data.playerLane = this.player.lane;
   }
 
   updateCrowding() {

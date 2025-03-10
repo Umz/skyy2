@@ -103,7 +103,6 @@ export default class CitizenCaptive extends ActionManager {
       this.addActions(
         new ActComplete(()=>{
           sprite.setHome(0);
-          SaveData.Data.citizens = SaveData.Data.citizens.filter(citData => citData.uid !== sprite.uid);
         }),
         new ActMoveOffX(sprite, Vars.AREA_WIDTH * .5),
         new ActComplete(()=>{
@@ -112,6 +111,7 @@ export default class CitizenCaptive extends ActionManager {
             duration: 1000,
             alpha: {from:1, to:0},
             onComplete: ()=>{
+              SaveData.Data.citizens = SaveData.Data.citizens.filter(citData => citData.uid !== sprite.uid);
               sprite.kill();
             }
           })

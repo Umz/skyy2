@@ -32,6 +32,7 @@ export default class TutorialSequence {
   startFrom(skipAmt) {
     this.sequence.splice(0, skipAmt);
     this.step = skipAmt;
+    this.stepToSave = skipAmt;
   }
 
   update() {
