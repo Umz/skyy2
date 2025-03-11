@@ -257,8 +257,6 @@ export default class TutorialSequence {
 
     if (this.shouldSaveStepID) {
       SaveData.Data.tutorialSequenceStep = this.stepToSave;
-
-      // Go through from P1- deciding when to save next step
     }
   }
 

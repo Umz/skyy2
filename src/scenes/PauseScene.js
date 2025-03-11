@@ -1,23 +1,39 @@
 import Phaser from 'phaser';
 
 export default class PauseScene extends Phaser.Scene {
+  
   constructor() {
     super('PauseScene');
   }
 
   create() {
 
-    const pauseContainer = document.getElementById('pause-container');
-    pauseContainer.style.display = 'flex';
+    this.showMenuDOM();
     
     this.input.keyboard.on('keydown-P', () => {
-      pauseContainer.style.display = 'none';
+      
+      this.hideMenuDOM();
+
       this.scene.resume('PlayScene');
       this.scene.stop('PauseScene');
     });
 
     this.input.keyboard.on('keydown-M', () => {
-      this.scene.start('MainMenuScene');
+
+      this.hideMenuDOM();
+
+      this.scene.stop('PlayScene');
+      this.scene.start('MenuScene');
     });
+  }
+
+  showMenuDOM() {
+    const menuContainer = document.getElementById("pause-container");
+    menuContainer.style.display = 'flex';
+  }
+
+  hideMenuDOM() {
+    const menuContainer = document.getElementById("pause-container");
+    menuContainer.style.display = 'none';
   }
 }

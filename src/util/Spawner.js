@@ -44,7 +44,7 @@ export default class Spawner {
 
   /** Spawn the given type of Soldier and assign them a team */
   spawnSoldierType(pX, type, team) {
-      
+    
     const data = SoldierMap.get(type);
     const controller = new data.ctrl();
     const sheet = data.sheet;

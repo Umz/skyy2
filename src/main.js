@@ -1,6 +1,7 @@
 import { Game } from "phaser";
 import { Preloader } from "./preloader";
 import { PlayScene } from "./scenes/PlayScene";
+import MenuScene from "./scenes/MenuScene";
 
 // More information about config: https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 
@@ -48,7 +49,8 @@ const config = {
 
     scene: [
         Preloader,
-        PlayScene
+        PlayScene,
+        MenuScene
     ]
 };
 

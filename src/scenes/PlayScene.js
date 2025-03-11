@@ -116,9 +116,6 @@ export class PlayScene extends Scene {
     keyMapper.registerKeyboard(controllerKeys);
     this.controller = new SpriteController(this.player, controllerKeys);
 
-    this.initialLoad = false;
-    this.loadedGameData = await SaveData.LOAD_GAME_DATA();
-
     //  DEV  --------------------------------------------------------------------------
 
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
@@ -143,7 +140,9 @@ export class PlayScene extends Scene {
     }
 
     // Add the ScreenshotScene scene to the game
-    this.scene.add('ScreenshotScene', ScreenshotScene);
+    if (!this.scene.get('ScreenshotScene')) {
+      this.scene.add('ScreenshotScene', ScreenshotScene);
+    }
 
     // Add a key listener to pause the game and go to the ScreenshotScene scene when the 'S' key is pressed
     this.input.keyboard.on('keydown-S', () => {
@@ -152,13 +151,17 @@ export class PlayScene extends Scene {
     });
 
     // Add the PauseScene scene to the game
-    this.scene.add('PauseScene', PauseScene);
+    if (!this.scene.get('PauseScene')) {
+      this.scene.add('PauseScene', PauseScene);
+    }
 
     // Add a key listener to pause the game and go to the PauseScene scene when the 'P' key is pressed
     this.input.keyboard.on('keydown-P', () => {
-        this.scene.pause('PlayScene');
-        this.scene.launch('PauseScene');
+      this.scene.pause('PlayScene');
+      this.scene.launch('PauseScene');
     });
+
+    this.setupScene();
   }
 
   /** Initial scene setup (first load) */
@@ -204,22 +207,11 @@ export class PlayScene extends Scene {
     this.tutorial.load();
 
     this.spawnAllMaMFlags();
-
-    this.initialLoad = true;
   }
 
   //  ---------------------------------------------------------------
 
   update(time, delta) {
-
-    //  Wait until the data is loaded
-
-    if (!this.initialLoad) {
-      if (this.loadedGameData) {
-        this.setupScene();
-      }
-      return true;
-    }
 
     //  - Normal updating -
     
@@ -266,7 +258,9 @@ export class PlayScene extends Scene {
     }
 
     for (let sol of allSoldiers) {
-      SaveData.SaveSoldierData(sol.getSaveData());
+      if (sol.uid > 1) {
+        SaveData.SaveSoldierData(sol.getSaveData());
+      }
     }
 
     SaveData.Data.playerX = this.player.x;
