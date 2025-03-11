@@ -23,6 +23,8 @@ import Sfx from "../const/Sfx";
 import Vfx from "../util/Vfx";
 import Subtitles from "../util/Subtitles";
 import Counter from "../util/Counter";
+import ScreenshotScene from "./ScreenshotScene";
+import PauseScene from "./PauseScene";
 
 export class PlayScene extends Scene {
 
@@ -139,6 +141,24 @@ export class PlayScene extends Scene {
       this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
       //this.graphics.strokeRectShape(this.crowdRect);
     }
+
+    // Add the ScreenshotScene scene to the game
+    this.scene.add('ScreenshotScene', ScreenshotScene);
+
+    // Add a key listener to pause the game and go to the ScreenshotScene scene when the 'S' key is pressed
+    this.input.keyboard.on('keydown-S', () => {
+      this.scene.pause('PlayScene');
+      this.scene.launch('ScreenshotScene');
+    });
+
+    // Add the PauseScene scene to the game
+    this.scene.add('PauseScene', PauseScene);
+
+    // Add a key listener to pause the game and go to the PauseScene scene when the 'P' key is pressed
+    this.input.keyboard.on('keydown-P', () => {
+        this.scene.pause('PlayScene');
+        this.scene.launch('PauseScene');
+    });
   }
 
   /** Initial scene setup (first load) */

@@ -131,6 +131,41 @@
             }
         }
 
+        #pause-container {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        #pause-menu {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 260px;
+            text-align: center;
+        }
+
+        #pause-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #pause-menu li {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #pause-menu button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-variant: small-caps;
+        }
+
     </style>
 
 </head>
@@ -167,6 +202,16 @@
 
     <div id="duel-container" class="page-container index-5">
         <h2 id="duel-text" class="">- DUEL -</h2>
+    </div>
+
+    <div id="pause-container" class="page-container flex-center index-6">
+        <div id="pause-menu">
+            <h2>Paused</h2>
+            <ul>
+                <li><button id="resume-button">Resume Game</button></li>
+                <li><button id="main-menu-button">Main Menu</button></li>
+            </ul>
+        </div>
     </div>
 
     <div id="dialogue-container" class="page-container flex-center index-4">
