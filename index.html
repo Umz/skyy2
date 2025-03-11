@@ -131,6 +131,62 @@
             }
         }
 
+        #pause-container {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        #pause-menu {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 260px;
+            text-align: center;
+        }
+
+        #pause-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #pause-menu li {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #pause-menu button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-variant: small-caps;
+        }
+
+        #main-menu-container {
+            display: none;
+        }
+
+        .menu-button {
+            background: none;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 2rem;
+            border-radius: 12px;
+            border:  none;
+            border-left: 4px solid white;
+            border-right: 4px solid white;
+        }
+        .menu-button:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
     </style>
 
 </head>
@@ -145,15 +201,13 @@
         <img id="splash-image" class="" src="/assets/umz_games_logo.png" alt="Umz Games" />
     </div>
 
-    <div class="hidden">
-        <div id="main-menu-container" class="page-container flex-center index-2">
-            <img id="game-logo" class="" src="/assets/skyy2_logo.png" alt="Skyy Tribes II" />
-            <div>
-                <button>Play</button>
-                <button>Credits</button>
-            </div>
-            <p id="copyright">Umz Games &copy; 2024 | STII 1.01</p>
+    <div id="main-menu-container" class="page-container flex-center index-6">
+        <img id="game-logo" class="" src="/assets/skyy2_logo.png" alt="Skyy Tribes II" />
+        <div>
+            <button id="menu-play-button" class="menu-button">Play</button>
+            <button id="menu-credits-button" class="menu-button">Credits</button>
         </div>
+        <p id="copyright">Umz Games &copy; 2025 | Sky Tribes 2 | V-1</p>
     </div>
 
     <div id="blackout-container" class="page-container index-14">
@@ -167,6 +221,16 @@
 
     <div id="duel-container" class="page-container index-5">
         <h2 id="duel-text" class="">- DUEL -</h2>
+    </div>
+
+    <div id="pause-container" class="page-container flex-center index-6">
+        <div id="pause-menu">
+            <h2>Paused</h2>
+            <ul>
+                <li><button id="resume-button"><span class='keyboard-key'>P</span> Resume Game</button></li>
+                <li><button id="main-menu-button"><span class='keyboard-key'>M</span> Main Menu</button></li>
+            </ul>
+        </div>
     </div>
 
     <div id="dialogue-container" class="page-container flex-center index-4">

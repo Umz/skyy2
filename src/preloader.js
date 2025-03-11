@@ -24,7 +24,6 @@ const INFANTRY = [
     Vars.SHEET_WL_INFANTRY,
     Vars.SHEET_WL_GREEN_SWORD
 ];
-
 const CITIZENS = [
     Vars.SHEET_CITIZEN_MAM_KING,
     Vars.SHEET_CITIZEN_MAM_GLOW,
@@ -273,7 +272,7 @@ export class Preloader extends Phaser.Scene {
 
         //  -
 
-        this.scene.start("PlayScene");      // Next Scene when all assets are loaded
+        this.scene.start("MenuScene");      // Next Scene when all assets are loaded
     }
 
     //  CREATE animations   -------------------------------------------------------------------------
