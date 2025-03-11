@@ -46,6 +46,13 @@ const Enum = {
   CS_TALKING: 3,
   CS_TRAVELLING: 4,
   CS_BOWING: 5,
+  CS_CHEERING: 6,
+
+  CS_HUNGRY: 30,
+  CS_SOCIAL: 31,
+  CS_CONVERSATION: 32,
+  CS_FORAGING: 33,
+  CS_BATTLE_MODE: 34,
 
   // Tribes
 
@@ -62,7 +69,7 @@ const Enum = {
 
   SOLDIER_BANDIT1: 101,
   SOLDIER_BANDIT2: 102,
-  SOLDIER_BANDIT_BOSS: 110,
+  SOLDIER_RABID_BANDIT: 110,
 
   SOLDIER_RED1: 111,
   SOLDIER_RED2: 112,
@@ -83,6 +90,8 @@ const Enum = {
   SOLDIER_ALLY_LANCER1: 203,
   SOLDIER_ALLY_WILDMAN: 204,
 
+  SOLDIER_ALLY_HEAVY2: 205,
+
   SOLDIER_PLAYER: 1,
   SOLDIER_WILDMAN: 10,
   SOLDIER_BLUEMOON: 11,
@@ -97,22 +106,27 @@ const Enum = {
   BUILDING_HOUSE: 100,
   BUILDING_TOWER: 101,
 
-  //  Dialogue - Remove below
+  //  Collectible types
 
-  BF_TEST: 1,
-  BF_BATTLE: 2,   // Blue Forest Battle
-  BF_WIN: 3,      // Blue Forest Victory
+  COLLECT_HEART: 1,
+  COLLECT_POWER: 2,
+  COLLECT_DEFENSE: 3,
+  COLLECT_SPEED: 4,
+  COLLECT_TROOPS: 5,
 
-  BF_BOSS1: 4,
-  BF_BOSS2: 5,
-  BF_BOSS3: 6,
+  //  Unique IDs
 
-  MAM_BM_FIRST: 10,   // Blue Moon first time in MaM
-  MAM_SOLDIER_ALERT: 11,
-  MAM_MC_WHO_DARES: 12,
+  ID_MOON_CHIEF: 1,
+  ID_BLUE_MOON: 2,
+  ID_NIGHT_TRAIN: 3,
+  ID_LUNAR: 4,
 
-  MC_TAUNT: 101,
-  MC_PEOMS: 102,
+  ID_HARVEST_MOON: 5,
+  ID_MOON_GLOW: 6,
+  ID_MOON_ROSE: 7,
+
+  ID_GREEN_CHIEF: 8,
+  ID_BOSS: 9
 
 }
 export default Enum;

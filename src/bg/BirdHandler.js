@@ -1,5 +1,7 @@
 import Counter from "../util/Counter";
 import Vars from "../const/Vars";
+import Juke from "../util/Juke";
+import Sfx from "../const/Sfx";
 
 export default class BirdHandler {
   
@@ -100,6 +102,7 @@ export default class BirdHandler {
       bird.setVelocityY(velY);
     }
 
+    Juke.PlaySound(Sfx.WING_FLAP);
   }
 
   /** Get sprite that uses the bird sheet for bird animations */

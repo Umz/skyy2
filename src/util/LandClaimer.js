@@ -1,6 +1,8 @@
 import MapInfo from "../const/MapInfo";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Counter from "./Counter";
+import Juke from "./Juke";
 import SaveData from "./SaveData";
 
 /** Handle all claiming of new territory in this class */
@@ -9,7 +11,7 @@ export default class LandClaimer {
   constructor(scene) {
     this.scene = scene;
 
-    this.claimCounter = new Counter(17 * 1000).setLooping(false);
+    this.claimCounter = new Counter(10 * 1000).setLooping(false);
     this.cooldownCounter = new Counter(100).setLooping(false);    // Cooldown > 100ms NOT overlapping the claim flag
     this.noticeCounter = new Counter(4000).setLooping(false).pause();
 
@@ -82,6 +84,8 @@ export default class LandClaimer {
     element.innerText = `${map.name} Annexed`;
     
     this.noticeCounter.resume();
+
+    Juke.PlaySound(Sfx.LAND_CLAIMED);
   }
 
   hideClaimNotice() {
@@ -124,11 +128,15 @@ export default class LandClaimer {
     this.fx.setPosition(tX, tc.y);
     this.fx.setDepth(lane * 10 + 1);
     this.fx.setVisible(true);
+
+    Juke.PlaySound(Sfx.CLAIMING);
   }
 
   hideclaimFX() {
     this.fx.setVisible(false);
     this.stopEmitter();
+
+    Juke.StopSound(Sfx.CLAIMING);
   }
 
   showEmitter() {

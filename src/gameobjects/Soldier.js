@@ -1,6 +1,5 @@
 import Blank from "../ai/Blank";
 import SoldierView from "../ai/SoldierView";
-import { getSaveName as getControllerSaveName } from "../const/ControllerMap";
 import CSSClasses from "../const/CSSClasses";
 import Enum from "../const/Enum";
 import Sfx from "../const/Sfx";
@@ -9,6 +8,7 @@ import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
+import ControllerMap, { getControllerSaveName } from "../const/ControllerMap";
 
 export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
@@ -34,6 +34,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
     this.state = Enum.SS_READY;
     this.team = Enum.TEAM_ENEMY;
+    this.sType = -1;  // Soldier Type
     this.speed = 96;  // Use 72-
     this.movementSpeed = 0;
     this.lane = 1;
@@ -46,6 +47,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.maxGP = 2;   // Guard Points
     this.hp = this.maxHP;
     this.gp = this.maxGP;
+
+    this.att = 1;
+    this.def = 1;
+    this.attBoost = 0;
+    this.defBoost = 0;
     
     this.setOrigin(.5, 1);
 
@@ -70,10 +76,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     //  Calculate the slow down
 
     const velX = this.body.velocity.x;
-    if (velX !== 0) {
-      const newVelocity = velX * .95;
+    if (velX !== 0 && this.movementSpeed === 0) {
+      const minus = delta * this.speed * .001 * Math.sign(velX);
+      const newVelocity = velX - (2 * minus);
       this.body.velocity.x = Math.abs(newVelocity) < 4 ? 0 : newVelocity;
     }
+
+    //  Min Max position
+
+    Phaser.Math.Clamp(this.x, this.width, Vars.AREA_WIDTH * 8 - this.width);
 
     //  State updating
     
@@ -110,6 +121,26 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   getGPPercent() {
     return this.gp / this.maxGP;
+  }
+
+  boostAttack(amt) {
+    this.attBoost = amt;
+    Vfx.ShowAnimatedFollow(this, Vars.VFX_TELEPORT2);
+  }
+
+  reduceBoostAttack(amt) {
+    this.attBoost = Math.max(0, this.attBoost - amt);
+    if (this.attBoost === 0) {
+      Vfx.DestroyFX(this);
+    }
+  }
+
+  isBoosted() {
+    return this.attBoost > 0;
+  }
+
+  boostDefense(amt) {
+    this.defBoost = amt;
   }
 
   //  Battle functions   ------------------------------------------------------------
@@ -181,6 +212,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.team = en;
   }
 
+  setType(t) {
+    this.sType = t;
+  }
+
   isAlly() {
     return this.team === Enum.TEAM_ALLY;
   }
@@ -237,18 +272,19 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   rebound_calc(intensity = 1) {
     const vX = this.body.velocity.x;
     const recoilSpeed = vX > 0 ? -this.getSpeed() : this.getSpeed();
-    this.movementSpeed = recoilSpeed * (intensity * .1);
+    this.movementSpeed = recoilSpeed * (intensity);
   }
 
   kickback(intensity, pX) {
-    const speed = pX > this.x ? -this.getSpeed() : this.getSpeed();
-    this.body.velocity.x = speed * (intensity * .1);
+    const speed = pX > this.x ? -this.speed : this.speed;
+    this.body.velocity.x = speed * (intensity);
   }
 
   hit(attacker) {
 
     if (!this.isState(Enum.SS_HURT)) {
-      this.hp = Math.max(0, this.hp - 1);
+      const damage = attacker.isBoosted() ? 4 : 1;
+      this.hp = Math.max(0, this.hp - damage);
       this.isDefending = false;
       if (this.hp === 0) {
         this.stopTweening();
@@ -373,7 +409,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   defend(isDefending) {
     if (!this.isState(Enum.SS_HURT)) {
 
-      if (this.state !== Enum.SS_DEFEND) {
+      if (this.state !== Enum.SS_DEFEND && isDefending) {
         Juke.PlaySound(Sfx.BLOCK_ACTION);
       }
 
@@ -419,33 +455,24 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   flipXTween(flipDirection = 0) {
     
-    let skipFirst = false;
-    const duration = 150;
-
-    this.scene.tweens.chain({
+    const duration = 100;
+    this.scene.tweens.add({
       targets: this,
-      tweens: [
-        {
-          scaleX: .2,
-          duration: duration,
-          ease: 'Power2'
-        },
-        {
-          onActive: () => {
-            if (skipFirst) {
-              const velX = this.body.velocity.x;
-              const flipX = flipDirection === 0 ? velX < 0 : flipDirection < 0;
-              this.setFlipX(flipX);
-            }
-            skipFirst = true;
-          }
-        },
-        {
-          scaleX: 1,
-          duration: duration,
-          ease: 'Power2'
-        }
-      ]
+      duration: duration,
+      scaleX: .2,
+      ease: 'Power2',
+      onComplete: ()=>{
+        const velX = this.body.velocity.x;
+        const flipX = flipDirection === 0 ? velX < 0 : flipDirection < 0;
+        this.setFlipX(flipX);
+      }
+    });
+    this.scene.tweens.add({
+      targets: this,
+      duration: duration,
+      scaleX: 1,
+      delay: duration,
+      ease: 'Power2'
     });
   }
 
@@ -515,18 +542,56 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   //  - Save Data -
 
-  loadData() {
+  loadData(data) {
+
+    for (const key in data.data) {
+      if (Object.hasOwn(data.data, key)) {
+        this.setData(key, data.data[key])
+      }
+    }
+
+    this.setTexture(data.prefix);
+    this.setHP(data.hp, data.hp);
+    this.setGP(data.gp, data.gp);
+    
+    const ctr = ControllerMap.get(data.ctr);
+    this.setController(new ctr());
+    
+    if (data.name !== "Soldier") {
+      this.setDisplayName(data.name, Enum.TEAM_ALLY);
+    }
+
+    this.uid = data.uid;
+    this.prefix = data.prefix;
+    this.x = data.x;
+    this.state = data.state;
+    this.team = data.team;
+    this.sType = data.sType;
+    this.speed = data.speed;
+    this.lane = data.lane;
+    this.home = data.home;
   }
 
   getSaveData() {
     return {
+
       uid: this.uid,
-      sheet: this.prefix,
+      prefix: this.prefix,
       x: this.x,
-      name: this.name,
-      showName: this.name !== "Soldier",
+
+      state: this.state,
+      team: this.team,
+      sType: this.sType,
+
+      speed: this.speed,
+      hp: this.maxHP,
+      gp: this.maxGP,
+
+      lane: this.lane,
       home: this.home,
-      controller: getControllerSaveName(this.controller)
+      name: this.name,
+
+      ctr: getControllerSaveName(this.controller)
     }
   }
   

@@ -65,7 +65,9 @@ export default class BanditBoss extends ActionManager {
       new ActAttack(this.sprite),
       new ActWait(attackCooldown),
       new ActComplete(()=>{
-        this.switchLane();
+        if (Math.random() > .5) {
+          this.switchLane();
+        }
       }),
       new ActComplete(()=> { this.sprite.faceX(target.x) }),
       new ActDefend(this.sprite, 500)

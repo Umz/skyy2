@@ -27,6 +27,19 @@ const INFANTRY = [
 
 const CITIZENS = [
     Vars.SHEET_CITIZEN_MAM_KING,
+    Vars.SHEET_CITIZEN_MAM_GLOW,
+    Vars.SHEET_CITIZEN_MAM_ROSE,
+    Vars.SHEET_CITIZEN_MAM_M1,
+    Vars.SHEET_CITIZEN_MAM_M2,
+    Vars.SHEET_CITIZEN_MAM_F1,
+    Vars.SHEET_CITIZEN_MAM_F2,
+
+    Vars.SHEET_CITIZEN_GV_CHIEF,
+    Vars.SHEET_CITIZEN_GV_M1,
+    Vars.SHEET_CITIZEN_GV_M2,
+    Vars.SHEET_CITIZEN_GV_F1,
+    Vars.SHEET_CITIZEN_GV_F2,
+    
     Vars.SHEET_CITIZEN_STORM_F1,
     Vars.SHEET_CITIZEN_STORM_F2,
     Vars.SHEET_CITIZEN_STORM_M1,
@@ -90,7 +103,7 @@ export class Preloader extends Phaser.Scene {
         // - BG animals
         
         this.load.spritesheet(Vars.SHEET_BIRDS1, 'spritesheets/bg_birds.png', { frameWidth: 32, frameHeight: 43});
-        this.load.spritesheet("doe_test", 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet(Vars.SHEET_DOE, 'spritesheets/doe_original.png', { frameWidth: 32, frameHeight: 32});
 
         // - BG Items
         this.load.spritesheet(Vars.SHEET_ALL_BANNERS, 'spritesheets/banner_mam.png', { frameWidth: 26, frameHeight: 48});
@@ -98,6 +111,7 @@ export class Preloader extends Phaser.Scene {
         // - VFX
 
         this.load.spritesheet(Vars.VFX_SPEECH_SHEET, 'vfx/icons_full_24.png', { frameWidth: 24, frameHeight: 24});
+        this.load.spritesheet(Vars.VFX_COLLECT_SHEET, 'vfx/icons_full_32.png', { frameWidth: 32, frameHeight: 32});
 
         this.load.spritesheet(Vars.VFX_CLAIM, 'vfx/Spark0.png', { frameWidth: 16, frameHeight: 80});
         
@@ -105,7 +119,11 @@ export class Preloader extends Phaser.Scene {
         this.load.spritesheet(Vars.VFX_SPARKLE1, 'vfx/Spark1.png', { frameWidth: 16, frameHeight: 80});
         this.load.spritesheet(Vars.VFX_SQUAREFORE0, 'vfx/Square0Fore.png', { frameWidth: 16, frameHeight: 32});
         this.load.spritesheet(Vars.VFX_CONSUME, 'vfx/Consume0.png', { frameWidth: 16, frameHeight: 48});
+        this.load.spritesheet(Vars.VFX_CONSUME2, 'vfx/Consume2.png', { frameWidth: 16, frameHeight: 48});
         this.load.spritesheet(Vars.VFX_BLOOD3, 'vfx/BloodSplatter3.png', { frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet(Vars.VFX_TELEPORT2, 'vfx/Teleport2.png', { frameWidth: 16, frameHeight: 48});
+        this.load.spritesheet(Vars.VFX_SMALL_SLASH_HIT2, 'vfx/Small_slash_hit_2.png', { frameWidth: 41, frameHeight: 36});
+        this.load.spritesheet(Vars.VFX_SMALL_STING_HIT, 'vfx/Small_sting_hit.png', { frameWidth: 26, frameHeight: 53});
 
         //  - Audio
 
@@ -190,21 +208,21 @@ export class Preloader extends Phaser.Scene {
 
         this.anims.create({
             key: 'doe1',
-            frames: this.anims.generateFrameNumbers("doe_test", { start: 6, end: 9 }),
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_DOE, { start: 6, end: 9 }),
             frameRate: 12,
             repeat: -1
         });
 
         this.anims.create({
             key: 'doe2',
-            frames: this.anims.generateFrameNumbers("doe_test", { start: 42, end: 45 }),
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_DOE, { start: 42, end: 45 }),
             frameRate: 12,
             repeat: -1
         });
 
         this.anims.create({
             key: 'doe3',
-            frames: this.anims.generateFrameNumbers("doe_test", { start: 78, end: 81 }),
+            frames: this.anims.generateFrameNumbers(Vars.SHEET_DOE, { start: 78, end: 81 }),
             frameRate: 12,
             repeat: -1
         });
@@ -216,8 +234,12 @@ export class Preloader extends Phaser.Scene {
         this.createVFXAnimation(Vars.VFX_SPARKLE0, 10, 16, -1);
         this.createVFXAnimation(Vars.VFX_SPARKLE1, 10, 16, -1);
         this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 19, 16, 0);
-        this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, -1);
+        this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, 0);
+        this.createVFXAnimation(Vars.VFX_CONSUME2, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_BLOOD3, 7, 16, 0);
+        this.createVFXAnimation(Vars.VFX_TELEPORT2, 9, 21, -1);
+        this.createVFXAnimation(Vars.VFX_SMALL_SLASH_HIT2, 4, 16, 0);
+        this.createVFXAnimation(Vars.VFX_SMALL_STING_HIT, 4, 12, 0);
 
         //  Sprite animation
 
@@ -318,10 +340,10 @@ export class Preloader extends Phaser.Scene {
         {   // CREATE Blood Add
             const size = 4;
 
-            graphics.fillStyle(0x000000, 1);
-            graphics.fillRect(0, 0, 3, 1);
+            graphics.fillStyle(0xffffff, 1);
+            graphics.fillRect(0, 0, 8, 1);
 
-            graphics.generateTexture('bbb', 3, 1);
+            graphics.generateTexture(Vars.TX_LINE, 5, 1);
             graphics.clear();
         }
 

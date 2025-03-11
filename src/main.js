@@ -41,6 +41,11 @@ const config = {
         }
     },
 
+    fps: {
+        target: 60,
+        forceSetTimeout: true,
+    },
+
     scene: [
         Preloader,
         PlayScene

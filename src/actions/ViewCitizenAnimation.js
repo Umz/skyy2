@@ -19,14 +19,16 @@ export default class ViewCitizenAnimation extends Action {
 
     switch (state) {
 
-      case Enum.CS_IDLE:
-        if (velX !== 0) {
-          sprite.playWalk();
-          sprite.setFlipX(velX < 0);
-        }
-        else {
-          sprite.playIdle();
-        }
+      case Enum.CS_CHEERING:
+        sprite.playCheering();
+        break;
+
+      case Enum.CS_FORAGING:
+        sprite.playIdleBack();
+        break;
+
+      case Enum.CS_CONVERSATION:
+        sprite.playIdleSide();
         break;
 
       case Enum.CS_BOWING:
@@ -35,6 +37,16 @@ export default class ViewCitizenAnimation extends Action {
 
       case Enum.CS_DIGGING:
         sprite.playDigging();
+        break;
+
+      default:
+        if (velX !== 0) {
+          sprite.playWalk();
+          sprite.setFlipX(velX < 0);
+        }
+        else {
+          sprite.playIdle();
+        }
         break;
     }
   }

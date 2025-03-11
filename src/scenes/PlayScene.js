@@ -16,13 +16,13 @@ import Rock from "../gameobjects/Rock";
 import SaveData from "../util/SaveData";
 import Tutorial from "../classes/Tutorial";
 import MapInfo from "../const/MapInfo";
-import Conversation from "../util/Conversation";
 import Spawner from "../util/Spawner";
 import LandClaimer from "../util/LandClaimer";
 import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
 import Vfx from "../util/Vfx";
 import Subtitles from "../util/Subtitles";
+import Counter from "../util/Counter";
 
 export class PlayScene extends Scene {
 
@@ -120,11 +120,9 @@ export class PlayScene extends Scene {
     //  DEV  --------------------------------------------------------------------------
 
     this.tutorial = new Tutorial(this, controllerKeys, this.controller);
-    this.convo = new Conversation(this);
 
     Juke.SetScene(this);
     Juke.PlayMusic(Sfx.MUS_GAME);
-
     Vfx.SetScene(this);
 
     const allScripts = this.cache.json.get(Vars.JSON_SCRIPT);
@@ -134,6 +132,8 @@ export class PlayScene extends Scene {
 
     this.crowdRect = new Phaser.Geom.Rectangle(0, 0, 100, 24);
     this.isPlayerCrowded = false;
+    this.deathCounter = 0;
+    this.counter = new Counter(5000);
 
     this.test = function() {
       this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
@@ -150,13 +150,14 @@ export class PlayScene extends Scene {
     this.player.setX(playerX);
     this.player.setLane(playerLane);
 
-    if (SaveData.Data.hasBlueMoon) {
-      this.spawnBlueMoon();
-    }
-
     for (let sd of SaveData.Data.citizens) {
       const citizen = this.spawnCitizen(sd.x, sd.sheet);
       citizen.loadData(sd);
+    }
+
+    for (let sd of SaveData.Data.soldiers) {
+      const soldier = this.spawnAlly(sd.x, sd.sType);
+      soldier.loadData(sd);
     }
 
     //  -
@@ -200,11 +201,8 @@ export class PlayScene extends Scene {
       return true;
     }
 
-    SaveData.Data.playtime += delta;
-
     //  - Normal updating -
     
-    this.convo.update(time, delta);
     this.tutorial.update();
 
     this.mapTracker.updateCurrentArea(this.player.x);
@@ -217,7 +215,6 @@ export class PlayScene extends Scene {
     this.updateCrowding();
     this.updateSpriteLayers();
     this.updateShadows();
-    this.updateSaveData();
 
     this.birdSpawner.update(time, delta);
     this.wildlifeSpawner.update(time, delta);
@@ -226,11 +223,35 @@ export class PlayScene extends Scene {
     this.drawSoldierHP();       // HP and GP bars
     this.showSoldierNames();    // Soldier names
     this.showSoldierIcon();     // Icons for soldiers
+
+    SaveData.Data.playtime += delta;
+    if (this.counter.update(delta)) {
+      this.updateSaveData();
+    }
     
     this.test();
   }
 
   //  UPDATE helper functions     -------------------------------------------------------------------------
+
+  updateSaveData() {
+
+    const allCitizens = this.groupCitizens.getChildren();
+    const allSoldiers = this.groupAllies.getChildren();
+    
+    // Buildings updated when used
+
+    for (let cit of allCitizens) {
+      SaveData.SaveCitizenData(cit.getSaveData());
+    }
+
+    for (let sol of allSoldiers) {
+      SaveData.SaveSoldierData(sol.getSaveData());
+    }
+
+    SaveData.Data.playerX = this.player.x;
+    SaveData.Data.playerLane = this.player.lane;
+  }
 
   /** Update the layers of the Sprites according to their lane */
   updateSpriteLayers() {
@@ -324,16 +345,16 @@ export class PlayScene extends Scene {
     }
   }
 
-  updateSaveData() {
-    SaveData.Data.playerX = this.player.x;
-    SaveData.Data.playerLane = this.player.lane;
-  }
-
   updateCrowding() {
     this.crowdRect.setPosition(this.player.x - this.crowdRect.width * .5, this.player.y - this.crowdRect.height);
     const rect = this.crowdRect;
     const bodies = this.physics.overlapRect(rect.x, rect.y, rect.width, rect.height);
     this.isPlayerCrowded = bodies.length >= 6;
+
+    // - Update Emitter -
+
+    const view = this.cameras.main.worldView;
+    this.streamEmitter.setPosition(view.left, view.top);
   }
 
   //  -----------------------------------------------------------------------------------------------------
@@ -358,6 +379,11 @@ export class PlayScene extends Scene {
         domLabel.destroy(true);
       }
     });
+
+    //  Play Sounds for area
+    if (data.sound) {
+      Juke.PlaySound(data.sound);
+    }
   }
 
   //  -----------------------------------------------------------------------------------------
@@ -403,7 +429,7 @@ export class PlayScene extends Scene {
       emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
       emitting: false
     });
-    this.ccc = this.add.particles(0, 0, 'bbb', {
+    this.ccc = this.add.particles(0, 0, Vars.TX_LINE, {
       speedX: { min: -emitMin, max: -emitMax },
       speedY: { min: -ySpray, max: ySpray },
       alpha: { start: 1, end: 0},
@@ -420,7 +446,7 @@ export class PlayScene extends Scene {
       emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 0, 2, 4), quantity: 20 },
       emitting: false
     });
-    this.bbb = this.add.particles(0, 0, 'bbb', {
+    this.hitLines = this.add.particles(0, 0, Vars.TX_LINE, {
       speedX: { min: emitMin, max: emitMax },
       speedY: { min: -ySpray, max: ySpray },
       alpha: { start: 1, end: 0},
@@ -437,6 +463,15 @@ export class PlayScene extends Scene {
       frequency: 50,
       emitting: false
     });
+
+    this.streamEmitter = this.add.particles(0, 0, Vars.TX_SPARKLE, {
+      speedX: { min: -40, max: -20 },
+      alpha: .25,
+      lifespan: 6 * 1000,
+      emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(0, 215, 480, 30), quantity: 18 },
+      frequency: 500,
+      emitting: true
+    }).setDepth(55);
   }
 
   emitDust(x, y, lane) {
@@ -463,8 +498,8 @@ export class PlayScene extends Scene {
   emitRightHit(x, y, lane) {
     this.hitRightEmitter.setDepth(lane * 10 + 1);
     this.hitRightEmitter.emitParticleAt(x, y, 10);
-    this.bbb.setDepth(lane * 10 + 2);
-    this.bbb.emitParticleAt(x, y, 4);
+    this.hitLines.setDepth(lane * 10 + 2);
+    this.hitLines.emitParticleAt(x, y, 4);
   }
 
   //  -
@@ -537,15 +572,6 @@ export class PlayScene extends Scene {
     return this.spawner.spawnPlayer();
   }
 
-  spawnWildman() {
-    this.bluemoon = this.spawner.spawnWildman();
-  }
-
-  spawnBlueMoon() {
-    const pX = this.player.x + 24;
-    this.bluemoon = this.spawner.spawnBlueMoon(pX);
-  }
-
   spawnAlly(posX, type = Enum.SOLDIER_BANDIT1) {
     return this.spawner.spawnAlly(posX, type);
   }
@@ -571,17 +597,13 @@ export class PlayScene extends Scene {
 
   spawnCollectible(posX, lane, type) {
     
-    //  Collectible
-
-    const frame = "collect_heart";
-    // getFrame -
-
-    const item = new Collectible(this, posX, 0, frame);
+    const item = new Collectible(this, posX, type);
     item.initCollectible(lane);
-    //item.setType(type);
 
     this.add.existing(item);
     this.physics.add.existing(item);
+
+    this.allGroup.add(item);
     this.groupCollectibles.add(item);
   }
 
@@ -673,11 +695,23 @@ export class PlayScene extends Scene {
     
     const pp = target.getCenter();
     const y = pp.y + 3;
+    const amt = Phaser.Math.Between(10, 16);
+    const dir = att.x < target.x ? 1 : -1;
+
     if (att.x < target.x) {
       this.emitRightHit(pp.x, y, target.lane);
     }
     else {
       this.emitLeftHit(pp.x, y, target.lane);
+    }
+    
+    if (att.isBoosted()) {
+      Vfx.ShowDamageNum(pp.x, pp.y, "HIT", dir, "#FFA500");
+      Vfx.ShowAnimatedFX(target, Vars.VFX_SMALL_SLASH_HIT2);
+      Juke.PlaySound(Sfx.HIT_CRITICAL);
+    }
+    else {
+      Vfx.ShowDamageNum(pp.x, pp.y, amt, dir);
     }
   }
 
@@ -688,29 +722,75 @@ export class PlayScene extends Scene {
       if (defender.hitboxContainsX(point.x)) {
 
         const activeDefense = defender.isState(Enum.SS_DEFEND) && defender.isFacing(attacker.x) && defender.hasGP();
+        const isGuardBreak = attacker.isBoosted() //|| attacker.guardBreak;
 
-        // M<ust be facing enemy to defend
-        if (activeDefense) {
+        // Guard break
+        if (isGuardBreak && activeDefense) {
+          
+          const pp = defender.getCenter();
+          const dir = attacker.x < defender.x ? 1 : -1;
 
-          attacker.recoil(16);
-          defender.guard();
-          defender.kickback(2, attacker.x);
+          attacker.reduceBoostAttack(1);
+          attacker.recoil(.5);
+          
+          defender.setGP(0);
+          defender.kickback(4, attacker.x);
           this.emitClash(point.x, point.y, attacker.lane);
+
+          Vfx.ShowDamageNum(pp.x, pp.y, "BREAK", dir, "#0055ff");
+          Vfx.ShowAnimatedFX(defender, Vars.VFX_SMALL_STING_HIT);
+          Juke.PlaySound(Sfx.GUARD_BREAK);
+
+          if (attacker.isPlayer) {
+            this.tinyCameraShake();
+          }
+
+        }
+        // Must be facing enemy to defend
+        else if (activeDefense) {
+
+          attacker.recoil(1);
+          defender.guard();
+          defender.kickback(.5, attacker.x);
+          this.emitClash(point.x, point.y, attacker.lane);
+
+          if (defender.gp === 0) {
+            Vfx.ShowAnimatedFX(defender, Vars.VFX_SMALL_STING_HIT);
+            Juke.PlaySound(Sfx.GUARD_BREAK);
+          }
+
+          const pp = defender.getCenter();
+          const dir = attacker.x < defender.x ? 1 : -1;
+          const amt = Phaser.Math.Between(4, 9);
+
           Juke.PlaySound(Sfx.DEFENDED);
+          Vfx.ShowDamageNum(pp.x, pp.y, amt, dir, "#0055ff");
 
           if (attacker.isPlayer) {
             this.tinyCameraShake();
           }
         }
         else {
-          attacker.rebound(4);
+
+          attacker.rebound(.5);
+          attacker.reduceBoostAttack(1);
+
           this.addHitFx(attacker, defender);
 
           const fatal = defender.hit(attacker);
           if (fatal) {
+            
             this.showDeath(defender);
-          }
+            
+            // Spawn Collectible on enemy or ally death
+            const eligible = SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
+            this.deathCounter ++;
+            if (this.deathCounter % 33 === 0 && eligible) {
+              const ctype = Phaser.Utils.Array.GetRandom([Enum.COLLECT_HEART, Enum.COLLECT_POWER]);
+              this.spawnCollectible(defender.x, defender.lane, ctype);
+            }
 
+          }
         }
       }
     }
@@ -724,9 +804,9 @@ export class PlayScene extends Scene {
 
       const facing = ally.isFacing(en.x) && en.isFacing(ally.x);
 
-      if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK) && facing) {
-        ally.recoil(16);
-        en.recoil(16);
+      if (ally.isState(Enum.SS_ATTACK) && en.isState(Enum.SS_ATTACK) && facing && !ally.isBoosted()) {
+        ally.recoil(1);
+        en.recoil(1);
 
         const p1 = ally.getAttackPoint();
         const p2 = en.getAttackPoint();
@@ -743,15 +823,28 @@ export class PlayScene extends Scene {
         checkAttack(en, ally);
       }
     }
-
-    // scaleX .9
-    // kick back
   }
 
+  /** Apply effects of collected item and VFX */
   playerItemCollision(player, item) {
     if (player.lane === item.lane) {
+
+      const allies = this.groupAllies.getChildren();
+
+      switch (item.type) {
+        case Enum.COLLECT_HEART:
+          for (let ally of allies) {
+            ally.recoverHP(4);
+            Vfx.ShowAnimatedFX(ally, Vars.VFX_CONSUME);
+          }
+          break;
+
+        case Enum.COLLECT_POWER:
+          this.player.boostAttack(10);
+          break;
+      }
+
       item.collectAndDestroy();
-      //  Apply effects of collected item and VFX
     }
   }
 
@@ -768,7 +861,7 @@ export class PlayScene extends Scene {
     
     if (sprite.isState(Enum.SS_ATTACK) && sprite.isLane(rock.lane) && contains) {
 
-      sprite.recoil(2);
+      sprite.recoil(.4);
       this.emitDust(rock.x, rock.y, rock.lane);
       this.emitRock(rock.x, rock.getCenter().y);
       rock.isHit = true;

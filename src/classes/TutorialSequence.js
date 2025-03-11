@@ -1,5 +1,11 @@
+import Enum from "../const/Enum";
+import Sfx from "../const/Sfx";
+import Vars from "../const/Vars";
+import SequenceHelper from "../tutorial/SequenceHelper";
+import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
+import Vfx from "../util/Vfx";
 
 export default class TutorialSequence {
   
@@ -10,6 +16,7 @@ export default class TutorialSequence {
 
     this.sequence = [];
     this.shouldSaveStepID = true;
+    this.stepToSave = 0;
 
     this.step = 0;
     this.once = -1;
@@ -25,6 +32,7 @@ export default class TutorialSequence {
   startFrom(skipAmt) {
     this.sequence.splice(0, skipAmt);
     this.step = skipAmt;
+    this.stepToSave = skipAmt;
   }
 
   update() {
@@ -56,6 +64,7 @@ export default class TutorialSequence {
   addInstruction(instruction) {
     this.add(()=>{
       this.doOnce(()=>{
+        Juke.PlaySound(Sfx.UI_SHOW_INSTRUCTIONS);
         this.tutorial.showInstructions(instruction);
       });
     });
@@ -68,7 +77,6 @@ export default class TutorialSequence {
       return true;
     })
     return this;
-
   }
 
   addDialogueAndWait(name, text, ttl) {
@@ -83,17 +91,23 @@ export default class TutorialSequence {
     return this;
   }
 
-  addIcon(sprite, icon, ttl) {
+  addIcon(uid, icon, ttl) {
     this.add(()=>{
+      const sprite = this.getSoldierbyUID(uid);
       sprite.showIcon(icon, ttl);
       return true;
-    })
+    });
     return this;
   }
 
-  addSpeaker(sprite, icon, text, ttl) {
+  addSpeaker(uid, icon, text, ttl, sfx = null) {
     this.add(()=>{
+      const sprite = this.getSoldierbyUID(uid);
       sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+        console.log("Speaking")
+      }
       return true;
     })
     return this;
@@ -106,25 +120,69 @@ export default class TutorialSequence {
     return this;
   }
 
-  addStopSaving() {
+  /** Speak (UID) without stopping flow to wait for dialogue */
+  addSpeak(uid, icon, text, ttl, sfx = null) {
     this.add(()=>{
-      this.turnSavingOff();
+      const sprite = this.getSoldierbyUID(uid);
+      sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
       return true;
-    })
+    });
     return this;
   }
 
-  addStartSaving() {
+  /** Soldier with the specified UID will speak */
+  addSpeakAndWait(uid, icon, text, ttl, sfx = null) {
     this.add(()=>{
-      this.turnSavingOn();
+      const sprite = this.getSoldierbyUID(uid);
+      sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
       return true;
     })
+    .addWaitForDialogue();
+    return this;
+  }
+
+  /** Citizen will speak with Icon (GET using UID) */  
+  addSpeakCitizenW(uid, icon, text, ttl, sfx = null) {
+    this.add(()=>{
+      const sprite = this.getCitizenByUID(uid);
+      sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
+      return true;
+    })
+    .addWaitForDialogue()
+    .addWait(500);
+    return this;
+  }
+
+  addUpdateSaveStep() {
+    this.add(()=>{
+      this.stepToSave = this.step;
+      return true;
+    });
     return this;
   }
 
   addSave() {
-    this.add(()=>{
+    this
+    .addUpdateSaveStep()
+    .add(()=>{
       SaveData.SAVE_GAME_DATA();
+      return true;
+    });
+    return this;
+  }
+
+  addSound(sfx) {
+    this.add(()=>{
+      Juke.PlaySound(sfx);
       return true;
     });
     return this;
@@ -160,6 +218,20 @@ export default class TutorialSequence {
     return this;
   }
 
+  /** Heal the whole team back to full health */
+  addHealing() {
+    this.add(()=> {
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        ally.recoverHP(ally.maxHP);
+        Vfx.ShowAnimatedFX(ally, Vars.VFX_CONSUME);
+        Juke.PlaySound(Sfx.HEAL);
+      }
+      return true;
+    });
+    return this;
+  }
+
   //  -------
 
   showConversation(en) {
@@ -184,7 +256,9 @@ export default class TutorialSequence {
     this.date = new Date();
 
     if (this.shouldSaveStepID) {
-      SaveData.Data.tutorialSequenceStep = this.step;
+      SaveData.Data.tutorialSequenceStep = this.stepToSave;
+
+      // Go through from P1- deciding when to save next step
     }
   }
 
@@ -204,6 +278,46 @@ export default class TutorialSequence {
   /** Resume saving steps when complete */
   turnSavingOn() {
     this.shouldSaveStepID = true;
+  }
+
+  //  -
+
+  /** Spawn an ally soldier */
+  spawnAlly(x, soldierEnum, hp, gp, name) {
+    const soldier = SequenceHelper.SpawnAlly(x, soldierEnum);
+    this.setSoldierStats(soldier, hp, gp, Enum.TEAM_ALLY, name);
+    return soldier;
+  }
+
+  /** Spawn an enemy soldier */
+  spawnEnemy(x, soldierEnum, hp, gp, name) {
+    const soldier = SequenceHelper.SpawnEnemy(x, soldierEnum);
+    this.setSoldierStats(soldier, hp, gp, Enum.TEAM_ENEMY, name);
+    return soldier;
+  }
+
+  /** Set the stats for soldier */
+  setSoldierStats(soldier, hp, gp, team, name) {
+    soldier.setHP(hp, hp);
+    soldier.setGP(gp, gp);
+    if (name) {
+      soldier.setDisplayName(name, team);
+    }
+  }
+
+  /** Get a specific Soldier by their UID from all existing */
+  getSoldierbyUID(uid) {
+    const { scene } = this;
+    const all = scene.groupSoldiers.getChildren();
+    const soldier = all.find(sprite => sprite.uid === uid);
+    return soldier;
+  }
+
+  getCitizenByUID(uid) {
+    const { scene } = this;
+    const all = scene.groupCitizens.getChildren();
+    const citizen = all.find(sprite => sprite.uid === uid);
+    return citizen;
   }
 
 }

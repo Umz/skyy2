@@ -87,6 +87,7 @@ const Icon = {
   ANGER: 219,
   CROSS: 223,
 
+  // 14 - Snail
   SNAIL: 224,
   CONFUSED: 225,
   DOWN_PURPLE: 226,
@@ -104,7 +105,24 @@ const Icon = {
   STAR_TWO: 238,
   STAR_THREE: 239,
 
-  ALLY: 245, // Row 16
+  //  15 - Ally
+  ALLY: 240,
+  ALLY_UP: 241,
+  ALY_DOWN: 242,
+  ALLY_FAST: 243,
+  ALLY_SLOW: 244,
+  ALLY_SWORD: 245,
+  ALLY_SHIELD: 246,
+
+  // 19 - Vegetables
+  RED_PEPPER: 304,
+  YELLOW_PEPPER: 305,
+  GREENS: 306,
+  TURNIP: 307,
+  STRAWBERRY: 308,
+  PUMPKIN: 309,
+  CARROT: 310,
+  POTATO: 311,
 
   // 22 - Keys
   WOOD_KEY: 352,
@@ -113,7 +131,7 @@ const Icon = {
   GOLD_PURSE: 359,
   SILVER_PURSE: 360,
 
-  // 26
+  // 26 - Valuables
   GOLD_BAT: 416,
   GOLD_LAMP: 417,
   GOLD_CUP: 418,
@@ -124,13 +142,23 @@ const Icon = {
   BLUE_SILICA: 423,
   GOLD_SILICA: 424,
 
+  // 29 - Spears
   SKY_SPEAR: 472,
   SPEAR: 473, // Row 30
   SPEAR2: 474, // Row 30
 
-  // 34 - Bows
-  // 35 - Slingshot
-  // 36 - Gun
+  // 31 - Clubs and maces
+  TWIG: 496,
+  STICK: 497,
+  WAND_POINT: 498, //?
+  WAND_BIT: 499, //?
+  WAND: 500,
+  DART: 501,
+  ANGEL_STICK: 502,
+  ANGEL_STICK2: 503,
+  CLUB: 504,
+  STUDDED_CLUB: 505,
+  BLACK_CLUB: 506,
 
   // 38 - Robes
   BROWN_SHIRT: 608,

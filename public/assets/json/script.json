@@ -1,11 +1,38 @@
 {
   "EN": {
+    "Names": {
+      "HarvestMoon": "Harvest Moon",
+      "MoonRose": "Moon Rose",
+      "MoonGlow": "Moon Glow",
+      "GreenChief": "Green Chief",
+
+      "MoonChief": "Moon Chief",
+      "Wildman": "Wildman",
+      "BlueMoon": "Blue Moon",
+      "Architect": "Architect",
+      "Lunar": "Lunar",
+      "NightTrain": "NightTrain",
+
+      "RabidBandit": "Rabid Bandit",
+      "RedFace": "Red Face",
+      "FallenCloud": "Fallen Cloud",
+      "GreenSword": "Green Sword",
+      "SplitClover": "Split Clover",
+      "TallAsh": "Tall Ash",
+      "FallingWillow": "Falling Willow",
+      "GreenMeadow": "Green Meadow",
+
+      "Braver": "Braver",
+      "Zoll": "Zoll",
+      "Madogu": "Madogu",
+      "Soldier": "Soldier"
+    },
     "MoonChief": {
 
       "taunt": "Come! I shall grant you a swift death.",
       "peons": "More peons. How futile",
       
-      "bf1": "Hah. So you seek death.",
+      "bf1": "Come and face me. Your time has come.",
       "bf2": "Fight strong stranger! I will aid you!",
       "bf3": "Moon Chief, of the Moon at Midnight tribe.",
       
@@ -18,10 +45,22 @@
 
       "mam1": "Who dares to attack our tribe!?",
       "mam2": "Red Face!",
+      "mam3": "What!",
+      "mam4": "They dare to attack us!? Do they not fear the Moon at Midnight? They dare to dream they can defeat us!?",
+      "mam5": "To Battle!",
 
       "rose1": "Hear Me! Moon Chief has defeated Red Face in a Duel!",
       "rose2": "Now cut down the rest of the scum.",
       "rose3": "The matter is settled. Let us proceed.",
+      "rose4": "Give no ground!",
+      "rose5": "Press onward!",
+      "rose6": "Fight! Fight!",
+      "rose7": "To the village!",
+      "rose8": "A true warrior!",
+
+      "storm1": "Now you face the Moon at Midnight!",
+      "storm2": "Moon Chief has slain the enemy general",
+      "storm3": "Push back the rest of them!",
 
       "mines1": "I see. What is it?",
       "mines2": "... What is it you want me to do?",
@@ -29,12 +68,22 @@
       "mines4": "Who would dare to loot our mines",
       "mines5": "Then let us settle the matter now.",
       "mines6": "The matter is settled.",
+      "mines7": "Now. To Green Village in the east.",
 
       "plains1": "What of it?",
       "plains2": "Paying homage.",
       "plains3": "I don't know of it.",
       "plains4": "Soon.",
       "plains5": "Diplomacy.",
+
+      "plains6": "Slaughter the rest of them while they are surprised",
+      "plains7": "Move forward, quickly, we still have the upper hand",
+      "plains8": "Slaughter the rest! Don't let them regroup",
+      "plains9": "Come my warriors, now we charge their main force",
+      "plains10": "Brace yourselves! More are coming!",
+      "plains11": "Hah! Dig deep for the next wave!",
+      "plains12": "I am Moon Chief of Moon at Midnight.",
+      "plains13": "We have defeated the Whiteleaf Army!",
 
       "green1": "Are you the architect.",
       "green2": "Night Train has sent me here for you. Come. Fly with our tribe, Moon at Midnight.",
@@ -43,7 +92,10 @@
       "green5": "Time to head back now.",
       "green6": "A true warrior. Let us battle to the bitter end.",
       "green7": "We have returned!",
-      "green8": "Do you have a name for him?"
+      "green8": "Do you have a name for him?",
+
+      "green9": "The village is next.",
+      "green10": "All the land belongs to Moon at Midnight!"
     },
     "Wildman": {
 
@@ -79,13 +131,18 @@
       "mines6": "Because it has so many uses, all the tribes covet it. Thus the prices have skyrocketed ever since someone discovered how to process it!",
       "mines7": "Help me collect the silica! Break the rocks, the purple-ish ones.",
       "mines8": "Gather up the small blue stones tha drop out and hand them to me. I'll cart it back to Moon at Midnight and we'll ask Harvest Moon about processing the lot.",
-
       "mines9": "Great! That's enough for now, MC. Let's go see Harvest Moon.",
+      "mines10": "Hah! I was worried for nothing, it's all clear!",
+      "mines11": "Come on MC! We need more silica. Let's work.",
+      "mines12": "I'll run it to Storm. Keep it coming!",
+      "mines13": "We'll need more. We'll need alot more!",
+      "mines14": "Come to Storm, I'll hire some villagers.",
 
       "storm1": "All of that comes later! We've found some blue silica deposits just passed the village!",
       "storm2": "Haha! Right? Tell MC how great this is.",
       "storm3": "The Architect?",
       "storm4": "The Architect! We're counting on you MC!",
+      "storm5": "No time to rest MC! We need to secure The Mines!",
 
       "green1": "Architect. Welcome to Moon at Midnight!"
     },
@@ -96,6 +153,17 @@
       "green4": "Finally. I am free of Whiteleaf.",
       "green5": "I am honoured to fly with the tribe!",
       "green6": "I am Lunar the Architect of Moon at Midnight!"
+    },
+    "Braver": {
+      "mam1": "Whiteleaf have sent an army! They are destroying Storm!"
+    },
+    "Zoll": {
+      "storm1": "Sir, we have news on Whiteleaf. Please come to Rose Forest.",
+      "storm2": "Sir! The Whiteleaf tribe are camped in The Plains preparing an attack.",
+      "storm3": "My unit are ready to ambush them. Please lead us!."
+    },
+    "Madogu": {
+      "plains1": "You should have called us Moon Chief! We came here to aid you!"
     },
 
     "HarvestMoon": {
@@ -130,6 +198,13 @@
     },
     "GreenSword": {
       "green1": "Moon Chief. I am Green Sword of Green Village."
+    },
+    "Boss": {
+      "TallAsh": "Why are you here!? Moon Chief the bastard warrior!",
+      "FallingWillow": "Hah! So you caught us off guard!",
+      "GreenMeadow1": "What a joke. Who knew this backwater hovel had any actual warriors!",
+      "GreenMeadow2": "Country bumpkin. You are no one! From this unknown jut in the middle of nowhere!",
+      "GreenMeadow3": "Powerful indeed. You have defeated me bumpkin. Maybe you will be strong enough to see the real world."
     },
 
     "Soldier": {

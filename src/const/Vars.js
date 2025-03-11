@@ -8,6 +8,8 @@ const Vars = {
 
   SHEET_BIRDS1: 'bg_birds',
   SHEET_BIRDS2: 'bg_bird',
+  SHEET_DOE: "doe_test",
+
   SHEET_ALL_BANNERS: 'all_banners',
   SHEET_ALL_FLAGS: 'all_flags',
 
@@ -42,6 +44,19 @@ const Vars = {
   SHEET_WL_SPLIT_CLOVER: "Lancer_WL_Clover.png",
 
   SHEET_CITIZEN_MAM_KING: "Citizen_MaM_King.png",
+  SHEET_CITIZEN_MAM_GLOW: "Citizen_MaM_Glow.png",
+  SHEET_CITIZEN_MAM_ROSE: "Citizen_MaM_Rose.png",
+  SHEET_CITIZEN_MAM_M1: "Citizen_MaM_M1.png",
+  SHEET_CITIZEN_MAM_M2: "Citizen_MaM_M2.png",
+  SHEET_CITIZEN_MAM_F1: "Citizen_MaM_F1.png",
+  SHEET_CITIZEN_MAM_F2: "Citizen_MaM_F2.png",
+
+  SHEET_CITIZEN_GV_CHIEF: "Citizen_GV_Chief.png",
+  SHEET_CITIZEN_GV_M1: "Citizen_GV_M1.png",
+  SHEET_CITIZEN_GV_M2: "Citizen_GV_M2.png",
+  SHEET_CITIZEN_GV_F1: "Citizen_GV_F1.png",
+  SHEET_CITIZEN_GV_F2: "Citizen_GV_F2.png",
+
   SHEET_CITIZEN_STORM_F1: "Citizen_Storm_F1.png",
   SHEET_CITIZEN_STORM_F2: "Citizen_Storm_F2.png",
   SHEET_CITIZEN_STORM_M1: "Citizen_Storm_M1.png",
@@ -55,16 +70,23 @@ const Vars = {
 
   TX_SPARKLE: "graphic_sparkle",
   TX_HIT: "graphic_hit_fx",
+  TX_LINE: "graphic_h_line",
 
   VFX_SPEECH_SHEET: "vfx_speech_icons",
+  VFX_COLLECT_SHEET: "vfx_collect_icons",
 
   VFX_CLAIM: "vfx_claimEffect",
 
   VFX_BLOOD3: "vfx_bloodsplatter3",
   VFX_CONSUME: "vfx_consume0",
+  VFX_CONSUME2: "vfx_consume2",
   VFX_SPARKLE0: "vfx_sparkle0",
   VFX_SPARKLE1: "vfx_sparkle1",
   VFX_SQUAREFORE0: "vfx_squarefore0",
+  VFX_TELEPORT2: "Teleport2",
+  VFX_SMALL_SLASH_HIT2: "Small_slash_hit_2",
+  VFX_SMALL_STING_HIT: "Small_sting_hit",
+
 
   //  -
 
@@ -79,9 +101,11 @@ const Vars = {
 
   ANIM_CIT_IDLE: "-idle",
   ANIM_CIT_IDLE_SIDE: "-idle-side",
+  ANIM_CIT_IDLE_BACK: "-idle-back",
   ANIM_CIT_WALK: "-walk",
   ANIM_CIT_DIGGING: "-dig-side",
   ANIM_CIT_BOW: "-bow",
+  ANIM_CIT_CHEERING: "-cheer",
 
   ANIM_BIRD_FLY: 'bird-fly',
 
@@ -110,6 +134,7 @@ const Vars = {
   ACT_ATTACK: "action_soldier_attack",
   ACT_DEFEND: "action_soldier_defend",
   ACT_COMPLETE: "action_complete_instant",
+  ACT_REPEAT_INTERVALS: "action_repeat_function_at_intervals",
   
   LISTEN_CONDITION: "listener_for_condition",
   LISTEN_PLAYER_DISTANCE: "listener_player_distance",
@@ -123,6 +148,7 @@ const Vars = {
   VIEW_ANIMATION: "view_soldier_animations",
   VIEW_CITIZEN_ANIMATION: "view_citizen_animations",
   VIEW_CROWD_CONTROL: "view_crowding_hide_soldiers",
+  VIEW_SOLDIER_STEPS: "view_soldier_steps_sfx",
 
   WORLD_LENGTHS: 3,
   GRAVITY: 60,

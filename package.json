@@ -12,6 +12,6 @@
   },
   "dependencies": {
     "localforage": "^1.10.0",
-    "phaser": "^3.80.1"
+    "phaser": "^3.88.2"
   }
 }

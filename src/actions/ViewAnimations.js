@@ -19,13 +19,12 @@ export default class ViewAnimation extends Action {
 
         if (velX !== 0) {
           this.sprite.playRun();
+          const isFacingRight = this.sprite.flipX;
 
-          // Don't always flip tween
-    
-          if (!this.sprite.flipX && velX < 0 && !this.sprite.isTweening() && this.sprite.movePressed) {
+          if (!isFacingRight && velX < 0 && !this.sprite.isTweening() && this.sprite.movePressed) {
             this.sprite.flipXTween();
           }
-          else if (this.sprite.flipX && velX > 0 && !this.sprite.isTweening() && this.sprite.movePressed) {
+          else if (isFacingRight && velX > 0 && !this.sprite.isTweening() && this.sprite.movePressed) {
             this.sprite.flipXTween();
           }
           else if (this.sprite.staticMoveStart) {

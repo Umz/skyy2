@@ -7,8 +7,8 @@ import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Vars from "../const/Vars";
 import CitizenController from "./CitizenController";
-import { getClosestCitizen, getDistanceFrom } from "../util/ActionHelper";
 import SaveData from "../util/SaveData";
+import { getClosestCitizen, getDistanceFrom } from "../util/ActionHelper";
 
 export default class CitizenCaptive extends ActionManager {
 
@@ -93,9 +93,7 @@ export default class CitizenCaptive extends ActionManager {
           sprite.setTribe(Enum.TRIBE_MAM);
           const controller = new CitizenController();
           sprite.setController(controller);
-
-          const index = SaveData.Data.citizens.findIndex(item => item.uid === sprite.uid);
-          SaveData.Data.citizens[index] = sprite.saveData;
+          SaveData.SaveCitizenData(sprite.getSaveData())
         })
       )
     }
@@ -103,7 +101,6 @@ export default class CitizenCaptive extends ActionManager {
       this.addActions(
         new ActComplete(()=>{
           sprite.setHome(0);
-          SaveData.Data.citizens = SaveData.Data.citizens.filter(citData => citData.uid !== sprite.uid);
         }),
         new ActMoveOffX(sprite, Vars.AREA_WIDTH * .5),
         new ActComplete(()=>{
@@ -112,6 +109,7 @@ export default class CitizenCaptive extends ActionManager {
             duration: 1000,
             alpha: {from:1, to:0},
             onComplete: ()=>{
+              SaveData.Data.citizens = SaveData.Data.citizens.filter(citData => citData.uid !== sprite.uid);
               sprite.kill();
             }
           })
@@ -159,5 +157,4 @@ export default class CitizenCaptive extends ActionManager {
     return Phaser.Utils.Array.GetRandom(options);
   }
 
-  get saveID() { return 2 }
 }

@@ -2,6 +2,7 @@ import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Instructions from "../const/Instructions";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
@@ -11,17 +12,16 @@ export default class P11 extends TutorialSequence {
 
   init() {
 
-    const { scene } = this;
     const player = this.scene.player;
     const script = Subtitles.GetScript();
     const WIDTH = Vars.AREA_WIDTH;
 
     this
-    .addStopSaving()  // Temp (dev)
+    .addTitle(" >>> End of the game just to claim the final locations -")
 
     .addInstruction(Instructions.P11_CONQUER)
 
-    .addTitle(" >>> Spawn a claimer flag for Greenleaf forest")
+    .addTitle(" >>> Spawn a claimer flag for Greenleaf forest -")
 
     .add(()=>{
       this.doOnce(()=>{
@@ -30,10 +30,12 @@ export default class P11 extends TutorialSequence {
       return SaveData.Data.claimed.includes(Enum.LOC_GREEN_FOREST);
     })
     .addSave()
+    .addHealing()
     .addWait(4000)
-    .addSpeakerAndWait(player, Icon.BANNER, "The village is next.", 5000)
 
-    .addTitle(" >>> Spawn a claimer flag for Green village")
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.green9, 5000, Sfx.VOICE_AMUSED1)
+
+    .addTitle(" >>> Spawn a claimer flag for Green village -")
 
     .add(()=>{
       this.doOnce(()=>{
@@ -42,9 +44,10 @@ export default class P11 extends TutorialSequence {
       return SaveData.Data.claimed.includes(Enum.LOC_GREEN_FOREST);
     })
     .addSave()
+    .addHealing()
     .addWait(4000)
 
-    .addSpeakerAndWait(player, Icon.BANNER, "All the land belongs to Moon at Midnight!", 5000)
+    .addSpeakerAndWait(player, Icon.BANNER, script.MoonChief.green10, 5000, Sfx.VOICE_YES1)
 
     .addInstruction(Instructions.P11_COMPLETE)
     .addSave()

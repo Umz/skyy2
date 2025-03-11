@@ -7,6 +7,8 @@ import SequenceHelper from "./SequenceHelper";
 import Icon from "../const/Icon";
 import Subtitles from "../util/Subtitles";
 import Instructions from "../const/Instructions";
+import Sfx from "../const/Sfx";
+import Juke from "../util/Juke";
 
 export default class P2 extends TutorialSequence {
 
@@ -17,112 +19,113 @@ export default class P2 extends TutorialSequence {
     const script = Subtitles.GetScript();
 
     this
+    .addTitle(" >>> Moon Chief arrived in Blue Forest and defeats initial enemies")
+
     .add(()=>{ return SequenceHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
-    .addIcon(player, Icon.BANNER, 3000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 3000)
+    .addUpdateSaveStep()
     .addInstruction(Instructions.P2A_CLAIM_BLUE)
 
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000, Sfx.VOICE_AMUSED3)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH) {
         SequenceHelper.SpawnEnemies(3, [Enum.SOLDIER_BANDIT1]);
         return true;
       }
     })
-    .addSpeaker(player, Icon.SPEECH, script.MoonChief.bf1, 3000)
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .75) {
         return this.spawnAndWait(3);
       }
     })
-    .addStopSaving()
+    .addSave()
+
+    .addTitle(" >>> Wildman appears and Moon Chief comes in to help him")
+
     .add(()=>{
       if (player.x < Vars.AREA_WIDTH * .65) {
-        SequenceHelper.SpawnEnemiesAt(Vars.AREA_WIDTH* .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
+        SequenceHelper.SpawnEnemiesAt(Vars.AREA_WIDTH * .48, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
         this.spawnWildman();
         return true;
       }
     })
 
-    .addPlayerSpeak(Icon.ALLY, script.MoonChief.bf2, 4000)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.ALLY, script.MoonChief.bf2, 4000, Sfx.VOICE_ATTACK1)
     .add(()=>{ return SequenceHelper.CheckEnemiesLessOrEqual(0) })
 
-    .addSpeakAndSpawn(scene.bluemoon, Icon.SPEECH, script.Wildman.bf1, 2000)
-    .addSpeakAndSpawn(scene.bluemoon, Icon.SPEECH, script.Wildman.bf2, 5000)
-    .addSpeakAndSpawn(player, Icon.SPEECH, script.MoonChief.bf3, 3000)
-    .addSpeakAndSpawn(scene.bluemoon, Icon.EXCLAIM, script.Wildman.bf3, 6000)
-    .addIcon(player, Icon.SPARKLE, 2000)
+    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf1, 2000, Sfx.VOICE_THANKFUL1)
+    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf2, 5000, Sfx.VOICE_AMUSED3)
+    .addSpeakAndSpawn(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf3, 3000, Sfx.VOICE_AMUSED3)
+    .addSpeakAndSpawn(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.Wildman.bf3, 6000, Sfx.VOICE_THANKFUL1)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.SPARKLE, 2000)
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
+    .addUpdateSaveStep()
 
-    //  - Victory
-    
-    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf4, 3000)
-    .addBlueSpeak(Icon.FIST_FIRE, script.Wildman.bf4, 2000)
-    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf5, 5000)
-    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf6, 5000)
+    .addTitle(" >>> Enemies are defeated and Moon Chief recruits Wildman to Moon at Midnight")
 
-    .addBlueIcon(Icon.ELLIPSE, 2000).addWait(1000)
-    .addBlueSpeak(Icon.SPEECH, script.Wildman.bf5, 5000)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf4, 3000, Sfx.VOICE_AMUSED3)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.FIST_FIRE, script.Wildman.bf4, 2000, Sfx.VOICE_AMUSED1)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf5, 5000, Sfx.VOICE_AMUSED3)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf6, 5000, Sfx.VOICE_AMUSED3)
+
+    .addIcon(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
+    .addWait(1000)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.SPEECH, script.Wildman.bf5, 5000, Sfx.VOICE_AMUSED1)
     .addWait(1000)
 
-    .addPlayerSpeak(Icon.SPEECH, script.MoonChief.bf7, 4000)
-    .addBlueIcon(Icon.ELLIPSE, 2000).addWait(1000)
-    .addIcon(player, Icon.ELLIPSE, 2000).addWait(1000)
-
-    .addPlayerSpeak(Icon.QUESTION, script.MoonChief.bf8, 2000)
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf7, 4000, Sfx.VOICE_ATTACK1)
+    .addIcon(Enum.ID_BLUE_MOON, Icon.ELLIPSE, 2000)
     .addWait(1000)
-    .addBlueSpeak(Icon.EXCLAIM, script.Wildman.bf6, 5000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.ELLIPSE, 2000)
     .addWait(1000)
-    .addBlueSpeak(Icon.BANNER, script.Wildman.bf7, 4000)
 
-    .add(()=>{
-      this.turnSavingOn();
-      return true;
-    })
-    .addStartSaving()
-    
+    .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.QUESTION, script.MoonChief.bf8, 2000, Sfx.VOICE_HO2)
+    .addWait(1000)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.Wildman.bf6, 5000, Sfx.VOICE_LAUGH1)
+    .addWait(1000)
+    .addSpeakWithDelay(Enum.ID_BLUE_MOON, Icon.BANNER, script.Wildman.bf7, 4000, Sfx.VOICE_HO1)
+
     .add(()=>{
       this.convertWildman();
-      SaveData.Data.hasBlueMoon = true;
-      SaveData.SAVE_GAME_DATA();
       return true;
     })
+    .addSave()
 
-    //  - Boss battle   -------------------------------
-
-    .add(()=>{ return true })
+    .addTitle(" >>> Rabid Bandit appears to start the boss battle")
 
     .addWait(3000)
-    .addStopSaving()
     .add(()=>{
       this.doOnce(()=>{
-        this.spawnBoss();
+        this.spawnRabidBandit();
         SequenceHelper.SpawnEnemies(4, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
       });
       return true;
     })
-    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss1, 4000)
-    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss2, 4000)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss1, 4000, Sfx.VOICE_ANGRY1)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss2, 4000, Sfx.VOICE_ANGRY3)
     .addWait(1000)
 
-    // Second speech when 1/3 life gone
+    .addTitle(" >>> Second boss speech starts when HP is 2/3")
+
     .add(()=>{
       SequenceHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
-      return this.checkBossHP(this.check1);
+      return this.checkBossHP(this.bossHpCheck1);
     })
 
-    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss3, 4000)
-    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss4, 4000)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss3, 4000, Sfx.VOICE_ANGRY3)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss4, 4000, Sfx.VOICE_ANGRY1)
 
-    // Third speech when 2/3 life gone
+    .addTitle(" >>> Last boss speech starts when HP is 1/3")
+
     .add(()=>{
       SequenceHelper.SpawnConstant(2, 2, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
-      return this.checkBossHP(this.check2);
+      return this.checkBossHP(this.bossHPCheck2);
     })
-    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss5, 4000)
-    .addSpeakBoss(Icon.ANGER, script.RabidBandit.boss6, 4000)
-    .addSpeakBoss(Icon.FIST_FIRE, script.RabidBandit.boss7, 5000)
-    .addWaitForDialogue()
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss5, 4000, Sfx.VOICE_ANGRY1)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.ANGER, script.RabidBandit.boss6, 4000, Sfx.VOICE_ANGRY2)
+    .addSpeakWithDelay(Enum.ID_BOSS, Icon.FIST_FIRE, script.RabidBandit.boss7, 5000, Sfx.VOICE_ANGRY3)
     
     .add(()=>{
       SequenceHelper.SpawnEnemies(7, [Enum.SOLDIER_BANDIT1, Enum.SOLDIER_BANDIT2]);
@@ -131,12 +134,12 @@ export default class P2 extends TutorialSequence {
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
+    .addSave()
     .addWait(3000)
 
-    //  Claim land
+    .addTitle(" >>> Claim the Blue Forest and place a flag near the teal tree")
 
-    .addStartSaving()
-    .addIcon(player, Icon.STANDARD, 15 * 1000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
     .addInstruction(Instructions.P2B_PLACE_FLAG)
     .add(()=>{
       this.doOnce(()=>{
@@ -144,56 +147,26 @@ export default class P2 extends TutorialSequence {
       });
       return SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
     })
-    .add(()=>{
-      this.doOnce(()=> {
-        SaveData.SAVE_GAME_DATA();
-      });
-      return true;
-    })
+    .addSave()
+
+    .addWait(1000)
+    .addHealing()
+    
     .addWait(3000)
     .addInstruction(Instructions.P2C_LEAVE_FOREST);
     
   }
 
   //  ---------------------------------------------------
-  
-  addPlayerSpeak(ic, text, ttl) {
-    this.add(()=>{
-      const { scene } = this;
-      const player = scene.player;
-      player.speak(ic, text, ttl);
-      return true;
-    })
-    .addWait(ttl + 750)
-    return this;
-  }
 
-  addBlueSpeak(ic, text, ttl) {
-    this.add(()=>{
-      const { scene } = this;
-      const bm = scene.bluemoon;
-      bm.speak(ic, text, ttl);
-      return true;
-    })
-    .addWait(ttl + 750)
-    return this;
-  }
-
-  addSpeakBoss(ic, text, ttl) {
-    this.add(()=>{
-      this.boss.speak(ic, text, ttl);
-      return true;
-    })
-    .addWait(ttl + 750)
-    return this;
-  }
-
-  addSpeakAndSpawn(soldier, icon, text, ttl) {
-
+  addSpeakAndSpawn(uid, icon, text, ttl, sfx) {
     this
     .add(()=>{
-      const sprite = soldier || this.scene.bluemoon;
+      const sprite = this.getSoldierbyUID(uid);
       sprite.speak(icon, text, ttl);
+      if (sfx) {
+        Juke.PlaySound(sfx);
+      }
       return true;
     })
     .addWait(ttl)
@@ -206,31 +179,32 @@ export default class P2 extends TutorialSequence {
     return this;
   }
 
-  addBlueIcon(icon, ttl) {
-    this.add(()=>{
-      const sprite = this.scene.bluemoon;
-      sprite.showIcon(icon, ttl);
-      return true;
-    })
-    .addWait(750)
+  addSpeakWithDelay(uid, icon, text, ttl, sfx) {
+    this
+    .addSpeakAndWait(uid, icon, text, ttl, sfx)
+    .addWait(500);
     return this;
   }
 
   //  -----------------------------------
 
   spawnWildman() {
-    const { scene } = this;
-    scene.spawnWildman();
+    const script = Subtitles.GetScript();
+    const pX = Vars.AREA_WIDTH * .5;
+    const wildman = this.spawnAlly(pX, Enum.SOLDIER_WILDMAN, 25, 10, script.Names.Wildman);
+    wildman.uid = Enum.ID_BLUE_MOON;
+    SaveData.SaveSoldierData(wildman.getSaveData());
   }
 
   convertWildman() {
-    const { scene } = this;
-    const bm = scene.bluemoon;
+    const script = Subtitles.GetScript();
+    const bm = this.getSoldierbyUID(Enum.ID_BLUE_MOON);
     if (bm) {
       bm.setHP(45, 45);
       bm.setGP(10, 10);
-      bm.setDisplayName("Blue Moon", Enum.TEAM_ALLY);
+      bm.setDisplayName(script.Names.BlueMoon, Enum.TEAM_ALLY);
       bm.setController(new BlueMoon());
+      SaveData.SaveSoldierData(bm.getSaveData());
     }
   }
 
@@ -242,16 +216,15 @@ export default class P2 extends TutorialSequence {
     return this.scene.countEnemies();
   }
 
-  spawnBoss() {
-    const { scene } = this;
-    const boss = scene.spawnEnemy(null, Enum.SOLDIER_BANDIT_BOSS);
+  spawnRabidBandit() {
 
-    boss.setDisplayName("Rabid Bandit", Enum.TEAM_ENEMY);
-    boss.setHP(18, 18);
-    boss.setGP(7, 7);
+    const script = Subtitles.GetScript();
 
-    this.check1 = 18 - 6;
-    this.check2 = 18 - 12;
+    const boss = this.spawnEnemy(null, Enum.SOLDIER_RABID_BANDIT, 20, 7, script.Names.RabidBandit);
+    boss.uid = Enum.ID_BOSS;
+
+    this.bossHpCheck1 = 20 - 6;
+    this.bossHPCheck2 = 20 - 12;
 
     this.boss = boss;
   }
