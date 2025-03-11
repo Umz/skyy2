@@ -18,15 +18,7 @@ export default class P8 extends TutorialSequence {
     const { scene } = this;
     const player = this.scene.player;
     const script = Subtitles.GetScript();
-
-    //  - Battle of Storm Village - Destroy buildings and configure battle -
-    // Max troops
-    // Split and divide after
   
-    // - When to save sequence advancements (Die and reload in specific places)
-    // - Which enemies drop items
-    // - When does NT drop help
-
     this
     .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")
 
@@ -47,6 +39,7 @@ export default class P8 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.ANGER, script.MoonChief.mam4, 8000, Sfx.VOICE_ANGRY2)
     .addWait(1000)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.mam5, 4000, Sfx.VOICE_ATTACK1)
+    .addSave()
 
     .addInstruction(Instructions.P8A_GOTO)
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 30 * 1000)
@@ -74,6 +67,7 @@ export default class P8 extends TutorialSequence {
 
     .addPositionCheck(2.9)
     .addBattleSpawn(15, 15)
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Arriving in Storm village to full scale battle -", true)
 
@@ -98,6 +92,7 @@ export default class P8 extends TutorialSequence {
       this.spawnAlliesConstant(11);
       return this.clover.isDead();
     })
+    .addSave()
     
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.storm2, 5000, Sfx.VOICE_HO1)
     .addWait(750)
@@ -128,6 +123,7 @@ export default class P8 extends TutorialSequence {
 
       return true;
     })
+    .addSave()
 
     .addWait(1000)
     .addInstruction(Instructions.P8B_VICTORY)

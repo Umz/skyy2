@@ -48,6 +48,7 @@ export default class P3 extends TutorialSequence {
 
     //  From herre down = add sounds to speech 
 
+    .addUpdateSaveStep()
     .addSpeak(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.mam1, 4000, Sfx.VOICE_ANGRY2)
 
     .addTitle(" >>> Enemies spawning from the right - initial wave without Red Face -")
@@ -63,6 +64,7 @@ export default class P3 extends TutorialSequence {
     .addWait(5 * 1000)
     .addEnemiesRight(2, Enum.SOLDIER_RED2)
     .add(()=>{return SequenceHelper.CheckEnemiesLessOrEqual(0)})
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Red Face dialogue, then he appears from the left -")
 
@@ -83,6 +85,7 @@ export default class P3 extends TutorialSequence {
     })
     .addSound(Sfx.VOICE_THANKFUL1)
     .addDialogueAndWait(redface, script.RedFace.retreat, 7000)
+    .addUpdateSaveStep()
     
     //  -
 

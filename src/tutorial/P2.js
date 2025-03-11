@@ -61,7 +61,8 @@ export default class P2 extends TutorialSequence {
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
-    
+    .addUpdateSaveStep()
+
     .addTitle(" >>> Enemies are defeated and Moon Chief recruits Wildman to Moon at Midnight")
 
     .addSpeakWithDelay(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf4, 3000, Sfx.VOICE_AMUSED3)
@@ -133,6 +134,7 @@ export default class P2 extends TutorialSequence {
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
+    .addSave()
     .addWait(3000)
 
     .addTitle(" >>> Claim the Blue Forest and place a flag near the teal tree")

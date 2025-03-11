@@ -259,8 +259,6 @@ export default class TutorialSequence {
       SaveData.Data.tutorialSequenceStep = this.stepToSave;
 
       // Go through from P1- deciding when to save next step
-      // Save Soldier+Citizen Data automatically every second
-
     }
   }
 

@@ -34,6 +34,7 @@ export default class P9 extends TutorialSequence {
       SaveData.SaveSoldierData(lunar.getSaveData());
       return true;
     })
+    .addSave()
 
     .add(()=>{
       const lunar = this.getSoldierbyUID(Enum.ID_LUNAR);
@@ -50,6 +51,7 @@ export default class P9 extends TutorialSequence {
     })
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.PICKAXE, script.NightTrain.storm5, 6000, Sfx.VOICE_HO1)
     .addWait(1000)
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Night Train runs forward to The Mines to secure the resources")
 
@@ -71,6 +73,7 @@ export default class P9 extends TutorialSequence {
     })
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.HAPPY, script.NightTrain.mines10, 4000, Sfx.VOICE_LAUGH1)
     .addWait(500)
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Night Train begins transporting the resources back to Storm while Moon Chief mines it -")
 
@@ -101,6 +104,7 @@ export default class P9 extends TutorialSequence {
       const night = this.getSoldierbyUID(Enum.ID_NIGHT_TRAIN);
       return night.x >= WIDTH * 4.3
     })
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Finish mining section and go to Storm to recruit villagers to work -")
 
@@ -119,6 +123,7 @@ export default class P9 extends TutorialSequence {
       // Convert all villagers to miners
       return true;
     })
+    .addSave()
 
     .add(()=>{
       Ctr.SetActions(this.zoll,
@@ -141,6 +146,7 @@ export default class P9 extends TutorialSequence {
     })
 
     .add(()=>{ return player.x <= WIDTH * 2.8})
+    
     .add(()=>{
       
       for (let i=0; i< 15; i++) {

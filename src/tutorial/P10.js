@@ -36,6 +36,7 @@ export default class P10 extends TutorialSequence {
       }
       return true;
     })
+    .addUpdateSaveStep()
     .add(()=> player.x >= WIDTH * 5)
 
     .add(()=>{
@@ -59,6 +60,7 @@ export default class P10 extends TutorialSequence {
       this.resumeSoldiersAfterDuel();
       return true;
     })
+    .addSave()
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.plains6, 5000, Sfx.VOICE_ATTACK1)
 
     .add(()=>{
@@ -109,6 +111,7 @@ export default class P10 extends TutorialSequence {
       this.resumeSoldiersAfterDuel();
       return true;
     })
+    .addSave()
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.plains8, 5000)
 
     .add(()=>{
@@ -131,6 +134,7 @@ export default class P10 extends TutorialSequence {
       killed += 20;
       return true;
     })
+    .addUpdateSaveStep()
     
     .addTitle(" >>> Green Meadow attacks Moon Chief - duel and kill the unit")
 
@@ -150,6 +154,7 @@ export default class P10 extends TutorialSequence {
       return true;
     })
     .add(() => SequenceHelper.CheckEnemiesLessOrEqual(10))
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Madogu arrives with more troops to help Moon Chief -")
 
@@ -203,6 +208,7 @@ export default class P10 extends TutorialSequence {
     .addDialogueAndWait(script.Names.GreenMeadow, script.Boss.GreenMeadow3, 8000)
     .addSound(Sfx.VOICE_AMUSED3)
     .addHideDuelDOM()
+    .addSave()
 
     .addTitle(" >>> After Moon Chief is victorious the rest of the enemies flee -")
     

@@ -1,3 +1,4 @@
+import BlueMoon from "../ai/BlueMoon";
 import Lunar1 from "../ai/Lunar1";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
@@ -41,6 +42,7 @@ export default class P7 extends TutorialSequence {
       this.spawnLunar();
       return true;
     })
+    .addSave()
     .add(()=>{ return player.x >= Vars.AREA_WIDTH * 7.4 })
 
     .addTitle(" >>> Moon Chief meets the Architect and recruits him -", true)
@@ -57,6 +59,7 @@ export default class P7 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.green2, 6000, Sfx.VOICE_ATTACK1)
     .addWait(500)
     .addSpeakAndWait(Enum.ID_LUNAR, Icon.BANNER, script.Lunar.green2, 2000, Sfx.VOICE_AMUSED1)
+    .addUpdateSaveStep()
 
     .addTitle(" >>> The Architect joins Moon Chief and leaves with him -")
 
@@ -91,13 +94,14 @@ export default class P7 extends TutorialSequence {
     .add(()=>{
       Juke.PlaySound(Sfx.HEAL);
 
-      player.recoverHP(5);
+      player.recoverHP(10);
       player.recoverGP(player.maxGP);
 
       Vfx.ShowAnimatedFX(player, Vars.VFX_CONSUME);
       Juke.PlaySound(Sfx.HEAL);
       return true;
     })
+    .addSave()
 
     .add(()=>{
       const lunar = this.getSoldierbyUID(Enum.ID_LUNAR);
@@ -151,6 +155,7 @@ export default class P7 extends TutorialSequence {
       return true;
     })
     .add(()=> SequenceHelper.CheckEnemiesLessOrEqual(0))
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Moon Chief leaves the village and runs into Green Sword. -", true)
 
@@ -165,6 +170,7 @@ export default class P7 extends TutorialSequence {
     .addGreenSwordSpeakAndWait(Icon.SWORD, script.GreenSword.green1, 3000)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.green6, 3000, Sfx.VOICE_AMUSED3)
     .add(() => green.isDead())
+    .addSave()
 
     .addTitle(" >>> Fade out the screen to black and jump to Moon at Midnight with everyone. -")
 
@@ -193,9 +199,11 @@ export default class P7 extends TutorialSequence {
 
       nighttrain.faceX(lunar.x);
 
+      const blue = this.getSoldierbyUID(Enum.ID_BLUE_MOON);
+      blue.setController(new BlueMoon());
+
       return true;
     })
-    
     .addWait(500)
     .add(() => {
       const ele = document.getElementById("blackout-container");
@@ -209,6 +217,7 @@ export default class P7 extends TutorialSequence {
       ele.style.display = "none";
       return true;
     })
+    .addSave()
 
     .addTitle(" >>> The Architect joins Moon at Midnight and becomes Lunar -")
 

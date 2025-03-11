@@ -5,7 +5,6 @@ import Icon from "../const/Icon";
 import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
-import Ctr from "../util/Ctr";
 import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
@@ -38,6 +37,8 @@ export default class P5 extends TutorialSequence {
       this.spawnNT();
       return true;
     })
+    .addSave()
+
     .add(()=>{
       const nt = this.getSoldierbyUID(Enum.ID_NIGHT_TRAIN);
       nt.controller.gotoPlayer();
@@ -54,6 +55,7 @@ export default class P5 extends TutorialSequence {
 
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.HAND_UP_RIGHT, script.NightTrain.mines3, 2000, Sfx.VOICE_HO1)
     .addWait(500)
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Night Train leads Moon Chief to the mines in the east -", true)
 
@@ -68,6 +70,7 @@ export default class P5 extends TutorialSequence {
     .addSpeak(Enum.ID_NIGHT_TRAIN, Icon.EXCLAIM, script.NightTrain.come_on, 2000, Sfx.VOICE_EFFORT1)
     .addNightMove(Vars.AREA_WIDTH * 4.4)
     .add(()=> player.x > Vars.AREA_WIDTH * 4.3 )
+    .addUpdateSaveStep()
 
     .addTitle(" >>> Moon Chief and Night Train arrive at The Mines together -")
 
@@ -88,11 +91,13 @@ export default class P5 extends TutorialSequence {
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.DROPLET, script.MoonChief.mines3, 2000, Sfx.VOICE_SIGH1)
     .addWait(500)
+    .addUpdateSaveStep()
     .addInstruction(Instructions.P5A_BREAK_ROCKS)
     
     .addTitle(" >>> Moon Chief breaks the rocks for Night Train and escorts him back to storm -")
 
     .add(()=> SaveData.Data.silica > 7 )
+    .addUpdateSaveStep()
 
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.BLUE_SILICA, script.NightTrain.mines9, 4000, Sfx.VOICE_THANKFUL1)
     .add(()=>{
@@ -102,6 +107,7 @@ export default class P5 extends TutorialSequence {
     })
 
     .add(()=> player.x <= Vars.AREA_WIDTH * 3.5 )
+    .addUpdateSaveStep()
     .addNightMove(Vars.AREA_WIDTH * 3.28)
 
     .addTitle(" >>> Harvest Moon appears and instructs Moon Chief to collect more Blue Silica -", true)
@@ -110,9 +116,7 @@ export default class P5 extends TutorialSequence {
       const x = Vars.AREA_WIDTH * 3.3;
       const hm = this.getCitizenByUID(Enum.ID_HARVEST_MOON);
       hm.setX(x);
-      Ctr.SetActions(hm,
-        Ctr.Wait(120 * 1000)
-      )
+      hm.controller.pause();
       return true;
     })
 
@@ -135,11 +139,16 @@ export default class P5 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.EXCLAIM, script.NightTrain.storm3, 1500, Sfx.VOICE_HO1)
 
     .add(()=>{
+      const hm = this.getCitizenByUID(Enum.ID_HARVEST_MOON);
+      hm.controller.resume();
+
       const nt = this.getSoldierbyUID(Enum.ID_NIGHT_TRAIN);
       nt.controller.gotoPlayer(-32);
+      
       return true;
     })
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.HAND_RIGHT, script.NightTrain.storm4, 2500, Sfx.VOICE_EFFORT1)
+    .addSave()
 
     .addInstruction(Instructions.P5B_MISSION)
 
@@ -186,6 +195,7 @@ export default class P5 extends TutorialSequence {
     .addTitle(" >>> Claim The Mines when Fallen Cloud has been defeated. -", true)
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.mines6, 3000, Sfx.VOICE_AMUSED3)
+    .addSave()
 
     .addInstruction(Instructions.P5C_CLAIM_MINES)
 
@@ -195,6 +205,7 @@ export default class P5 extends TutorialSequence {
       });
       return SaveData.Data.claimed.includes(Enum.LOC_MINES);
     })
+    .addSave()
     .addWait(3000)
     .addHealing()
 

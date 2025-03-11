@@ -13,7 +13,7 @@ export default class P6 extends TutorialSequence {
 
     this
     .addTitle(" >>> Just generic conversations until Moon Chief and Blue Moon reach Green Village -")
-
+    
     .addPlayerDistanceCheck(4.8)
     .addSpeakAndWait(Enum.ID_BLUE_MOON, Icon.EXCLAIM, script.BlueMoon.plains1, 3000, Sfx.VOICE_AMUSED1)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.QUESTION, script.MoonChief.plains1, 2000, Sfx.VOICE_HO1)
@@ -35,6 +35,7 @@ export default class P6 extends TutorialSequence {
     .addPlayerDistanceCheck(6.4)
     .addSpeakAndWait(Enum.ID_BLUE_MOON, Icon.BANNER, script.BlueMoon.plains6, 3000, Sfx.VOICE_HO2)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.plains4, 2000, Sfx.VOICE_HO1)
+    .addSave()
 
     .addTitle(" >>> Blue Moon - How are we going to get the Architect -")
 

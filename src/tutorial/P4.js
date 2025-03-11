@@ -104,6 +104,7 @@ export default class P4 extends TutorialSequence {
 
       return true;
     })
+    .addSave()
 
     .add(()=>{
       this.spawnConstantRight(6, 1);
@@ -111,8 +112,6 @@ export default class P4 extends TutorialSequence {
     })
 
     .addTitle(" >>> When Player reaches far right start the Duel -")
-
-    .addSave()
     
     .addRedFace()
     .addSound(Sfx.VOICE_AMUSED1)
@@ -146,12 +145,11 @@ export default class P4 extends TutorialSequence {
     .addSound(Sfx.VOICE_LAUGH1)
     .addHideDuelDOM()
     .addDialogueAndWait(bossName, script.RedFace.death, 7000)
+    .addSave()
 
     .addTitle(" >>> Duel ends with final words and Red Face defeated -")
 
-    .addSave()
     .addWait(2000)
-
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.rose1, 7000, Sfx.VOICE_EFFORT1)
     .addWait(500)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose2, 4000, Sfx.VOICE_EFFORT1)
@@ -170,6 +168,7 @@ export default class P4 extends TutorialSequence {
       }
       return true;
     })
+    .addSave()
 
     .add(()=>{ return SequenceHelper.CheckEnemiesLessOrEqual(0) })
     .addWait(3000)
@@ -177,6 +176,7 @@ export default class P4 extends TutorialSequence {
     .addTitle(" >>> Battle is Over with all enemies dead - Claim Storm Village for MaM -")
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
+    .addUpdateSaveStep()
     .addInstruction(Instructions.P4A_CLAIM_STORM)
 
     //  Claim the land
@@ -207,6 +207,7 @@ export default class P4 extends TutorialSequence {
       }
       return true;
     })
+    .addSave()
 
     .add(()=>{
       const storm = scene.countCitizensOfLoc(Enum.LOC_STORM);
