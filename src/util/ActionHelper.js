@@ -78,6 +78,17 @@ export function isNumberInRange(number, min, max) {
   return number >= min && number <= max;
 }
 
+/**
+ * Checks if a sprite is within the camera's horizontal view.
+ * @param {Phaser.GameObjects.Sprite} sprite The sprite to check.
+ * @param {Phaser.Cameras.Scene2D.Camera} camera The camera to check against.
+ * @returns {boolean} True if the sprite is within the camera's X bounds, false otherwise.
+ */
+export function isSpriteInCameraViewX(sprite, camera) {
+  const cameraView = camera.worldView;
+  return sprite.x >= cameraView.x && sprite.x <= cameraView.x + cameraView.width;
+}
+
 //  - INTERNAL FUNCTIONS  ---------------------------------------------------------
 
 function getAllyGroupForSprite(sprite) {

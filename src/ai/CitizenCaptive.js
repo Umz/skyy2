@@ -72,6 +72,7 @@ export default class CitizenCaptive extends ActionManager {
       new ActComplete(()=>{
         sprite.showIcon(Icon.EXCLAIM, 1000);
         sprite.setState(Enum.CS_BOWING);
+        sprite.stopMove();
       }),
       new ActWait(1750),
       new ActComplete(()=>{

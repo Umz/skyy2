@@ -2,6 +2,7 @@ import Action from "../classes/Action";
 import Enum from "../const/Enum";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import { isSpriteInCameraViewX } from "../util/ActionHelper";
 import Counter from "../util/Counter";
 import Juke from "../util/Juke";
 
@@ -18,8 +19,10 @@ export default class ViewSteps extends Action {
     const velX = this.sprite.velocityX;
     if (this.sprite.isState(Enum.SS_READY) && velX !== 0) {
       if (this.counter.update(delta)) {
-        const sound = Phaser.Utils.Array.GetRandom([Sfx.STEP1, Sfx.STEP2, Sfx.STEP3]);
-        Juke.PlaySound(sound);
+        if (isSpriteInCameraViewX(this.sprite, this.scene.cameras.main)) {
+          const sound = Phaser.Utils.Array.GetRandom([Sfx.STEP1, Sfx.STEP2, Sfx.STEP3]);
+          Juke.PlaySound(sound);
+        }
       }
     }
     else {

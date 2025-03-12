@@ -316,10 +316,10 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
   kill() {
     this.stopTweening();
-    this.destroy(true);
     if (this.displayName) {
       this.displayName.destroy(true);
     }
+    this.destroy(true);
   }
 
   //  Calculated values
@@ -559,6 +559,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     
     if (data.name !== "Soldier") {
       this.setDisplayName(data.name, Enum.TEAM_ALLY);
+      this.setDepth(2);
     }
 
     this.uid = data.uid;

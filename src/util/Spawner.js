@@ -71,6 +71,7 @@ export default class Spawner {
     player.setGP(7, 7);
     player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER, 2);
     player.setTeam(Enum.TEAM_ALLY);
+    player.setDepth(7);
     player.isPlayer = true;
     player.uid = Enum.ID_MOON_CHIEF;
 

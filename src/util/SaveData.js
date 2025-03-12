@@ -69,6 +69,8 @@ export default class SaveData {
           //data = saveData;
           console.log("Loaded again")
           console.log(data)
+          data.tutorialNumber = 7;
+          data.playerX = Vars.AREA_WIDTH * 7;
         }
         SaveData.isLoaded = true;
       })

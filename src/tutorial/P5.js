@@ -20,17 +20,6 @@ export default class P5 extends TutorialSequence {
     this
     .addTitle(" >>> Transition from battle mode to focus on mining and civilians -")
 
-    .add(()=>{
-      const allies = this.scene.groupAllies.getChildren();
-      for (let ally of allies) {
-        if (ally.uid > 100) {
-          ally.home = Enum.LOC_STORM;
-          ally.setController(new AllyStandby());
-        }
-      }
-      return true;
-    })
-
     .addTitle(" >>> Night Train appears from the east to get Moon Chief! -")
 
     .add(()=> {
@@ -116,6 +105,7 @@ export default class P5 extends TutorialSequence {
       const x = Vars.AREA_WIDTH * 3.3;
       const hm = this.getCitizenByUID(Enum.ID_HARVEST_MOON);
       hm.setX(x);
+      hm.stopMove();
       hm.controller.pause();
       return true;
     })
@@ -155,6 +145,18 @@ export default class P5 extends TutorialSequence {
     .addTitle(" >>> Leave Storm Village and travel toward Green Village - Fight at the Mines", true)
 
     .add(()=>  player.x >= Vars.AREA_WIDTH * 4.1 )
+
+    .addTitle(" >>> Clear old allies - can always just spawn new ones! -")
+    .add(()=>{
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        if (ally.uid > 100) {
+          ally.kill();
+        }
+      }
+      return true;
+    })
+    
     .add(()=>{
       const pX = SequenceHelper.GetCameraRight() + Phaser.Math.Between(10, 70);
       SequenceHelper.SpawnEnemiesAt(pX, 6, [Enum.SOLDIER_GR1]);
