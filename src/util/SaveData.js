@@ -66,7 +66,7 @@ export default class SaveData {
     localforage.getItem(GAME_DATA)
       .then(saveData => {
         if (saveData) {
-          data = saveData;
+          //data = saveData;
           console.log("Loaded again")
           console.log(data)
         }
