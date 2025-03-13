@@ -288,11 +288,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.hp = Math.max(0, this.hp - damage);
       this.isDefending = false;
       if (this.hp === 0) {
-        this.stopTweening();
-        this.destroy(true);
         if (isSpriteInCameraViewX(this)) {
           Juke.PlaySound(Sfx.DIE1);
         }
+        this.stopTweening();
+        this.destroy(true);
         if (this.displayName) {
           this.displayName.destroy(true);
         }

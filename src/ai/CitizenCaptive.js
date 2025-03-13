@@ -137,7 +137,7 @@ export default class CitizenCaptive extends ActionManager {
       sfx = isMale ? Sfx.VOICE_SIGH1 : Sfx.VOICEF_UMMM;
     }
 
-    Juke.PlaySound(sfx)
+    Juke.PlaySound(sfx);
   }
 
   getJoinSpeech() {

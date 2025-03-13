@@ -186,6 +186,7 @@ export default class CitizenWife extends ActionManager {
     }
     else {
       sprite.speak(Icon.SPEECH_HEART, "Finish your business quickly and come home, OK.", 5000);
+      Juke.PlaySound(Sfx.HEAL);
     }
   }
 
