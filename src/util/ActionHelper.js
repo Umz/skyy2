@@ -16,6 +16,11 @@ export function getAnyEnemyWithinRange(sprite, maxDistance) {
   return getAnySpriteInGroup(sprite, group, maxDistance);
 }
 
+export function getAllEnemiesWithinRange(sprite, maxDistance) {
+  const group = getEnemyGroupForSprite(sprite);
+  return getSpritesInRange(sprite, group, maxDistance);
+}
+
 /** Get any soldier within range */
 export function getClosestSoldierInRange(sprite, range) {
   const scene = sprite.scene;

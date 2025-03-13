@@ -111,12 +111,16 @@ export default class P7 extends TutorialSequence {
       lunar.controller.gotoX(WIDTH * 1.5);
       return true;
     })
+    .add(()=>{
+      const lunar = this.getSoldierbyUID(Enum.ID_LUNAR);
+      return lunar.x < player.x - 200;
+    })
     .addInstruction(Instructions.P7A_HOLD)
 
     .addTitle(" >>> Moon Chief stays in Green Village to hold back the enemies -")
 
     .add(()=>{
-      SequenceHelper.SpawnEnemiesAt(player.x + 100, 6, [Enum.SOLDIER_WL_INFANTRY]);
+      SequenceHelper.SpawnEnemiesAt(player.x + 140, 6, [Enum.SOLDIER_WL_INFANTRY]);
       return true;
     })
     .add(()=> SequenceHelper.CheckEnemiesLessOrEqual(0))

@@ -71,6 +71,21 @@ export default class SaveData {
           console.log(data)
           data.tutorialNumber = 7;
           data.playerX = Vars.AREA_WIDTH * 7;
+          data.soldiers = [{
+            "uid": 2,
+            "prefix": "Infantry_Wildman.png",
+            "x": data.playerX,
+            "state": 1,
+            "team": 1,
+            "sType": 10,
+            "speed": 96,
+            "hp": 45,
+            "gp": 10,
+            "lane": 2,
+            "home": 2,
+            "name": "Blue Moon",
+            "ctr": "BlueMoon"
+          }];
         }
         SaveData.isLoaded = true;
       })
