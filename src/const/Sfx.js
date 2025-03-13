@@ -38,6 +38,10 @@ const Sfx = {
   VOICE_THANKFUL1: { key: "voice_thankful1.mp3", config: {volume: .3} },
   VOICE_YES1: { key: "voice_yes1.mp3", config: {volume: .3} },
 
+  VOICEF_GIGGLE: { key: "voicef_giggle.mp3", config: {volume: .3} },
+  VOICEF_OH: { key: "voicef_oh.mp3", config: {volume: .3} },
+  VOICEF_UMMM: { key: "voicef_ummm.mp3", config: {volume: .3} },
+
   CROW_CALL: { key: "amb_crow.mp3", config: {volume: .3} },
   WING_FLAP: { key: "amb_wing_flap.mp3", config: {volume: 1} },
 

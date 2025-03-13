@@ -9,6 +9,8 @@ import Vars from "../const/Vars";
 import CitizenController from "./CitizenController";
 import SaveData from "../util/SaveData";
 import { getClosestCitizen, getDistanceFrom } from "../util/ActionHelper";
+import Juke from "../util/Juke";
+import Sfx from "../const/Sfx";
 
 export default class CitizenCaptive extends ActionManager {
 
@@ -80,7 +82,8 @@ export default class CitizenCaptive extends ActionManager {
       }),
 
       new ActComplete(()=>{
-        sprite.speak(icon, speech, 5000)
+        sprite.speak(icon, speech, 5000);
+        this.playVoice(isJoining);
       }),
       new ActWait(5000)
     )
@@ -120,6 +123,21 @@ export default class CitizenCaptive extends ActionManager {
       )
     }
 
+  }
+
+  playVoice(isJoining) {
+
+    let isMale = this.sprite.prefix === Vars.SHEET_CITIZEN_STORM_M1;
+    let sfx;
+
+    if (isJoining) {
+      sfx = isMale ? Sfx.VOICE_LAUGH1 : Sfx.VOICEF_OH;
+    }
+    else {
+      sfx = isMale ? Sfx.VOICE_SIGH1 : Sfx.VOICEF_UMMM;
+    }
+
+    Juke.PlaySound(sfx)
   }
 
   getJoinSpeech() {

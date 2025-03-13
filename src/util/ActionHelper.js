@@ -89,7 +89,8 @@ export function isNumberInRange(number, min, max) {
  * @param {Phaser.Cameras.Scene2D.Camera} camera The camera to check against.
  * @returns {boolean} True if the sprite is within the camera's X bounds, false otherwise.
  */
-export function isSpriteInCameraViewX(sprite, camera) {
+export function isSpriteInCameraViewX(sprite) {
+  const camera = sprite.scene.cameras.main;
   const cameraView = camera.worldView;
   return sprite.x >= cameraView.x && sprite.x <= cameraView.x + cameraView.width;
 }

@@ -19,7 +19,7 @@ export default class ViewSteps extends Action {
     const velX = this.sprite.velocityX;
     if (this.sprite.isState(Enum.SS_READY) && velX !== 0) {
       if (this.counter.update(delta)) {
-        if (isSpriteInCameraViewX(this.sprite, this.scene.cameras.main)) {
+        if (isSpriteInCameraViewX(this.sprite)) {
           const sound = Phaser.Utils.Array.GetRandom([Sfx.STEP1, Sfx.STEP2, Sfx.STEP3]);
           Juke.PlaySound(sound);
         }

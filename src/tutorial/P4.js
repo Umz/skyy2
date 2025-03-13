@@ -216,6 +216,7 @@ export default class P4 extends TutorialSequence {
       const citizens = all.filter(ss => ss.tribe === Enum.TRIBE_STORM);
       for (let citi of citizens) {
         citi.setController(new CitizenCaptive());
+        SaveData.SaveCitizenData(citi.getSaveData())
       }
       return true;
     })
