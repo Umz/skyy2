@@ -9,6 +9,7 @@ import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
 import ControllerMap, { getControllerSaveName } from "../const/ControllerMap";
+import { isSpriteInCameraViewX } from "../util/ActionHelper";
 
 export default class Soldier extends Phaser.Physics.Arcade.Sprite {
 
@@ -289,7 +290,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       if (this.hp === 0) {
         this.stopTweening();
         this.destroy(true);
-        Juke.PlaySound(Sfx.DIE1);
+        if (isSpriteInCameraViewX(this)) {
+          Juke.PlaySound(Sfx.DIE1);
+        }
         if (this.displayName) {
           this.displayName.destroy(true);
         }
@@ -300,7 +303,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     // only do damage if not already HURT state- no double hits
     this.state = Enum.SS_HURT;
     this.movementSpeed = (attacker.x > this.x) ? -this.getSpeed() : this.getSpeed();
-    Juke.PlaySound(Sfx.HIT1);
+    if (isSpriteInCameraViewX(this)) {
+      Juke.PlaySound(Sfx.HIT1);
+    }
 
     return false;
   }
@@ -353,7 +358,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     } else if (this.isState(Enum.SS_DEFEND) && velX === 0 && ((direction === -1 && !this.flipX) || (direction === 1 && this.flipX))) {
       this.body.velocity.x = adjustedSpeed * 1.3;
       this.showMovementDust();
-      Juke.PlaySound(Sfx.MOVE);
+      if (isSpriteInCameraViewX(this)) {
+        Juke.PlaySound(Sfx.MOVE);
+      }
     }
   
     this.movePressed = true;
@@ -383,14 +390,18 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   moveUp() {
     if (!this.isTweening() && this.state === Enum.SS_READY) {
       this.lane = Math.max(1, this.lane - 1);
-      Juke.PlaySound(Sfx.MOVE);
+      if (isSpriteInCameraViewX(this)) {
+        Juke.PlaySound(Sfx.MOVE);
+      }
     }
   }
 
   moveDown() {
     if (!this.isTweening() && this.state === Enum.SS_READY) {
       this.lane = Math.min(3, this.lane + 1);
-      Juke.PlaySound(Sfx.MOVE);
+      if (isSpriteInCameraViewX(this)) {
+        Juke.PlaySound(Sfx.MOVE);
+      }
     }
   }
 
@@ -402,7 +413,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
       this.showMovementDust();
 
       const snd = Phaser.Utils.Array.GetRandom([Sfx.ATTACK1, Sfx.ATTACK2])
-      Juke.PlaySound(snd);
+      if (isSpriteInCameraViewX(this)) {
+        Juke.PlaySound(snd);
+      }
     }
   }
 
@@ -410,7 +423,9 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     if (!this.isState(Enum.SS_HURT)) {
 
       if (this.state !== Enum.SS_DEFEND && isDefending) {
-        Juke.PlaySound(Sfx.BLOCK_ACTION);
+        if (isSpriteInCameraViewX(this)) {
+          Juke.PlaySound(Sfx.BLOCK_ACTION);
+        }
       }
 
       this.state = isDefending ? Enum.SS_DEFEND : Enum.SS_READY;
