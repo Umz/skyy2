@@ -39,7 +39,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     this.speed = 96;  // Use 72-
     this.movementSpeed = 0;
     this.lane = 1;
-    this.name = "Soldier";
+    this.name = Subtitles.GetScript().Names.Soldier;
     this.isShowingIcon = false;
 
     //  Play stats
@@ -572,7 +572,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     const ctr = ControllerMap.get(data.ctr);
     this.setController(new ctr());
     
-    if (data.name !== "Soldier") {
+    if (data.name !== Subtitles.GetScript().Names.Soldier) {
       this.setDisplayName(data.name, Enum.TEAM_ALLY);
       this.setDepth(2);
     }

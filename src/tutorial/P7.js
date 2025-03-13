@@ -3,7 +3,6 @@ import Lunar1 from "../ai/Lunar1";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Juke from "../util/Juke";
@@ -115,7 +114,7 @@ export default class P7 extends TutorialSequence {
       const lunar = this.getSoldierbyUID(Enum.ID_LUNAR);
       return lunar.x < player.x - 200;
     })
-    .addInstruction(Instructions.P7A_HOLD)
+    .addInstruction(script.Story.P7A_HOLD)
 
     .addTitle(" >>> Moon Chief stays in Green Village to hold back the enemies -")
 

@@ -70,7 +70,7 @@ export default class Spawner {
     camera.startFollow(player, true, .8);
     player.setHP(50, 50);
     player.setGP(7, 7);
-    player.setDisplayName("Moon Chief", Enum.TEAM_PLAYER, 2);
+    player.setDisplayName(Subtitles.GetScript().Names.MoonChief, Enum.TEAM_PLAYER, 2);
     player.setTeam(Enum.TEAM_ALLY);
     player.setDepth(7);
     player.isPlayer = true;

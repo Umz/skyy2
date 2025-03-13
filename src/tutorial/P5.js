@@ -1,8 +1,6 @@
-import AllyStandby from "../ai/AllyStandby";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
@@ -81,7 +79,7 @@ export default class P5 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.DROPLET, script.MoonChief.mines3, 2000, Sfx.VOICE_SIGH1)
     .addWait(500)
     .addUpdateSaveStep()
-    .addInstruction(Instructions.P5A_BREAK_ROCKS)
+    .addInstruction(script.Story.P5A_BREAK_ROCKS)
     
     .addTitle(" >>> Moon Chief breaks the rocks for Night Train and escorts him back to storm -")
 
@@ -140,7 +138,7 @@ export default class P5 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.HAND_RIGHT, script.NightTrain.storm4, 2500, Sfx.VOICE_EFFORT1)
     .addSave()
 
-    .addInstruction(Instructions.P5B_MISSION)
+    .addInstruction(script.Story.P5B_MISSION)
 
     .addTitle(" >>> Leave Storm Village and travel toward Green Village - Fight at the Mines", true)
 
@@ -199,7 +197,7 @@ export default class P5 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.mines6, 3000, Sfx.VOICE_AMUSED3)
     .addSave()
 
-    .addInstruction(Instructions.P5C_CLAIM_MINES)
+    .addInstruction(script.Story.P5C_CLAIM_MINES)
 
     .add(()=>{
       this.doOnce(()=>{

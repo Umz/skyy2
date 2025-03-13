@@ -1,7 +1,6 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
@@ -19,7 +18,7 @@ export default class P11 extends TutorialSequence {
     this
     .addTitle(" >>> End of the game just to claim the final locations -")
 
-    .addInstruction(Instructions.P11_CONQUER)
+    .addInstruction(script.Story.P11_CONQUER)
 
     .addTitle(" >>> Spawn a claimer flag for Greenleaf forest -")
 
@@ -49,7 +48,7 @@ export default class P11 extends TutorialSequence {
 
     .addSpeakerAndWait(player, Icon.BANNER, script.MoonChief.green10, 5000, Sfx.VOICE_YES1)
 
-    .addInstruction(Instructions.P11_COMPLETE)
+    .addInstruction(script.Story.P11_COMPLETE)
     .addSave()
 
     .add(()=> false)

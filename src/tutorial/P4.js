@@ -5,7 +5,6 @@ import RedDuel from "../ai/RedDuel";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
@@ -178,7 +177,7 @@ export default class P4 extends TutorialSequence {
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
     .addUpdateSaveStep()
-    .addInstruction(Instructions.P4A_CLAIM_STORM)
+    .addInstruction(script.Story.P4A_CLAIM_STORM)
 
     //  Claim the land
 
@@ -207,7 +206,7 @@ export default class P4 extends TutorialSequence {
 
     .addWait(3000)
     .addHealing()
-    .addInstruction(Instructions.P4B_CITIZEN_TRIALS)
+    .addInstruction(script.Story.P4B_CITIZEN_TRIALS)
 
     .addTitle(" >>> Citizens set to Captive behaviour and wait till all have been interacted with -")
 

@@ -1,12 +1,10 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
 import Juke from "../util/Juke";
-import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
@@ -26,7 +24,7 @@ export default class P10 extends TutorialSequence {
     this
     .addTitle(" >>> Instructions to go and start a war - duel and kill Tall Ash -")
 
-    .addInstruction(Instructions.P10_GOTO_WAR)
+    .addInstruction(script.Story.P10_GOTO_WAR)
     .add(()=> {
       const group = this.scene.groupAllies.getChildren();
       for (let sol of group) {

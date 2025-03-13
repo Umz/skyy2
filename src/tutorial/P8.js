@@ -1,7 +1,6 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
@@ -41,7 +40,7 @@ export default class P8 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.mam5, 4000, Sfx.VOICE_ATTACK1)
     .addSave()
 
-    .addInstruction(Instructions.P8A_GOTO)
+    .addInstruction(script.Story.P8A_GOTO)
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 30 * 1000)
 
     .addTitle(" >>> Battles are already taking place in the forest as you pass through")
@@ -126,7 +125,7 @@ export default class P8 extends TutorialSequence {
     .addSave()
 
     .addWait(1000)
-    .addInstruction(Instructions.P8B_VICTORY)
+    .addInstruction(script.Story.P8B_VICTORY)
   }
 
   //  ====================================================================================================
