@@ -70,6 +70,12 @@ export class PlayScene extends Scene {
     this.lane_2 = this.add.layer().setDepth(20);
     this.lane_3 = this.add.layer().setDepth(30);
 
+    //  Independent
+
+    const allScripts = this.cache.json.get(Vars.JSON_SCRIPT);
+    Subtitles.SetScene(this);
+    Subtitles.SetScript(allScripts.EN);
+
     //  Camera setup
 
     const camera = this.cameras.main;
@@ -123,11 +129,6 @@ export class PlayScene extends Scene {
     Juke.SetScene(this);
     Juke.PlayMusic(Sfx.MUS_GAME);
     Vfx.SetScene(this);
-
-    const allScripts = this.cache.json.get(Vars.JSON_SCRIPT);
-
-    Subtitles.SetScene(this);
-    Subtitles.SetScript(allScripts.EN);
 
     this.crowdRect = new Phaser.Geom.Rectangle(0, 0, 100, 24);
     this.isPlayerCrowded = false;
@@ -554,6 +555,7 @@ export class PlayScene extends Scene {
     for (let building of storm) {
       if (building.buildingType === Enum.BUILDING_HOUSE || building.buildingType === Enum.BUILDING_TOWER) {
         building.setLevel(2);
+        building.updateSaveData();
       }
     }
   }
@@ -564,6 +566,7 @@ export class PlayScene extends Scene {
     for (let building of storm) {
       if (building.buildingType === Enum.BUILDING_HOUSE || building.buildingType === Enum.BUILDING_TOWER) {
         building.addProgress(Phaser.Math.Between(20, 40));
+        building.updateSaveData();
       }
     }
   }

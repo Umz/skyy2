@@ -158,6 +158,8 @@ export default class CitizenWife extends ActionManager {
     const script = Subtitles.GetScript();
 
     if (player.getHPPercent() < 1 || player.getGPPercent() < 1) {
+
+      sprite.stopMove();
       sprite.speak(Icon.ALLY_SHIELD, script.MoonRose.powerup, 5000);
       Juke.PlaySound(Sfx.HEAL);
 
@@ -177,9 +179,11 @@ export default class CitizenWife extends ActionManager {
 
     const sprite = this.sprite;
     const player = this.scene.player;
+    const script = Subtitles.GetScript();
 
     if (player.attBoost === 0) {
       
+      sprite.stopMove();
       sprite.speak(Icon.ALLY_SWORD, script.MoonGlow.powerup, 5000);
       player.boostAttack(10);
 

@@ -141,15 +141,15 @@ function convertPlaytime(saveData) {
 
 function getSaveDataChrome() {
   return {
-    "playtime": 1278594,
-    "playSecs": 1278,
-    "playMins": 21,
+    "playtime": 1467403,
+    "playSecs": 1467,
+    "playMins": 24,
     "playHours": 0,
-    "uid": 580,
+    "uid": 738,
     "silica": 46,
     "transportedSilica": 0,
     "buildingMaterial": 0,
-    "playerX": 11403,
+    "playerX": 6059,
     "playerLane": 2,
     "citizens": [
       {
@@ -158,7 +158,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_F2.png",
-        "x": 2329.3333333334936,
+        "x": 3260.666666666615,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -171,7 +171,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_M2.png",
-        "x": 2989.999999999959,
+        "x": 3010.666666666621,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -184,7 +184,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_F1.png",
-        "x": 3313.9999999999645,
+        "x": 2986.000000000039,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -197,7 +197,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_M2.png",
-        "x": 2424.000000000157,
+        "x": 2684.0000000000978,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -210,7 +210,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_M2.png",
-        "x": 3260.3333333333503,
+        "x": 2714.3333333334745,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -223,7 +223,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_M2.png",
-        "x": 2715.000000000008,
+        "x": 2865.6666666666406,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -236,7 +236,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_F1.png",
-        "x": 1473.6666666668038,
+        "x": 3059.66666666665,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -249,7 +249,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_F2.png",
-        "x": 3016.333333333272,
+        "x": 2741.666666666668,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -262,7 +262,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_F1.png",
-        "x": 3299.333333333301,
+        "x": 2464.6666666668243,
         "home": 2,
         "tribe": 1,
         "name": "Citizen",
@@ -275,7 +275,7 @@ function getSaveDataChrome() {
           "role": "citizen"
         },
         "sheet": "Citizen_MaM_King.png",
-        "x": 1976.6666666661176,
+        "x": 3065.9999999992388,
         "home": 2,
         "tribe": 1,
         "name": "Harvest Moon",
@@ -315,7 +315,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_F1.png",
-        "x": 6693.333333333539,
+        "x": 7103.333333333725,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -329,7 +329,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_F1.png",
-        "x": 6595.6666666669,
+        "x": 6449.666666666833,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -343,7 +343,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_F2.png",
-        "x": 5455.666666666333,
+        "x": 5024.999999999471,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -357,7 +357,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_M1.png",
-        "x": 6557.666666666594,
+        "x": 6074.999999999708,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -371,7 +371,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_M1.png",
-        "x": 6651.333333333212,
+        "x": 6310.6666666663905,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -385,7 +385,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_M1.png",
-        "x": 6997.333333333687,
+        "x": 7361.333333333852,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -399,7 +399,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_M1.png",
-        "x": 6546.000000000036,
+        "x": 6655.333333333419,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -413,7 +413,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_M1.png",
-        "x": 5480.999999999641,
+        "x": 5206.999999999516,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -427,7 +427,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_M1.png",
-        "x": 6236.666666666651,
+        "x": 6239.3333333333185,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -441,7 +441,7 @@ function getSaveDataChrome() {
           "isJoining": true
         },
         "sheet": "Citizen_Storm_F1.png",
-        "x": 7241.666666666948,
+        "x": 7283.666666666967,
         "home": 4,
         "tribe": 1,
         "name": "Citizen",
@@ -453,52 +453,52 @@ function getSaveDataChrome() {
       {
         "uid": 2,
         "prefix": "Infantry_Wildman.png",
-        "x": 9015.453881600592,
+        "x": 7836.464755200212,
         "state": 1,
         "team": 1,
         "sType": 10,
         "speed": 96,
         "hp": 45,
         "gp": 10,
-        "lane": 2,
+        "lane": 3,
         "home": 2,
         "name": "Blue Moon",
-        "ctr": "Lunar1"
+        "ctr": "BlueMoon"
       },
       {
         "uid": 191,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 7380.564433067242,
+        "x": 7829.224676267369,
         "state": 1,
         "team": 1,
         "sType": 202,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 2,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy1"
       },
       {
         "uid": 192,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 7424.859315200639,
+        "x": 6222.992512000375,
         "state": 1,
         "team": 1,
         "sType": 202,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 2,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy1"
       },
       {
         "uid": 193,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 6479.829260800403,
+        "x": 7446.0534016001575,
         "state": 1,
         "team": 1,
         "sType": 202,
@@ -508,49 +508,49 @@ function getSaveDataChrome() {
         "lane": 3,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy1"
       },
       {
         "uid": 194,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 6523.559884800456,
+        "x": 6187.3011648003685,
         "state": 1,
         "team": 1,
         "sType": 202,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 2,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy1"
       },
       {
         "uid": 219,
         "prefix": "Infantry_MaM.png",
-        "x": 6487.3386176002605,
+        "x": 7327.9412224000325,
         "state": 1,
         "team": 1,
         "sType": 201,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 2,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyLight1"
       },
       {
         "uid": 220,
         "prefix": "Infantry_MaM.png",
-        "x": 13837.046146135224,
+        "x": 6275.918504533503,
         "state": 1,
         "team": 1,
         "sType": 201,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 1,
         "home": 2,
         "name": "Soldier",
         "ctr": "AllyLight1"
@@ -558,7 +558,7 @@ function getSaveDataChrome() {
       {
         "uid": 221,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 6503.805376000396,
+        "x": 6188.3980544003225,
         "state": 1,
         "team": 1,
         "sType": 202,
@@ -568,19 +568,19 @@ function getSaveDataChrome() {
         "lane": 3,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy1"
       },
       {
         "uid": 222,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 13719.311731201818,
-        "state": 1,
+        "x": 6228.727577599974,
+        "state": 2,
         "team": 1,
         "sType": 205,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 2,
+        "lane": 1,
         "home": 2,
         "name": "CC 192",
         "ctr": "AllyHeavy2"
@@ -588,7 +588,7 @@ function getSaveDataChrome() {
       {
         "uid": 246,
         "prefix": "Infantry_Wildman_Crew.png",
-        "x": 6597.703534933899,
+        "x": 6099.238229333763,
         "state": 1,
         "team": 1,
         "sType": 204,
@@ -598,12 +598,12 @@ function getSaveDataChrome() {
         "lane": 3,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyLight1"
       },
       {
         "uid": 247,
         "prefix": "Infantry_Wildman_Crew.png",
-        "x": 6602.59776640045,
+        "x": 7810.667942400726,
         "state": 1,
         "team": 1,
         "sType": 204,
@@ -613,12 +613,12 @@ function getSaveDataChrome() {
         "lane": 3,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyLight1"
       },
       {
         "uid": 248,
         "prefix": "Infantry_Wildman_Crew.png",
-        "x": 7441.467430400592,
+        "x": 7719.870438400736,
         "state": 1,
         "team": 1,
         "sType": 204,
@@ -628,27 +628,27 @@ function getSaveDataChrome() {
         "lane": 3,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyLight1"
       },
       {
         "uid": 249,
         "prefix": "Infantry_Wildman_Crew.png",
-        "x": 6619.728768000473,
+        "x": 6295.75783680045,
         "state": 1,
         "team": 1,
         "sType": 204,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 2,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyLight1"
       },
       {
         "uid": 250,
         "prefix": "Infantry_Wildman_Crew.png",
-        "x": 6489.451769600309,
+        "x": 7883.151136000692,
         "state": 1,
         "team": 1,
         "sType": 204,
@@ -658,27 +658,27 @@ function getSaveDataChrome() {
         "lane": 3,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyLight1"
       },
       {
         "uid": 251,
         "prefix": "Infantry_Wildman_Crew.png",
-        "x": 6920.247622400509,
+        "x": 6262.19827840041,
         "state": 1,
         "team": 1,
         "sType": 204,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 2,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyLight1"
       },
       {
         "uid": 252,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 6480.481856000335,
+        "x": 7401.176620800054,
         "state": 1,
         "team": 1,
         "sType": 205,
@@ -688,42 +688,42 @@ function getSaveDataChrome() {
         "lane": 3,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy2"
       },
       {
         "uid": 253,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 6616.494438400449,
+        "x": 6191.54887680037,
         "state": 1,
         "team": 1,
         "sType": 205,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 2,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy2"
       },
       {
         "uid": 254,
         "prefix": "Heavy_Infantry_MaM.png",
-        "x": 6524.379579733769,
+        "x": 6248.174498133747,
         "state": 1,
         "team": 1,
         "sType": 205,
         "speed": 96,
         "hp": 5,
         "gp": 5,
-        "lane": 3,
+        "lane": 1,
         "home": 4,
         "name": "Soldier",
-        "ctr": "AllyStandby"
+        "ctr": "AllyHeavy2"
       },
       {
         "uid": 3,
         "prefix": "Supplyman_MaM.png",
-        "x": 6372.644354133539,
+        "x": 6857.770504533614,
         "state": 1,
         "team": 1,
         "sType": 12,
@@ -737,31 +737,136 @@ function getSaveDataChrome() {
       },
       {
         "uid": 4,
-        "prefix": "Advisor_Architect.png",
-        "x": 2870.5783039977323,
+        "prefix": "Advisor_Lunar.png",
+        "x": 6585.554310400505,
         "state": 1,
         "team": 1,
         "sType": 13,
         "speed": 96,
-        "hp": 25,
+        "hp": 15,
         "gp": 10,
         "lane": 1,
         "home": 2,
-        "name": "Architect",
-        "ctr": "Lunar1"
+        "name": "Lunar",
+        "ctr": "LunarBuilder"
+      },
+      {
+        "uid": 623,
+        "prefix": "Lancer_MaM.png",
+        "x": 6240.777248000398,
+        "state": 1,
+        "team": 1,
+        "sType": 203,
+        "speed": 96,
+        "hp": 20,
+        "gp": 12,
+        "lane": 3,
+        "home": 2,
+        "name": "Braver",
+        "ctr": "AllyHeavy1"
+      },
+      {
+        "uid": 668,
+        "prefix": "Lancer_MaM.png",
+        "x": 6219.707155200375,
+        "state": 1,
+        "team": 1,
+        "sType": 203,
+        "speed": 96,
+        "hp": 20,
+        "gp": 12,
+        "lane": 3,
+        "home": 2,
+        "name": "Braver",
+        "ctr": "AllyHeavy1"
+      },
+      {
+        "uid": 669,
+        "prefix": "Infantry_MaM.png",
+        "x": 7282.654873600298,
+        "state": 1,
+        "team": 1,
+        "sType": 201,
+        "speed": 96,
+        "hp": 5,
+        "gp": 5,
+        "lane": 2,
+        "home": 2,
+        "name": "Soldier",
+        "ctr": "AllyLight1"
+      },
+      {
+        "uid": 680,
+        "prefix": "Infantry_Wildman_Crew.png",
+        "x": 4712.113126400026,
+        "state": 5,
+        "team": 1,
+        "sType": 204,
+        "speed": 96,
+        "hp": 5,
+        "gp": 5,
+        "lane": 2,
+        "home": 2,
+        "name": "Soldier",
+        "ctr": "AllyLight1"
+      },
+      {
+        "uid": 697,
+        "prefix": "Infantry_Wildman_Crew.png",
+        "x": 4989.833939199941,
+        "state": 6,
+        "team": 1,
+        "sType": 204,
+        "speed": 96,
+        "hp": 5,
+        "gp": 5,
+        "lane": 3,
+        "home": 2,
+        "name": "Soldier",
+        "ctr": "AllyLight1"
+      },
+      {
+        "uid": 705,
+        "prefix": "Infantry_Wildman_Crew.png",
+        "x": 6330.167852800009,
+        "state": 5,
+        "team": 1,
+        "sType": 204,
+        "speed": 96,
+        "hp": 5,
+        "gp": 5,
+        "lane": 3,
+        "home": 2,
+        "name": "Soldier",
+        "ctr": "AllyLight1"
+      },
+      {
+        "uid": 721,
+        "prefix": "Infantry_Wildman_Crew.png",
+        "x": 5917.1679167998855,
+        "state": 1,
+        "team": 1,
+        "sType": 204,
+        "speed": 96,
+        "hp": 5,
+        "gp": 5,
+        "lane": 2,
+        "home": 2,
+        "name": "Soldier",
+        "ctr": "AllyLight1"
       }
     ],
     "houses": [
       {
         "num": 0,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 1,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
@@ -773,125 +878,125 @@ function getSaveDataChrome() {
       {
         "num": 3,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 4,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 5,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 6,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 7,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 8,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 9,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 10,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 11,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 12,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 13,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 14,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 15,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 16,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 17,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 18,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 19,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 20,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 21,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       },
       {
         "num": 22,
         "progress": 0,
-        "level": 1,
+        "level": 2,
         "location": 4
       }
     ],
-    "location": 6,
+    "location": 4,
     "claimed": [
       2,
       1,
@@ -899,7 +1004,7 @@ function getSaveDataChrome() {
       3,
       5
     ],
-    "tutorialNumber": 7,
-    "tutorialSequenceStep": 64
+    "tutorialNumber": 9,
+    "tutorialSequenceStep": 1
   }
 }
