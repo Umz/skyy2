@@ -6,6 +6,7 @@ import Sfx from "../const/Sfx";
 import SoldierMap from "../const/SoldierMap";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
+import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import Vfx from "../util/Vfx";
 import SequenceHelper from "./SequenceHelper";
@@ -93,6 +94,7 @@ export default class P8 extends TutorialSequence {
         if (ctrName === "AllyStandby") {
           const data = SoldierMap.get(ally.sType);
           ally.setController(new data.ctrl());
+          SaveData.SaveSoldierData(ally.getSaveData());
         }
       }
 

@@ -4,7 +4,7 @@ export default class ClaimFlag extends Phaser.Physics.Arcade.Sprite {
 
   constructor(scene, x) {
     super(scene, x, Vars.GROUND_TOP, Vars.SHEET_ALL_BANNERS, 0);
-    this.setOrigin(.5, 1).setAlpha(.3);
+    this.setOrigin(.5, 1).setAlpha(.5);
 
     scene.physics.add.existing(this);
     scene.allGroup.add(this);

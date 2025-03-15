@@ -50,6 +50,7 @@ export default class P11 extends TutorialSequence {
           ally.idle();
           ally.home = Enum.LOC_GREEN;
           ally.setController(new AllyStandby());
+          SaveData.SaveSoldierData(ally.getSaveData());
         }
       }
       return true;

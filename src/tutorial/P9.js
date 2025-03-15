@@ -81,6 +81,7 @@ export default class P9 extends TutorialSequence {
           ally.idle();
           ally.home = Enum.LOC_MINES;
           ally.setController(new AllyStandby());
+          SaveData.SaveSoldierData(ally.getSaveData());
         }
       }
       return true;

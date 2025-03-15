@@ -198,6 +198,7 @@ export default class P4 extends TutorialSequence {
         if (ally.uid > 100) {
           ally.home = Enum.LOC_STORM;
           ally.setController(new AllyStandby());
+          SaveData.SaveSoldierData(ally.getSaveData());
         }
       }
       return true;
