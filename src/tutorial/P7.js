@@ -92,8 +92,6 @@ export default class P7 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.green4, 4000, Sfx.VOICE_EFFORT1)
 
     .add(()=>{
-      Juke.PlaySound(Sfx.HEAL);
-
       player.recoverHP(10);
       player.recoverGP(player.maxGP);
 
@@ -134,8 +132,6 @@ export default class P7 extends TutorialSequence {
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.HOME, script.MoonChief.green5, 2000, Sfx.VOICE_SIGH1)
     .add(()=>{
-      Juke.PlaySound(Sfx.HEAL);
-
       player.recoverHP(10);
       player.recoverGP(player.maxGP);
 
@@ -232,6 +228,7 @@ export default class P7 extends TutorialSequence {
       ele.style.display = "none";
       return true;
     })
+    .addHealing()
     .addSave()
 
     .addTitle(" >>> The Architect joins Moon at Midnight and becomes Lunar -")
