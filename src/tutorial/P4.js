@@ -1,10 +1,10 @@
+import AllyStandby from "../ai/AllyStandby";
 import CitizenBattle from "../ai/CitizenBattle";
 import CitizenCaptive from "../ai/CitizenCaptive";
 import RedDuel from "../ai/RedDuel";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
@@ -177,7 +177,7 @@ export default class P4 extends TutorialSequence {
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
     .addUpdateSaveStep()
-    .addInstruction(Instructions.P4A_CLAIM_STORM)
+    .addInstruction(script.Story.P4A_CLAIM_STORM)
 
     //  Claim the land
 
@@ -191,11 +191,22 @@ export default class P4 extends TutorialSequence {
       SaveData.Data.claimed.push(Enum.LOC_ROSE_FOREST);
       return true;
     })
+    
+    .add(()=>{
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        if (ally.uid > 100) {
+          ally.home = Enum.LOC_STORM;
+          ally.setController(new AllyStandby());
+        }
+      }
+      return true;
+    })
     .addSave()
 
     .addWait(3000)
     .addHealing()
-    .addInstruction(Instructions.P4B_CITIZEN_TRIALS)
+    .addInstruction(script.Story.P4B_CITIZEN_TRIALS)
 
     .addTitle(" >>> Citizens set to Captive behaviour and wait till all have been interacted with -")
 
@@ -204,6 +215,7 @@ export default class P4 extends TutorialSequence {
       const citizens = all.filter(ss => ss.tribe === Enum.TRIBE_STORM);
       for (let citi of citizens) {
         citi.setController(new CitizenCaptive());
+        SaveData.SaveCitizenData(citi.getSaveData())
       }
       return true;
     })

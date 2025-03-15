@@ -1,12 +1,10 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
 import Juke from "../util/Juke";
-import SaveData from "../util/SaveData";
 import Subtitles from "../util/Subtitles";
 import SequenceHelper from "./SequenceHelper";
 
@@ -26,7 +24,7 @@ export default class P10 extends TutorialSequence {
     this
     .addTitle(" >>> Instructions to go and start a war - duel and kill Tall Ash -")
 
-    .addInstruction(Instructions.P10_GOTO_WAR)
+    .addInstruction(script.Story.P10_GOTO_WAR)
     .add(()=> {
       const group = this.scene.groupAllies.getChildren();
       for (let sol of group) {
@@ -162,7 +160,7 @@ export default class P10 extends TutorialSequence {
       for (let i=0; i<15; i++) {
         SequenceHelper.SpawnAlly(player.x - 200, Enum.SOLDIER_ALLY_WILDMAN);
       }
-      const captain = this.spawnAlly(x, Enum.SOLDIER_ALLY_LANCER1, hp, gp, script.Names.Madogu);
+      const captain = this.spawnAlly(player.x - 160, Enum.SOLDIER_ALLY_LANCER1, 25, 20, script.Names.Madogu);
       captain.speak(Icon.BANNER, script.Madogu.plains1, 5000);
       Juke.PlaySound(Sfx.VOICE_AMUSED3);
       return true;
@@ -184,8 +182,8 @@ export default class P10 extends TutorialSequence {
     .addTitle(" >>> Last duel with Green Meadow final captain of the game -")
 
     .add(()=>{
-      this.meadow.idle();
       this.pauseSoldiersForDuel();
+      this.meadow.idle();
       return true;
     })
     .addShowDuelDOM()
@@ -202,7 +200,7 @@ export default class P10 extends TutorialSequence {
       return true;
     })
     .addWaitForDialogue()
-    .addIcon(player, Icon.ANGER, 4000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.ANGER, 4000)
 
     .add(()=> this.meadow.hp <= 0 )
     .addDialogueAndWait(script.Names.GreenMeadow, script.Boss.GreenMeadow3, 8000)
@@ -242,7 +240,7 @@ export default class P10 extends TutorialSequence {
       return true;
     })
 
-    .addIcon(player, Icon.ELLIPSE, 2000)
+    .addIcon(Enum.ID_MOON_CHIEF, Icon.ELLIPSE, 2000)
     .addWait(3000)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.plains13, 3000, Sfx.VOICE_ATTACK1)
   }
@@ -254,7 +252,7 @@ export default class P10 extends TutorialSequence {
     const player = this.scene.player;
     const group = this.scene.groupSoldiers.getChildren();
     for (let sol of group) {
-      if (sol !== player && sol !== this.tallash) {
+      if (sol !== player) {
         sol.controller.pause();
         sol.viewController.pause();
         sol.setActive(false);

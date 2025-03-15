@@ -1,7 +1,7 @@
+import AllyStandby from "../ai/AllyStandby";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
@@ -12,20 +12,20 @@ export default class P11 extends TutorialSequence {
 
   init() {
 
-    const player = this.scene.player;
     const script = Subtitles.GetScript();
     const WIDTH = Vars.AREA_WIDTH;
 
     this
     .addTitle(" >>> End of the game just to claim the final locations -")
 
-    .addInstruction(Instructions.P11_CONQUER)
+    .addSave()
+    .addInstruction(script.Story.P11_CONQUER)
 
     .addTitle(" >>> Spawn a claimer flag for Greenleaf forest -")
 
     .add(()=>{
       this.doOnce(()=>{
-        SequenceHelper.SpawnClaimerFlag(WIDTH * 6.5);
+        SequenceHelper.SpawnClaimerFlag(WIDTH * 6.48);
       });
       return SaveData.Data.claimed.includes(Enum.LOC_GREEN_FOREST);
     })
@@ -39,17 +39,28 @@ export default class P11 extends TutorialSequence {
 
     .add(()=>{
       this.doOnce(()=>{
-        SequenceHelper.SpawnClaimerFlag(WIDTH * 6.5);
+        SequenceHelper.SpawnClaimerFlag(WIDTH * 7.5);
       });
-      return SaveData.Data.claimed.includes(Enum.LOC_GREEN_FOREST);
+      return SaveData.Data.claimed.includes(Enum.LOC_GREEN);
+    })
+    .add(()=>{
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        if (ally.uid > 100 && ally.home !== Enum.LOC_MINES && ally.home !== Enum.LOC_STORM) {
+          ally.idle();
+          ally.home = Enum.LOC_GREEN;
+          ally.setController(new AllyStandby());
+        }
+      }
+      return true;
     })
     .addSave()
     .addHealing()
     .addWait(4000)
 
-    .addSpeakerAndWait(player, Icon.BANNER, script.MoonChief.green10, 5000, Sfx.VOICE_YES1)
-
-    .addInstruction(Instructions.P11_COMPLETE)
+    .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.green10, 5000, Sfx.VOICE_YES1)
+    
+    .addInstruction(script.Story.P11_COMPLETE)
     .addSave()
 
     .add(()=> false)

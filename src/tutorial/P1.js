@@ -3,7 +3,6 @@ import CitizenWife from "../ai/CitizenWife";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import SaveData from "../util/SaveData";
@@ -54,12 +53,12 @@ export default class P1 extends TutorialSequence {
     .addSave()
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, 15000)
-    .addInstruction(Instructions.P0_INTRO)
+    .addInstruction(script.Story.P0_INTRO)
 
     .add(()=>{
       return this.checkCount(2000);
     })
-    .addInstruction(Instructions.P1A_APPRENTICE)
+    .addInstruction(script.Story.P1A_APPRENTICE)
 
     .addCitizenStateChange(Enum.CS_BATTLE_MODE)
     .add(()=>{
@@ -72,7 +71,7 @@ export default class P1 extends TutorialSequence {
     .addWait(2000)
     .addUpdateSaveStep()
 
-    .addInstruction(Instructions.P1B_APPRENTICE)
+    .addInstruction(script.Story.P1B_APPRENTICE)
     .add(()=>{
       return this.spawnAndWait(2);
     })
@@ -92,7 +91,7 @@ export default class P1 extends TutorialSequence {
     .addCitizenStateChange(Enum.CS_IDLE)
     .addWait(1000)
     .addUpdateSaveStep()
-    .addInstruction(Instructions.P1C_BLUEFOREST)
+    .addInstruction(script.Story.P1C_BLUEFOREST)
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.HAND_LEFT, 4000)
     .addHealing()

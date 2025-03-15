@@ -1,8 +1,9 @@
 import TutorialSequence from "../classes/TutorialSequence";
+import { getControllerSaveName } from "../const/ControllerMap";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
+import SoldierMap from "../const/SoldierMap";
 import Vars from "../const/Vars";
 import Ctr from "../util/Ctr";
 import Subtitles from "../util/Subtitles";
@@ -23,16 +24,13 @@ export default class P8 extends TutorialSequence {
     .addTitle(" >>> Soldier comes to tell Moon Chief that Whiteleaf is attacking Storm village")
 
     .add(()=>{
-
-      player.boostAttack(40);
-      Vfx.ShowAnimatedFX(player, Vars.VFX_CONSUME2);
-
       Ctr.SetActions(this.braver,
         Ctr.MoveToX(player.x + 80)
       );
       return true;
     })
     .addSpeakAndWait(this.braverID, Icon.ALARM, script.Braver.mam1, 5000, Sfx.VOICE_HO1)
+    .addSave()
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.ANGER, script.MoonChief.mam3, 2000, Sfx.VOICE_ANGRY3)
     .addWait(750)
@@ -41,28 +39,32 @@ export default class P8 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.mam5, 4000, Sfx.VOICE_ATTACK1)
     .addSave()
 
-    .addInstruction(Instructions.P8A_GOTO)
+    .addInstruction(script.Story.P8A_GOTO)
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 30 * 1000)
 
     .addTitle(" >>> Battles are already taking place in the forest as you pass through")
 
     .addPositionCheck(1.9)
     .addBattleSpawn(6, 10)
-
+    
     .addPositionCheck(2)
+    .addAttackBoost(10)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.rose4, 2000, Sfx.VOICE_ATTACK1)
 
     .addPositionCheck(2.2)
     .addBattleSpawn(10, 18)
 
     .addPositionCheck(2.3)
+    .addAttackBoost(15)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.rose5, 2000, Sfx.VOICE_ATTACK1)
 
     .addPositionCheck(2.5)
+    .addAttackBoost(10)
     .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose6, 2000, Sfx.VOICE_ATTACK1)
     .addBattleSpawn(15, 10)
 
     .addPositionCheck(2.8)
+    .addAttackBoost(10)
     .addSpeak(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose7, 2000, Sfx.VOICE_ATTACK1)
 
     .addPositionCheck(2.9)
@@ -81,6 +83,21 @@ export default class P8 extends TutorialSequence {
     .addBattleSpawn(5, 20)
     .addSpeak(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.storm1, 3000, Sfx.VOICE_ANGRY1)
 
+    .addTitle(" >>> Resume every single soldier to their controller type -", true)
+
+    .add(()=>{
+
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        const ctrName = getControllerSaveName(ally.controller);
+        if (ctrName === "AllyStandby") {
+          const data = SoldierMap.get(ally.sType);
+          ally.setController(new data.ctrl());
+        }
+      }
+
+      return true;
+    })
     .add(()=>{
       this.clover.setHP(25, 25);
       return true;
@@ -126,7 +143,7 @@ export default class P8 extends TutorialSequence {
     .addSave()
 
     .addWait(1000)
-    .addInstruction(Instructions.P8B_VICTORY)
+    .addInstruction(script.Story.P8B_VICTORY)
   }
 
   //  ====================================================================================================
@@ -136,6 +153,17 @@ export default class P8 extends TutorialSequence {
       return this.scene.player.x >= Vars.AREA_WIDTH * mul;
     });
     return this;
+  }
+
+  addAttackBoost(amt) {
+    return this
+    .add(()=>{
+      const player = this.scene.player;
+      player.boostAttack(amt);
+      Vfx.ShowAnimatedFX(player, Vars.VFX_CONSUME2);
+      return true;
+    })
+    .addSound(Sfx.ATTACK_BOOST);
   }
 
   spawnAlliesConstant(min) {

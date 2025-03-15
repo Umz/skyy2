@@ -3,7 +3,6 @@ import Lunar1 from "../ai/Lunar1";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Juke from "../util/Juke";
@@ -111,12 +110,16 @@ export default class P7 extends TutorialSequence {
       lunar.controller.gotoX(WIDTH * 1.5);
       return true;
     })
-    .addInstruction(Instructions.P7A_HOLD)
+    .add(()=>{
+      const lunar = this.getSoldierbyUID(Enum.ID_LUNAR);
+      return lunar.x < player.x - 200;
+    })
+    .addInstruction(script.Story.P7A_HOLD)
 
     .addTitle(" >>> Moon Chief stays in Green Village to hold back the enemies -")
 
     .add(()=>{
-      SequenceHelper.SpawnEnemiesAt(player.x + 100, 6, [Enum.SOLDIER_WL_INFANTRY]);
+      SequenceHelper.SpawnEnemiesAt(player.x + 140, 6, [Enum.SOLDIER_WL_INFANTRY]);
       return true;
     })
     .add(()=> SequenceHelper.CheckEnemiesLessOrEqual(0))

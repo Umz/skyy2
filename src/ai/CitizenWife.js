@@ -12,6 +12,7 @@ import ActRepeatAtIntervals from "../actions/ActRepeatAtIntervals";
 import Vfx from "../util/Vfx";
 import Juke from "../util/Juke";
 import Sfx from "../const/Sfx";
+import Subtitles from "../util/Subtitles";
 
 export default class CitizenWife extends ActionManager {
 
@@ -154,9 +155,12 @@ export default class CitizenWife extends ActionManager {
 
     const sprite = this.sprite;
     const player = this.scene.player;
+    const script = Subtitles.GetScript();
 
     if (player.getHPPercent() < 1 || player.getGPPercent() < 1) {
-      sprite.speak(Icon.ALLY_SHIELD, "You look weary my love, let me heal you.", 5000);
+
+      sprite.stopMove();
+      sprite.speak(Icon.ALLY_SHIELD, script.MoonRose.powerup, 5000);
       Juke.PlaySound(Sfx.HEAL);
 
       player.recoverHP(player.maxHP);
@@ -166,7 +170,8 @@ export default class CitizenWife extends ActionManager {
       Juke.PlaySound(Sfx.HEAL);
     }
     else {
-      sprite.speak(Icon.SPEECH_HEART, "Come home soon, OK.", 5000);
+      sprite.speak(Icon.SPEECH_HEART, script.MoonRose.love, 5000);
+      Juke.PlaySound(Sfx.VOICEF_GIGGLE);
     }
   }
 
@@ -174,17 +179,20 @@ export default class CitizenWife extends ActionManager {
 
     const sprite = this.sprite;
     const player = this.scene.player;
+    const script = Subtitles.GetScript();
 
     if (player.attBoost === 0) {
       
-      sprite.speak(Icon.ALLY_SWORD, "Moon, my love, let me invigorate you.", 5000);
+      sprite.stopMove();
+      sprite.speak(Icon.ALLY_SWORD, script.MoonGlow.powerup, 5000);
       player.boostAttack(10);
 
       Vfx.ShowAnimatedFX(this.scene.player, Vars.VFX_CONSUME2);
       Juke.PlaySound(Sfx.ATTACK_BOOST);
     }
     else {
-      sprite.speak(Icon.SPEECH_HEART, "Finish your business quickly and come home, OK.", 5000);
+      sprite.speak(Icon.SPEECH_HEART, script.MoonGlow.love, 5000);
+      Juke.PlaySound(Sfx.HEAL);
     }
   }
 

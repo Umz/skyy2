@@ -16,6 +16,11 @@ export function getAnyEnemyWithinRange(sprite, maxDistance) {
   return getAnySpriteInGroup(sprite, group, maxDistance);
 }
 
+export function getAllEnemiesWithinRange(sprite, maxDistance) {
+  const group = getEnemyGroupForSprite(sprite);
+  return getSpritesInRange(sprite, group, maxDistance);
+}
+
 /** Get any soldier within range */
 export function getClosestSoldierInRange(sprite, range) {
   const scene = sprite.scene;
@@ -76,6 +81,18 @@ export function getDistanceFrom(x1, x2) {
 /** Check if the number is within the given ranges (including the minimum and maximum) */
 export function isNumberInRange(number, min, max) {
   return number >= min && number <= max;
+}
+
+/**
+ * Checks if a sprite is within the camera's horizontal view.
+ * @param {Phaser.GameObjects.Sprite} sprite The sprite to check.
+ * @param {Phaser.Cameras.Scene2D.Camera} camera The camera to check against.
+ * @returns {boolean} True if the sprite is within the camera's X bounds, false otherwise.
+ */
+export function isSpriteInCameraViewX(sprite) {
+  const camera = sprite.scene.cameras.main;
+  const cameraView = camera.worldView;
+  return sprite.x >= cameraView.x && sprite.x <= cameraView.x + cameraView.width;
 }
 
 //  - INTERNAL FUNCTIONS  ---------------------------------------------------------

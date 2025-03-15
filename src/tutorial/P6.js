@@ -1,7 +1,6 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Subtitles from "../util/Subtitles";
@@ -43,7 +42,7 @@ export default class P6 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_BLUE_MOON, Icon.QUESTION, script.BlueMoon.plains7, 4000, Sfx.VOICE_HO2)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.plains5, 2000, Sfx.VOICE_LAUGH1)
 
-    .addInstruction(Instructions.P6A_GREEN_VILLAGE);
+    .addInstruction(script.Story.P6A_GREEN_VILLAGE);
   }
 
   //  =================================================================================================

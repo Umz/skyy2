@@ -1,3 +1,4 @@
+import AllyStandby from "../ai/AllyStandby";
 import LunarBuilder from "../ai/LunarBuilder";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
@@ -73,6 +74,17 @@ export default class P9 extends TutorialSequence {
     })
     .addSpeakAndWait(Enum.ID_NIGHT_TRAIN, Icon.HAPPY, script.NightTrain.mines10, 4000, Sfx.VOICE_LAUGH1)
     .addWait(500)
+    .add(()=>{
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        if (ally.uid > 100) {
+          ally.idle();
+          ally.home = Enum.LOC_MINES;
+          ally.setController(new AllyStandby());
+        }
+      }
+      return true;
+    })
     .addUpdateSaveStep()
 
     .addTitle(" >>> Night Train begins transporting the resources back to Storm while Moon Chief mines it -")
@@ -151,9 +163,10 @@ export default class P9 extends TutorialSequence {
       
       for (let i=0; i< 15; i++) {
         const pX = (WIDTH * 2.47) - 24 - (i * 18);
-        const ally = SequenceHelper.SpawnAlly(pX, Enum.SOLDIER_ALLY_HEAVY1);
+        const ally = SequenceHelper.SpawnAlly(pX, Enum.SOLDIER_ALLY_HEAVY2);
         ally.faceX(this.zoll.x);
         ally.controller.pause();
+        ally.home = Enum.LOC_ROSE_FOREST;
       }
       return true;
     })

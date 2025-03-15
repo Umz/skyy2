@@ -6,7 +6,6 @@ import BlueMoon from "../ai/BlueMoon";
 import SequenceHelper from "./SequenceHelper";
 import Icon from "../const/Icon";
 import Subtitles from "../util/Subtitles";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Juke from "../util/Juke";
 
@@ -24,7 +23,7 @@ export default class P2 extends TutorialSequence {
     .add(()=>{ return SequenceHelper.CheckLocation(Enum.LOC_BLUE_FOREST) })
     .addIcon(Enum.ID_MOON_CHIEF, Icon.BANNER, 3000)
     .addUpdateSaveStep()
-    .addInstruction(Instructions.P2A_CLAIM_BLUE)
+    .addInstruction(script.Story.P2A_CLAIM_BLUE)
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SPEECH, script.MoonChief.bf1, 3000, Sfx.VOICE_AMUSED3)
     .add(()=>{
@@ -140,7 +139,7 @@ export default class P2 extends TutorialSequence {
     .addTitle(" >>> Claim the Blue Forest and place a flag near the teal tree")
 
     .addIcon(Enum.ID_MOON_CHIEF, Icon.STANDARD, 15 * 1000)
-    .addInstruction(Instructions.P2B_PLACE_FLAG)
+    .addInstruction(script.Story.P2B_PLACE_FLAG)
     .add(()=>{
       this.doOnce(()=>{
         SequenceHelper.SpawnClaimerFlag(Vars.AREA_WIDTH * .48);
@@ -153,7 +152,7 @@ export default class P2 extends TutorialSequence {
     .addHealing()
     
     .addWait(3000)
-    .addInstruction(Instructions.P2C_LEAVE_FOREST);
+    .addInstruction(script.Story.P2C_LEAVE_FOREST);
     
   }
 

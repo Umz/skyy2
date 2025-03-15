@@ -1,7 +1,6 @@
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
-import Instructions from "../const/Instructions";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
 import Juke from "../util/Juke";
@@ -89,7 +88,7 @@ export default class P3 extends TutorialSequence {
     
     //  -
 
-    .addInstruction(Instructions.P3_CHASE_REDFACE)
+    .addInstruction(script.Story.P3_CHASE_REDFACE)
   }
 
   //  ============================================================================

@@ -17,6 +17,7 @@ import CitizenWife from "../ai/CitizenWife";
 import Defensive from "../ai/Defensive";
 import DuelIdle from "../ai/DuelIdle";
 import Lunar1 from "../ai/Lunar1";
+import LunarBuilder from "../ai/LunarBuilder";
 import Nighttrain from "../ai/Nighttrain";
 import RedDuel from "../ai/RedDuel";
 import SoldierView from "../ai/SoldierView";
@@ -42,6 +43,7 @@ const ControllerMap = new Map([
   ["Defensive", Defensive],
   ["DuelIdle", DuelIdle],
   ["Lunar1", Lunar1],
+  ["LunarBuilder", LunarBuilder],
   ["Nighttrain", Nighttrain],
   ["RedDuel", RedDuel],
   ["SoldierView", SoldierView],
