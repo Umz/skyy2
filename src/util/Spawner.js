@@ -85,6 +85,7 @@ export default class Spawner {
     const deployX = (pX ?? spawnPoint) + Phaser.Math.Between(-30, 30);
     
     const enemy = this.spawnSoldierType(deployX, type, Enum.TEAM_ENEMY);
+    enemy.setDepth(2)
     this.groupEnemies.add(enemy);
     return enemy;
   }

@@ -574,7 +574,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     
     if (data.name !== Subtitles.GetScript().Names.Soldier) {
       this.setDisplayName(data.name, Enum.TEAM_ALLY);
-      this.setDepth(2);
+      this.setDepth(3);
     }
 
     this.uid = data.uid;

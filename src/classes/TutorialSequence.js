@@ -300,6 +300,7 @@ export default class TutorialSequence {
     soldier.setGP(gp, gp);
     if (name) {
       soldier.setDisplayName(name, team);
+      soldier.setDepth(3);
     }
   }
 
