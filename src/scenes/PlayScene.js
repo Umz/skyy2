@@ -803,6 +803,7 @@ export class PlayScene extends Scene {
           if (fatal) {
             
             this.showDeath(defender);
+            SaveData.RemoveSoldier(defender.uid);
             
             // Spawn Collectible on enemy or ally death
             const eligible = SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);

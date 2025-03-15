@@ -104,6 +104,10 @@ export default class SaveData {
     }
   }
 
+  static RemoveSoldier(uid) {
+    data.citizens = data.citizens.filter(citData => citData.uid !== uid);
+  }
+
   static SaveCitizenData(citData) {
     const saved = data.citizens.find(dd => dd.uid === citData.uid);
     if (saved) {
