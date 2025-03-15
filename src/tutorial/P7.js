@@ -212,6 +212,7 @@ export default class P7 extends TutorialSequence {
 
       const blue = this.getSoldierbyUID(Enum.ID_BLUE_MOON);
       blue.setController(new BlueMoon());
+      SaveData.SaveSoldierData(blue.getSaveData());
 
       return true;
     })
