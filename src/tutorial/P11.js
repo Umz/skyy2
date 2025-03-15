@@ -29,6 +29,23 @@ export default class P11 extends TutorialSequence {
       });
       return SaveData.Data.claimed.includes(Enum.LOC_GREEN_FOREST);
     })
+    .add(()=>{
+      let count = 0;
+      const allies = this.scene.groupAllies.getChildren();
+      for (let ally of allies) {
+        if (ally.uid > 100 && ally.home !== Enum.LOC_MINES && ally.home !== Enum.LOC_STORM) {
+          ally.idle();
+          ally.home = Enum.LOC_GREEN_FOREST;
+          ally.setController(new AllyStandby());
+          SaveData.SaveSoldierData(ally.getSaveData());
+        }
+        count++;
+        if (count >= 10) {
+          break;
+        }
+      }
+      return true;
+    })
     .addSave()
     .addHealing()
     .addWait(4000)
