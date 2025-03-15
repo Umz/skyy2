@@ -125,7 +125,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   boostAttack(amt) {
-    this.attBoost = amt;
+    this.attBoost = Math.min(20, this.attBoost + amt);
     Vfx.ShowAnimatedFollow(this, Vars.VFX_TELEPORT2);
   }
 
