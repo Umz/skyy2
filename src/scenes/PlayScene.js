@@ -162,6 +162,11 @@ export class PlayScene extends Scene {
       this.scene.launch('PauseScene');
     });
 
+    this.input.keyboard.on('keydown-Q', () => {
+      const pX = (this.player.x / Vars.AREA_WIDTH).toFixed(2);
+      console.log(pX);
+    });
+
     this.setupScene();
   }
 

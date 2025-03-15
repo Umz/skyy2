@@ -65,8 +65,6 @@ export default class MapBuilder extends BaseBuilder {
         this.addLabel(houseSprite, data.area);
       }
 
-      console.log(saveData)
-
       houseSprite.setDepth(data.depth);
       layer.add(houseSprite);
     }
