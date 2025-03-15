@@ -1,4 +1,5 @@
 import BlueMoon from "../ai/BlueMoon";
+import CitizenMaM from "../ai/CitizenMaM";
 import Lunar1 from "../ai/Lunar1";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
@@ -149,6 +150,17 @@ export default class P7 extends TutorialSequence {
       return true;
     })
     .add(()=> SequenceHelper.CheckEnemiesLessOrEqual(0))
+
+    .add(()=>{
+      const all = scene.groupCitizens.getChildren();
+      const citizens = all.filter(ss => ss.tribe === Enum.TRIBE_WHITELEAF);
+      for (let citi of citizens) {
+        citi.setController(new CitizenMaM());
+        SaveData.SaveCitizenData(citi.getSaveData())
+      }
+      return true;
+    })
+    .addSave()
 
     .add(()=> player.x <= Vars.AREA_WIDTH * 6.9 )
 

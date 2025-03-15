@@ -209,7 +209,8 @@ export default class CitizenMaM extends ActionManager {
   forage() {
     
     const sprite = this.sprite;
-    const min = Vars.AREA_WIDTH * .3, max = Vars.AREA_WIDTH * .6;
+    const min = this.getForageMin();
+    const max = this.getForageMax();
     const x1 = Phaser.Math.Between(min, max);
 
     this.addActions(
@@ -262,6 +263,24 @@ export default class CitizenMaM extends ActionManager {
 
     this.hunger = Math.max(0, this.hunger - 1);
     this.social = Math.max(0, this.social - 1);
+  }
+
+  //  - Ranges
+
+  getMin() {
+    return this.sprite.home === Enum.LOC_MAM ? Vars.AREA_WIDTH * 1.2 : Vars.AREA_WIDTH * 7.2;
+  }
+
+  getMax() {
+    return this.sprite.home === Enum.LOC_MAM ? Vars.AREA_WIDTH * 1.8 : Vars.AREA_WIDTH * 7.8;
+  }
+
+  getForageMin() {
+    return this.sprite.home === Enum.LOC_MAM ? Vars.AREA_WIDTH * .3 : Vars.AREA_WIDTH * 6.3;
+  }
+
+  getForageMax() {
+    return this.sprite.home === Enum.LOC_MAM ? Vars.AREA_WIDTH * .6 : Vars.AREA_WIDTH * 6.7;
   }
 
   //  - Icon Arrays -------------------------------------------------------------
