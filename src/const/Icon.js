@@ -4,6 +4,11 @@ const Icon = {
   HEART_BLACK: 2,
   SWORD: 7,
   
+  MAP: 21,
+  MAP_PEN: 22,
+  MAP_QUESTION: 23,
+  BOX: 24,
+  BOX_QUESTION: 25,
   SPEECH: 26,
   EXCLAIM: 27,
   QUESTION: 28,
@@ -130,6 +135,11 @@ const Icon = {
   GOLD_KEY: 354,
   GOLD_PURSE: 359,
   SILVER_PURSE: 360,
+
+  // 25 - Gold Bell
+  GOLD_BELL: 400,
+  TRIANGLE: 408,
+  OCARINA: 409,
 
   // 26 - Valuables
   GOLD_BAT: 416,

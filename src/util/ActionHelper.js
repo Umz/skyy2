@@ -27,7 +27,7 @@ export function getClosestSoldierInRange(sprite, range) {
   return getClosestToSpriteInGroup(sprite, scene.groupSoldiers, range);
 }
 
-/** Get the closest citizen to the Player in village */
+/** Get the closest citizen to the sprite in village */
 export function getClosestCitizen(sprite) {
   const scene = sprite.scene;
   return getClosestToSpriteInGroup(sprite, scene.groupCitizens, 600);
