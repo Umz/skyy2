@@ -133,6 +133,7 @@ export default class P2 extends TutorialSequence {
     .add(()=>{
       return SequenceHelper.CheckEnemiesLessOrEqual(0);
     })
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.victory, 2000, Sfx.VOICE_ATTACK1)
     .addSave()
     .addWait(3000)
 

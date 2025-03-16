@@ -181,6 +181,7 @@ export default class P7 extends TutorialSequence {
     .addGreenSwordSpeakAndWait(Icon.SWORD, script.GreenSword.green1, 3000)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.green6, 3000, Sfx.VOICE_AMUSED3)
     .add(() => green.isDead())
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.victory, 2000, Sfx.VOICE_ATTACK1)
     .addSave()
 
     .addTitle(" >>> Fade out the screen to black and jump to Moon at Midnight with everyone. -")
