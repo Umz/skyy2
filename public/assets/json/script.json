@@ -263,7 +263,7 @@
       "P2C_LEAVE_FOREST": ["The forest is safe now. It belongs to Moon at Midnight.", "Now head east of the village to expand our territory. Show no mercy to any who oppose us."],
       "P3_CHASE_REDFACE": ["Red Face the traitor has managed to escape to Rose Forest.", "Go and make sure he meets his end."],
       "P4A_CLAIM_STORM": ["The traitor held control over the forest with captives in the village.", "Place our banners high and proud. It belongs to Moon at Midnight now."],
-      "P4B_CITIZEN_TRIALS": ["Only those that choose to fly with our tribe may remain.", "Those that will not are permitted to leave immediately, or die."],
+      "P4B_CITIZEN_TRIALS": ["Only the civilians that choose to fly with our tribe may remain.", "Those that will not are permitted to leave immediately, or die.", "Get their decisions from them now."],
       "P5A_BREAK_ROCKS": ["Break the purple rocks to collect the blue silica held within."],
       "P5B_MISSION": ["Travel to the east to find Green Village. Once we have found the village, we will return here with 'The Architect'."],
       "P5C_CLAIM_MINES": ["These Mines belong to Moon at Midnight. The resources will serve our people.", "Place our banner to warn any others, this land is ours now."],

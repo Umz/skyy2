@@ -1,5 +1,6 @@
 import AllyStandby from "../ai/AllyStandby";
 import LunarBuilder from "../ai/LunarBuilder";
+import NightTrain2 from "../ai/NightTrain2";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
@@ -133,7 +134,9 @@ export default class P9 extends TutorialSequence {
 
     .add(()=>{ return player.x <= WIDTH * 4 })
     .add(()=>{
-      // Convert all villagers to miners
+      const night = this.getSoldierbyUID(Enum.ID_NIGHT_TRAIN);
+      night.setController(new NightTrain2())
+      SaveData.SaveSoldierData(night.getSaveData());
       return true;
     })
     .addSave()

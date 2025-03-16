@@ -149,6 +149,7 @@ export default class P5 extends TutorialSequence {
       const allies = this.scene.groupAllies.getChildren();
       for (let ally of allies) {
         if (ally.uid > 100) {
+          SaveData.RemoveSoldier(ally.uid);
           ally.kill();
         }
       }

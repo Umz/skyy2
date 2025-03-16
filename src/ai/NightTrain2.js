@@ -1,11 +1,7 @@
 import ActComplete from "../actions/ActComplete";
-import ActMoveOffX from "../actions/ActMoveOffX";
 import ActMoveToTargetDistance from "../actions/ActMoveToTargetDistance";
-import ActMoveToTargetOffset from "../actions/ActMoveToTargetOffset";
 import ActMoveToX from "../actions/ActMoveToX";
 import ActWait from "../actions/ActWait";
-import ListenCondition from "../actions/ListenCondition";
-import ListenPlayerDistance from "../actions/ListenPlayerDistance";
 import ActionManager from "../classes/ActionManager";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
@@ -102,7 +98,12 @@ export default class NightTrain2 extends ActionManager {
       }
     }
 
-    this.addAction(new ActWait(4000));
+    this.addActions(
+      new ActWait(4000),
+      new ActComplete(()=>{
+        this.action = TO_MINES;
+      })
+    );
   }
 
 }

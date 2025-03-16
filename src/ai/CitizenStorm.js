@@ -159,7 +159,9 @@ export default class CitizenStorm extends ActionManager {
         this.energy += Phaser.Math.Between(10, 15);
 
         this.sprite.setData("available", true);
-      })
+      }),
+      new ActMoveOffX(this.sprite, Vars.AREA_WIDTH),
+      new ActWait(2000)
     );
   }
 
@@ -167,7 +169,7 @@ export default class CitizenStorm extends ActionManager {
 
   startMining() {
     
-    const money = sprite.getData("money") || 0;
+    const money = this.sprite.getData("money") || 0;
     this.sprite.setData("available", false);
     this.sprite.setData("money", money + 25);
 

@@ -148,7 +148,7 @@ export default class P7 extends TutorialSequence {
     .add(()=> SequenceHelper.CheckEnemiesLessOrEqual(0))
 
     .add(()=>{
-      const all = scene.groupCitizens.getChildren();
+      const all = this.scene.groupCitizens.getChildren();
       const citizens = all.filter(ss => ss.tribe === Enum.TRIBE_WHITELEAF);
       for (let citi of citizens) {
         citi.setController(new CitizenMaM());

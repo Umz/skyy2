@@ -25,6 +25,7 @@ import Subtitles from "../util/Subtitles";
 import Counter from "../util/Counter";
 import ScreenshotScene from "./ScreenshotScene";
 import PauseScene from "./PauseScene";
+import CitizenStorm from "../ai/CitizenStorm";
 
 export class PlayScene extends Scene {
 
@@ -165,6 +166,33 @@ export class PlayScene extends Scene {
     this.input.keyboard.on('keydown-Q', () => {
       const pX = (this.player.x / Vars.AREA_WIDTH).toFixed(2);
       console.log(pX);
+    });
+
+    this.input.keyboard.on('keydown-R', () => {
+      
+      console.log("Sending closest citizen to start mining");
+
+      const all = this.groupCitizens.getChildren();
+      const citizens = all.filter(ss => ss.home === Enum.LOC_STORM);
+
+      let closestCitizen = null;
+      let closestDistance = Infinity; // Initialize with a large number
+
+      for (const citizen of citizens) {
+          const distance = Math.abs(this.player.x - citizen.x); // Calculate the absolute distance
+          if (distance < closestDistance) {
+              closestDistance = distance;
+              closestCitizen = citizen;
+          }
+      }
+
+      if (closestCitizen) {
+        console.log("Closest citizen:", closestCitizen.getSaveData());
+        closestCitizen.setController(new CitizenStorm())
+        closestCitizen.controller.startMining();
+      } else {
+        console.log("No available citizens found.");
+      }
     });
 
     this.setupScene();
