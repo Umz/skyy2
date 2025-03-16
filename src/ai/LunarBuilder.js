@@ -3,7 +3,10 @@ import ActMoveToX from "../actions/ActMoveToX";
 import ActWait from "../actions/ActWait";
 import ActionManager from "../classes/ActionManager";
 import Icon from "../const/Icon";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import { isSpriteInCameraViewX } from "../util/ActionHelper";
+import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 
 /** Lunar Builder | Roams around Storm village rebuilding */
@@ -41,6 +44,9 @@ export default class LunarBuilder extends ActionManager {
 
       new ActComplete(()=>{
         this.sprite.showIcon(Icon.DARK_ENERGY, 1000);
+        if (isSpriteInCameraViewX(this.sprite)) {
+          Juke.PlaySound(Sfx.PROCESSING);
+        }
       }),
       new ActWait(1750),
 
@@ -56,6 +62,7 @@ export default class LunarBuilder extends ActionManager {
   build(building) {
 
     const bX = building.getCenter().x;
+    const buildDelay = 250;
 
     this.addActions(
       new ActMoveToX(this.sprite, bX),
@@ -76,6 +83,25 @@ export default class LunarBuilder extends ActionManager {
         building.addProgress(raw);
         building.updateSaveData();
       }),
+
+      new ActComplete(()=>{
+        if (isSpriteInCameraViewX(this.sprite)) {
+          Juke.PlaySound(Sfx.BUILD1);
+        }
+      }),
+      new ActWait(buildDelay),
+      new ActComplete(()=>{
+        if (isSpriteInCameraViewX(this.sprite)) {
+          Juke.PlaySound(Sfx.BUILD2);
+        }
+      }),
+      new ActWait(buildDelay),
+      new ActComplete(()=>{
+        if (isSpriteInCameraViewX(this.sprite)) {
+          Juke.PlaySound(Sfx.BUILD3);
+        }
+      }),
+
       new ActWait(1500)
     );
   }

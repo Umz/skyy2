@@ -5,7 +5,9 @@ import ActWait from "../actions/ActWait";
 import ActionManager from "../classes/ActionManager";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 
 export default class CitizenStorm extends ActionManager {
@@ -189,6 +191,7 @@ export default class CitizenStorm extends ActionManager {
       new ActWait(500),
       new ActComplete(()=>{
         sprite.showIcon(Icon.PICKAXE, 60 * 1000)
+        this.playVoice();
       }),
 
       new ActMoveToX(sprite, rockX),
@@ -245,6 +248,12 @@ export default class CitizenStorm extends ActionManager {
   }
 
   //  --------------------------------------------------------------------------
+
+  playVoice() {
+    let isMale = this.sprite.prefix === Vars.SHEET_CITIZEN_STORM_M1 || this.sprite.prefix === Vars.SHEET_CITIZEN_STORM_M1A;
+    let sfx = isMale ? Sfx.VOICE_HO1 : Sfx.VOICEF_OH;
+    Juke.PlaySound(sfx);
+  }
 
   get forageIcons() {
     return [

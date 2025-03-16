@@ -21,6 +21,12 @@ const Sfx = {
   CLAIMING: { key: "fx_claiming.mp3", config: {volume: .2, loop: true} },
   LAND_CLAIMED: { key: "fx_claim_land.mp3", config: {volume: .4} },
 
+  PROCESSING: { key: "fx_processing.mp3", config: {volume: .2} },
+  BUILD1: { key: "fx_build1.mp3", config: {volume: .2} },
+  BUILD2: { key: "fx_build2.mp3", config: {volume: .2} },
+  BUILD3: { key: "fx_build3.mp3", config: {volume: .2} },
+
+
   UI_SHOW_INSTRUCTIONS: { key: "ui_instructions.mp3", config: {volume: .5} },
   UI_CLOSE_INSTRUCTIONS: { key: "ui_instructions_close.mp3", config: {volume: .5} },
 

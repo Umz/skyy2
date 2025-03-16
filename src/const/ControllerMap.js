@@ -1,3 +1,4 @@
+import Aggressive from "../ai/Aggressive";
 import AllyHeavy1 from "../ai/AllyHeavy1";
 import AllyHeavy2 from "../ai/AllyHeavy2";
 import AllyLight1 from "../ai/AllyLight1";
@@ -22,10 +23,12 @@ import LunarBuilder from "../ai/LunarBuilder";
 import Nighttrain from "../ai/Nighttrain";
 import NightTrain2 from "../ai/NightTrain2";
 import RedDuel from "../ai/RedDuel";
+import RedFace1 from "../ai/RedFace1";
 import SoldierView from "../ai/SoldierView";
 import Wildman from "../ai/Wildman";
 
 const ControllerMap = new Map([
+  ["Aggressive", Aggressive],
   ["AllyHeavy1", AllyHeavy1],
   ["AllyHeavy2", AllyHeavy2],
   ["AllyLight1", AllyLight1],
@@ -50,6 +53,7 @@ const ControllerMap = new Map([
   ["Nighttrain", Nighttrain],
   ["Nighttrain2", NightTrain2],
   ["RedDuel", RedDuel],
+  ["RedFace1", RedFace1],
   ["SoldierView", SoldierView],
   ["Wildman", Wildman]
 ]);
