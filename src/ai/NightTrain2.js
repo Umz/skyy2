@@ -85,7 +85,7 @@ export default class NightTrain2 extends ActionManager {
     let max = 3;
     for (let available of citizens) {
       this.addActions(
-        new ActMoveToTargetDistance(this.sprite, available),
+        new ActMoveToTargetDistance(this.sprite, available, 12),
         new ActComplete(()=>{
           this.sprite.showIcon(Icon.SILVER_PURSE, 2500);
           available.controller.startMining();   // Hire citizen

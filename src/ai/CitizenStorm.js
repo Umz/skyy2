@@ -7,6 +7,7 @@ import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import { isSpriteInCameraViewX } from "../util/ActionHelper";
 import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 
@@ -252,7 +253,9 @@ export default class CitizenStorm extends ActionManager {
   playVoice() {
     let isMale = this.sprite.prefix === Vars.SHEET_CITIZEN_STORM_M1 || this.sprite.prefix === Vars.SHEET_CITIZEN_STORM_M1A;
     let sfx = isMale ? Sfx.VOICE_HO1 : Sfx.VOICEF_OH;
-    Juke.PlaySound(sfx);
+    if (isSpriteInCameraViewX(this.sprite)) {
+      Juke.PlaySound(sfx);
+    }
   }
 
   get forageIcons() {

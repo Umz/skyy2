@@ -8,8 +8,8 @@
   justify-content: center;
   background-color: #efefef;
   
-  visibility: hidden;
   pointer-events: none;
+  transition: opacity 1s ease-in-out;
 }
 
 #splash-image {

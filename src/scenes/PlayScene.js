@@ -148,8 +148,8 @@ export class PlayScene extends Scene {
 
     // Add a key listener to pause the game and go to the ScreenshotScene scene when the 'S' key is pressed
     this.input.keyboard.on('keydown-S', () => {
-      this.scene.pause('PlayScene');
-      this.scene.launch('ScreenshotScene');
+      //this.scene.pause('PlayScene');
+      //this.scene.launch('ScreenshotScene');
     });
 
     // Add the PauseScene scene to the game
@@ -165,34 +165,6 @@ export class PlayScene extends Scene {
 
     this.input.keyboard.on('keydown-Q', () => {
       const pX = (this.player.x / Vars.AREA_WIDTH).toFixed(2);
-      console.log(pX);
-    });
-
-    this.input.keyboard.on('keydown-R', () => {
-      
-      console.log("Sending closest citizen to start mining");
-
-      const all = this.groupCitizens.getChildren();
-      const citizens = all.filter(ss => ss.home === Enum.LOC_STORM);
-
-      let closestCitizen = null;
-      let closestDistance = Infinity; // Initialize with a large number
-
-      for (const citizen of citizens) {
-          const distance = Math.abs(this.player.x - citizen.x); // Calculate the absolute distance
-          if (distance < closestDistance) {
-              closestDistance = distance;
-              closestCitizen = citizen;
-          }
-      }
-
-      if (closestCitizen) {
-        console.log("Closest citizen:", closestCitizen.getSaveData());
-        closestCitizen.setController(new CitizenStorm())
-        closestCitizen.controller.startMining();
-      } else {
-        console.log("No available citizens found.");
-      }
     });
 
     this.setupScene();
@@ -829,6 +801,18 @@ export class PlayScene extends Scene {
 
           const fatal = defender.hit(attacker);
           if (fatal) {
+
+            // Check if Main Character died
+            const mainUIDs = [Enum.ID_MOON_CHIEF, Enum.ID_BLUE_MOON, Enum.ID_NIGHT_TRAIN, Enum.ID_LUNAR];
+            if (mainUIDs.includes(defender.uid)) {
+              const notification = document.getElementById('notification');
+              notification.innerText = "Main Character Died.";
+              notification.style.display = 'block';
+              setTimeout(function() {
+                notification.style.display = 'none';
+              }, 3000);
+              this.scene.start('MenuScene');
+            }
             
             this.showDeath(defender);
             SaveData.RemoveSoldier(defender.uid);

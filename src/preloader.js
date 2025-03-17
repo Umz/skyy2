@@ -270,6 +270,14 @@ export class Preloader extends Phaser.Scene {
             this.createSpritesheetAnimation(citi, data.citizen);
         }
 
+        //  - Hide Splash
+
+        const splashContainer = document.getElementById("splash-container");
+        splashContainer.style.opacity = 0;
+        splashContainer.addEventListener('transitionend', () => {
+            splashContainer.style.display = 'none';
+        });
+
         //  -
 
         this.scene.start("MenuScene");      // Next Scene when all assets are loaded

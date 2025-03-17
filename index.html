@@ -139,31 +139,10 @@
         }
 
         #pause-menu {
-            background-color: #fff;
-            border-radius: 10px;
             padding: 20px;
             min-width: 260px;
-            text-align: center;
-        }
-
-        #pause-menu ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        #pause-menu li {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        #pause-menu button {
-            background-color: #007bff;
             color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-variant: small-caps;
+            text-align: center;
         }
 
         #main-menu-container {
@@ -187,6 +166,33 @@
             -webkit-backdrop-filter: blur(3px);
         }
 
+        #clear-data-confirm-container {
+            display: none;
+            background-color: rgba(0, 0, 0, .8);
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 260px;
+            text-align: center;
+        }
+
+        #clear-data-confirm-menu {
+            color: #fff;
+        }
+
+        #notification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            color: black;
+            text-align: center;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 11;
+        }
+
     </style>
 
 </head>
@@ -195,6 +201,7 @@
 
     <!-- Box shape -->
     <div id="page-border"></div>
+    <div id="notification">Data has been deleted.</div>
 
     <!-- Splash Umz Games Logo -->
     <div id="splash-container" class="page-container index-15">
@@ -204,10 +211,21 @@
     <div id="main-menu-container" class="page-container flex-center index-6">
         <img id="game-logo" class="" src="/assets/skyy2_logo.png" alt="Skyy Tribes II" />
         <div>
-            <button id="menu-play-button" class="menu-button">Play</button>
-            <button id="menu-credits-button" class="menu-button">Credits</button>
+            <button id="menu-play-button" class="menu-button"><span class='keyboard-key'>Z</span> Play</button>
+            <button id="menu-play-button" class="menu-button"><span class='keyboard-key'>C</span> Clear Data</button>
         </div>
         <p id="copyright">Umz Games &copy; 2025 | Sky Tribes 2 | V-1</p>
+    </div>
+
+    <div id="clear-data-confirm-container" class="page-container flex-center index-6">
+        <div id="clear-data-confirm-menu">
+            <h2>Confirm Clear Data</h2>
+            <p>Are you sure you want to clear all saved game data? This action cannot be undone.</p>
+            <div class="flex">
+                <button id="clear-data-yes-button" class="menu-button"><span class='keyboard-key'>Y</span> Yes, Clear Data</button>
+                <button id="clear-data-no-button" class="menu-button"><span class='keyboard-key'>N</span> No, Cancel</button>
+            </div>
+        </div>
     </div>
 
     <div id="blackout-container" class="page-container index-14">
@@ -226,10 +244,10 @@
     <div id="pause-container" class="page-container flex-center index-6">
         <div id="pause-menu">
             <h2>Paused</h2>
-            <ul>
-                <li><button id="resume-button"><span class='keyboard-key'>P</span> Resume Game</button></li>
-                <li><button id="main-menu-button"><span class='keyboard-key'>M</span> Main Menu</button></li>
-            </ul>
+            <div>
+                <button id="resume-button" class="menu-button"><span class='keyboard-key'>P</span> Resume Game</button>
+                <button id="main-menu-button" class="menu-button"><span class='keyboard-key'>M</span> Main Menu</button>
+            </div>
         </div>
     </div>
 
@@ -262,8 +280,3 @@
 </body>
 
 </html>
-
-<!--
-TODOs
-> Spawning allies and enemies clean up
--->

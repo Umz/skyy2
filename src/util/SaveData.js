@@ -6,6 +6,9 @@ const GAME_DATA = "GAME_DATA";
 
 // Kills, Collects
 let data = {
+}
+
+const initial = {
   
   playtime: 0,
   playSecs: 0,
@@ -42,6 +45,14 @@ const settings = {
 
 export default class SaveData {
 
+  static DELETE_SAVE() {
+    localforage.removeItem(GAME_DATA).then(function() {
+      data = {...initial};
+    }).catch(function(err) {
+      console.log(err);
+    });
+  }
+
   static SAVE_GAME_DATA() {
 
     const empty = {};
@@ -50,16 +61,10 @@ export default class SaveData {
     convertPlaytime(saveData);
     saveData.playerX = Math.floor(saveData.playerX);
 
-    console.log("Saving data:")
-    console.log(saveData)
+    //console.log("Saving data:")
+    //console.log(saveData)
 
     localforage.setItem(GAME_DATA, saveData);
-  }
-
-  static LOAD_DEV() {
-    data = getSaveDataChrome();
-    console.log("Game Data loaded with DEV data:")
-    console.log(data)
   }
 
   static PRELOAD() {
@@ -68,13 +73,13 @@ export default class SaveData {
       .then(saveData => {
         if (saveData) {
           data = saveData;
-          console.log("Game Data loaded with preload:")
-          console.log(data)
+          //console.log("Game Data loaded with preload:")
+          //console.log(data)
         }
         SaveData.isLoaded = true;
       })
       .catch(error => {
-        console.error("Error loading data from localForage: ", error);
+        console.error("Error loading data: ", error);
       })
   }
 
@@ -105,7 +110,7 @@ export default class SaveData {
   }
 
   static RemoveSoldier(uid) {
-    data.citizens = data.citizens.filter(citData => citData.uid !== uid);
+    data.soldiers = data.citizens.filter(citData => citData.uid !== uid);
   }
 
   static SaveCitizenData(citData) {
