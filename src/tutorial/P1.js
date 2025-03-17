@@ -26,7 +26,7 @@ export default class P1 extends TutorialSequence {
         const ss = Phaser.Utils.Array.GetRandom([Vars.SHEET_CITIZEN_MAM_M1, Vars.SHEET_CITIZEN_MAM_M2, Vars.SHEET_CITIZEN_MAM_F1, Vars.SHEET_CITIZEN_MAM_F2]);
 
         const citi = this.spawnCitizen(x, ss);
-        SaveData.Data.citizens.push(citi.getSaveData());
+        SaveData.SaveCitizenData(citi.getSaveData())
       }
 
       //  Specific Sprites -
@@ -34,19 +34,19 @@ export default class P1 extends TutorialSequence {
       const king = this.spawnCitizen(Vars.AREA_WIDTH * 1.48, Vars.SHEET_CITIZEN_MAM_KING);
       king.setName(script.Names.HarvestMoon);
       king.uid = Enum.ID_HARVEST_MOON;
-      SaveData.Data.citizens.push(king.getSaveData());
+      SaveData.SaveCitizenData(king.getSaveData());
 
       const glow = this.spawnCitizen(Vars.AREA_WIDTH * 1.52, Vars.SHEET_CITIZEN_MAM_GLOW);
       glow.setName(script.Names.MoonGlow);
       glow.setController(new CitizenWife())
       glow.uid = Enum.ID_MOON_GLOW;
-      SaveData.Data.citizens.push(glow.getSaveData());
+      SaveData.SaveCitizenData(glow.getSaveData());
 
       const rose = this.spawnCitizen(Vars.AREA_WIDTH * 1.48, Vars.SHEET_CITIZEN_MAM_ROSE);
       rose.setName(script.Names.MoonRose);
       rose.setController(new CitizenWife())
       rose.uid = Enum.ID_MOON_ROSE;
-      SaveData.Data.citizens.push(rose.getSaveData());
+      SaveData.SaveCitizenData(rose.getSaveData());
 
       return true;
     })

@@ -99,7 +99,7 @@ export default class P4 extends TutorialSequence {
         citi.setController(new CitizenBattle());
         citi.setData("isJoining", i < 10);
 
-        SaveData.Data.citizens.push(citi.getSaveData());
+        SaveData.SaveCitizenData(citi.getSaveData());
       }
 
       return true;

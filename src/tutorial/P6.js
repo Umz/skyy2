@@ -59,13 +59,13 @@ export default class P6 extends TutorialSequence {
         ]);
 
         const citi = this.spawnCitizen(x, ss);
-        SaveData.Data.citizens.push(citi.getSaveData());
+        SaveData.SaveCitizenData(citi.getSaveData());
       }
 
       const chief = this.spawnCitizen(Vars.AREA_WIDTH * 7.4, Vars.SHEET_CITIZEN_GV_CHIEF);
       chief.setName(script.Names.GreenChief);
       chief.uid = Enum.ID_GREEN_CHIEF;
-      SaveData.Data.citizens.push(chief.getSaveData());
+      SaveData.SaveCitizenData(chief.getSaveData());
 
       return true;
     })
