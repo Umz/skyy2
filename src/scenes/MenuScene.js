@@ -18,6 +18,10 @@ export default class MenuScene extends Phaser.Scene {
 
   create() {
 
+    const camera = this.cameras.main;
+    camera.setBounds(0, 0, 960, 240);
+    camera.centerOnX(320);
+
     this.allGroup = this.add.group({runChildUpdate: true});
 
     this.sceneryLayer = this.add.layer();

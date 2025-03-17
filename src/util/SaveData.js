@@ -110,7 +110,7 @@ export default class SaveData {
   }
 
   static RemoveSoldier(uid) {
-    data.soldiers = data.citizens.filter(citData => citData.uid !== uid);
+    data.soldiers = data.soldiers.filter(citData => citData.uid !== uid);
   }
 
   static SaveCitizenData(citData) {

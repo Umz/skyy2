@@ -52,7 +52,7 @@ export default class Spawner {
     const player = this.spawnSoldierBase(0, 1, Vars.SHEET_PLAYER);
     
     camera.startFollow(player, true, .8);
-    player.setHP(3, 3);
+    player.setHP(50, 50);
     player.setGP(7, 7);
     player.setDisplayName(Subtitles.GetScript().Names.MoonChief, Enum.TEAM_PLAYER, 2);
     player.setTeam(Enum.TEAM_ALLY);

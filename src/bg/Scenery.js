@@ -8,7 +8,7 @@ class Scenery {
   addBGLayer(frame, scroll, speed, offsetY = 0) {
 
     const camera = this.scene.cameras.main;
-    const x = 0;
+    const x = -10;
     const y = camera.height;
 
     const sprite = this.scene.add.tileSprite(x, y, camera.width * 1.15, 216 + offsetY, frame).setOrigin(0, 1);

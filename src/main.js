@@ -11,7 +11,7 @@ const viewBox = document.getElementById('app');
 const rect = viewBox.getBoundingClientRect();
 const ratio = rect.width / rect.height;
 const HEIGHT = 240;
-const WIDTH = Math.round(HEIGHT * ratio);
+const WIDTH = Math.ceil(HEIGHT * ratio);
 
 const config = {
 

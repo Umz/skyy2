@@ -232,7 +232,7 @@ export class Preloader extends Phaser.Scene {
 
         this.createVFXAnimation(Vars.VFX_SPARKLE0, 10, 16, -1);
         this.createVFXAnimation(Vars.VFX_SPARKLE1, 10, 16, -1);
-        this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 19, 16, 0);
+        this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 18, 16, 0);
         this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_CONSUME2, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_BLOOD3, 7, 16, 0);

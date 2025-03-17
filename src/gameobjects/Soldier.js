@@ -367,11 +367,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   moveLeft() {
-    this.moveDirection(-1);
+    if (!this.isDead()) {
+      this.moveDirection(-1);
+    }
   }
 
   moveRight() {
-    this.moveDirection(1);
+    if (!this.isDead()) {
+      this.moveDirection(1);
+    }
   }
 
   moveTowards(x) {
@@ -444,11 +448,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   isTweening() {
-    return this.scene.tweens.isTweening(this);
+    return this.scene?.tweens.isTweening(this);
   }
 
   stopTweening() {
-    this.scene.tweens.killTweensOf(this);
+    this.scene?.tweens.killTweensOf(this);
   }
 
   faceX(x) {

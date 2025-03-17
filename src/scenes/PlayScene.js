@@ -335,8 +335,10 @@ export class PlayScene extends Scene {
       this.wildlifeSpawner.resetCounts();
       
       const areaInfo = MapInfo.get(currentAreaID);
-      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
-      this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+      if (areaInfo) {
+        this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+        this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+      }
     }
   }
 
