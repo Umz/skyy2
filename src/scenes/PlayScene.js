@@ -922,7 +922,6 @@ export class PlayScene extends Scene {
   /** Claim current territory when hovering flag for X seconds */
   playerClaimFlagCollision(player, flag) {
     if (player.isLane(1)) {
-      console.log(1);
       this.landClaimer.setClaiming();
       const locID = this.mapTracker.currentAreaID;
       const allClaimed = SaveData.Data.claimed;
