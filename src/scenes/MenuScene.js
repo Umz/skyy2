@@ -12,10 +12,15 @@ export default class MenuScene extends Phaser.Scene {
   
   preload() {
     this.isMenuShowing = false;
+    this.isShowingClearData = false;
     SaveData.PRELOAD(this.isMenuShowing);
   }
 
   create() {
+
+    const camera = this.cameras.main;
+    camera.setBounds(0, 0, 960, 240);
+    camera.centerOnX(320);
 
     this.allGroup = this.add.group({runChildUpdate: true});
 
@@ -46,6 +51,27 @@ export default class MenuScene extends Phaser.Scene {
       }
     });
 
+    this.input.keyboard.on('keydown-C', () => {
+      if (this.isMenuShowing) {
+        this.showClearData();
+      }
+    });
+
+    this.input.keyboard.on('keydown-Y', () => {
+      if (this.isShowingClearData) {
+        SaveData.DELETE_SAVE();
+        this.hideClearData();
+        this.showDeleteNotification();
+      }
+    });
+
+    this.input.keyboard.on('keydown-N', () => {
+      if (this.isShowingClearData) {
+        this.hideClearData();
+        this.isShowingClearData = false;
+      }
+    });
+
   }
 
   update(time, delta) {
@@ -63,5 +89,26 @@ export default class MenuScene extends Phaser.Scene {
   hideMenuDOM() {
     const menuContainer = document.getElementById("main-menu-container");
     menuContainer.style.display = 'none';
+  }
+
+  showClearData() {
+    const menuContainer = document.getElementById("clear-data-confirm-container");
+    menuContainer.style.display = 'flex';
+    this.isShowingClearData = true;
+  }
+
+  hideClearData() {
+    const menuContainer = document.getElementById("clear-data-confirm-container");
+    menuContainer.style.display = 'none';
+    this.isShowingClearData = false;
+  }
+
+  showDeleteNotification() {
+    const notification = document.getElementById('notification');
+    notification.innerText = "Data has been cleared";
+    notification.style.display = 'block';
+    setTimeout(function() {
+      notification.style.display = 'none';
+    }, 2000);
   }
 }

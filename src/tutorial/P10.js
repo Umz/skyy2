@@ -38,9 +38,10 @@ export default class P10 extends TutorialSequence {
     .add(()=> player.x >= WIDTH * 5)
 
     .add(()=>{
-      this.tallash.idle();
-      player.boostAttack(405);
+      player.boostAttack(3);
+      Juke.PlaySound(Sfx.ATTACK_BOOST);
       this.pauseSoldiersForDuel();
+      this.tallash.idle();
       return true;
     })
     .addShowDuelDOM()
@@ -50,6 +51,10 @@ export default class P10 extends TutorialSequence {
       return true;
     })
     .add(()=> this.tallash.hp <= 0)
+    .add(()=>{
+      player.boostAttack(10);
+      return true;
+    })
     .addHideDuelDOM()
 
     .addTitle(" >>> Battle is concluded after Moon Chief wins the duel and attack the soldiers -")

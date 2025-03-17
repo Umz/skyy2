@@ -2,7 +2,7 @@ import ActionManager from "../classes/ActionManager";
 import ActComplete from "../actions/ActComplete";
 import ActMoveOffX from "../actions/ActMoveOffX";
 import ActWait from "../actions/ActWait";
-import CitizenController from "./CitizenController";
+import CitizenStorm from "./CitizenStorm";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
 import Juke from "../util/Juke";
@@ -94,9 +94,8 @@ export default class CitizenCaptive extends ActionManager {
     if (isJoining) {
       this.addActions(
         new ActComplete(()=>{
-
           sprite.setTribe(Enum.TRIBE_MAM);
-          const controller = new CitizenController();
+          const controller = new CitizenStorm();
           sprite.setController(controller);
           SaveData.SaveCitizenData(sprite.getSaveData())
         })

@@ -157,11 +157,11 @@ export default class CitizenWife extends ActionManager {
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
+    sprite.stopMove();
+
     if (player.getHPPercent() < 1 || player.getGPPercent() < 1) {
 
-      sprite.stopMove();
       sprite.speak(Icon.ALLY_SHIELD, script.MoonRose.powerup, 5000);
-      Juke.PlaySound(Sfx.HEAL);
 
       player.recoverHP(player.maxHP);
       player.recoverGP(player.maxGP);
@@ -181,9 +181,10 @@ export default class CitizenWife extends ActionManager {
     const player = this.scene.player;
     const script = Subtitles.GetScript();
 
+    sprite.stopMove();
+
     if (player.attBoost === 0) {
       
-      sprite.stopMove();
       sprite.speak(Icon.ALLY_SWORD, script.MoonGlow.powerup, 5000);
       player.boostAttack(10);
 
@@ -192,7 +193,7 @@ export default class CitizenWife extends ActionManager {
     }
     else {
       sprite.speak(Icon.SPEECH_HEART, script.MoonGlow.love, 5000);
-      Juke.PlaySound(Sfx.HEAL);
+      Juke.PlaySound(Sfx.VOICEF_GIGGLE);
     }
   }
 

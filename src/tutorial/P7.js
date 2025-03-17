@@ -1,4 +1,5 @@
 import BlueMoon from "../ai/BlueMoon";
+import CitizenMaM from "../ai/CitizenMaM";
 import Lunar1 from "../ai/Lunar1";
 import TutorialSequence from "../classes/TutorialSequence";
 import Enum from "../const/Enum";
@@ -91,8 +92,6 @@ export default class P7 extends TutorialSequence {
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.green4, 4000, Sfx.VOICE_EFFORT1)
 
     .add(()=>{
-      Juke.PlaySound(Sfx.HEAL);
-
       player.recoverHP(10);
       player.recoverGP(player.maxGP);
 
@@ -133,8 +132,6 @@ export default class P7 extends TutorialSequence {
 
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.HOME, script.MoonChief.green5, 2000, Sfx.VOICE_SIGH1)
     .add(()=>{
-      Juke.PlaySound(Sfx.HEAL);
-
       player.recoverHP(10);
       player.recoverGP(player.maxGP);
 
@@ -149,6 +146,17 @@ export default class P7 extends TutorialSequence {
       return true;
     })
     .add(()=> SequenceHelper.CheckEnemiesLessOrEqual(0))
+
+    .add(()=>{
+      const all = this.scene.groupCitizens.getChildren();
+      const citizens = all.filter(ss => ss.tribe === Enum.TRIBE_WHITELEAF);
+      for (let citi of citizens) {
+        citi.setController(new CitizenMaM());
+        SaveData.SaveCitizenData(citi.getSaveData())
+      }
+      return true;
+    })
+    .addSave()
 
     .add(()=> player.x <= Vars.AREA_WIDTH * 6.9 )
 
@@ -173,6 +181,7 @@ export default class P7 extends TutorialSequence {
     .addGreenSwordSpeakAndWait(Icon.SWORD, script.GreenSword.green1, 3000)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.green6, 3000, Sfx.VOICE_AMUSED3)
     .add(() => green.isDead())
+    .addSpeak(Enum.ID_MOON_CHIEF, Icon.BANNER, script.MoonChief.victory, 2000, Sfx.VOICE_ATTACK1)
     .addSave()
 
     .addTitle(" >>> Fade out the screen to black and jump to Moon at Midnight with everyone. -")
@@ -204,6 +213,7 @@ export default class P7 extends TutorialSequence {
 
       const blue = this.getSoldierbyUID(Enum.ID_BLUE_MOON);
       blue.setController(new BlueMoon());
+      SaveData.SaveSoldierData(blue.getSaveData());
 
       return true;
     })
@@ -220,6 +230,7 @@ export default class P7 extends TutorialSequence {
       ele.style.display = "none";
       return true;
     })
+    .addHealing()
     .addSave()
 
     .addTitle(" >>> The Architect joins Moon at Midnight and becomes Lunar -")

@@ -100,26 +100,6 @@ export default class TutorialSequence {
     return this;
   }
 
-  addSpeaker(uid, icon, text, ttl, sfx = null) {
-    this.add(()=>{
-      const sprite = this.getSoldierbyUID(uid);
-      sprite.speak(icon, text, ttl);
-      if (sfx) {
-        Juke.PlaySound(sfx);
-        console.log("Speaking")
-      }
-      return true;
-    })
-    return this;
-  }
-
-  addSpeakerAndWait(sprite, icon, text, ttl) {
-    this
-    .addSpeaker(sprite, icon, text, ttl)
-    .add(()=>{ return !Subtitles.IsShowing() })
-    return this;
-  }
-
   /** Speak (UID) without stopping flow to wait for dialogue */
   addSpeak(uid, icon, text, ttl, sfx = null) {
     this.add(()=>{
@@ -210,8 +190,7 @@ export default class TutorialSequence {
   addTitle(txt, logDetails = false) {
     if (logDetails) {
       this.add(()=>{
-        console.log(txt);
-        console.log(`Tutorial Step ${this.step}`)
+        //console.log(`${txt} | Step ${this.step}`)
         return true;
       });
     }
@@ -300,6 +279,7 @@ export default class TutorialSequence {
     soldier.setGP(gp, gp);
     if (name) {
       soldier.setDisplayName(name, team);
+      soldier.setDepth(3);
     }
   }
 

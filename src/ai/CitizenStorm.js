@@ -5,7 +5,10 @@ import ActWait from "../actions/ActWait";
 import ActionManager from "../classes/ActionManager";
 import Enum from "../const/Enum";
 import Icon from "../const/Icon";
+import Sfx from "../const/Sfx";
 import Vars from "../const/Vars";
+import { isSpriteInCameraViewX } from "../util/ActionHelper";
+import Juke from "../util/Juke";
 import SaveData from "../util/SaveData";
 
 export default class CitizenStorm extends ActionManager {
@@ -19,7 +22,6 @@ export default class CitizenStorm extends ActionManager {
 
   setDefaultActions() {
 
-    const ownMines = SaveData.Data.claimed.includes(Enum.LOC_MINES);
     const isClothingUpgraded = this.sprite.getData("newClothes");
     const money = this.sprite.getData("money") || 0;
 
@@ -28,9 +30,6 @@ export default class CitizenStorm extends ActionManager {
     }
     else if (this.food <= 0) {
       this.state = Enum.CS_HUNGRY;
-    }
-    else if (ownMines && this.energy > 5) {
-      this.state = Enum.CS_DIGGING;
     }
     else {
       this.state = Enum.CS_IDLE;
@@ -41,9 +40,6 @@ export default class CitizenStorm extends ActionManager {
     switch (this.state) {
       case Enum.CS_HUNGRY:
         this.forage();
-        break;
-      case Enum.CS_DIGGING:
-        this.mining();
         break;
       case Enum.CS_TRAVELLING:
         this.gotoShopForNewClothes();
@@ -109,18 +105,6 @@ export default class CitizenStorm extends ActionManager {
     )
   }
 
-  //  - Increase Money -
-
-  getPaid_TEMP() {
-    this.addActions(
-      new ActWait(4000),
-      new ActComplete(()=>{
-        this.sprite.showIcon(Icon.GOLD_RING, 2000);
-      }),
-      new ActWait(2000)
-    )
-  }
-
   //  -
 
   wander() {
@@ -138,6 +122,7 @@ export default class CitizenStorm extends ActionManager {
       new ActWait(3000),
       new ActComplete(()=>{
         this.food --;
+        this.sprite.setData("available", this.energy >= 5);
       })
     )
   }
@@ -174,12 +159,26 @@ export default class CitizenStorm extends ActionManager {
         sprite.showIcon(Icon.HAPPY, 15 * 1000);
 
         this.food = Phaser.Math.Between(50, 80);
-        this.energy += Phaser.Math.Between(5, 10);
-      })
+        this.energy += Phaser.Math.Between(10, 15);
+
+        this.sprite.setData("available", true);
+      }),
+      new ActMoveOffX(this.sprite, Vars.AREA_WIDTH),
+      new ActWait(2000)
     );
   }
 
   // - Mining
+
+  startMining() {
+    
+    const money = this.sprite.getData("money") || 0;
+    this.sprite.setData("available", false);
+    this.sprite.setData("money", money + 25);
+
+    this.clearAllActions();
+    this.mining();
+  }
 
   mining() {
 
@@ -193,6 +192,7 @@ export default class CitizenStorm extends ActionManager {
       new ActWait(500),
       new ActComplete(()=>{
         sprite.showIcon(Icon.PICKAXE, 60 * 1000)
+        this.playVoice();
       }),
 
       new ActMoveToX(sprite, rockX),
@@ -208,20 +208,17 @@ export default class CitizenStorm extends ActionManager {
       new ActWait(21 * 1000),
       new ActComplete(()=>{
 
-        const money = sprite.getData("money") || 0;
-        
         sprite.setState(Enum.CS_IDLE);
         sprite.showIcon(Icon.BLUE_SILICA, 15 * 1000);
 
-        SaveData.Data.silica += thi.energy;
-        sprite.setData("money", money + this.energy);
-
-        this.food = 0;
+        SaveData.Data.silica += this.energy * 2;
+        
+        this.food = 3;
         this.energy = 0;
       }),
 
       new ActWait(3000),
-      new ActMoveToX(sprite, Vars.AREA_WIDTH * 3.9)
+      new ActMoveToX(sprite, Vars.AREA_WIDTH * 3.7)
     );
   }
 
@@ -252,6 +249,14 @@ export default class CitizenStorm extends ActionManager {
   }
 
   //  --------------------------------------------------------------------------
+
+  playVoice() {
+    let isMale = this.sprite.prefix === Vars.SHEET_CITIZEN_STORM_M1 || this.sprite.prefix === Vars.SHEET_CITIZEN_STORM_M1A;
+    let sfx = isMale ? Sfx.VOICE_HO1 : Sfx.VOICEF_OH;
+    if (isSpriteInCameraViewX(this.sprite)) {
+      Juke.PlaySound(sfx);
+    }
+  }
 
   get forageIcons() {
     return [

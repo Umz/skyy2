@@ -27,7 +27,7 @@ export function getClosestSoldierInRange(sprite, range) {
   return getClosestToSpriteInGroup(sprite, scene.groupSoldiers, range);
 }
 
-/** Get the closest citizen to the Player in village */
+/** Get the closest citizen to the sprite in village */
 export function getClosestCitizen(sprite) {
   const scene = sprite.scene;
   return getClosestToSpriteInGroup(sprite, scene.groupCitizens, 600);
@@ -37,7 +37,7 @@ export function getClosestCitizen(sprite) {
 export function getClosestMaMCitizenForChat(sprite) {
   const scene = sprite.scene;
   const citizens = scene.groupCitizens.getChildren();
-  const available = citizens.filter(sprite => sprite.home === Enum.LOC_MAM && sprite.tribe === Enum.TRIBE_MAM && sprite.uid > 100);
+  const available = citizens.filter(cit => cit.home === sprite.home && cit.tribe === sprite.tribe && cit.uid > 100);
   return getClosestToSpriteInArray(sprite, available, 400);
 }
 

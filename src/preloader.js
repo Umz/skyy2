@@ -232,7 +232,7 @@ export class Preloader extends Phaser.Scene {
 
         this.createVFXAnimation(Vars.VFX_SPARKLE0, 10, 16, -1);
         this.createVFXAnimation(Vars.VFX_SPARKLE1, 10, 16, -1);
-        this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 19, 16, 0);
+        this.createVFXAnimation(Vars.VFX_SQUAREFORE0, 18, 16, 0);
         this.createVFXAnimation(Vars.VFX_CONSUME, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_CONSUME2, 13, 18, 0);
         this.createVFXAnimation(Vars.VFX_BLOOD3, 7, 16, 0);
@@ -269,6 +269,14 @@ export class Preloader extends Phaser.Scene {
         for (let citi of CITIZENS) {
             this.createSpritesheetAnimation(citi, data.citizen);
         }
+
+        //  - Hide Splash
+
+        const splashContainer = document.getElementById("splash-container");
+        splashContainer.style.opacity = 0;
+        splashContainer.addEventListener('transitionend', () => {
+            splashContainer.style.display = 'none';
+        });
 
         //  -
 

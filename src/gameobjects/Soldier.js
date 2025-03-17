@@ -125,7 +125,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   boostAttack(amt) {
-    this.attBoost = amt;
+    this.attBoost = Math.min(20, this.attBoost + amt);
     Vfx.ShowAnimatedFollow(this, Vars.VFX_TELEPORT2);
   }
 
@@ -367,11 +367,15 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   moveLeft() {
-    this.moveDirection(-1);
+    if (!this.isDead()) {
+      this.moveDirection(-1);
+    }
   }
 
   moveRight() {
-    this.moveDirection(1);
+    if (!this.isDead()) {
+      this.moveDirection(1);
+    }
   }
 
   moveTowards(x) {
@@ -444,11 +448,11 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
   }
 
   isTweening() {
-    return this.scene.tweens.isTweening(this);
+    return this.scene?.tweens.isTweening(this);
   }
 
   stopTweening() {
-    this.scene.tweens.killTweensOf(this);
+    this.scene?.tweens.killTweensOf(this);
   }
 
   faceX(x) {
@@ -574,7 +578,7 @@ export default class Soldier extends Phaser.Physics.Arcade.Sprite {
     
     if (data.name !== Subtitles.GetScript().Names.Soldier) {
       this.setDisplayName(data.name, Enum.TEAM_ALLY);
-      this.setDepth(2);
+      this.setDepth(3);
     }
 
     this.uid = data.uid;

@@ -25,6 +25,7 @@ import Subtitles from "../util/Subtitles";
 import Counter from "../util/Counter";
 import ScreenshotScene from "./ScreenshotScene";
 import PauseScene from "./PauseScene";
+import CitizenStorm from "../ai/CitizenStorm";
 
 export class PlayScene extends Scene {
 
@@ -147,8 +148,8 @@ export class PlayScene extends Scene {
 
     // Add a key listener to pause the game and go to the ScreenshotScene scene when the 'S' key is pressed
     this.input.keyboard.on('keydown-S', () => {
-      this.scene.pause('PlayScene');
-      this.scene.launch('ScreenshotScene');
+      //this.scene.pause('PlayScene');
+      //this.scene.launch('ScreenshotScene');
     });
 
     // Add the PauseScene scene to the game
@@ -164,7 +165,6 @@ export class PlayScene extends Scene {
 
     this.input.keyboard.on('keydown-Q', () => {
       const pX = (this.player.x / Vars.AREA_WIDTH).toFixed(2);
-      console.log(pX);
     });
 
     this.setupScene();
@@ -335,8 +335,10 @@ export class PlayScene extends Scene {
       this.wildlifeSpawner.resetCounts();
       
       const areaInfo = MapInfo.get(currentAreaID);
-      this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
-      this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+      if (areaInfo) {
+        this.birdSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+        this.wildlifeSpawner.isForestArea = areaInfo.type === Enum.AREA_FOREST;
+      }
     }
   }
 
@@ -801,8 +803,21 @@ export class PlayScene extends Scene {
 
           const fatal = defender.hit(attacker);
           if (fatal) {
+
+            // Check if Main Character died
+            const mainUIDs = [Enum.ID_MOON_CHIEF, Enum.ID_BLUE_MOON, Enum.ID_NIGHT_TRAIN, Enum.ID_LUNAR];
+            if (mainUIDs.includes(defender.uid)) {
+              const notification = document.getElementById('notification');
+              notification.innerText = "Main Character Died.";
+              notification.style.display = 'block';
+              setTimeout(function() {
+                notification.style.display = 'none';
+              }, 3000);
+              this.scene.start('MenuScene');
+            }
             
             this.showDeath(defender);
+            SaveData.RemoveSoldier(defender.uid);
             
             // Spawn Collectible on enemy or ally death
             const eligible = SaveData.Data.claimed.includes(Enum.LOC_BLUE_FOREST);
@@ -907,7 +922,6 @@ export class PlayScene extends Scene {
   /** Claim current territory when hovering flag for X seconds */
   playerClaimFlagCollision(player, flag) {
     if (player.isLane(1)) {
-      console.log(1);
       this.landClaimer.setClaiming();
       const locID = this.mapTracker.currentAreaID;
       const allClaimed = SaveData.Data.claimed;

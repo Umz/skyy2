@@ -99,7 +99,7 @@ export default class P4 extends TutorialSequence {
         citi.setController(new CitizenBattle());
         citi.setData("isJoining", i < 10);
 
-        SaveData.Data.citizens.push(citi.getSaveData());
+        SaveData.SaveCitizenData(citi.getSaveData());
       }
 
       return true;
@@ -198,6 +198,7 @@ export default class P4 extends TutorialSequence {
         if (ally.uid > 100) {
           ally.home = Enum.LOC_STORM;
           ally.setController(new AllyStandby());
+          SaveData.SaveSoldierData(ally.getSaveData());
         }
       }
       return true;
@@ -222,16 +223,17 @@ export default class P4 extends TutorialSequence {
     .addSave()
 
     .add(()=>{
-      const storm = scene.countCitizensOfLoc(Enum.LOC_STORM);
-      const mam = scene.countCitizensOfLocTribe(Enum.LOC_STORM, Enum.TRIBE_MAM);
-      return storm === mam;
+      const all = scene.groupCitizens.getChildren();
+      const citizens = all.filter(ss => ss.home === Enum.LOC_STORM);
+      const storm = scene.countCitizensOfLocTribe(Enum.LOC_STORM, Enum.TRIBE_MAM);
+      return storm === citizens.length;
     })
 
     .addWait(4000)
     .addSpeakAndWait(Enum.ID_MOON_CHIEF, Icon.SKY_SPEAR, script.MoonChief.rose3, 4000, Sfx.VOICE_HO1)
   }
 
-  //  - P4 functions    --------------------------------------------------------------------------------
+  //  - P4 functions    -------------------------------------------------------------------------------
 
   addRedFace() {
     this.add(()=>{

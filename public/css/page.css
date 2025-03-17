@@ -6,7 +6,8 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #aaaaaa;
+  background: linear-gradient(to bottom, #028af8 50%, #3d1a23 50%); /* Updated background property */
+  background-color: #000;
   font-family: 'f-forward', sans-serif;
 }
 
