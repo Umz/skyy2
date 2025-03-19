@@ -313,10 +313,11 @@ export class PlayScene extends Scene {
 
     if (this.mapTracker.updateLastAreaVisited()) {
 
-      this.showAreaName(currentAreaID);
-  
-      SaveData.Data.location = currentAreaID;
-      SaveData.SAVE_GAME_DATA();
+      if (currentAreaID > 0) {
+        this.showAreaName(currentAreaID);
+        SaveData.Data.location = currentAreaID;
+        SaveData.SAVE_GAME_DATA();
+      }
     }
 
     //  Instant check for new area

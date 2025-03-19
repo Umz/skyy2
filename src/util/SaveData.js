@@ -76,6 +76,9 @@ export default class SaveData {
           //console.log("Game Data loaded with preload:")
           //console.log(data)
         }
+        else {
+          data = initial;
+        }
         SaveData.isLoaded = true;
       })
       .catch(error => {
